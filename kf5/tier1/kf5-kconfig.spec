@@ -86,7 +86,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/modules/KF5Config
+%{_kf5_libdir}/cmake/KF5Config
 
 %changelog
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
