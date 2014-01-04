@@ -15,7 +15,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  libx11-devel
+BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
 
 %description

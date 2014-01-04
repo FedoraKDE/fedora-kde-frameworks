@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-BuildRequires:  libx11-devel
+BuildRequires:  libX11-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 

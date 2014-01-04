@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-BuildRequires:  libx11-devel
+BuildRequires:  libX11-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-ki18n-devel
