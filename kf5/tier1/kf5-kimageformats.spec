@@ -60,7 +60,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files devel
 %doc
 %{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_plugindir}/imageformats/*.so
 %{_kf5_libdir}/cmake/KF5ImageFormats
 
 
