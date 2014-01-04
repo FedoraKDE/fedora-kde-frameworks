@@ -1,0 +1,31 @@
+%_kf5_prefix /opt/kf5
+%_kf5_archdatadir %{_kf5_prefix}
+%_kf5_bindir %{_kf5_prefix}/bin
+%_kf5_datadir %{_kf5_prefix}/share
+%_kf5_docdir %{_kf5_prefix}/doc
+%_kf5_includedir %{_kf5_prefix}/include
+%_kf5_libdir %{_kf5_prefix}/%{_lib}
+%_kf5_libexecdir %{_kf5_prefix}/libexec
+%_kf5_plugindir %{_kf5_libdir}/qt5/plugins
+%_kf5_sysconfdir %{_kf5_prefix}/etc
+%cmake_kf5 \
+  QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
+  PATH="%{_kf5_bindir}:$PATH" ; export PATH ; \
+  CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
+  CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
+  FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
+  %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
+  %{__cmake} \\\
+    -DBUILD_SHARED_LIBS:BOOL=ON \\\
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \\\
+    -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
+    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
+    -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
+    -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
+%if "%{?_lib}" == "lib64" \
+     %{?_cmake_lib_suffix64} \\\
+%endif \
+    -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
+    -DDATA_INSTALLL_DIR:PATH=%{_kf5_datadir} \\\
+    -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir} \\\
+    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir}

@@ -1,0 +1,50 @@
+# Tear 1
+extra-cmake-modules
+karchive
+kcodecs
+kconfig
+kcoreaddons
+kdbusaddons
+kglobalaccel
+kguiaddons
+kidletime
+kimageformats
+kitemmodels
+kitemviews
+kjs
+kplotting
+kwidgetsaddons
+kwindowsystem
+solid
+sonnet
+threadweaver
+
+# Tier 2
+kauth
+kcompletion
+kcrash
+# kdnssd repo contains the old one
+kdnssd-framework
+kdoctools
+ki18n
+kjobwidgets
+knotifications
+kwallet-framework
+
+# Tier 3
+kbookmarks
+kcmutils
+kconfigwidgets
+kdeclarative
+kded
+kdewebkit
+kiconthemes
+kinit
+kio
+kjsembed
+kparts
+kprintutils
+kservice
+ktextwidgets
+kunitconversion
+kxmlgui
