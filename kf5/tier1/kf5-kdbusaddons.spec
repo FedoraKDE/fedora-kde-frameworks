@@ -52,7 +52,6 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
-%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 %files devel
 %doc
