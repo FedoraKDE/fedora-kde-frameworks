@@ -17,10 +17,10 @@
   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
   %{__cmake} \\\
     -DBUILD_SHARED_LIBS:BOOL=ON \\\
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \\\
+    -DCMAKE_BUILD_TYPE=release \\\
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
-    -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
+    -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_includedir} \\\
     -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
