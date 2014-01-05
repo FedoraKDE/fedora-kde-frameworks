@@ -17,6 +17,8 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  libX11-devel
+BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  libXrender-devel
 
 %description
 KDE Frameworks tier 1 integration module that provides classes for managing and
