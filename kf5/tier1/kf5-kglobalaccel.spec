@@ -59,6 +59,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
+%{_kf5_datadir}/dbus-1/interfaces/*
 %{_kf5_libdir}/cmake/KF5GlobalAccel
 
 
