@@ -24,14 +24,6 @@ such it is not required for the compilation of any other software, but
 may be a runtime requirement for Qt-based software to support certain
 image formats.
 
-%package        devel
-Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
 
 %prep
 %setup -q
@@ -56,12 +48,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
-
-%files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_plugindir}/imageformats/*.so
-%{_kf5_libdir}/cmake/KF5ImageFormats
+%{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop
 
 
 %changelog
