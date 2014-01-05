@@ -76,11 +76,13 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files core
 %doc
-%{_kf5_libdir}/libKConfigCore.so.*
+%{_kf5_libexecdir}/*
+%{_kf5_bindir}/*
+%{_kf5_libdir}/libKF5ConfigCore.so.*
 
 %files gui
 %doc
-%{_kf5_libdir}/libkConfigGui.so.*
+%{_kf5_libdir}/libKF5ConfigGui.so.*
 
 %files devel
 %doc
