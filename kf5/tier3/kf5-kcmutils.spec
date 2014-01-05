@@ -20,6 +20,7 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcionthemes-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be

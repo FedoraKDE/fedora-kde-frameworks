@@ -19,6 +19,7 @@ BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 solution for working with .desktop files

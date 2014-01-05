@@ -17,6 +17,7 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 addon for Qt declarative

@@ -16,6 +16,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 addon with JS scripting engine

@@ -15,6 +15,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KCompletion provides widgets with advanced completion support as well as a

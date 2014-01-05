@@ -28,6 +28,7 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 solution for KParts

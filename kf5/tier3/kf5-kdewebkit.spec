@@ -34,6 +34,7 @@ BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 integration module for WebKit

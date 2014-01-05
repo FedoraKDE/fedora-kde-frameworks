@@ -18,6 +18,7 @@ BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KBookmarks lets you access and manipulate bookmarks stored using the

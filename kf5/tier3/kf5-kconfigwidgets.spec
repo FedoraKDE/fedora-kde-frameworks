@@ -20,6 +20,7 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KConfigWidgets provides easy-to-use classes to create configuration dialogs, as

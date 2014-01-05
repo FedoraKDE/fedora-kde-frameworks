@@ -28,6 +28,7 @@ BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 addon with utilities fo printing

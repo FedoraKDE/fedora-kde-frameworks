@@ -14,6 +14,7 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-filesystem
 BuildRequires:  perl
 
 %description

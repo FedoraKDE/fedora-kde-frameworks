@@ -16,6 +16,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  libX11-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-filesystem
 
 
 %description

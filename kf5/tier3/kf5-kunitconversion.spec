@@ -15,6 +15,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 addon for unit conversions

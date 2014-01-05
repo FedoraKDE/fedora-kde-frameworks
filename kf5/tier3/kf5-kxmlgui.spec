@@ -26,6 +26,7 @@ BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 solution for generating UI

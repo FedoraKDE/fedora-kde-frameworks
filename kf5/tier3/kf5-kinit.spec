@@ -18,6 +18,7 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-filesystem
 
 %description
 kdeinit is a process launcher somewhat similar to the 
