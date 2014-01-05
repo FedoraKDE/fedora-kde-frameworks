@@ -2,7 +2,7 @@
 
 Name:           kf5-kconfig
 Version:        5.0.0
-Release:        0.1.%{snapshot}git
+Release:        0.2.%{snapshot}git
 Summary:        KDE Frameworks tier 1 addon with advanced configuration system
 
 License:        GPLv2+
@@ -16,8 +16,8 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-Requires:       kconfig-core
-Requires:       kconfig-gui
+Requires:       kf5-kconfig-core
+Requires:       kf5-kconfig-gui
 
 %description
 KDE Frameworks tier 1 addon with advanced configuration system made of two parts:
