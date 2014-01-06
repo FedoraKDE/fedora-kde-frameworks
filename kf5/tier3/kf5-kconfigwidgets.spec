@@ -15,6 +15,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kauth-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kcodecs-devel
