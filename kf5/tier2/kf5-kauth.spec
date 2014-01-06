@@ -53,7 +53,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
-%{_kf5_etcsysconf}/dbus-1/system.d/*
+%{_kf5_sysconfdir}/dbus-1/system.d/*
 %{_kf5_libdir}/plugins/kf5/plugins/kauth/
 %{_kf5_datadir}/kauth/
 
