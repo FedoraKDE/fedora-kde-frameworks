@@ -59,8 +59,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files
-%doc COPYING COPYING.GPL2 COPYING.LIB README.md
+%doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/kde5/servicetypes/*.desktop
 
 %files devel
 %doc
