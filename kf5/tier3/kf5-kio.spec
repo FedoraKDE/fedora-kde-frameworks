@@ -49,6 +49,14 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
+%package        doc
+Summary:        Documentation files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description    doc
+Documentation for %{name}.
+
 %prep
 %setup -q
 
@@ -72,6 +80,17 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_bindir}/*
+%{_kf5_sysconfdir}/xdg/accept-languages.codes
+%{_kf5_libdir}/plugins/kf5/*.so
+%{_kf5_libexecdir}/*
+%{_kf5_datadir}/applications/kde5/*.desktop
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
+%{_kf5_datadir}/kconf_update/*
+%{_kf5_datadir}/kde5/services/*
+%{_kf5_datadir}/kde5/servicetypes/*
+%{_kf5_datadir}/proxyscout/
+%{_kf5_datadir}/khtml/domain_info
 
 %files devel
 %doc
@@ -79,7 +98,12 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5KIO
 
+%files doc
+%{_kf5_mandir}/man8/*
+%{_kf5_datadir}/doc/HTML/en/kioslave/
+
 
 %changelog
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
+
