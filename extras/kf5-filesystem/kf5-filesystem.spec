@@ -2,7 +2,7 @@
 
 Name:           kf5-filesystem
 Version:        5.0.0
-Release:        0.1.%{snapshot}
+Release:        0.2.%{snapshot}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 
@@ -24,6 +24,9 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 /opt/kf5
 
 %changelog
+* Mon Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
+- alter XDG_DATA_DIRS in cmake_kf5 RPM macro
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
 
