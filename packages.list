@@ -1,0 +1,52 @@
+Global dependencies
+kf5-filesystem
+extra-cmake-modules
+
+TIER 1
+kf5-karchive
+kf5-kcodecs
+kf5-kconfig
+kf5-kcoreaddons
+kf5-kdbusaddons
+kf5-kglobalaccel
+kf5-kguiaddons
+kf5-kidletime
+kf5-kimageformats
+kf5-kitemmodels
+kf5-kitemviews
+kf5-kjs
+kf5-kplotting
+kf5-kwidgetsaddons
+kf5-kwindowsystem
+kf5-solid
+kf5-sonnet
+kf5-threadweaver
+
+TIER 2
+kf5-kauth
+kf5-kcompletion
+kf5-kcrash
+kf5-kdnssd
+kf5-kdoctools
+kf5-ki18n
+kf5-kjobwidgets
+kf5-knotifications
+kf5-kwallet
+
+TIER 3 (order matters!)
+kf5-kconfigwidgets
+kf5-kiconthemes
+kf5-kservice
+kf5-ktextwidgets
+kf5-kxmlgui
+kf5-kbookmarks
+kf5-kcmutils
+kf5-kdeclarative
+kf5-kio
+kf5-kparts
+kf5-kdewebkit
+kf5-kded
+kf5-kinit
+kf5-kjsembed
+kf5-kprintutils
+kf5-kunitconversion
