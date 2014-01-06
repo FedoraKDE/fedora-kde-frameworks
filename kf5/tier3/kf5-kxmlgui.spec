@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
-BuildRequires:  libattica-devel
+BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
