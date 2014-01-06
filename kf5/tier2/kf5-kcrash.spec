@@ -16,6 +16,7 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  libX11-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
@@ -61,7 +62,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/modules/KF5Crash
+%{_kf5_libdir}/cmake/KF5Crash
 
 %changelog
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
