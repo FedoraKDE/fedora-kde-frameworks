@@ -30,7 +30,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-framework-%{version}
 
 
 %build
@@ -52,6 +52,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/dbus-1/interfaces/*
 
 %files devel
 %doc
