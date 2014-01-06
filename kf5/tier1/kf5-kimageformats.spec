@@ -47,7 +47,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/plugins/imageformats/*.so
 %{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop
 
 

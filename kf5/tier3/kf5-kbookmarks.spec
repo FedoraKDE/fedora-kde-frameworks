@@ -13,12 +13,13 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KBookmarks lets you access and manipulate bookmarks stored using the

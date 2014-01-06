@@ -14,6 +14,8 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
@@ -28,7 +30,7 @@ BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-filesystem
+
 
 %description
 KDE Frameworks tier 3 addon with utilities fo printing

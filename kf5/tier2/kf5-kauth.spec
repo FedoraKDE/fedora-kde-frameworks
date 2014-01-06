@@ -13,8 +13,9 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KAuth is a framework to let applications perform actions as a privileged user.

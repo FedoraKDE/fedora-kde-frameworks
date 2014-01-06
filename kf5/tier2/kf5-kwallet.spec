@@ -13,9 +13,10 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-framework-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 2 solution for password management

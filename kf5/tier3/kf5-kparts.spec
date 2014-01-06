@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -28,7 +30,7 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-knotifications-devel
-BuildRequires:  kf5-filesystem
+
 
 %description
 KDE Frameworks tier 3 solution for KParts

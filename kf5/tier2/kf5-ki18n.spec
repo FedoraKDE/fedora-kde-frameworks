@@ -13,9 +13,11 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-BuildRequires:  kf5-kjs-devel
-BuildRequires:  kf5-filesystem
 BuildRequires:  perl
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-kjs-devel
+
 
 %description
 KDE Frameworks tier 2 addon for localization

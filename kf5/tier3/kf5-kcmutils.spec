@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -20,7 +22,6 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcionthemes-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be

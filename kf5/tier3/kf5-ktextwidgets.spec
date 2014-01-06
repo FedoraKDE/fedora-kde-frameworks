@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -22,7 +24,7 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
-BuildRequires:  kf5-filesystem
+
 
 %description
 KDE Frameworks tier 3 addon with text widgets

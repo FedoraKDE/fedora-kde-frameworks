@@ -14,9 +14,10 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-filesystem
 
 
 %description

@@ -13,13 +13,15 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  kf5-filesystem
+
 
 %description
 KDE Frameworks tier 3 solution for working with .desktop files

@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kdbusaddons-devel
@@ -21,7 +23,6 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kinit-devel
 BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KDED stands for KDE Daemon which isn't very descriptive.

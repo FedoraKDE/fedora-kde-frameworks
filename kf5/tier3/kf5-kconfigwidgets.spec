@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kauth-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kcodecs-devel
@@ -20,7 +22,6 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KConfigWidgets provides easy-to-use classes to create configuration dialogs, as

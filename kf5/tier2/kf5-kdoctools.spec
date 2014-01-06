@@ -13,12 +13,13 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-BuildRequires:  kf5-archive-devel
-BuildRequires:  kf5-filesystem
 BuildRequires:  libxslt
 BuildRequires:  libxml2-devel
 BuildRequires:  docbook-dtds
 BuildRequires:  docboox-style-xsl
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-archive-devel
 
 
 %description

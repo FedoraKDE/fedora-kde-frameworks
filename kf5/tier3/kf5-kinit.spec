@@ -14,11 +14,13 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcrash-devel
-BuildRequires:  kf5-filesystem
+
 
 %description
 kdeinit is a process launcher somewhat similar to the 

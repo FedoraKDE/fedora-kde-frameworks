@@ -13,6 +13,9 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
@@ -34,7 +37,6 @@ BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kparts-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 integration module for WebKit

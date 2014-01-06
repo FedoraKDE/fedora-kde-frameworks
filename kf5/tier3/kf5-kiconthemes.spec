@@ -13,12 +13,13 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-filesystem
 
 %description
 KDE Frameworks tier 3 integration module for icon themes
