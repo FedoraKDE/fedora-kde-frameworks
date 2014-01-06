@@ -16,6 +16,9 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  libX11-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
+# if there's no job control on next build, uncomment; otherwise delete
+#BuildRequires:  kf5-filesystem
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 
@@ -53,6 +56,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/dbus-1/interfaces/*
 
 %files devel
 %doc
