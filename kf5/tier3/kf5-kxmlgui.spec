@@ -66,6 +66,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_sysconfdir}/xdg/ui/ui_standards.rc
+%{_kf5_libexecdir}/ksendbugmail
+%{_kf5_datadir}/kxmlgui/
 
 %files devel
 %doc
