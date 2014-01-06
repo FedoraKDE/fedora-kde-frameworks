@@ -1,9 +1,9 @@
 %define snapshot  20140104
 
-Name:           kf5-kdewebkit
+Name:           kf5-kdesignerplugin
 Version:        5.0.0
 Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 integration module for WebKit
+Summary:        KDE Frameworks tier 3 integration module for QtCreator
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -15,31 +15,31 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtwebkit-devel
 
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-kconfigwidgets-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-kcompletion-devel
-BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kbookmarks-devel
-
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kwallet-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-knotifications-devel
-BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-kplotting-devel
+BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-webkit-devel
+
 
 %description
-KDE Frameworks tier 3 integration module for WebKit
+KDE Frameworks tier 3 integration module for QtCreator
 
 
 %package        devel
@@ -78,7 +78,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5WebKit
+%{_kf5_libdir}/cmake/KF5DesignerPlugin
 
 
 %changelog

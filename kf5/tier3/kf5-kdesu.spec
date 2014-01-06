@@ -1,9 +1,9 @@
 %define snapshot  20140104
 
-Name:           kf5-kdewebkit
+Name:           kf5-kdesu
 Version:        5.0.0
 Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 integration module for WebKit
+Summary:        KDE Frameworks tier 3 module for su integration
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -13,33 +13,16 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  libX11-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kservice-devel
-BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-kconfigwidgets-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-kcompletion-devel
-BuildRequires:  kf5-ktextwidgets-devel
-BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  kf5-kpty-devel
 
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kwallet-devel
-BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-knotifications-devel
-BuildRequires:  kf5-kparts-devel
 
 %description
-KDE Frameworks tier 3 integration module for WebKit
+KDE Frameworks tier 3 module for su integration
 
 
 %package        devel
@@ -78,7 +61,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5WebKit
+%{_kf5_libdir}/cmake/KF5Su
 
 
 %changelog
