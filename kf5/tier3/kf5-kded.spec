@@ -60,13 +60,16 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_bindir}/*
+%{_kf5_libdir}/*.so
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
+%{_kf5_datadir}/dbus-1/services/*.service
+%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_mandir}/man8/*
 
 %files devel
 %doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5KDED
+%{_kf5_libdir}/cmake/KDED
 
 
 %changelog
