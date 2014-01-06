@@ -61,12 +61,13 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md README.autostart README.wrapper
-%{_kf5_libdir}/*.so.*
+%{_kf5_bindir}/*
+%{_kf5_libdir}/*.so
+%{_kf5_libexecdir}/*
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 %files devel
 %doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5Init
 
 
