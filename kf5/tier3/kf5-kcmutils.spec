@@ -19,7 +19,7 @@ BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kcionthemes-devel
+BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kxmlgui-devel
 
@@ -59,6 +59,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/kde5/servicetypes/*.desktop
 
 %files devel
 %doc
