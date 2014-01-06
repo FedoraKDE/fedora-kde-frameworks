@@ -13,13 +13,13 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-BuildRequires:  libxslt
+BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  docbook-dtds
-BuildRequires:  docboox-style-xsl
+BuildRequires:  docbook-style-xsl
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  kf5-archive-devel
+BuildRequires:  kf5-karchive-devel
 
 
 %description
@@ -57,13 +57,17 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_bindir}/checkXML
+%{_kf5_bindir}/meinproc5
+%{_kf5_libdir}/libKF5XsltKde*
+%{_kf5_datadir}/ksgmltools2/customization/*
+%{_kf5_datadir}/man/*
+
 
 %files devel
 %doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/modules/KF5DocBook
+%{_kf5_includedir}/XsltKde/*
+%{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
