@@ -21,6 +21,7 @@ BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kwindowsystem-devel
 
 
 %description
