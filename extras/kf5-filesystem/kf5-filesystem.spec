@@ -26,6 +26,7 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 %changelog
 * Mon Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
 - alter XDG_DATA_DIRS in cmake_kf5 RPM macro
+- add _kf5_mandir RPM macro
 
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

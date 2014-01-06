@@ -8,6 +8,7 @@
 %_kf5_libexecdir %{_kf5_prefix}/libexec
 %_kf5_plugindir %{_kf5_libdir}/qt5/plugins
 %_kf5_sysconfdir %{_kf5_prefix}/etc
+%_kf5_mandir %{_kf5_datadir}/man
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
   PATH="%{_kf5_bindir}:$PATH" ; export PATH ; \
