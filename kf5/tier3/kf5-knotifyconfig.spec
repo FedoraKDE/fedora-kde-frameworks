@@ -1,11 +1,11 @@
 %define snapshot  20140104
 
-Name:           kf5-knewstuff
+Name:           kf5-knotifyconfig
 Version:        5.0.0
 Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 module for downloading application assets
+Summary:        KDE Frameworks tier 3 module for KNotify configuration
 
-License:        LGPL2+
+License:        LGPL2
 URL:            http://www.kde.org
 
 # git archive --format=tar --prefix=%{name}-%{snapshot}/ \
@@ -14,29 +14,28 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
+BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
 
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kservice-devel
-BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-karchive-devel
-BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kbookmarks-devel
-BuildRequires:  kf5-kio-devel
 
 
 %description
-KDE Frameworks tier 3 module for downloading application assets
+KDE Frameworks tier 3 module for KNotify configuration
 
 
 %package        devel
@@ -75,7 +74,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5NewStuff
+%{_kf5_libdir}/cmake/KF5NotifyConfig
 
 
 %changelog
