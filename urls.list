@@ -1,8 +1,9 @@
 # URLS
-http://dvratil.fedorapeople.org/copr/kf5/kf5-extra-cmake-modules-5.0.0-0.1.20140104.src.rpm
+http://dvratil.fedorapeople.org/copr/kf5/extra-cmake-modules-5.0.0-0.1.20140104.src.rpm
+http://dvratil.fedorapeople.org/copr/kf5/kf5-filesystem-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-karchive-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kcodecs-5.0.0-0.1.20140104git.src.rpm
-http://dvratil.fedorapeople.org/copr/kf5/kf5-kconfig-5.0.0-0.1.20140104git.src.rpm
+http://dvratil.fedorapeople.org/copr/kf5/kf5-kconfig-5.0.0-0.2.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kcoreaddons-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kdbusaddons-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kglobalaccel-5.0.0-0.1.20140104git.src.rpm
@@ -11,11 +12,11 @@ http://dvratil.fedorapeople.org/copr/kf5/kf5-kidletime-5.0.0-0.1.20140104git.src
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kimageformats-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kitemmodels-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kitemviews-5.0.0-0.1.20140104git.src.rpm
-http://dvratil.fedorapeople.org/copr/kf5/kf5-kjs-5.0.0-0.1.20140104git.src.rpm
+###http://dvratil.fedorapeople.org/copr/kf5/kf5-kjs-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kplotting-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kwidgetsaddons-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-kwindowsystem-5.0.0-0.1.20140104git.src.rpm
-http://dvratil.fedorapeople.org/copr/kf5/kf5-solid-5.0.0-0.1.20140104git.src.rpm
+###http://dvratil.fedorapeople.org/copr/kf5/kf5-solid-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-sonnet-5.0.0-0.1.20140104git.src.rpm
 http://dvratil.fedorapeople.org/copr/kf5/kf5-threadweaver-5.0.0-0.1.20140104git.src.rpm
 
