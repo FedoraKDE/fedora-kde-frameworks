@@ -52,8 +52,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files
-%doc COPYING COPYING.LIB README.md
+%doc COPYING.LIB README.md
+%{_kf5_bindir}/kjs
 %{_kf5_libdir}/*.so.*
+%{_kf5_datador}/kjs/create_hash_table
 
 %files devel
 %doc
