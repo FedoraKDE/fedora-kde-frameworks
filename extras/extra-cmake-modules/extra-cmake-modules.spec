@@ -2,7 +2,7 @@
 
 Name:           extra-cmake-modules
 Version:        5.0.0
-Release:        0.1.%{snapshot}
+Release:        0.2.%{snapshot}
 Summary:        Additional modules for CMake build system
 BuildArch:      noarch
 
@@ -13,6 +13,10 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # gzip -c > %{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
+
+# https://git.reviewboard.kde.org/r/114888/
+Patch0:         ecm-fix-doubleslash-in-generated-headers.patch
+
 
 BuildRequires:  cmake
 BuildRequires:  kf5-filesystem
@@ -26,6 +30,8 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 %prep
 %setup -q
+
+%patch0 -p 1 -b .doubleslash
 
 %build
 mkdir -p %{_target_platform}
@@ -46,5 +52,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon Jan  6 2014 Daniel Vrátil <dvraitl@redhat.com>
+- Include patch to prevent ECMGenerateHeaders to generate "//" in include paths
+  (fixes build of solid and kdnssd frameworks)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
