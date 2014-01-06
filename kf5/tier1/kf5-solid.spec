@@ -57,7 +57,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md TODO
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/qml/org/kde/solid/*
+%{_kf5_libdir}/*.so*
+%{_kf5_datadir}/dbus-1/interfaces/*
+
 
 %files devel
 %doc
