@@ -15,6 +15,9 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools-static
+BuildRequires:  qt5-qtsvg-devel
+BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
@@ -53,11 +56,14 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
+%{_kf5_bindir}/kjscmd
+%{_kf5_bindir}/kjsconsole
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/man/man1/kjscmd.1
+
 
 %files devel
 %doc
-%{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5JsEmbed
 
