@@ -17,6 +17,7 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kjs-devel
 
 
 %description
@@ -52,7 +53,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files
-%doc COPYING COPYING.GPL2 COPYING.LIB README.md
+%doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
 
 %files devel
