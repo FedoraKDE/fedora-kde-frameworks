@@ -2,7 +2,7 @@
 
 Name:           kf5-kdoctools
 Version:        5.0.0
-Release:        0.1.%{snapshot}git
+Release:        0.2.%{snapshot}git
 Summary:        KDE Frameworks tier 2 addon for documentation
 
 License:        GPLv2+
@@ -20,6 +20,8 @@ BuildRequires:  docbook-style-xsl
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-karchive-devel
+
+Requires:       docbook-dtds
 
 
 %description
@@ -70,5 +72,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
+* Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com>
+- add docbook-dtds to Requries, needed for meinproc to actually work
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
