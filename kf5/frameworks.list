@@ -38,7 +38,6 @@ kconfigwidgets
 kdeclarative
 kded
 kdewebkit
-kemoticons
 kiconthemes
 kinit
 kio
@@ -49,3 +48,4 @@ kservice
 ktextwidgets
 kunitconversion
 kxmlgui
+kemoticons
