@@ -15,7 +15,7 @@
   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
-  XDG_DATA_DIRS="%{_kf5_datadir}:$XDG_DATA_DIRS"; \
+  XDG_DATA_DIRS="%{_kf5_datadir}:$XDG_DATA_DIRS"; export XDG_DATA_DIRS ; \
   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
   %{__cmake} \\\
     -DBUILD_SHARED_LIBS:BOOL=ON \\\
