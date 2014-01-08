@@ -13,10 +13,12 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  attica-qt5-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
+BuildRequires:  qt5-qttools-static
 
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kitemviews-devel
@@ -31,9 +33,20 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kbookmarks-devel
-BuildRequires:  kf5-kdoctool-devel
+BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-karchive-devel
+BuildRequires:  kf5-kjobwidgets-devel
+BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-knotifications-devel
 
 %description
 KDE Frameworks tier 3 solution for application scripting
@@ -69,7 +82,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
+%{_kf5_bindir}/kf5kross
+%{_kf5_libdir}/plugins/*
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/man/*
 
 %files devel
 %doc
@@ -79,5 +95,5 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Sat Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
+* Sat Jan 4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
