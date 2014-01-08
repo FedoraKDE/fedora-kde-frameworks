@@ -13,8 +13,13 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  attica-qt5-devel
 BuildRequires:  extra-cmake-modules
+BuildRequires:  libxml2-devel
+BuildRequires:  libxslt-devel
+BuildRequires:  zlib-devel
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtscript-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kguiaddons-devel
@@ -35,7 +40,12 @@ BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kbookmarks-devel
 BuildRequires:  kf5-knotifications-devel
-
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kglobalaccel-devel
 
 %description
 KDE Frameworks tier 3 solution for filesystem abstraction
