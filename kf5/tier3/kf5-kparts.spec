@@ -13,6 +13,7 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  attica-qt5-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
@@ -30,7 +31,15 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-knotifications-devel
-
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kjobwidgets-devel
 
 %description
 KDE Frameworks tier 3 solution for KParts
