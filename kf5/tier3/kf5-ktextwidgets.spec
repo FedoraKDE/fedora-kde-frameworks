@@ -24,7 +24,13 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
-
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kdbusaddons-devel
 
 %description
 KDE Frameworks tier 3 addon with text widgets
