@@ -2,7 +2,7 @@
 
 version="5.0.0"
 snapshot="20140104"
-destdir=${HOME}/rpmbuild/SOURCES
+destdir=`rpm --eval="%_sourcedir"`
 
 frameworks=`grep -v '^#' < frameworks.list`
 
