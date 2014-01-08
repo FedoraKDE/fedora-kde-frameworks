@@ -32,6 +32,7 @@ knotifications
 kwallet-framework
 
 # Tier 3
+kpty
 kbookmarks
 kcmutils
 kconfigwidgets
