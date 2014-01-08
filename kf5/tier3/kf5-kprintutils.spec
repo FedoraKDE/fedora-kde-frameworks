@@ -14,6 +14,7 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
+BuildRequires:  attica-qt5-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
@@ -30,7 +31,17 @@ BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kxmlgui-devel
-
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-kjobwidgets-devel
+BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-knotifications-devel
 
 %description
 KDE Frameworks tier 3 addon with utilities fo printing
@@ -65,7 +76,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files
-%doc COPYING.LIB README.md AUTHORS
+%doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
 
 %files devel
