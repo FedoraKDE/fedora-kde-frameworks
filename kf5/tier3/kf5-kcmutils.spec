@@ -16,12 +16,26 @@ Source0:        %{name}-%{snapshot}.tar.gz
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  attica-qt5-devel
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be
@@ -71,3 +85,4 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %changelog
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
+
