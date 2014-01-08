@@ -18,6 +18,7 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kjs-devel
 
 
 %description
