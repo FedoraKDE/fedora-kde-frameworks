@@ -20,6 +20,12 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
 
 %description
 KDE Frameworks tier 3 integration module for icon themes
