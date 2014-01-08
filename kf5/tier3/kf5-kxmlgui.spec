@@ -29,6 +29,15 @@ BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-sonnet-devel
 
 
 %description
