@@ -13,6 +13,7 @@ URL:            http://www.kde.org
 # gzip -c > %{name}-framework-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  attica-qt5-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kconfigwidgets-devel
