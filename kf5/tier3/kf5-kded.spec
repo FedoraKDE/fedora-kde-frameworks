@@ -23,6 +23,9 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kinit-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-karchive-devel
 
 %description
 KDED stands for KDE Daemon which isn't very descriptive.
