@@ -24,6 +24,8 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
 
 %description
 Framework Integration is a set of plugins responsible for better integration of
@@ -69,7 +71,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5TextWidgets
+%{_kf5_libdir}/cmake/KF5FrameworkIntegration
 
 
 %changelog

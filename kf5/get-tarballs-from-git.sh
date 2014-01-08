@@ -1,7 +1,7 @@
 #!/bin/sh
 
 version="5.0.0"
-snapshot="20140104"
+snapshot="20140108"
 destdir=`rpm --eval="%_sourcedir"`
 
 frameworks=`grep -v '^#' < frameworks.list`
