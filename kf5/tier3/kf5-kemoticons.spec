@@ -21,7 +21,8 @@ BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kservice-devel
-
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kconfig-devel
 
 %description
 KDE Frameworks tier 3 module for emoticons support
@@ -58,6 +59,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/plugins/kf5/*.so
+%{_kf5_datadir}/kde5/services/*
+%{_kf5_datadir}/kde5/servicetypes/*
 
 %files devel
 %doc
@@ -67,5 +71,5 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Sat Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
+* Mon Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
