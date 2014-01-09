@@ -1,4 +1,4 @@
-%define snapshot  20140104
+%define snapshot  20140109
 
 Name:           kf5-kmediaplayer
 Version:        5.0.0
@@ -15,7 +15,13 @@ Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kservice-devel
@@ -24,11 +30,19 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kglobalaccel-devel
 BuildRequires:  kf5-kbookmarks-devel
 BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-kxmlgui-devel
+
+BuildRequires:  attica-qt5-devel
 
 
 %description
@@ -66,14 +80,16 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc LICENSE README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_datadir}/kde5/servicetypes/*.desktop
 
 %files devel
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5MediaPlayer
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 
 %changelog
-* Sat Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
+* Mon Jan  6 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
