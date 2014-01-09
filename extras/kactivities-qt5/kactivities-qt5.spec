@@ -13,9 +13,18 @@ URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
 # gzip -c > ${name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
+BuildRequires:  boost-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
+BuildRequires:  qt5-qtdeclarative-devel
+# FIXME: Why do I need to isntall all backends when depending on QtSql?
+BuildRequires:  qt5-qtbase-ibase
+BuildRequires:  qt5-qtbase-odbc
+BuildRequires:  qt5-qtbase-mysql
+BuildRequires:  qt5-qtbase-postgresql
+BuildRequires:  qt5-qtbase-tds
 
 BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-kconfig-devel
@@ -26,7 +35,6 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kservice-devel
-
 
 %description
 API for using and interacting with Activities as a consumer,
