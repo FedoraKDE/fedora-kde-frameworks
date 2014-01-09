@@ -26,6 +26,15 @@ BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kdbusaddons-devel
 
 %description
 Framework Integration is a set of plugins responsible for better integration of
