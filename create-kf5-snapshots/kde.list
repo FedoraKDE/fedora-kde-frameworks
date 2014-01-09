@@ -1,0 +1,14 @@
+cmake-git
+extra-cmake-modules
+attica
+libstreams
+libstreamanalyzer
+plasma-framework
+kde-kactivities
+kde-runtime
+kde-workspace
+kate
+konsole
+phonon
+phonon-vlc
+phonon-gstreamer
