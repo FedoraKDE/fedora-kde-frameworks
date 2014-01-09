@@ -1,4 +1,4 @@
-Global dependencies
+## Global dependencies
 kf5-filesystem
 extra-cmake-modules
 attica-qt5
@@ -6,7 +6,7 @@ dbusmenu-qt5
 kactivities-qt5
 kf5-umbrella
 
-TIER 1
+## TIER 1
 kf5-karchive
 kf5-kcodecs
 kf5-kconfig
@@ -26,7 +26,7 @@ kf5-solid
 kf5-sonnet
 kf5-threadweaver
 
-TIER 2
+## TIER 2
 kf5-kauth
 kf5-kcompletion
 kf5-kcrash
@@ -37,7 +37,7 @@ kf5-kjobwidgets
 kf5-knotifications
 kf5-kwallet
 
-TIER 3 (order matters!)
+## TIER 3 (order matters!)
 kf5-kconfigwidgets
 kf5-kiconthemes
 kf5-kservice
@@ -63,5 +63,9 @@ kf5-knewstuff
 kf5-kemoticons
 kf5-kmediaplayer
 
-TIER 4
-kf5-khtml
+## TIER 4
+frameworkintegration
+#apidox
+kde4support
+kfileaudiopreview
+khtml

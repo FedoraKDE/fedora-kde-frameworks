@@ -6,3 +6,7 @@
 - pass %{_kf5_plugindir} to cmake
 - fix licenses (should be mostly LGPLv2+ instead of GPLV2+)
 - move DBus interfaces (dbus-1/interfaces/*.xml) to -devel subpackages
+- missing %{?dist} in Release
+- missing versions in %changelog
+- broken comments above Source0
+- disable building tests
