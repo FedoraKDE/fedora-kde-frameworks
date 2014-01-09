@@ -55,6 +55,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files devel
 %doc
 %{_kf5_includedir}/ThreadWeaver/
+%{_kf5_includedir}/threadweaver_version.h
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5ThreadWeaver
 
