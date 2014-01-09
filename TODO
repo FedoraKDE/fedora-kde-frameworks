@@ -9,3 +9,4 @@
 - missing %{?dist} in Release
 - missing versions in %changelog
 - broken comments above Source0
+- disable building tests
