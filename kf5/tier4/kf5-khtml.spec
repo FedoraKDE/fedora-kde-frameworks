@@ -1,13 +1,13 @@
-%define snapshot git010814171303
+%define snapshot 20140109
+
 Name:           kf5-khtml
 Version:        5.0.0
-Release:        0.1.%{snapshot}%{?dist}
+Release:        0.1.%{snapshot}git
 Summary:        KDE Core Libraries
 
 License:        GPLv3 
 URL:            http://www.kde.org
-#kf5-khtml-git010814171303.tar.bz2
-Source0:        %{name}-%{snapshot}.tar.bz2
+Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  attica-qt5-devel >= 1.0.0
 BuildRequires:  cmake >= 2.8.12
@@ -66,7 +66,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{name}-%{snapshot}
+%setup -q -n %{name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -104,4 +104,3 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 * Thu Jan 09 2014 Siddharth Sharma <siddharths@fedoraproject.org> - kf5-html- 5.0.0-0.1.git010814171303
 - Initial Release
- 
