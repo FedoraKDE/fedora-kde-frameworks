@@ -1,4 +1,4 @@
-%define snapshot  20140104
+%define snapshot  20140109
 
 Name:           kf5-knotifyconfig
 Version:        5.0.0
@@ -18,20 +18,32 @@ BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
 
-BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires:  kf5-kglobalaccel-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  kf5-kjobwidgets-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-knotifications-devel
+
+BuildRequires:  attica-qt5-devel
 
 
 %description
