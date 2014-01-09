@@ -1,4 +1,4 @@
-%define snapshot  20140104
+%define snapshot  20140109
 
 Name:           kf5-kdesu
 Version:        5.0.0
@@ -14,9 +14,15 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  libX11-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kpty-devel
 
@@ -56,6 +62,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_libexecdir}/kdesu_stub
 
 %files devel
 %doc
