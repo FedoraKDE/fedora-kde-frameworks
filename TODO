@@ -1,0 +1,8 @@
+ TODO
+=========
+
+- "update" version (should be 4.9.95)
+- drop epoch from ECM
+- pass %{_kf5_plugindir} to cmake
+- fix licenses (should be mostly LGPLv2+ instead of GPLV2+)
+- move DBus interfaces (dbus-1/interfaces/*.xml) to -devel subpackages
