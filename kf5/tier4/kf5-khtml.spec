@@ -1,5 +1,4 @@
 %define snapshot git010814171303
-
 Name:           kf5-khtml
 Version:        5.0.0
 Release:        0.1.%{snapshot}%{?dist}
@@ -7,7 +6,7 @@ Summary:        KDE Core Libraries
 
 License:        GPLv3 
 URL:            http://www.kde.org
-
+#kf5-khtml-git010814171303.tar.bz2
 Source0:        %{name}-%{snapshot}.tar.bz2
 
 BuildRequires:  attica-qt5-devel >= 1.0.0
@@ -45,29 +44,14 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-sonnet-devel
+BuildRequires:  libjpeg-devel
+BuildRequires:  openssl-devel
 BuildRequires:  perl
+BuildRequires:  libpng-devel
 BuildRequires:  phonon-qt5-devel
-BuildRequires:  pkgconfig(Qt5Core) >= 5.2.0
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  zlib-devel
-
-Requires:       extra-cmake-modules >= 0.0.9
-Requires:       kf5-karchive-devel
-Requires:       kf5-kbookmarks-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kglobalaccel-devel
-Requires:       kf5-ki18n-devel
-Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kio-devel
-Requires:       kf5-kjs-devel
-Requires:       kf5-knotifications-devel
-Requires:       kf5-kparts-devel
-Requires:       kf5-kwallet-devel
-Requires:       kf5-kwidgetsaddons-devel
-Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-sonnet-devel
-Requires:       libKF5KHtml5 = %{version}
-Requires:       pkgconfig(Qt5Core) >= 5.2.0
-
 
 %description
 Kf5-kthml contains the core libraries of K Desktop Environment
@@ -83,7 +67,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}-%{snapshot}
-
 
 %build
 mkdir -p %{_target_platform}
@@ -103,6 +86,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.GPL3 COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/plugins/kf5/*.so
 %{_kf5_datadir}/kjava/
 %{_kf5_datadir}/khtml/
 %{_kf5_datadir}/kde5/services/*.desktop
@@ -110,7 +94,6 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %doc
-%{_kf5_libdir}/plugins/kf5/*.so
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5KHtml/*.cmake
 %{_kf5_includedir}/KHtml/
