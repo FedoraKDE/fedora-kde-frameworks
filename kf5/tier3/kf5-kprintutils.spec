@@ -3,7 +3,7 @@
 Name:           kf5-kprintutils
 Version:        5.0.0
 Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 addon with utilities fo printing
+Summary:        KDE Frameworks tier 3 addon with utilities for printing
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -44,7 +44,7 @@ BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-knotifications-devel
 
 %description
-KDE Frameworks tier 3 addon with utilities fo printing
+KDE Frameworks tier 3 addon with utilities for printing
 
 
 %package        devel

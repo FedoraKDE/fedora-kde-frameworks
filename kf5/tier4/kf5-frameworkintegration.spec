@@ -78,13 +78,16 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kf5/infopage/*
+# FIXME check the plugin dirs!!!
+%{_kf5_libdir}/plugins/kf5/*
+%{_kf5_libdir}/plugins/platformthemes/*
 
 %files devel
 %doc
 %{_kf5_includedir}/*
 %{_kf5_libdir}/*.so
-%{_kf5_libdir}/cmake/KF5FrameworkIntegration
+%{_kf5_libdir}/cmake/KF5Style
 
 
 %changelog
