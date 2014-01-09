@@ -13,6 +13,7 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
+BuildRequires:  attica-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -35,6 +36,9 @@ BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kjobwidgets-devel
+BuildRequires:  kf5-solid-devel
 
 %description
 Framework Integration is a set of plugins responsible for better integration of
