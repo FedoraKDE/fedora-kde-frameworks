@@ -29,6 +29,12 @@ BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtscript-devel
+# FIXME: Why do I need to isntall all backends when depending on QtSql?
+BuildRequires:  qt5-qtbase-ibase
+BuildRequires:  qt5-qtbase-odbc
+BuildRequires:  qt5-qtbase-mysql
+BuildRequires:  qt5-qtbase-postgresql
+BuildRequires:  qt5-qtbase-tds
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-umbrella
@@ -69,7 +75,7 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kdnssd-devel
 
 BuildRequires:  attica-qt5-devel
-BuildRequires:  kactivities-qt5
+BuildRequires:  kactivities-qt5-devel
 
 
 %description
