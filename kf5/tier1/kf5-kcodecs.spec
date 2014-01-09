@@ -1,23 +1,19 @@
-%define snapshot  20140104
+%define framework kcodecs
 
-Name:           kf5-kcodecs
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 1 addon with string manipulation methods
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 1 addon with string manipulation methods
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 %description
-KDE Frameworks tier 1 addon with string manipulation methods
+KDE Frameworks 5 Tier 1 addon with string manipulation methods
 
 
 %package        devel
@@ -30,8 +26,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -51,15 +46,18 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5Codecs.so.*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kcodecs_version.h
+%{_kf5_includedir}/KCodecs
+%{_kf5_libdir}/libKF5Codecs.so
 %{_kf5_libdir}/cmake/KF5Codecs
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

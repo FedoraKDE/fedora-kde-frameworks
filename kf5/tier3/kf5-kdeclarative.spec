@@ -1,23 +1,21 @@
-%define snapshot  20140104
+%define framework kdeclarative
 
-Name:           kf5-kdeclarative
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 addon for Qt declarative
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  attica-qt5-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtscript-devel
+
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kiconthemes-devel
@@ -44,7 +42,7 @@ BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
 
 %description
-KDE Frameworks tier 3 addon for Qt declarative
+KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 
 %package        devel
@@ -56,8 +54,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -77,15 +74,19 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5Declarative.so.*
 
 %files devel
 %doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kdeclarative_version.h
+%{_kf5_includedir}/KDeclarative
+%{_kf5_libdir}/libKF5Declarative.so
 %{_kf5_libdir}/cmake/KF5Declarative
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

@@ -1,28 +1,25 @@
-%define snapshot  20140104
+%define framework sonnet
 
-Name:           kf5-sonnet
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 1 solution for spell checking
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
 License:        GPLv2+
 URL:            http://www.kde.org
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
-
-BuildRequires:  extra-cmake-modules
-BuildRequires:  qt5-qtbase-devel
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
 
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+
+Requires:       kf5-sonnet-core
+Requires:       kf5-sonnet-ui
+
 %description
-Solid provides the following features for application developers:
- - Hardware Discovery
- - Power Management
- - Network Management
+KDE Frameworks 5 Tier 1 solution for spell checking
 
 
 %package        devel
@@ -34,11 +31,21 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 
-# TODO: Split to core, ui, plugins and unicode
+%package        core
+Summary:        Non-gui part of the Sonnet framework
+
+%description    core
+Non-gui part of the Sonnet framework provides low-level spell checking tools
+
+%package        ui
+Summary:        GUI part of the Sonnet framework
+
+%description    ui
+GUI part of the Sonnet framework provides widgets with spell checking support.
+
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -55,18 +62,26 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %postun -p /sbin/ldconfig
 
-
 %files
-%doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%doc COPYING.lib README.md
+
+%files core
+%{_kf5_libdir}/libKF5SonnetCore.so.*
+
+%files ui
+%{_kf5_libdir}/libKF5SonnetUi.so.*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/sonnet_version.h
+%{_kf5_includedir}/sonnet
+%{_kf5_libdir}/libKF5Sonnet{Core,Ui}.so
 %{_kf5_libdir}/cmake/KF5Sonnet
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+- split to -core and -ui subpackages
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

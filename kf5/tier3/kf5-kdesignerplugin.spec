@@ -1,17 +1,15 @@
-%define snapshot  20140109
+%define framework kdesignerplugin
 
-Name:           kf5-kdesignerplugin
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 integration module for QtDesigner
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 integration module for QtDesigner
 
 License:        GPLv2+
 URL:            http://www.kde.org
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -24,7 +22,6 @@ BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  attica-qt5-devel
 
 # optional requirements
 BuildRequires:  kf5-kguiaddons-devel
@@ -52,10 +49,8 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kjobwidgets-devel
 
 
-
 %description
-KDE Frameworks tier 3 integration module for QtDesigner
-
+KDE Frameworks 5 Tier 3 integration module for QtDesigner
 
 %package        devel
 Summary:        Development files for %{name}
@@ -66,8 +61,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -93,10 +87,12 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kf5widgets/*
 
 %files devel
-%doc
 %{_kf5_libdir}/cmake/KF5DesignerPlugin
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

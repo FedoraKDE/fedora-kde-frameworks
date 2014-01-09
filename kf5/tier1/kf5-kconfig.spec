@@ -1,17 +1,13 @@
-%define snapshot  20140104
+%define framework kconfig
 
-Name:           kf5-kconfig
-Version:        5.0.0
-Release:        0.2.%{snapshot}git
-Summary:        KDE Frameworks tier 1 addon with advanced configuration system
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1
+Summary:        KDE Frameworks 5 Tier 1 addon with advanced configuration system
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -20,7 +16,7 @@ Requires:       kf5-kconfig-core
 Requires:       kf5-kconfig-gui
 
 %description
-KDE Frameworks tier 1 addon with advanced configuration system made of two parts:
+KDE Frameworks 5 Tier 1 addon with advanced configuration system made of two parts:
 KConfigCore and KConfigGui.
 
 
@@ -45,6 +41,7 @@ KConfigCore provides access to the configuration files themselves. It features:
 
 %package        gui
 Summary:        GUI part of KConfig framework
+Requires:       kf5-kconfig-gui
 
 %description    gui
 KConfigGui provides a way to hook widgets to the configuration so that they are
@@ -52,8 +49,7 @@ automatically initialized from the configuration and automatically propagate
 their changes to their respective configuration files.
 
 %prep
-%setup -q
-
+%setup -q %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -75,21 +71,22 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB DESIGN README.md TODO
 
 %files core
-%doc
-%{_kf5_libexecdir}/*
-%{_kf5_bindir}/*
+%{_kf5_libexecdir}/kconfig_compiler
+%{_kf5_bindir}/kconf_update
 %{_kf5_libdir}/libKF5ConfigCore.so.*
 
 %files gui
-%doc
 %{_kf5_libdir}/libKF5ConfigGui.so.*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kconfig_version.h
+%{_kf5_includedir}/KConfig{Core,Gui}/
+%{_kf5_libdir}/libKF5Config{Core,Gui}.so
 %{_kf5_libdir}/cmake/KF5Config
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

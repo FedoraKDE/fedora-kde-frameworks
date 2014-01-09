@@ -1,20 +1,19 @@
-%define snapshot  20140104
+%define framework kcmutils
 
-Name:           kf5-kcmutils
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 addon for interacting with KCModules
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 addon for interacting with KCModules
 
 License:        GPLv2+
 URL:            http://www.kde.org
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kauth-devel
 BuildRequires:  kf5-kcodecs-devel
@@ -35,7 +34,6 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  attica-qt5-devel
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be
@@ -51,8 +49,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -72,17 +69,20 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5KCMUtils.so.*
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kcmutils_version.h
+%{_kf5_includedir}/KCMUtils
+%{_kf5_libdir}/libKF5KCMUtils.so
 %{_kf5_libdir}/cmake/KF5KCMUtils
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
 

@@ -1,27 +1,24 @@
-%define snapshot  20140104
+%define framework kdnssd
 
-Name:           kf5-kdnssd
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 2 integration module for DNS-SD services (Zeroconf)
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 2 integration module for DNS-SD services (Zeroconf)
 
 License:        GPLv2+
 URL:            http://www.kde.org
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-framework-%{snapshot}.tar.gz
+BuildRequires:  avahi-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  avahi-devel
 
 Requires:       nss-mdns
 
 
 %description
-KDE Frameworks tier 2 integration module for DNS-SD services (Zeroconf)
+KDE Frameworks 5 Tier 2 integration module for DNS-SD services (Zeroconf)
 
 %package        devel
 Summary:        Development files for %{name}
@@ -32,8 +29,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -qn %{name}-"framework"-%{version}
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -53,15 +49,18 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5DNSSD.so.*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kdnssd_version.h
+%{_kf5_includedir}/KDNSSD
+%{_kf5_libdir}/libKF5DNSSD.so
 %{_kf5_libdir}/cmake/KF5DNSSD
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

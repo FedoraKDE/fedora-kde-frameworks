@@ -1,17 +1,13 @@
-%define snapshot  20140104
+%define framework kcoreaddons
 
-Name:           kf5-kcoreaddons
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 1 addon with various classes on top of QtCore
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtCore
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://downloads.kde.org/unstable/frameworks/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -32,8 +28,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -53,15 +48,18 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5CoreAddons.so.*
 %{_kf5_datadir}/mime/packages/kde5.xml
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kcoreaddons_version.h
+%{_kf5_includedir}/KCoreAddons/
+%{_kf5_libdir}/libKF5CoreAddons.so
 %{_kf5_libdir}/cmake/KF5CoreAddons
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

@@ -1,19 +1,28 @@
-%define snapshot 20140109
+%define framework khtml
 
-Name:           kf5-khtml
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Core Libraries
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 4 solution with KHTML engine
 
 License:        GPLv3 
 URL:            http://www.kde.org
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-BuildRequires:  attica-qt5-devel >= 1.0.0
-BuildRequires:  cmake >= 2.8.12
-BuildRequires:  extra-cmake-modules >= 0.0.9
 BuildRequires:  fdupes
 BuildRequires:  giflib-devel
+BuildRequires:  libjpeg-devel
+BuildRequires:  openssl-devel
+BuildRequires:  perl
+BuildRequires:  libpng-devel
+BuildRequires:  zlib-devel
+BuildRequires:  attica-qt5-devel
+
+BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  phonon-qt5-devel
+
 BuildRequires:  kf5-filesystem
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kauth-devel
@@ -44,18 +53,10 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-sonnet-devel
-BuildRequires:  libjpeg-devel
-BuildRequires:  openssl-devel
-BuildRequires:  perl
-BuildRequires:  libpng-devel
-BuildRequires:  phonon-qt5-devel
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  zlib-devel
 
 %description
-Kf5-kthml contains the core libraries of K Desktop Environment
-It is mandatory package for KDE Applications.
+KHTML is a web rendering engine, based on the KParts technology and using KJS
+for JavaScript support.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -66,7 +67,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -85,7 +86,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.GPL3 COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5KHtml.so.*
 %{_kf5_libdir}/plugins/kf5/*.so
 %{_kf5_datadir}/kjava/
 %{_kf5_datadir}/khtml/
@@ -94,13 +95,17 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %doc
-%{_kf5_libdir}/*.so
+%{_kf5_libdir}/libKF5KHtml.so
 %{_kf5_libdir}/cmake/KF5KHtml/*.cmake
 %{_kf5_includedir}/KHtml/
-%{_kf5_includedir}/*.h
+%{_kf5_includedir}/khtml_version.h
 %{_kf5_datadir}/dbus-1/interfaces/org.kde.KHtmlPart.xml
 
 %changelog
 
-* Thu Jan 09 2014 Siddharth Sharma <siddharths@fedoraproject.org> - kf5-html- 5.0.0-0.1.git010814171303
+%changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
+* Thu Jan 09 2014 Siddharth Sharma <siddharths@fedoraproject.org>
 - Initial Release

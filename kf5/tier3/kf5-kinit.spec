@@ -1,21 +1,19 @@
-%define snapshot  20140104
+%define framework kinit
 
-Name:           kf5-kinit
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 solution for process launching
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-ki18n-devel
@@ -59,8 +57,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -81,15 +78,17 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md README.autostart README.wrapper
 %{_kf5_bindir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_libdir}/libkdeinit5_klauncher.so
 %{_kf5_libexecdir}/*
-%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 %files devel
-%doc
 %{_kf5_libdir}/cmake/KF5Init
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

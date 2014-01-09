@@ -1,24 +1,22 @@
-%define snapshot  20140104
+%define framework kdoctools
 
-Name:           kf5-kdoctools
-Version:        5.0.0
-Release:        0.3.%{snapshot}git
-Summary:        KDE Frameworks tier 2 addon for documentation
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-karchive-devel
 
 Requires:       docbook-dtds
@@ -38,8 +36,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -61,17 +58,19 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/checkXML
 %{_kf5_bindir}/meinproc5
-%{_kf5_libdir}/libKF5XsltKde*
+%{_kf5_libdir}/libKF5XsltKde.a
 %{_kf5_datadir}/ksgmltools2/customization/*
 %{_kf5_datadir}/man/*
 
 
 %files devel
-%doc
 %{_kf5_includedir}/XsltKde/*
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com>
 - add docboox-style-xsl to Requires
 

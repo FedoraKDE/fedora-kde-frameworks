@@ -1,19 +1,13 @@
-%define snapshot 20140107
-
 Name:           extra-cmake-modules
 Version:        0.0.9
 Epoch:          1
-Release:        0.1.%{snapshot}
+Release:        1%{?dist}
 Summary:        Additional modules for CMake build system
 BuildArch:      noarch
 
 License:        BSD
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{version}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/4.95.0/%{name}-%{version}.tar.xz
 
 # https://git.reviewboard.kde.org/r/114888/
 Patch0:         ecm-fix-doubleslash-in-generated-headers.patch
@@ -53,12 +47,15 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com>
+* Thu Jan  9 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-1
+- Update to KDE Frameworks 5 TP1 (4.9.95)
+
+* Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-0.1.20140104git
 - Match version with upstream: 0.0.9 (ECM is not a framework, it does not follow the 5.x.x scheme)
 
-* Mon Jan  6 2014 Daniel Vrátil <dvraitl@redhat.com>
+* Mon Jan  6 2014 Daniel Vrátil <dvraitl@redhat.com> 5.0.0-0.2.201409104git
 - Include patch to prevent ECMGenerateHeaders from generating "//" in include paths
   (fixes build of solid and kdnssd frameworks)
 
-* Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
-- initial version
+* Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com> 5.0.0-0.1.201409104git
+- Initial version

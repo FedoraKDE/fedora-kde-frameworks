@@ -1,8 +1,8 @@
-%define snapshot 20140104
+%define framework filesystem
 
-Name:           kf5-filesystem
-Version:        5.0.0
-Release:        0.3.%{snapshot}
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 
@@ -24,6 +24,9 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 /opt/kf5
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com>
 - export XDG_DATA_DIRS
 

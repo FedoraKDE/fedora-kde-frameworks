@@ -1,17 +1,13 @@
-%define snapshot  20140109
+%define framework umbrella
 
-Name:           kf5-umbrella
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/kf5umbrella.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/kf5umbrella-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -21,8 +17,7 @@ Provides CMake configuration file for KDE Frameworks 5
 
 
 %prep
-%setup -q
-
+%setup -q -n kf5umbrella-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -41,6 +36,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Thu Jan  9 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
 

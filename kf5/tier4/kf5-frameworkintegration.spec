@@ -1,20 +1,19 @@
-%define snapshot  20140108
+%define framework frameworkintegration
 
-Name:           kf5-frameworkintegration
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 4 addon with framework integration
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 4 addon with framework integration
 License:        LGPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
-BuildRequires:  attica-qt5-devel
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-ki18n-devel
@@ -56,8 +55,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -77,19 +75,22 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5Style.so.*
 %{_kf5_datadir}/kf5/infopage/*
 # FIXME check the plugin dirs!!!
-%{_kf5_libdir}/plugins/kf5/*
-%{_kf5_libdir}/plugins/platformthemes/*
+%{_kf5_libdir}/plugins/kf5/FrameworkIntegrationPlugin.so
+%{_kf5_libdir}/plugins/platformthemes/KDEPlatformTheme.so
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kstyle_version.h
+%{_kf5_includedir}/KStyle
+%{_kf5_libdir}/libKF5Style.so
 %{_kf5_libdir}/cmake/KF5Style
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.9.95)
+
 * Wed Jan 8 2014 Lukáš Tinkl <ltinkl@redhat.com>
 - initial version

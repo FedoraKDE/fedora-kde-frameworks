@@ -1,17 +1,13 @@
-%define snapshot  20140109
+%define framework kdesu
 
-Name:           kf5-kdesu
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 module for su integration
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 module for su integration
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 
@@ -28,7 +24,7 @@ BuildRequires:  kf5-kpty-devel
 
 
 %description
-KDE Frameworks tier 3 module for su integration
+KDE Frameworks 5 Tier 3 module for su integration
 
 
 %package        devel
@@ -40,8 +36,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -61,16 +56,20 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5Su.so.*
 %{_kf5_libexecdir}/kdesu_stub
 
 %files devel
 %doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kdesu_version.h
+%{_kf5_includedir}KDESu
+%{_kf5_libdir}/libKF5Su.so
 %{_kf5_libdir}/cmake/KF5Su
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

@@ -1,19 +1,16 @@
-%define snapshot  20140104
+%define framework kross
 
-Name:           kf5-kross
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 3 solution for application scripting
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 solution for application scripting
 
 License:        LGPL2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  attica-qt5-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -48,8 +45,11 @@ BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-knotifications-devel
 
+Requires:       kf5-kross-core
+Requires:       kf5-kross-ui
+
 %description
-KDE Frameworks tier 3 solution for application scripting
+KDE Frameworks 5 Tier 3 solution for application scripting
 
 
 %package        devel
@@ -60,9 +60,27 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%prep
-%setup -q
+%package        core
+Summary:        Non-gui part of the Kross framework
 
+%description    core
+Non-gui part of the Kross framework.
+
+%package        ui
+Summary:        Gui part of the Kross framework
+Requires:       kf5-kross-core
+
+%description    ui
+Gui part of the Kross framework.
+
+%package        doc
+Summary:        Documentation and user manuals for the Kross framework
+
+%description    doc
+Documentation and user manuals for the Kross framework
+
+%prep
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -80,20 +98,30 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 
-%files
-%doc COPYING.LIB README.md
+%files core
 %{_kf5_bindir}/kf5kross
-%{_kf5_libdir}/plugins/*
-%{_kf5_libdir}/*.so.*
+%{_kf5_libdir}/libKF5KrossCore.so
+%{_kf5_libdir}/plugins/krossqts.so
+%{_kf5_libdir}/plugins/scripts/libkrossqtsplugin.so.*
+
+%files ui
+%{_kf5_libdir}/libKF5KrossUi.so
+
+%files doc
+%doc COPYING.LIB README.md
 %{_kf5_datadir}/man/*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kross_version.h
+%{_kf5_includedir}/Kross
+%{_kf5_libdir}/libKF5Kross*.so
+%{_kf6_libdir}/plugins/scripts/libkrossqtsplugin.so
 %{_kf5_libdir}/cmake/KF5Kross
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan 4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

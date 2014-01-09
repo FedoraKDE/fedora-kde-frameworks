@@ -1,25 +1,22 @@
-%define snapshot  20140104
+%define framework kwallet
 
-Name:           kf5-kwallet
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
-Summary:        KDE Frameworks tier 2 solution for password management
+Name:           kf5-%{framework}
+Version:        4.95.0
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 Tier 2 solution for password management
 
 License:        GPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}-framework.git master | \
-# gzip -c > %{name}-framework-%{snapshot}.tar.gz
-Source0:        %{name}-framework-%{snapshot}.tar.gz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 %description
-KDE Frameworks tier 2 solution for password management
+KDE Frameworks 5 Tier 2 solution for password management
 
 %package        devel
 Summary:        Development files for %{name}
@@ -30,8 +27,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{name}-framework-%{version}
-
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -51,16 +47,19 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/*.so.*
-%{_kf5_datadir}/dbus-1/interfaces/*
+%{_kf5_libdir}/libKF5Wallet.so.*
 
 %files devel
-%doc
-%{_kf5_includedir}/*
-%{_kf5_libdir}/*.so
+%{_kf5_includedir}/kwallet_version.h
+%{_kf5_includedir}/KWallet
+%{_kf5_libdir}/libKF5Wallet.so
 %{_kf5_libdir}/cmake/KF5Wallet
+%{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 
 %changelog
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+- Update to KDE Frameworks 5 TP1 (4.95.0)
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
