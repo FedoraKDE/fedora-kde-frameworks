@@ -64,8 +64,8 @@ kf5-kemoticons
 kf5-kmediaplayer
 
 ## TIER 4
-frameworkintegration
-#apidox
-kde4support
-kfileaudiopreview
-khtml
+kf5-frameworkintegration
+#kf5-apidox
+kf5-kde4support
+kf5-kfileaudiopreview
+kf5-khtml
