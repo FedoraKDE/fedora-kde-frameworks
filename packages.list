@@ -1,6 +1,10 @@
 Global dependencies
 kf5-filesystem
 extra-cmake-modules
+attica-qt5
+dbusmenu-qt5
+kactivities-qt5
+kf5-umbrella
 
 TIER 1
 kf5-karchive
@@ -50,8 +54,11 @@ kf5-kded
 kf5-kjsembed
 kf5-kprintutils
 kf5-kunitconversion
-kf5-kdesignerplugins
+kf5-kdesignerplugin
 kf5-kdesu
 kf5-knotifyconfig
 kf5-kpty
 kf5-kross
+kf5-knewstuff
+
+
