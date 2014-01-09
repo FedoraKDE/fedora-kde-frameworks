@@ -1,8 +1,8 @@
-%define snapshot  20140104
+%define snapshot  20140109
 
 Name:           kf5-threadweaver
 Version:        5.0.0
-Release:        0.1.%{snapshot}git
+Release:        0.2.%{snapshot}git
 Summary:        KDE Frameworks tier 1 addon for advanced thread management
 
 License:        GPLv2+
@@ -54,7 +54,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %doc
-%{_kf5_includedir}/*
+%{_kf5_includedir}/ThreadWeaver/
 %{_kf5_libdir}/*.so
 %{_kf5_libdir}/cmake/KF5ThreadWeaver
 
