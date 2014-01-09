@@ -10,3 +10,4 @@
 - missing versions in %changelog
 - broken comments above Source0
 - disable building tests
+- set PYTHONPATH for plasma2 so that we find our Python stuff
