@@ -14,6 +14,7 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{snapshot}.tar.gz
 
 BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 
 %description
 Provides CMake configuration file for KDE Frameworks 5
