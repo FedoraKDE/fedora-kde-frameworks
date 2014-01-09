@@ -1,4 +1,4 @@
-%define snapshot  20140104
+%define snapshot  20140109
 
 Name:           kf5-kemoticons
 Version:        5.0.0
@@ -18,11 +18,11 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-karchive-devel
-BuildRequires:  kf5-kservice-devel
-BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kservice-devel
 
 %description
 KDE Frameworks tier 3 module for emoticons support
