@@ -49,7 +49,7 @@ automatically initialized from the configuration and automatically propagate
 their changes to their respective configuration files.
 
 %prep
-%setup -q %{framework}-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -71,8 +71,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB DESIGN README.md TODO
 
 %files core
-%{_kf5_libexecdir}/kconfig_compiler
-%{_kf5_bindir}/kconf_update
+%{_kf5_libexecdir}/kconf_update
+%{_kf5_bindir}/kconfig_compiler
 %{_kf5_libdir}/libKF5ConfigCore.so.*
 
 %files gui
@@ -80,8 +80,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %{_kf5_includedir}/kconfig_version.h
-%{_kf5_includedir}/KConfig{Core,Gui}/
-%{_kf5_libdir}/libKF5Config{Core,Gui}.so
+%{_kf5_includedir}/KConfigCore
+%{_kf5_includedir}/KConfigGui
+%{_kf5_libdir}/libKF5ConfigCore.so
+%{_kf5_libdir}/libKF5ConfigGui.so
 %{_kf5_libdir}/cmake/KF5Config
 
 %changelog
