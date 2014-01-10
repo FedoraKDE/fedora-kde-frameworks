@@ -7,7 +7,7 @@ Summary:        KDE Frameworks 5 Tier 1 addon with item views
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{name}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
