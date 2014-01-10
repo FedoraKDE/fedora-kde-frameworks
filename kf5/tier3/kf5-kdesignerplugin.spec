@@ -83,7 +83,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kgendesignerplugin
 %{_kf5_mandir}/man1/kgendesignerplugin.1
-%{_kf5_libdir}/plugins/designer/*.so
+%{_kf5_qtplugindir}/designer/*.so
 %{_kf5_datadir}/kf5widgets/*
 
 %files devel

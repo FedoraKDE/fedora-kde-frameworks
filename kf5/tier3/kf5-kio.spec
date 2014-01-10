@@ -91,7 +91,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/*.so.*
 %{_kf5_bindir}/*
 %{_kf5_sysconfdir}/xdg/accept-languages.codes
-%{_kf5_libdir}/plugins/kf5/*.so
+%{_kf5_plugindir}/*.so
 %{_kf5_libexecdir}/*
 %{_kf5_datadir}/applications/kde5/*.desktop
 %{_kf5_datadir}/dbus-1/interfaces/*.xml

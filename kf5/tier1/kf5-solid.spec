@@ -33,7 +33,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-%{name}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}

@@ -52,11 +52,12 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_bindir}/kjs
 %{_kf5_libdir}/libKF5JS.so.*
 %{_kf5_libdir}/libKF5JSApi.so.*
-%{_kf5_datador}/kjs/create_hash_table
+%{_kf5_datadir}/kjs/create_hash_table
 
 %files devel
 %{_kf5_includedir}/kjs_version.h
-%{_kf5_includedir}/{kjs,wtf}
+%{_kf5_includedir}/kjs
+%{_kf5_includedir}/wtf
 %{_kf5_libdir}/libKF5JS.so
 %{_kf5_libdir}/libKF5JSApi.so
 %{_kf5_libdir}/cmake/KF5JS

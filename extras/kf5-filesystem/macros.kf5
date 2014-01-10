@@ -6,7 +6,8 @@
 %_kf5_includedir %{_kf5_prefix}/include
 %_kf5_libdir %{_kf5_prefix}/%{_lib}
 %_kf5_libexecdir %{_kf5_prefix}/libexec
-%_kf5_plugindir %{_kf5_libdir}/qt5/plugins
+%_kf5_plugindir %{_kf5_libdir}/kf5/
+%_kf5_qtplugindir %{_kf5_libdir}/qt5/plugins
 %_kf5_sysconfdir %{_kf5_prefix}/etc
 %_kf5_mandir %{_kf5_datadir}/man
 %cmake_kf5 \
@@ -31,5 +32,6 @@
     -DDATA_INSTALLL_DIR:PATH=%{_kf5_datadir} \\\
     -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir} \\\
     -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
+    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_kf5_qtplugindir} \\\
     -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir} \\\
     -DBUILD_TESTING:BOOL=FALSE

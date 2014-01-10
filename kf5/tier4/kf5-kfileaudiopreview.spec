@@ -66,8 +66,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-# FIXME check the plugin dirs!!!
-%{_kf5_libdir}/plugins/*
+%{_kf5_plugindir}/*.so
 
 
 %changelog

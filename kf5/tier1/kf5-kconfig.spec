@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.95.0
-Release:        1
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with advanced configuration system
 
 License:        GPLv2+
@@ -12,8 +12,8 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-Requires:       kf5-kconfig-core
-Requires:       kf5-kconfig-gui
+Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
+Requires:       kf5-kconfig-gui%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 1 addon with advanced configuration system made of two parts:
@@ -41,7 +41,7 @@ KConfigCore provides access to the configuration files themselves. It features:
 
 %package        gui
 Summary:        GUI part of KConfig framework
-Requires:       kf5-kconfig-gui
+Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
 
 %description    gui
 KConfigGui provides a way to hook widgets to the configuration so that they are

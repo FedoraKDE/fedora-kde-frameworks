@@ -87,8 +87,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kf5-config
 %{_kf5_libdir}/libKF5KDE4Support.so.*
-%{_kf5_libdir}/plugins/kf5/*.so
-%{_kf5_libdir}/plugins/designer/*.so
+%{_kf5_plugindir}/*.so
+%{_kf5_qtplugindir}/designer/*.so
 %{_kf5_libexecdir}/fileshareset
 %{_kf5_mandir}/man1/kf5-config.1
 %{_kf5_datadir}/kde5/services/*.protocol

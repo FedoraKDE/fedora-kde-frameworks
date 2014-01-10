@@ -15,8 +15,8 @@ BuildRequires:  systemd-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-Requires:       kf5-sonnet-core
-Requires:       kf5-sonnet-ui
+Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}
+Requires:       kf5-sonnet-ui%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 1 solution for spell checking
@@ -39,6 +39,7 @@ Non-gui part of the Sonnet framework provides low-level spell checking tools
 
 %package        ui
 Summary:        GUI part of the Sonnet framework
+Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}
 
 %description    ui
 GUI part of the Sonnet framework provides widgets with spell checking support.
@@ -58,15 +59,21 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+# For some unknown reason, kspell_aspell.so is not installed into /lib64/kf5/plugins/sonnet_clients,
+# but to /lib64/kf5/sonnet_clients.
+mv %{buildroot}/%{_kf5_plugindir}/sonnet_clients/kspell_aspell.so %{buildroot}/%{_kf5_plugindir}/plugins/sonnet_clients/
+rmdir %{buildroot}/%{_kf5_plugindir}/sonnet_clients
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING.lib README.md
+%doc COPYING.LIB README.md
 
 %files core
 %{_kf5_libdir}/libKF5SonnetCore.so.*
+%{_kf5_plugindir}/plugins/sonnet_clients
 
 %files ui
 %{_kf5_libdir}/libKF5SonnetUi.so.*
@@ -74,7 +81,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files devel
 %{_kf5_includedir}/sonnet_version.h
 %{_kf5_includedir}/sonnet
-%{_kf5_libdir}/libKF5Sonnet{Core,Ui}.so
+%{_kf5_libdir}/libKF5SonnetCore.so
+%{_kf5_libdir}/libKF5SonnetUi.so
 %{_kf5_libdir}/cmake/KF5Sonnet
 
 

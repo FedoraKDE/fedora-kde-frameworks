@@ -101,8 +101,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files core
 %{_kf5_bindir}/kf5kross
 %{_kf5_libdir}/libKF5KrossCore.so
-%{_kf5_libdir}/plugins/krossqts.so
-%{_kf5_libdir}/plugins/scripts/libkrossqtsplugin.so.*
+%{_kf5_qtplugindir}/krossqts.so
+%{_kf5_qtplugindir}/scripts/libkrossqtsplugin.so.*
 
 %files ui
 %{_kf5_libdir}/libKF5KrossUi.so
