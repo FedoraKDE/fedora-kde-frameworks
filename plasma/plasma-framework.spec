@@ -1,17 +1,17 @@
-%define snapshot  20140109
+%define snapshot  20140110
 
 Name:           plasma-framework
-Version:        5.0.0
-Release:        0.1.%{snapshot}git
+Version:        4.90.1
+Release:        0.1.%{snapshot}git%{?dist}
 Summary:        Plasma 2 libraries and runtime components
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{snapshot}/ \
+# git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/%{name}.git master | \
-# gzip -c > %{name}-%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+# bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -99,8 +99,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
-
+%setup -q -n %{name}-%{version}-%{snapshot}
 
 %build
 mkdir -p %{_target_platform}
