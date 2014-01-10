@@ -7,7 +7,7 @@ Summary:        KDE Frameworks 5 Tier 4 module for API documentation generation
 
 License:        GPLv3 BSD  LGPLv3 QPLv1
 URL:            http://download.kde.org/
-Source0:        http://download.kde.org/unstable/frameworks/${version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
