@@ -30,4 +30,6 @@
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
     -DDATA_INSTALLL_DIR:PATH=%{_kf5_datadir} \\\
     -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir} \\\
-    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir}
+    -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
+    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir} \\\
+    -DBUILD_TESTING:BOOL=FALSE
