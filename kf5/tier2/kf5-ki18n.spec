@@ -50,7 +50,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5I18n.so.*
-%{_kf5_libdir}/plugins/kf5/ktranscript.so
+%{_kf5_plugindir}/ktranscript.so
 
 
 %files devel

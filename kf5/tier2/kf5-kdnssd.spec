@@ -29,7 +29,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-framework-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -52,7 +52,6 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5DNSSD.so.*
 
 %files devel
-%{_kf5_includedir}/kdnssd_version.h
 %{_kf5_includedir}/KDNSSD
 %{_kf5_libdir}/libKF5DNSSD.so
 %{_kf5_libdir}/cmake/KF5DNSSD

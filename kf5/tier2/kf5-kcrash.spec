@@ -57,6 +57,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %{_kf5_includedir}/kcrash_version.h
+%{_kf5_includedir}/KCrash
 %{_kf5_libdir}/libKF5Crash.so
 %{_kf5_libdir}/cmake/KF5Crash
 
