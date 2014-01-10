@@ -1,12 +1,12 @@
 Name:           attica-qt5
-Version:        4.95.0
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Implementation of the Open Collaboration Services API built against Qt 5
 
 Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-4.95.0.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -24,7 +24,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n attica-%{version}
+%setup -q -n attica-4.95.0
 
 
 %build
@@ -64,7 +64,7 @@ test "$(pkg-config --modversion libattica)" = "%{version}"
 
 
 %changelog
-* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.9.95-1
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 1.0.0-1
 - Update to KDE Frameworks 5 TP1 (4.9.95)
 
 * Mon Jan 06 2014 Daniel Vrátil <dvratil@redhat.com> 0.4.2-1
