@@ -60,7 +60,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5IconThemes.so.*
 
 %files devel
-%{_kf5_includedir}/kiconthemes_devel
+%{_kf5_includedir}/kiconthemes_version.h
 %{_kf5_includedir}/KIconThemes
 %{_kf5_libdir}/libKF5IconThemes.so
 %{_kf5_libdir}/cmake/KF5IconThemes

@@ -65,6 +65,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files devel
 %doc
 %{_kf5_includedir}/kconfigwidgets_version.h
+%{_kf5_includedir}/KConfigWidgets
 %{_kf5_libdir}/libKF5ConfigWidgets.so
 %{_kf5_libdir}/cmake/KF5ConfigWidgets
 
