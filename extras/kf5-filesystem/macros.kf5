@@ -29,7 +29,7 @@
      %{?_cmake_lib_suffix64} \\\
 %endif \
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
-    -DDATA_INSTALLL_DIR:PATH=%{_kf5_datadir} \\\
+    -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
     -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir} \\\
     -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
     -DQT_PLUGIN_INSTALL_DIR:PATH=%{_kf5_qtplugindir} \\\
