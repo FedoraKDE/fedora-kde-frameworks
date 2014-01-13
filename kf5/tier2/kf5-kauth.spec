@@ -9,6 +9,8 @@ License:        GPLv2+
 URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+BuildRequires:  polkit-qt-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
