@@ -112,5 +112,5 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 
-* Wed Jan 9 2014 Daniel Vrátil <dvratil@redhat.com>
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
