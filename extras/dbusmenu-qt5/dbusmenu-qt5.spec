@@ -11,8 +11,8 @@ URL:            https://launchpad.net/libdbusmenu-qt/
 
 #Source0 :       https://launchpad.net/libdbusmenu-qt/trunk/%{version}/+download/libdbusmenu-qt-%{version}.tar.bz2
 # bzr branch lp:libdbusmenu-qt && mv libdbusmenu-qt{,-%{version}} && \
-# tar -c libdbusmenu-qt-0.9.2 | gzip -c > libdbusmenu-qt-0.9.2-${snapshot}.tar.gz
-Source0:        libdbusmenu-qt-%{version}-%{snapshot}.tar.gz
+# tar -c libdbusmenu-qt-0.9.2 | bzip2 -c > libdbusmenu-qt-0.9.2-${snapshot}.tar.bz2
+Source0:        libdbusmenu-qt-%{version}-%{snapshot}.tar.bz2
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
