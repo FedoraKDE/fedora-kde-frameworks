@@ -11,6 +11,10 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
+BuildRequires:  aspell-devel
+BuildRequires:  hspell-devel
+BuildRequires:  hunspell-devel
+BuildRequires:  zlib-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
