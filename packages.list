@@ -3,8 +3,8 @@ kf5-filesystem
 extra-cmake-modules
 attica-qt5
 dbusmenu-qt5
-kactivities-qt5
 kf5-umbrella
+kactivities-qt5
 
 ## TIER 1
 kf5-karchive
