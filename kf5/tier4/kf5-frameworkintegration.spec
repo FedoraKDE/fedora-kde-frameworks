@@ -77,8 +77,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Style.so.*
 %{_kf5_datadir}/kf5/infopage/*
-%{_kf5_plugindir}/FrameworkIntegrationPlugin.so
-%{_kf5_plugindir}/platformthemes/KDEPlatformTheme.so
+%{_kf5_qtplugindir}/kf5/FrameworkIntegrationPlugin.so
+%{_kf5_qtplugindir}/platformthemes/KDEPlatformTheme.so
 
 %files devel
 %{_kf5_includedir}/kstyle_version.h
