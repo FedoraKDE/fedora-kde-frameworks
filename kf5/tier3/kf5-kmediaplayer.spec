@@ -54,7 +54,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{frameworks}-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
