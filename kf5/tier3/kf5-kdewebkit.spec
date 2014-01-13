@@ -76,12 +76,12 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_libdir}/libKF5Webkit.so.*
+%{_kf5_libdir}/libKF5WebKit.so.*
 
 %files devel
 %{_kf5_includedir}/kdewebkit_version.h
-%{_kf5_includedir}/KDEWebkit
-%{_kf5_libdir}/libKF5Webkit.so
+%{_kf5_includedir}/KDEWebKit
+%{_kf5_libdir}/libKF5WebKit.so
 %{_kf5_libdir}/cmake/KF5WebKit
 
 
