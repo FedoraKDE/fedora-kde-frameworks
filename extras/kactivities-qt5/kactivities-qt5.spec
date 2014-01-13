@@ -62,6 +62,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
+mkdir -p %{buildroot}/%{_kf5_plugindir}/plugins && mv %{buildroot}/%{_kf5_plugindir}/activitymanager %{buildroot}/%{_kf5_plugindir}/plugins/activitymanager
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -69,7 +70,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_libdir}/libKActivities.so.*
-%{_kf5_libdir}/plugins/kf5/activitymanager/
+%{_kf5_plugindir}/plugins/activitymanager/
 %{_kf5_libdir}/qml/org/kde/activities/
 %{_kf5_datadir}/kde5/services/kactivitymanagerd.desktop
 %{_kf5_datadir}/kde5/servicetypes/activitymanager-plugin.desktop
