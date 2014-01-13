@@ -54,12 +54,12 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kjscmd
 %{_kf5_bindir}/kjsconsole
-%{_kf5_libdir}/libKF5JSEmbed.so.*
+%{_kf5_libdir}/libKF5JsEmbed.so.*
 %{_kf5_datadir}/man/man1/kjscmd.1
 
 
 %files devel
-%{_kf5_libdir}/libKF5JSEmbed.so
+%{_kf5_libdir}/libKF5JsEmbed.so
 %{_kf5_libdir}/cmake/KF5JsEmbed
 
 
