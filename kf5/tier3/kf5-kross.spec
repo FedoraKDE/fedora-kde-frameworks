@@ -45,8 +45,8 @@ BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-knotifications-devel
 
-Requires:       kf5-kross-core
-Requires:       kf5-kross-ui
+Requires:       kf5-kross-core%{_isa} = %{version}-%{release}
+Requires:       kf5-kross-ui%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 3 solution for application scripting
@@ -68,7 +68,7 @@ Non-gui part of the Kross framework.
 
 %package        ui
 Summary:        Gui part of the Kross framework
-Requires:       kf5-kross-core
+Requires:       kf5-kross-core%{?_isa} = %{version}-%{release}
 
 %description    ui
 Gui part of the Kross framework.
@@ -93,19 +93,26 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+mkdir -p %{buildroot}/%{_kf5_plugindir}/plugins && \
+       mv %{buildroot}/%{_kf5_plugindir}/KrossModule{Forms,KdeTranslation}.so \
+          %{buildroot}/%{_kf5_plugindir}/plugins/
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
+%files
 
 %files core
 %{_kf5_bindir}/kf5kross
-%{_kf5_libdir}/libKF5KrossCore.so
+%{_kf5_libdir}/libKF5KrossCore.so.*
 %{_kf5_qtplugindir}/krossqts.so
-%{_kf5_qtplugindir}/scripts/libkrossqtsplugin.so.*
+%{_kf5_qtplugindir}/script/libkrossqtsplugin.so.*
 
 %files ui
-%{_kf5_libdir}/libKF5KrossUi.so
+%{_kf5_libdir}/libKF5KrossUi.so.*
+%{_kf5_plugindir}/plugins/KrossModuleForms.so
+%{_kf5_plugindir}/plugins/KrossModuleKdeTranslation.so
 
 %files doc
 %doc COPYING.LIB README.md
@@ -113,9 +120,11 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files devel
 %{_kf5_includedir}/kross_version.h
-%{_kf5_includedir}/Kross
-%{_kf5_libdir}/libKF5Kross*.so
-%{_kf6_libdir}/plugins/scripts/libkrossqtsplugin.so
+%{_kf5_includedir}/KrossUi
+%{_kf5_includedir}/KrossCore
+%{_kf5_libdir}/libKF5KrossCore.so
+%{_kf5_libdir}/libKF5KrossUi.so
+%{_kf5_qtplugindir}/script/libkrossqtsplugin.so
 %{_kf5_libdir}/cmake/KF5Kross
 
 
