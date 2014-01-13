@@ -62,7 +62,7 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %files devel
 %doc
 %{_kf5_includedir}/kdesu_version.h
-%{_kf5_includedir}KDESu
+%{_kf5_includedir}/KDESu
 %{_kf5_libdir}/libKF5Su.so
 %{_kf5_libdir}/cmake/KF5Su
 
