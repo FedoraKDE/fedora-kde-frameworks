@@ -124,10 +124,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
 %{_kf5_libdir}/platformqml/touch/org/kde/plasma
-%{_kf5_libdir}/plugins/kf5/*.so
-%{_kf5_libdir}/plugins/kf5/plasma/dataengine/*.so
 %{_kf5_libdir}/qml/org/kde/*
 %{_kf5_libdir}/qml/org/kde/*
+%{_kf5_plugindir}/*.so
+%{_kf5_plugindir}/plasma/dataengine/
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/desktoptheme/*
 %{_kf5_datadir}/plasma/
