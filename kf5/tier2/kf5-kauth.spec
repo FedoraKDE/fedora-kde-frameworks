@@ -2,14 +2,14 @@
 
 Name:           kf5-%{framework}
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        GPLv2+
 URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-BuildRequires:  polkit-qt-devel
+BuildRequires:  polkit-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -65,6 +65,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Jan 15 2014 Daniel Vr8til <dvratil@redhat.com> 4.95.0-2
+- Rebuilt against polkit-qt5
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 
