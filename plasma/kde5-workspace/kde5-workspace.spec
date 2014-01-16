@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        2.%{snapshot}git%{?dist}
+Release:        3.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -118,9 +118,21 @@ BuildRequires:  kactivities-qt5-devel
 Requires:       kf5-kinit
 Requires:       kde5-runtime
 
+# startkde
+Requires:       coreutils
+Requires:       dbus-x11
+
+Requires:       xorg-x11-utils
+Requires:       xorg-x11-server-utils
+
+# KDM is dead in Plasma 2, so let's use SDDM.
+Requires:       sddm
+
+Requires:       systemd
+
+
 Provides:       plasma2 = %{version}-%{release}
 Obsoletes:      plasma2 <= 4.90.1-1.20140110git
-
 
 
 %description
@@ -164,8 +176,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %make_install -C %{_target_platform}
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
-install -p m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/
-install -p m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/
+install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
+install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 
 %post -p /sbin/ldconfig
 
@@ -175,6 +187,7 @@ install -p m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/
 # - KCM (?)
 # - plasmoids
 # - icons
+# - individual tools
 
 %files
 %{_kf5_bindir}/*
@@ -253,7 +266,10 @@ install -p m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/
 
 %changelog
 * Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com>
+- add some run-time dependencies
+
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com>
 - rename to kde5-workspace and bump Release
 
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
-- initial version
+- fork kde-workspace to plasma2
