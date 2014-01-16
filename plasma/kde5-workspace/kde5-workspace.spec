@@ -1,17 +1,19 @@
 %define snapshot  20140110
 
-Name:           plasma2
+Name:           kde5-workspace
 Version:        4.90.1
-Release:        1.%{snapshot}git%{?dist}
+Release:        2.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}.git master | \
+#             --remote=git://anongit.kde.org/kde-workspace.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
 Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
+Source1:        kde5-plasma.desktop
+Source2:        fedora_startkde.sh
 
 # udev
 BuildRequires:  systemd-devel
@@ -113,6 +115,14 @@ BuildRequires:  attica-qt5-devel
 BuildRequires:  kactivities-qt5-devel
 
 
+Requires:       kf5-kinit
+Requires:       kde5-runtime
+
+Provides:       plasma2 = %{version}-%{release}
+Obsoletes:      plasma2 <= 4.90.1-1.20140110git
+
+
+
 %description
 Plasma 2 libraries and runtime components
 
@@ -120,6 +130,8 @@ Plasma 2 libraries and runtime components
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       plasma2-devel = %{version}-%{release}
+Obsoletes:      plasma2-devel <= 4.90.1-1.20140110git
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -127,6 +139,8 @@ developing applications that use %{name}.
 
 %package        doc
 Summary:        Documentation and user manuals for %{name}
+Provides:       plasma2-doc = %{version}-%{release}
+Obsoletes:      plasma2-doc <= 4.90.1-1.20140110git
 
 %description    doc
 Documentation and user manuals for %{name}.
@@ -138,13 +152,20 @@ Documentation and user manuals for %{name}.
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+# LIBEXEC_INSTALL_DIR automatically prefixed by CMAKE_INSTALL_PREFIX internally
+%{cmake_kf5} \
+        -DLIBEXEC_INSTALL_DIR=libexec \
+        ..
 popd
 
 make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+
+# %%{_datadir} here is intended - we need to install to location where DMs look
+install -p m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/
+install -p m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/
 
 %post -p /sbin/ldconfig
 
@@ -212,6 +233,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/solid
 %{_kf5_datadir}/kstyle
 
+# %%{_datadir} here is intended - we need to install to location where DMs look
+%{_datadir}/xsessions/kde-plasma2.desktop
+
 %{_kf5_sysconfdir}/xdg/*.knsrc
 %{_kf5_sysconfdir}/ksysguarddrc
 %{_kf5_sysconfdir}/xdg/autostart/*.desktop
@@ -228,5 +252,8 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com>
+- rename to kde5-workspace and bump Release
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
