@@ -62,7 +62,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5Crash
 
 %changelog
-* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
 - Rebuild against new kf5-filesystem
 
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
