@@ -50,7 +50,7 @@ pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
-make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
+make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}

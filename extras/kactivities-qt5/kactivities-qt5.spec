@@ -60,7 +60,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+make install/fast -C %{_target_platform}
 
 mkdir -p %{buildroot}/%{_kf5_plugindir}/plugins && mv %{buildroot}/%{_kf5_plugindir}/activitymanager %{buildroot}/%{_kf5_plugindir}/plugins/activitymanager
 
