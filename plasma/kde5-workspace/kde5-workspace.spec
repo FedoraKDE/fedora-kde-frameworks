@@ -193,7 +193,6 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 %{_kf5_bindir}/*
 %{_kf5_libdir}/*.so.*
 %{_kf5_plugindir}/*.so
-%{_kf5_plugindir}/plasma/*.so
 %{_kf5_plugindir}/plasma/dataengine/*.so
 %{_kf5_plugindir}/plasma/geolocationprovider/*.so
 %{_kf5_plugindir}/plasma/packagestructure/*.so
@@ -247,7 +246,7 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 %{_kf5_datadir}/kstyle
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
-%{_datadir}/xsessions/kde-plasma2.desktop
+%{_datadir}/xsessions/kde5-plasma.desktop
 
 %{_kf5_sysconfdir}/xdg/*.knsrc
 %{_kf5_sysconfdir}/ksysguarddrc
