@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        3.%{snapshot}git%{?dist}
+Release:        4.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -180,6 +180,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
 install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 
+# plasma-shell keeps complaining about this ServiceType missing, but it's not
+# installeed, because plasmagenericshell is not compiled
+install -p -m655 -D %{sourcedir}/libs/plasmagenericshell/plasma-layout-template.desktop \
+                    %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
+
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -265,11 +271,14 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 
 
 %changelog
-* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com>
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-4
+- export KDEHOME in fedora_startkde (otherwise we don't get icons)
+
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-3
 - add some run-time dependencies
 
-* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com>
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
 - rename to kde5-workspace and bump Release
 
-* Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
+* Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - fork kde-workspace to plasma2

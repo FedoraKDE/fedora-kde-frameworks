@@ -16,6 +16,7 @@ export KDE_FULL_SESSION=true
 export XDG_DATA_HOME=$HOME/.local5
 export XDG_CONFIG_HOME=$HOME/.config5
 export XDG_CACHE_HOME=$HOME/.cache5
+export KDEHOME=$HOME/.kde5
 
 # Call the real startkde
 /opt/kf5/bin/startkde
