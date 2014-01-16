@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -87,6 +87,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
+- rebuild against updated kf5-filesytem
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 

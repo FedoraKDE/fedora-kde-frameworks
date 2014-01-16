@@ -23,15 +23,15 @@
     -DCMAKE_BUILD_TYPE=release \\\
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
-    -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_includedir} \\\
-    -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
+    -DINCLUDE_INSTALL_DIR:PATH=include \\\
+    -DLIB_INSTALL_DIR:PATH=%{_lib} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
 %endif \
-    -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
-    -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
-    -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir} \\\
-    -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
-    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_kf5_qtplugindir} \\\
-    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir} \\\
+    -DBIN_INSTALL_DIR:PATH=bin \\\
+    -DDATA_INSTALL_DIR:PATH=share \\\
+    -DLIBEXEC_INSTALL_DIR:PATH=libexec \\\
+    -DPLUGIN_INSTALL_DIR:PATH=%{_lib}/kf5 \\\
+    -DQT_PLUGIN_INSTALL_DIR:PATH=qt5/plugins \\\
+    -DSYSCONF_INSTALL_DIR:PATH=etc \\\
     -DBUILD_TESTING:BOOL=FALSE

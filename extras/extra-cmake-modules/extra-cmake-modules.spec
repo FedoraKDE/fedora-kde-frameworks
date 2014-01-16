@@ -1,7 +1,10 @@
+# There's nothing to debug
+%global debug_package   %{nil}
+
 Name:           extra-cmake-modules
 Version:        0.0.9
 Epoch:          1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Additional modules for CMake build system
 BuildArch:      noarch
 
@@ -47,6 +50,10 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-2
+- don't generate debuginfo
+- rebulild against updated kf5-filesystem
+
 * Thu Jan  9 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-1
 - Update to KDE Frameworks 5 TP1 (4.9.95)
 
