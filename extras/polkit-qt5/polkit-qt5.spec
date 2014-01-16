@@ -16,7 +16,7 @@ Source1:        Doxyfile
 
 Patch0:         polkit-qt5-cmake-config-fix.patch
 
-BuildRequires:  kf5-filesystem
+BuildRequires:  extra-cmake-modules
 BuildRequires:  polkit-devel >= 0.98
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  doxygen
