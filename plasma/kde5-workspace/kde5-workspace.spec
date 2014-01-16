@@ -117,6 +117,7 @@ BuildRequires:  kactivities-qt5-devel
 
 Requires:       kf5-kinit
 Requires:       kde5-runtime
+Requires:       qt5-qtquickcontrols
 
 # startkde
 Requires:       coreutils

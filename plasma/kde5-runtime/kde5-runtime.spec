@@ -85,11 +85,12 @@ BuildRequires:  attica-qt5-devel
 Requires:       oxygen-icon-theme >= 4.11.0
 Requires:       dbus-x11
 
+Requires:       kf5-kded
+
 # drkonqi
 Requires:       polkit
 
 Provides:       dbus-notification-daemon
-
 
 %description
 KDE core runtime components
