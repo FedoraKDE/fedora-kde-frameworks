@@ -2,7 +2,7 @@
 
 Name:           kde5-runtime
 Version:        4.90.1
-Release:        2.%{snapshot}git%{?dist}
+Release:        3.%{snapshot}git%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -12,6 +12,8 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git framework | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
 Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
+
+Patch0:         kde5-runtime-kioexec-crash.patch
 
 # udev
 BuildRequires:  openslp-devel
@@ -98,6 +100,8 @@ KDE core runtime components
 %prep
 %setup -q -n %{name}-%{version}-%{snapshot}
 
+%patch0 -p1 -b .kioexec
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -158,8 +162,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Thu Jan  16 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-2.20140116git
+* Mon Jan 20 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-3.20140116git
+- apply workaround for kioexec crash
+
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-2.20140116git
 - require oxygen-icon-theme 4.11.0
 
-* Thu Jan  16 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-1.20140116git
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-1.20140116git
 - initial version

@@ -1,0 +1,89 @@
+diff --git a/kioexec/main.cpp b/kioexec/main.cpp
+index d11ec5d..601f2f4 100644
+--- a/kioexec/main.cpp
++++ b/kioexec/main.cpp
+@@ -51,24 +51,24 @@ static const char description[] =
+         I18N_NOOP("KIO Exec - Opens remote files, watches modifications, asks for upload");
+ 
+ 
+-KIOExec::KIOExec()
++KIOExec::KIOExec(const QCommandLineParser &parser)
+     : mExited(false)
+ {
+-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+-    if (args->count() < 1)
++    const QStringList args = parser.positionalArguments();
++    if (args.count() < 1)
+         KCmdLineArgs::usageError(i18n("'command' expected.\n"));
+ 
+-    tempfiles = args->isSet("tempfiles");
+-    if ( args->isSet( "suggestedfilename" ) )
+-        suggestedFileName = args->getOption( "suggestedfilename" );
++    tempfiles = parser.isSet( QLatin1String("tempfiles") );
++    if ( parser.isSet( QLatin1String("suggestedfilename") ) )
++        suggestedFileName = parser.value( QLatin1String("suggestedfilename") );
+     expectedCounter = 0;
+     jobCounter = 0;
+-    command = args->arg(0);
++    command = args.at(0);
+     qDebug() << "command=" << command;
+ 
+-    for ( int i = 1; i < args->count(); i++ )
++    for ( int i = 1; i < args.count(); i++ )
+     {
+-        QUrl url = args->url(i);
++        QUrl url = args.at(i);
+ 	url = KIO::NetAccess::mostLocalUrl( url, 0 );
+ 
+         //kDebug() << "url=" << url.url() << " filename=" << url.fileName();
+@@ -115,7 +115,7 @@ KIOExec::KIOExec()
+             }
+         }
+     }
+-    args->clear();
++    //args->clear();
+ 
+     if ( tempfiles )
+     {
+@@ -268,15 +268,15 @@ int main( int argc, char **argv )
+      *    aboutData.setProgramIconName("kde");
+      */
+     QCommandLineParser parser;
+-    /*parser.addOption(QCommandLineOption(QStringList() << "tempfiles" , i18n("Treat URLs as local files and delete them afterwards")));
+-    parser.addOption(QCommandLineOption(QStringList() << "suggestedfilename <file name>" , ki18n("Suggested file name for the downloaded file")));
+-    parser.addOption(QCommandLineOption(QStringList() << "+command", i18n("Command to execute")));
+-    parser.addOption(QCommandLineOption(QStringList() << "+[URLs]", i18n("URL(s) or local file(s) used for 'command'"))); */
++    parser.addOption(QCommandLineOption("tempfiles" , i18n("Treat URLs as local files and delete them afterwards")));
++    parser.addOption(QCommandLineOption("suggestedfilename <file name>" , i18n("Suggested file name for the downloaded file")));
++    parser.addOption(QCommandLineOption("+command", i18n("Command to execute")));
++    parser.addOption(QCommandLineOption("+[URLs]", i18n("URL(s) or local file(s) used for 'command'")));
+     QApplication app( argc, argv);
+     app.setQuitOnLastWindowClosed(false);
+     parser.process(app);
+ 
+-    KIOExec exec;
++    KIOExec exec(parser);
+ 
+     // Don't go into the event loop if we already want to exit (#172197)
+     if (exec.exited())
+diff --git a/kioexec/main.h b/kioexec/main.h
+index 0d7b1f2..2123c09 100644
+--- a/kioexec/main.h
++++ b/kioexec/main.h
+@@ -29,6 +29,7 @@
+ #include <QtCore/QTimer>
+ 
+ #include <QUrl>
++#include <QCommandLineParser>
+ 
+ namespace KIO { class Job; }
+ 
+@@ -38,7 +39,7 @@ class KIOExec : public QObject
+ {
+     Q_OBJECT
+ public:
+-    KIOExec();
++    KIOExec(const QCommandLineParser &parser);
+ 
+     bool exited() const { return mExited; }
+ 
