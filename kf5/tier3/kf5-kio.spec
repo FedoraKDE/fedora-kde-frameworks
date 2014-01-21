@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -112,6 +112,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Jan 20 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
+- rebuild against new kf5-filesystem
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 
