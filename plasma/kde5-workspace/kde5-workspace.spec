@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        4.%{snapshot}git%{?dist}
+Release:        5.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -116,6 +116,7 @@ BuildRequires:  kactivities-qt5-devel
 
 
 Requires:       kf5-kinit
+Requires:       kf5-kded
 Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 
@@ -182,7 +183,7 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
 
 # plasma-shell keeps complaining about this ServiceType missing, but it's not
 # installeed, because plasmagenericshell is not compiled
-install -p -m655 -D %{sourcedir}/libs/plasmagenericshell/plasma-layout-template.desktop \
+install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
                     %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
 
 
@@ -271,6 +272,10 @@ install -p -m655 -D %{sourcedir}/libs/plasmagenericshell/plasma-layout-template.
 
 
 %changelog
+* Tue Jan 21 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-5
+- fix installation of a ,desktop file
+- add kf5-kded to runtime deps
+
 * Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-4
 - export KDEHOME in fedora_startkde (otherwise we don't get icons)
 
