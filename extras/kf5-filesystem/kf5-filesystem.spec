@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.95.0
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 
@@ -24,6 +24,9 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 /opt/kf5
 
 %changelog
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-4
+- fix definition of QT_PLUGIN_INSTALL_DIR in RPM macros
+
 * Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
 - fix install dirs definitions in RPM macros
 

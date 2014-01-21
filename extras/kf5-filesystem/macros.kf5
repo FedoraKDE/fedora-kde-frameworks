@@ -32,6 +32,6 @@
     -DDATA_INSTALL_DIR:PATH=share \\\
     -DLIBEXEC_INSTALL_DIR:PATH=libexec \\\
     -DPLUGIN_INSTALL_DIR:PATH=%{_lib}/kf5 \\\
-    -DQT_PLUGIN_INSTALL_DIR:PATH=qt5/plugins \\\
+    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_lib}/qt5/plugins \\\
     -DSYSCONF_INSTALL_DIR:PATH=etc \\\
     -DBUILD_TESTING:BOOL=FALSE
