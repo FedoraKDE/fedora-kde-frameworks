@@ -1,13 +1,18 @@
+%define snapshot 20140205
 %define framework kinit
 
 Name:           kf5-%{framework}
-Version:        4.95.0
-Release:        2%{?dist}
+Version:        4.96.0
+Release:        0.1.%{snapshot}git%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+# git archive --format=tar --prefix=%{framework}-%{version}/ \
+#             --remote=git://anongit.kde.org/%{framework}.git master | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 
@@ -87,6 +92,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140205git
+- Update to pre-relase snapshot of 4.96.0
+
 * Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
 - rebuild against updated kf5-filesytem
 
