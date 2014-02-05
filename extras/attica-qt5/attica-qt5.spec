@@ -1,12 +1,21 @@
+%define snapshot 20140205
+
+
 Name:           attica-qt5
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        %{snapshot}git%{?dist}
 Summary:        Implementation of the Open Collaboration Services API built against Qt 5
 
 Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-4.95.0.tar.xz
+
+# git archive --format=tar --prefix=%{name}-%{version}/ \
+#             --remote=git://anongit.kde.org/attica,git master | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
+Source0:        attica-qt5-%{version}-%{snapshot}git.tar.bz2
+
+#Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -24,7 +33,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n attica-4.95.0
+%setup -q -n attica-1.0.0
 
 
 %build
@@ -42,28 +51,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
-%check
-# verify pkg-config sanitry/version
-export PKG_CONFIG_PATH=%{buildroot}%{_kf5_libdir}/pkgconfig
-test "$(pkg-config --modversion libattica)" = "%{version}"
-
-
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING README
 %doc ChangeLog
-%{_kf5_libdir}/libattica.so.1.*
+%{_kf5_libdir}/libKF5Attica.so.1.*
 
 %files devel
 %{_kf5_includedir}/attica/
-%{_kf5_libdir}/libattica.so
-%{_kf5_libdir}/pkgconfig/libattica.pc
-%{_kf5_libdir}/cmake/LibAttica/
+%{_kf5_libdir}/libKF5Attica.so
+%{_kf5_libdir}/cmake/KF5Attica/
 
 
 %changelog
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 1.0.0-20140205git
+- Update snapshot of Attica to current git
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 1.0.0-1
 - Update to KDE Frameworks 5 TP1 (4.9.95)
 
