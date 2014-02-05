@@ -1,4 +1,4 @@
-%define snapshot 20140115
+%define snapshot 20140205
 
 Name:           polkit-qt5
 Version:        0.103.0
@@ -10,8 +10,8 @@ URL:            https://projects.kde.org/projects/kdesupport/polkit-qt-1
 
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/polkit-qt-1 qt5 | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz
-Source0:        %{name}-%{version}-%{snapshot}.tar.bz2 
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2 
 Source1:        Doxyfile
 
 Patch0:         polkit-qt5-cmake-config-fix.patch
@@ -90,5 +90,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140205git
+- Update to latest git snapshot
+
 * Wed Jan 15 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140115git
 - fork from polkit-qt SPEC
