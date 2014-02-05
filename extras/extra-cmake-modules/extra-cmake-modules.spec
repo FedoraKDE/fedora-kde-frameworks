@@ -1,20 +1,22 @@
 # There's nothing to debug
 %global debug_package   %{nil}
+%global snapshot 20140205
 
 Name:           extra-cmake-modules
-Version:        0.0.9
+Version:        0.0.10
 Epoch:          1
-Release:        2%{?dist}
+Release:        0.1.%{snapshot}git%{?dist}
 Summary:        Additional modules for CMake build system
 BuildArch:      noarch
 
 License:        BSD
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/4.95.0/%{name}-%{version}.tar.xz
 
-# https://git.reviewboard.kde.org/r/114888/
-Patch0:         ecm-fix-doubleslash-in-generated-headers.patch
-
+# git archive --format=tar --prefix=%{name}-%{version}/ \
+#             --remote=git://anongit.kde.org/%{name},git master | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        http://download.kde.org/unstable/frameworks/4.95.0/%{name}-%{version}.tar.xz
 
 BuildRequires:  cmake
 BuildRequires:  kf5-filesystem
@@ -28,8 +30,6 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 %prep
 %setup -q
-
-%patch0 -p 1 -b .doubleslash
 
 %build
 mkdir -p %{_target_platform}
@@ -50,6 +50,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.10-0.1.20140205git
+- Update to pre-relase snapshot of 0.0.10
+
 * Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-2
 - don't generate debuginfo
 - rebulild against updated kf5-filesystem
