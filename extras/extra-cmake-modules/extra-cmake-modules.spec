@@ -44,7 +44,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 
 %files
-%doc README
+%doc README.md COPYING-CMAKE-SCRIPTS
 %{_kf5_datadir}/ECM
 
 
