@@ -8,8 +8,8 @@ Summary:        KDE Frameworks 5 Tier 2 integration module for DNS-SD services (
 
 License:        GPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
+# git archive --format=tar --prefix=%{framework}-framework-%{version}/ \
+#             --remote=git://anongit.kde.org/%{framework}-framework.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
@@ -34,8 +34,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-#%setup -q -n %{framework}-framework-%{version}
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-framework-%{version}
 
 %build
 mkdir -p %{_target_platform}
