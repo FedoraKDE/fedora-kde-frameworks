@@ -74,7 +74,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files devel
 %{_kf5_libdir}/cmake/KDED
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
-%{_kf5_archdatadir}/mkspecs/modules/qt_KDED.pri
 
 
 %changelog
