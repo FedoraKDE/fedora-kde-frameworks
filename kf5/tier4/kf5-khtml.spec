@@ -106,6 +106,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5KHtml/*.cmake
 %{_kf5_includedir}/KHtml/
 %{_kf5_includedir}/khtml_version.h
+%{_kf5_archdatadir}/mkspecs/modules/qt_KHtml.pri
 
 
 %changelog

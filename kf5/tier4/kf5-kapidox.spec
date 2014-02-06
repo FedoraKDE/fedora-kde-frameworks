@@ -42,8 +42,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%{_kf5_datadir}/LICENSES/
-%{_kf5_datadir}/doc/
+%{_kf5_prefix}/lib/python2.7/site-packages/kapidox
+%{_kf5_prefix}/lib/python2.7/site-packages/kapidox-5.0.0-py2.7.egg-info
+%{_kf5_bindir}/kgenapidox
+%{_kf5_bindir}/depdiagram-prepare
+%{_kf5_bindir}/depdiagram-generate
+%{_kf5_bindir}/kgenframeworksapidox
+%{_kf5_bindir}/depdiagram-generate-all
 
 %changelog
 * Thu Feb 06 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140206git
