@@ -14,11 +14,11 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kiconthemes-devel
