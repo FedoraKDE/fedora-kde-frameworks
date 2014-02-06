@@ -1,18 +1,23 @@
 %define framework kde4support
+%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.95.0
-Release:        1%{?dist}
+Version:        4.96.0
+Release:        0.1.%{snapshot}git%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+# git archive --format=tar --prefix=%{framework}-%{version}/ \
+#             --remote=git://anongit.kde.org/%{framework}.git master | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
+
 
 BuildRequires:  libX11-devel
 BuildRequires:  libSM-devel
 BuildRequires:  openssl-devel
 BuildRequires:  gettext-devel
-BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -20,6 +25,7 @@ BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
 
+BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kguiaddons-devel
@@ -90,6 +96,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_plugindir}/*.so
 %{_kf5_qtplugindir}/designer/*.so
 %{_kf5_libexecdir}/fileshareset
+%{_kf5_libexecdir}/filesharelist
 %{_kf5_mandir}/man1/kf5-config.1
 %{_kf5_datadir}/kde5/services/*.protocol
 %{_kf5_datadir}/kde5/services/*.desktop
@@ -109,6 +116,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Feb 06 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140206git
+- Update to pre-relase snapshot of 4.96.0
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 

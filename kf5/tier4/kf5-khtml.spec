@@ -1,13 +1,19 @@
 %define framework khtml
+%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.95.0
-Release:        1%{?dist}
+Version:        4.96.0
+Release:        0.1.%{snapshot}git%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 solution with KHTML engine
 
 License:        GPLv3 
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+# git archive --format=tar --prefix=%{framework}-%{version}/ \
+#             --remote=git://anongit.kde.org/%{framework}.git master | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
+
 
 BuildRequires:  fdupes
 BuildRequires:  giflib-devel
@@ -16,13 +22,13 @@ BuildRequires:  openssl-devel
 BuildRequires:  perl
 BuildRequires:  libpng-devel
 BuildRequires:  zlib-devel
-BuildRequires:  attica-qt5-devel
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  phonon-qt5-devel
 
+BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-filesystem
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kauth-devel
@@ -53,6 +59,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-sonnet-devel
+
 
 %description
 KHTML is a web rendering engine, based on the KParts technology and using KJS
@@ -99,11 +106,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5KHtml/*.cmake
 %{_kf5_includedir}/KHtml/
 %{_kf5_includedir}/khtml_version.h
-%{_kf5_datadir}/dbus-1/interfaces/org.kde.KHtmlPart.xml
+
 
 %changelog
+* Thu Feb 06 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140206git
+- Update to pre-relase snapshot of 4.96.0
 
-%changelog
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 
