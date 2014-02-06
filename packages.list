@@ -1,12 +1,13 @@
 ## Global dependencies
 kf5-filesystem
 extra-cmake-modules
-attica-qt5
 dbusmenu-qt5
 kf5-umbrella
 kactivities-qt5
+polkit-qt5
 
 ## TIER 1
+kf5-attica
 kf5-karchive
 kf5-kcodecs
 kf5-kconfig
@@ -35,7 +36,6 @@ kf5-kdoctools
 kf5-ki18n
 kf5-kjobwidgets
 kf5-knotifications
-kf5-kwallet
 
 ## TIER 3 (order matters!)
 kf5-kconfigwidgets
@@ -48,6 +48,7 @@ kf5-kcmutils
 kf5-kio
 kf5-kdeclarative
 kf5-kparts
+kf5-kwallet
 kf5-kdewebkit
 kf5-kinit
 kf5-kded
