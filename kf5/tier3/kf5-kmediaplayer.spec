@@ -88,7 +88,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libKF5MediaPlayer.so
 %{_kf5_libdir}/cmake/KF5MediaPlayer
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
-%{_kf5_archdatadir}/mkspecs/modules/qt_KMediaPlayer.pri
 
 
 %changelog
