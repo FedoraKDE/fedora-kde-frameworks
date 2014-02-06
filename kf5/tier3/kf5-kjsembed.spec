@@ -57,10 +57,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_bindir}/kjscmd
+%{_kf5_bindir}/kjscmd5
 %{_kf5_bindir}/kjsconsole
 %{_kf5_libdir}/libKF5JsEmbed.so.*
-%{_kf5_datadir}/man/man1/kjscmd.1
+%{_kf5_datadir}/man/man1/kjscmd5.1
 
 
 %files devel
