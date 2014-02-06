@@ -66,7 +66,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files devel
 %{_kf5_libdir}/libKF5JsEmbed.so
 %{_kf5_libdir}/cmake/KF5JsEmbed
-%{_kf5_archdatadir}/mkspecs/modules/qt_KJSEmbed.pri
+%{_kf5_includedir}/KJsEmbed/
+%{_kf5_archdatadir}/mkspecs/modules/qt_KJsEmbed.pri
 
 
 %changelog
