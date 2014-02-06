@@ -1,10 +1,11 @@
-%define snapshot 20140205
+%define snapshot 20140206
+%define framework attica
 
 
-Name:           attica-qt5
-Version:        1.0.0
+Name:           kf5-attica
+Version:        4.96.0
 Release:        %{snapshot}git%{?dist}
-Summary:        Implementation of the Open Collaboration Services API built against Qt 5
+Summary:        KDE Frameworks Tier 1 Addon with implementation of the Open Collaboration Services API
 
 Group:          Development/Libraries
 License:        LGPLv2+
@@ -13,27 +14,32 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/attica,git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
-Source0:        attica-qt5-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 
 #Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+Provides:       attica-qt5
+Obsoletes:      attica-qt5
+
 %description
 Attica is a Qt library that implements the Open Collaboration Services
-API version 1.4. This package is built against Qt 5
+API version 1.4.
 
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       attica-qt5-devel
+Obsoletes:      attica-qt5-devel
 %description    devel
 %{summary}.
 
 
 %prep
-%setup -q -n attica-1.0.0
+%setup -q -n %{framework}-%{version}
 
 
 %build
@@ -55,17 +61,23 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README.md
 %doc ChangeLog
-%{_kf5_libdir}/libKF5Attica.so.1.*
+%{_kf5_libdir}/libKF5Attica.so.*
 
 %files devel
-%{_kf5_includedir}/attica/
-%{_kf5_libdir}/libKF5Attica.so
 %{_kf5_libdir}/cmake/KF5Attica/
+%{_kf5_includedir}/attica_version.h
+%{_kf5_includedir}/Attica/
+%{_kf5_libdir}/libKF5Attica.so
+%{_kf5_archdatadir}/mkspecs/modules/qt_Attica.pri
+%{_kf5_libdir}/pkgconfig/libKF5Attica.pc
 
 
 %changelog
+* Thu Feb 06 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-20140206git
+- Attica is now a proper Tier 1 framework
+
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 1.0.0-20140205git
 - Update snapshot of Attica to current git
 
