@@ -19,6 +19,7 @@ BuildRequires:  libX11-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-ki18n-devel
