@@ -17,11 +17,44 @@ Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-karchive-devel
+BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kservice-devel
+
+
+Requires:       kf5-kwallet-api%{_isa} = %{version}-%{release}
+Requires:       kf5-kwallet-runtime%{?_isa} = %{version}-%{release}
 
 %description
-KDE Frameworks 5 Tier 3 solution for password management
+KDE Frameworks 5 Tier 3 solution for password management.
+
+%package        api
+Summary:        KWallet framework libraries
+
+%description    api
+Provides API to access KWallet data from applications.
+
+%package        runtime
+Summary:        KWallet runtime deamon
+Requires:       kf5-kded
+
+%description    runtime
+Provides a runtime deamon that stores passwords.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -32,8 +65,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-#%setup -q -n %{framework}-framework-%{version}
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-framework-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -53,14 +85,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
+
+%files api
 %{_kf5_libdir}/libKF5Wallet.so.*
 
+%files runtime
+%{_kf5_datadir}/dbus-1/services/org.kde.kwalletd5.service
+%{_kf5_bindir}/kwalletd5
+%{_kf5_datadir}/kde5/services/kwalletd5.desktop
+%{_kf5_datadir}/kwalletd/kwalletd.notifyrc
+%{_kf5_libdir}/libkwalletbackend5.so.*
+
 %files devel
+%{_kf5_datadir}/dbus-1/interfaces/kf5_org.kde.KWallet.xml
 %{_kf5_includedir}/kwallet_version.h
 %{_kf5_includedir}/KWallet
-%{_kf5_libdir}/libKF5Wallet.so
 %{_kf5_libdir}/cmake/KF5Wallet
-%{_kf5_datadir}/dbus-1/interfaces/*.xml
+%{_kf5_libdir}/libKF5Wallet.so
+%{_kf5_libdir}/libkwalletbackend5.so
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
