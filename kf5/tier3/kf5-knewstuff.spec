@@ -1,4 +1,4 @@
-%define snapshot 20140205
+%define snapshot 20140206
 %define framework knewstuff
 
 Name:           kf5-%{framework}
