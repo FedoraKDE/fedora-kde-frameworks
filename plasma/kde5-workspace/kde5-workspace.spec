@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        5.%{snapshot}git%{?dist}
+Release:        6.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -187,15 +187,9 @@ install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
                     %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
 
 
-%post -p /sbin/ldconfig
+%post /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
-
-# TODO split to subpackages
-# - KCM (?)
-# - plasmoids
-# - icons
-# - individual tools
 
 %files
 %{_kf5_bindir}/*
@@ -270,8 +264,17 @@ install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
 %{_kf5_includedir}/*
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 
+# TODO split to subpackages
+# - KCM (?)
+# - plasmoids
+# - icons
+# - individual tools
+
 
 %changelog
+* Sat Feb 08 2014 Martin Briza <mbriza@redhat.com> 4.95.0-6
+- prevent annoying errors on package removing
+
 * Tue Jan 21 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-5
 - fix installation of a ,desktop file
 - add kf5-kded to runtime deps

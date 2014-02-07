@@ -2,7 +2,7 @@
 
 Name:           kde5-runtime
 Version:        4.90.1
-Release:        3.%{snapshot}git%{?dist}
+Release:        4.%{snapshot}git%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -117,10 +117,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %postun -p /sbin/ldconfig
 
-# TODO Add subpackages:
-# - drkonqi
-# - kio-smb
-
 %files
 %doc COPYING COPYING.LIB
 %{_kf5_bindir}/kglobalaccel
@@ -160,8 +156,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_sysconfdir}/xdg/*.knsrc
 %{_kf5_sysconfdir}/xdg/menus/kde-information.menu
 
+# TODO Add subpackages:
+# - drkonqi
+# - kio-smb
+
 
 %changelog
+* Sat Feb 08 2014 Martin Briza <mbriza@redhat.com> 4.90.1-4.20140116git
+- prevent annoying errors on package removing
+
 * Mon Jan 20 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-3.20140116git
 - apply workaround for kioexec crash
 
