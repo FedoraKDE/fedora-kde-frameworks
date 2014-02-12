@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Patch0:         kauth-fix-polkitqt-1-includedir.patch
+Patch0:         kauth-find-polkit-qt5.patch
 
 BuildRequires:  polkit-qt5-devel
 
@@ -39,7 +39,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .polkitqt1include
+%patch0 -p1 -b .polkitqt5
 
 %build
 mkdir -p %{_target_platform}
@@ -61,7 +61,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Auth.so.*
 %{_kf5_sysconfdir}/dbus-1/system.d/*
-%{_kf5_plugindir}/plugins/kauth/
+%{_kf5_qtplugindir}/kf5/plugins/kauth/helper/kauth_helper_plugin.so
+%{_kf5_qtplugindir}/kf5/plugins/kauth/backend/kauth_backend_plugin.so
 %{_kf5_datadir}/kauth/
 %{_kf5_libexecdir}/kauth-policy-gen
 

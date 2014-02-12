@@ -1,0 +1,94 @@
+diff --git a/cmake/FindPolkitQt-1.cmake b/cmake/FindPolkitQt-1.cmake
+index 4e90537..6503ec1 100644
+--- a/cmake/FindPolkitQt-1.cmake
++++ b/cmake/FindPolkitQt-1.cmake
+@@ -23,15 +23,16 @@ if ( NOT PolkitQt-1_FIND_VERSION AND POLKITQT-1_MIN_VERSION )
+ endif ( NOT PolkitQt-1_FIND_VERSION AND POLKITQT-1_MIN_VERSION )
+ 
+ set( _PolkitQt-1_FIND_QUIETLY  ${PolkitQt-1_FIND_QUIETLY} )
+-find_package( PolkitQt-1 ${PolkitQt-1_FIND_VERSION} QUIET NO_MODULE PATHS ${LIB_INSTALL_DIR}/PolkitQt-1/cmake )
++find_package( PolkitQt5-1 ${PolkitQt-1_FIND_VERSION} QUIET NO_MODULE PATHS ${LIB_INSTALL_DIR}/PolkitQt5-1/cmake )
+ set( PolkitQt-1_FIND_QUIETLY ${_PolkitQt-1_FIND_QUIETLY} )
+ 
++
+ include( FindPackageHandleStandardArgs )
+-find_package_handle_standard_args( PolkitQt-1 DEFAULT_MSG PolkitQt-1_CONFIG )
++find_package_handle_standard_args( PolkitQt5-1 DEFAULT_MSG PolkitQt5-1_CONFIG )
+ 
+-if (POLKITQT-1_FOUND)
++if (POLKITQT5-1_FOUND)
+     if (NOT POLKITQT-1_INSTALL_DIR STREQUAL CMAKE_INSTALL_PREFIX)
+         message("WARNING: Installation prefix does not match PolicyKit install prefixes. You probably will need to move files installed "
+                 "in POLICY_FILES_INSTALL_DIR and by dbus_add_activation_system_service to the ${PC_POLKITQT-1_PREFIX} prefix")
+     endif (NOT POLKITQT-1_INSTALL_DIR STREQUAL CMAKE_INSTALL_PREFIX)
+-endif (POLKITQT-1_FOUND)
++endif (POLKITQT5-1_FOUND)
+diff --git a/src/ConfigureChecks.cmake b/src/ConfigureChecks.cmake
+index f3dc6a6..6042b97 100644
+--- a/src/ConfigureChecks.cmake
++++ b/src/ConfigureChecks.cmake
+@@ -14,19 +14,19 @@ if(NOT KAUTH_BACKEND)
+     if (APPLE)
+         set (KAUTH_BACKEND "OSX")
+     elseif (UNIX)
+-        find_package(PolkitQt-1 0.99.0)
++        find_package(PolkitQt-1 0.103.0)
+ 
+-        if (PolkitQt-1_FOUND)
++        if (PolkitQt5-1_FOUND)
+             set (KAUTH_BACKEND "PolkitQt-1")
+ 
+-            set_package_properties(PolkitQt-1 PROPERTIES
++            set_package_properties(PolkitQt5-1 PROPERTIES
+               URL "http://techbase.kde.org/Polkit-Qt-1"
+               DESCRIPTION "PolicyKit API for Qt"
+               TYPE RECOMMENDED
+               PURPOSE "Support for executing priviledged actions in a controlled way (KAuth)"
+             )
+ 
+-        else (PolkitQt-1_FOUND)
++        else (PolkitQt5-1_FOUND)
+             find_package(PolkitQt)
+ 
+             if (POLKITQT_FOUND)
+@@ -40,7 +40,7 @@ if(NOT KAUTH_BACKEND)
+ 
+             else (POLKITQT_FOUND)
+                 # Nothing was found: notify and log the missing features
+-                set_package_properties(PolkitQt-1 PROPERTIES
++                set_package_properties(PolkitQt5-1 PROPERTIES
+                   URL "http://techbase.kde.org/Polkit-Qt-1"
+                   DESCRIPTION "PolicyKit API for Qt"
+                   TYPE RECOMMENDED
+@@ -54,7 +54,7 @@ if(NOT KAUTH_BACKEND)
+                 )
+                 set (KAUTH_BACKEND "Fake")
+             endif (POLKITQT_FOUND)
+-        endif (PolkitQt-1_FOUND)
++        endif (PolkitQt5-1_FOUND)
+     else(UNIX)
+         set (KAUTH_BACKEND "Fake")
+     endif(APPLE)
+@@ -94,18 +94,18 @@ else(NOT KAUTH_BACKEND)
+         endif (NOT POLKITQT_FOUND)
+     endif (KAUTH_BACKEND STREQUAL "POLKITQT")
+     if (KAUTH_BACKEND STREQUAL "POLKITQT-1")
+-        find_package(PolkitQt-1 0.99.0)
+-        set_package_properties(PolkitQt-1 PROPERTIES
++        find_package(PolkitQt-1 0.103.0)
++        set_package_properties(PolkitQt5-1 PROPERTIES
+           URL "http://techbase.kde.org/Polkit-Qt-1"
+           DESCRIPTION "PolicyKit API for Qt"
+           TYPE RECOMMENDED
+           PURPOSE "Support for executing priviledged actions in a controlled way (KAuth). Either this or PolkitQt is required to make KAuth work, and hence enable certain workspace functionalities"
+         )
+-        if (NOT POLKITQT-1_FOUND)
++        if (NOT POLKITQT5-1_FOUND)
+             message ("WARNING: You chose the PolkitQt-1 KAuth backend but you don't have PolkitQt-1 installed.
+                       Falling back to Fake backend")
+             set (KAUTH_BACKEND "FAKE")
+-        endif (NOT POLKITQT-1_FOUND)
++        endif (NOT POLKITQT5-1_FOUND)
+     endif (KAUTH_BACKEND STREQUAL "POLKITQT-1")
+ endif(NOT KAUTH_BACKEND)
+ 
