@@ -1,4 +1,4 @@
-%define snapshot 20140205
+%define snapshot 20140212
 
 Name:           polkit-qt5
 Version:        0.103.0
@@ -14,7 +14,7 @@ URL:            https://projects.kde.org/projects/kdesupport/polkit-qt-1
 Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2 
 Source1:        Doxyfile
 
-Patch0:         polkit-qt5-cmake-config-fix.patch
+Patch0:         polkit-qt5-qt4-coinstallability.patch
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  polkit-devel >= 0.98
@@ -43,7 +43,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}-%{snapshot}
 
-%patch0 -p1 -b .cmakefix
+%patch0 -p1 -b .coinstallable
 
 %build
 mkdir -p %{_target_platform}
@@ -69,21 +69,21 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc AUTHORS COPYING README
-%{_kf5_libdir}/libpolkit-qt-core-1.so.1*
-%{_kf5_libdir}/libpolkit-qt-gui-1.so.1*
-%{_kf5_libdir}/libpolkit-qt-agent-1.so.1*
+%{_kf5_libdir}/libpolkit-qt5-core-1.so.1*
+%{_kf5_libdir}/libpolkit-qt5-gui-1.so.1*
+%{_kf5_libdir}/libpolkit-qt5-agent-1.so.1*
 
 %files devel
 #%{_kf5_sysconfdir}/rpm/macros.polkit-qt
-%{_kf5_includedir}/polkit-qt-1/
-%{_kf5_libdir}/libpolkit-qt-core-1.so
-%{_kf5_libdir}/libpolkit-qt-gui-1.so
-%{_kf5_libdir}/libpolkit-qt-agent-1.so
-%{_kf5_libdir}/pkgconfig/polkit-qt-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt-core-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt-gui-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt-agent-1.pc
-%{_kf5_libdir}/cmake/PolkitQt-1/
+%{_kf5_includedir}/polkit-qt5-1/
+%{_kf5_libdir}/libpolkit-qt5-core-1.so
+%{_kf5_libdir}/libpolkit-qt5-gui-1.so
+%{_kf5_libdir}/libpolkit-qt5-agent-1.so
+%{_kf5_libdir}/pkgconfig/polkit-qt5-1.pc
+%{_kf5_libdir}/pkgconfig/polkit-qt5-core-1.pc
+%{_kf5_libdir}/pkgconfig/polkit-qt5-gui-1.pc
+%{_kf5_libdir}/pkgconfig/polkit-qt5-agent-1.pc
+%{_kf5_libdir}/cmake/PolkitQt5-1/
 
 %files doc
 %doc html/*
