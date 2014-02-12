@@ -1,9 +1,9 @@
-%define snapshot 20140205
+#%define snapshot 20140205
 %define framework kunitconversion
 
 Name:           kf5-%{framework}
 Version:        4.96.0
-Release:        0.1.%{snapshot}git%{?dist}
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for unit conversions
 
 License:        GPLv2+
@@ -11,8 +11,8 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -66,6 +66,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.96.0)
+
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140205git
 - Update to pre-relase snapshot of 4.96.0
 
