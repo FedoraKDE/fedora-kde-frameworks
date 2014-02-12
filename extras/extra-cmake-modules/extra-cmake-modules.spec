@@ -1,11 +1,12 @@
 # There's nothing to debug
 %global debug_package   %{nil}
-%global snapshot 20140205
+#%global snapshot 20140205
+%global frameworksversion 4.96.0
 
 Name:           extra-cmake-modules
 Version:        0.0.10
 Epoch:          1
-Release:        0.1.%{snapshot}git%{?dist}
+Release:        1
 Summary:        Additional modules for CMake build system
 BuildArch:      noarch
 
@@ -15,8 +16,8 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name},git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        http://download.kde.org/unstable/frameworks/4.95.0/%{name}-%{version}.tar.xz
+#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        http://download.kde.org/unstable/frameworks/%{frameworksversion}/%{name}-%{version}.tar.xz
 
 BuildRequires:  cmake
 BuildRequires:  kf5-filesystem
@@ -50,6 +51,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.10-1
+- Update to KDE Frameworks 5 Alpha 1 (4.96.0)
+
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.10-0.1.20140205git
 - Update to pre-relase snapshot of 0.0.10
 
@@ -58,7 +62,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 - rebulild against updated kf5-filesystem
 
 * Thu Jan  9 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-1
-- Update to KDE Frameworks 5 TP1 (4.9.95)
+- Update to KDE Frameworks 5 TP1 (4.95.0)
 
 * Tue Jan  7 2014 Daniel Vrátil <dvratil@redhat.com> 1:0.0.9-0.1.20140104git
 - Match version with upstream: 0.0.9 (ECM is not a framework, it does not follow the 5.x.x scheme)

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.96.0
-Release:        0.1.20140205git%{?dist}
+Release:        1
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 
@@ -24,6 +24,9 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 /opt/kf5
 
 %changelog
+* Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.96.0)
+
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140205git
 - Update to pre-release snapshot of 4.96.0
 
