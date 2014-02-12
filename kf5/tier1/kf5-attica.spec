@@ -1,10 +1,10 @@
-%define snapshot 20140206
+#%define snapshot 20140206
 %define framework attica
 
 
 Name:           kf5-attica
 Version:        4.96.0
-Release:        %{snapshot}git%{?dist}
+Release:        1%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with implementation of the Open Collaboration Services API
 
 Group:          Development/Libraries
@@ -14,9 +14,9 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/attica,git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 
-#Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -75,6 +75,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.96.0)
+
 * Thu Feb 06 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-20140206git
 - Attica is now a proper Tier 1 framework
 
