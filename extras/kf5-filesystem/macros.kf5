@@ -1,15 +1,16 @@
-%_kf5_prefix /opt/kf5
-%_kf5_archdatadir %{_kf5_prefix}
-%_kf5_bindir %{_kf5_prefix}/bin
-%_kf5_datadir %{_kf5_prefix}/share
-%_kf5_docdir %{_kf5_prefix}/doc
-%_kf5_includedir %{_kf5_prefix}/include
-%_kf5_libdir %{_kf5_prefix}/%{_lib}
-%_kf5_libexecdir %{_kf5_prefix}/libexec
-%_kf5_plugindir %{_kf5_libdir}/kf5/
-%_kf5_qtplugindir %{_kf5_libdir}/qt5/plugins
-%_kf5_sysconfdir %{_kf5_prefix}/etc
-%_kf5_mandir %{_kf5_datadir}/man
+%_kf5_prefix %_prefix
+%_kf5_archdatadir %_libdir/qt5
+%_kf5_bindir %_kf5_prefix/bin
+%_kf5_datadir %_datadir
+%_kf5_docdir /usr/share/doc
+%_kf5_includedir %_kf5_prefix/include
+%_kf5_libdir %_libdir
+%_kf5_libexecdir %_libexecdir
+%_kf5_plugindir %_kf5_libdir/plugins/kf5
+%_kf5_qtplugindir %_qt5_plugindir
+%_kf5_sysconfdir %_kf5_prefix/etc
+%_kf5_mandir %_kf5_datadir/man
+
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
   PATH="%{_kf5_bindir}:$PATH" ; export PATH ; \
@@ -21,17 +22,17 @@
   %{__cmake} \\\
     -DBUILD_SHARED_LIBS:BOOL=ON \\\
     -DCMAKE_BUILD_TYPE=release \\\
-    -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
+    -DCMAKE_INSTALL_PREFIX:PATH=%_kf5_prefix \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
-    -DINCLUDE_INSTALL_DIR:PATH=include \\\
-    -DLIB_INSTALL_DIR:PATH=%{_lib} \\\
+    -DINCLUDE_INSTALL_DIR:STRINGH=include \\\
+    -DLIB_INSTALL_DIR:STRING=%{_lib} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
 %endif \
-    -DBIN_INSTALL_DIR:PATH=bin \\\
-    -DDATA_INSTALL_DIR:PATH=share \\\
-    -DLIBEXEC_INSTALL_DIR:PATH=libexec \\\
-    -DPLUGIN_INSTALL_DIR:PATH=%{_lib}/kf5 \\\
-    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_lib}/qt5/plugins \\\
-    -DSYSCONF_INSTALL_DIR:PATH=etc \\\
-    -DBUILD_TESTING:BOOL=FALSE
+    -DBIN_INSTALL_DIR:STRING=bin \\\
+    -DDATA_INSTALL_DIR:STRING=share \\\
+    -DLIBEXEC_INSTALL_DIR:STRING=libexec \\\
+    -DSYSCONF_INSTALL_DIR:STRING=etc \\\
+    -DBUILD_TESTING:BOOL=FALSE \\\
+    -DQT_PLUGIN_INSTALL_DIR:STRING=%{_qt5_plugindir} \\\
+    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_lib}/qt5/mkspecs/modules

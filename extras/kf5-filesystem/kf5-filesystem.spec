@@ -21,7 +21,6 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 %files
 %{_rpmconfigdir}/macros.d/macros.kf5
-/opt/kf5
 
 %changelog
 * Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
