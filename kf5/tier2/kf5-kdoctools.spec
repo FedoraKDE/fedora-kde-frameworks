@@ -63,13 +63,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/checkXML5
 %{_kf5_bindir}/meinproc5
-%{_kf5_libdir}/libKF5XsltKde.a
 %{_kf5_datadir}/ksgmltools2/customization/*
 %{_kf5_datadir}/man/*
 
 
 %files devel
 %{_kf5_includedir}/XsltKde/*
+%{_kf5_libdir}/libKF5XsltKde.a
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
