@@ -45,7 +45,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 
 %post -p /sbin/ldconfig
-1
+
 %postun -p /sbin/ldconfig
 
 
