@@ -1,19 +1,21 @@
-%define snapshot  20140110
+%define snapshot  20140213
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        6.%{snapshot}git%{?dist}
+Release:        5.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
+# git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/kde-workspace.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source1:        kde5-plasma.desktop
 Source2:        fedora_startkde.sh
+
+Patch0:         kde5-workspace-fix-kactivities-build.patch
 
 # udev
 BuildRequires:  systemd-devel
@@ -61,6 +63,7 @@ BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtwebkit-devel
 BuildRequires:  phonon-qt5-devel
 
+BuildRequires:  kde5-filesystem
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-kidletime-devel
@@ -75,6 +78,7 @@ BuildRequires:  kf5-threadweaver-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kauth-devel
 BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kjsembed-devel
 BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-sonnet-devel
@@ -109,11 +113,10 @@ BuildRequires:  kf5-kinit-devel
 BuildRequires:  kf5-kpty-devel
 BuildRequires:  kf5-kde4support-devel
 BuildRequires:  kf5-kdesignerplugin-devel
-
-BuildRequires:  plasma-framework-devel
-BuildRequires:  attica-qt5-devel
-BuildRequires:  kactivities-qt5-devel
-
+BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-attica-devel
+BuildRequires:  kf5-kactivities-libs-devel
+BuildRequires:  kf5-krunner-devel
 
 Requires:       kf5-kinit
 Requires:       kf5-kded
@@ -161,15 +164,14 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}-%{snapshot}
+%setup -q -n %{name}-%{version}
+
+%patch0 -p1 -b .kactivities
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-# LIBEXEC_INSTALL_DIR automatically prefixed by CMAKE_INSTALL_PREFIX internally
-%{cmake_kf5} \
-        -DLIBEXEC_INSTALL_DIR=libexec \
-        ..
+%{cmake_kde5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -179,90 +181,90 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
 install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
-install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kf5_bindir}/fedora_startkde
+install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 
 # plasma-shell keeps complaining about this ServiceType missing, but it's not
-# installeed, because plasmagenericshell is not compiled
+# installed, because plasmagenericshell is not compiled
 install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
-                    %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
+                    %{buildroot}/%{_kde5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
 
 
-%post /sbin/ldconfig
+%post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%{_kf5_bindir}/*
-%{_kf5_libdir}/*.so.*
-%{_kf5_plugindir}/*.so
-%{_kf5_plugindir}/plasma/dataengine/*.so
-%{_kf5_plugindir}/plasma/geolocationprovider/*.so
-%{_kf5_plugindir}/plasma/packagestructure/*.so
-%{_kf5_qtplugindir}/styles/oxygen.so
-%{_kf5_qtplugindir}/kf5/*.so
-%{_kf5_libdir}/qml/org/kde/*
-%{_kf5_libdir}/kconf_update_bin
-%{_kf5_libexecdir}/*
-%{_kf5_datadir}/kde5/services/*.desktop
-%{_kf5_datadir}/kde5/services/*.protocol
-%{_kf5_datadir}/kde5/services/kwin/*.desktop
-%{_kf5_datadir}/kde5/services/kded/*.desktop
-%{_kf5_datadir}/kde5/services/ServiceMenus/*.desktop
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
-%{_kf5_datadir}/applications/kde5/*.desktop
-%{_kf5_datadir}/systemsettings
-%{_kf5_datadir}/config.kcfg
-%{_kf5_datadir}/kwin
-%{_kf5_datadir}/icons/*
-%{_kf5_datadir}/kconf_update/*
-%{_kf5_datadir}/ksmserver
-%{_kf5_datadir}/ksplash
-%{_kf5_datadir}/powerdevil
-%{_kf5_datadir}/ksysguard
-%{_kf5_datadir}/kcmkeyboard
-%{_kf5_datadir}/kcminput
-%{_kf5_datadir}/color-schemes
-%{_kf5_datadir}/kthememanager
-%{_kf5_datadir}/kdisplay
-%{_kf5_datadir}/kcontrol
-%{_kf5_datadir}/kcmstyle
-%{_kf5_datadir}/kcmkeys
-%{_kf5_datadir}/kfontinst
-%{_kf5_datadir}/kfontview
-%{_kf5_datadir}/konqsidebartng
-%{_kf5_datadir}/kmenuedit
-%{_kf5_datadir}/freespacenotifier
-%{_kf5_datadir}/kinfocenter
-%{_kf5_datadir}/kcmusb
-%{_kf5_datadir}/kcmview1394
-%{_kf5_datadir}/khotkeys
-%{_kf5_datadir}/kaccess
-%{_kf5_datadir}/plasma/plasmoids
-%{_kf5_datadir}/plasma/services
-%{_kf5_datadir}/plasma/shareprovider
-%{_kf5_datadir}/plasma/wallpapers
-%{_kf5_datadir}/plasma/shells
-%{_kf5_datadir}/plasma/look-and-feel
-%{_kf5_datadir}/plasma/packages
-%{_kf5_datadir}/solid
-%{_kf5_datadir}/kstyle
+%{_kde5_bindir}/*
+%{_kde5_libdir}/*.so.*
+%{_kde5_plugindir}/*.so
+%{_kde5_plugindir}/plasma/dataengine/*.so
+%{_kde5_plugindir}/plasma/geolocationprovider/*.so
+%{_kde5_plugindir}/plasma/packagestructure/*.so
+%{_kde5_qtplugindir}/styles/oxygen.so
+%{_kde5_qtplugindir}/kf5/*.so
+%{_kde5_libdir}/qml/org/kde/*
+%{_kde5_libdir}/kconf_update_bin
+%{_kde5_libexecdir}/*
+%{_kde5_datadir}/kde5/services/*.desktop
+%{_kde5_datadir}/kde5/services/*.protocol
+%{_kde5_datadir}/kde5/services/kwin/*.desktop
+%{_kde5_datadir}/kde5/services/kded/*.desktop
+%{_kde5_datadir}/kde5/services/ServiceMenus/*.desktop
+%{_kde5_datadir}/kde5/servicetypes/*.desktop
+%{_kde5_datadir}/applications/kde5/*.desktop
+%{_kde5_datadir}/systemsettings
+%{_kde5_datadir}/config.kcfg
+%{_kde5_datadir}/kwin
+%{_kde5_datadir}/icons/*
+%{_kde5_datadir}/kconf_update/*
+%{_kde5_datadir}/ksmserver
+%{_kde5_datadir}/ksplash
+%{_kde5_datadir}/powerdevil
+%{_kde5_datadir}/ksysguard
+%{_kde5_datadir}/kcmkeyboard
+%{_kde5_datadir}/kcminput
+%{_kde5_datadir}/color-schemes
+%{_kde5_datadir}/kthememanager
+%{_kde5_datadir}/kdisplay
+%{_kde5_datadir}/kcontrol
+%{_kde5_datadir}/kcmstyle
+%{_kde5_datadir}/kcmkeys
+%{_kde5_datadir}/kfontinst
+%{_kde5_datadir}/kfontview
+%{_kde5_datadir}/konqsidebartng
+%{_kde5_datadir}/kmenuedit
+%{_kde5_datadir}/freespacenotifier
+%{_kde5_datadir}/kinfocenter
+%{_kde5_datadir}/kcmusb
+%{_kde5_datadir}/kcmview1394
+%{_kde5_datadir}/khotkeys
+%{_kde5_datadir}/kaccess
+%{_kde5_datadir}/plasma/plasmoids
+%{_kde5_datadir}/plasma/services
+%{_kde5_datadir}/plasma/shareprovider
+%{_kde5_datadir}/plasma/wallpapers
+%{_kde5_datadir}/plasma/shells
+%{_kde5_datadir}/plasma/look-and-feel
+%{_kde5_datadir}/plasma/packages
+%{_kde5_datadir}/solid
+%{_kde5_datadir}/kstyle
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
 %{_datadir}/xsessions/kde5-plasma.desktop
 
-%{_kf5_sysconfdir}/xdg/*.knsrc
-%{_kf5_sysconfdir}/ksysguarddrc
-%{_kf5_sysconfdir}/xdg/autostart/*.desktop
+%{_kde5_sysconfdir}/xdg/*.knsrc
+%{_kde5_sysconfdir}/ksysguarddrc
+%{_kde5_sysconfdir}/xdg/autostart/*.desktop
 
 %files doc
 %doc COPYING COPYING.DOC COPYING.LIB README README.pam
-%{_kf5_datadir}/doc/HTML/en/*
+%{_kde5_datadir}/doc/HTML/en/*
 
 %files devel
-%{_kf5_libdir}/KDE4Workspace/
-%{_kf5_libdir}/*.so
-%{_kf5_includedir}/*
-%{_kf5_datadir}/dbus-1/interfaces/*.xml
+%{_kde5_libdir}/KDE4Workspace/
+%{_kde5_libdir}/*.so
+%{_kde5_includedir}/*
+%{_kde5_datadir}/dbus-1/interfaces/*.xml
 
 # TODO split to subpackages
 # - KCM (?)
@@ -272,6 +274,9 @@ install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
 
 
 %changelog
+* Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-5.20140213git
+- update to latest git snapshot
+
 * Sat Feb 08 2014 Martin Briza <mbriza@redhat.com> 4.95.0-6
 - prevent annoying errors on package removing
 
