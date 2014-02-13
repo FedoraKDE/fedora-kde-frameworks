@@ -84,6 +84,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+# This file is installed by kdelibs-common and I currently see no way to work around it
+rm %{buildroot}/%{_kf5_datadir}/locale/en_US/entry.desktop
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -93,11 +96,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kf5-config
 %{_kf5_libdir}/libKF5KDE4Support.so.*
-%{_kf5_plugindir}/*.so
+%{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_qtplugindir}/designer/*.so
 %{_kf5_libexecdir}/fileshareset
 %{_kf5_libexecdir}/filesharelist
-%{_kf5_mandir}/man1/kf5-config.1
+%{_kf5_mandir}/man1/*
 %{_kf5_datadir}/kde5/services/*.protocol
 %{_kf5_datadir}/kde5/services/*.desktop
 %{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop

@@ -75,7 +75,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_plugindir}/*.so
+%{_kf5_qtplugindir}/kf5/kfileaudiopreview.so
 
 
 %changelog
