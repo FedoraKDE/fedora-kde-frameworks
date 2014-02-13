@@ -3,7 +3,6 @@ kf5-filesystem
 extra-cmake-modules
 dbusmenu-qt5
 kf5-umbrella
-kactivities-qt5
 polkit-qt5
 
 ## TIER 1
@@ -63,6 +62,8 @@ kf5-kross
 kf5-knewstuff
 kf5-kemoticons
 kf5-kmediaplayer
+kf5-kactivities
+kf5-plasma
 
 ## TIER 4
 kf5-frameworkintegration
