@@ -1,18 +1,18 @@
-%global snapshot 20140109
+%global snapshot 20140213
 
 Summary:        A Qt implementation of the DBusMenu protocol (Qt5 version)
 Name:           dbusmenu-qt5
 Version:        0.9.2
-Release:        0.1.%{snapshot}git
+Release:        0.2.%{snapshot}bzr%{?dist}
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://launchpad.net/libdbusmenu-qt/
 
 #Source0 :       https://launchpad.net/libdbusmenu-qt/trunk/%{version}/+download/libdbusmenu-qt-%{version}.tar.bz2
-# bzr branch lp:libdbusmenu-qt && mv libdbusmenu-qt{,-%{version}} && \
-# tar -c libdbusmenu-qt-0.9.2 | bzip2 -c > libdbusmenu-qt-0.9.2-${snapshot}.tar.bz2
-Source0:        libdbusmenu-qt-%{version}-%{snapshot}.tar.bz2
+# bzr branch lp:libdbusmenu-qt && mv libdbusmenu-qt{,5-%{version}} && \
+# tar -c libdbusmenu-qt5-0.9.2 | bzip2 -c > libdbusmenu-qt5-0.9.2-${snapshot}bzr.tar.bz2
+Source0:        libdbusmenu-qt5-%{version}-%{snapshot}bzr.tar.bz2
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
@@ -38,7 +38,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n libdbusmenu-qt-%{version}
+%setup -q -n libdbusmenu-qt5-%{version}
 
 
 %build
@@ -92,5 +92,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 0.9.2-0.2.20140213bzr
+- Update to latest git snapshot, rebuild to install to /usr prefix
+
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> - 0.9.2-0.1.20140205bzr
+- Update to latest git snapshot
+
 * Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> - 0.9.2-1
 - fork from dbusmenu-qt, built against Qt 5
