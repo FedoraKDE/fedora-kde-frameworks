@@ -120,6 +120,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 # Rename /usr/bin/plasmapkg to /usr/bin/plasmapkg2 to prevent conflict with kde-workspaces
 mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,2}
+# Installed by kf5-krunner now
+rm %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-runner.desktop
 
 %post -p /sbin/ldconfig
 
@@ -129,7 +131,7 @@ mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,2}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/dpitest
-%{_kf5_bindir}/plasmapkg5
+%{_kf5_bindir}/plasmapkg2
 %{_kf5_bindir}/plasma-shell
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
