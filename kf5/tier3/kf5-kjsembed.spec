@@ -60,7 +60,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kjscmd5
 %{_kf5_bindir}/kjsconsole
 %{_kf5_libdir}/libKF5JsEmbed.so.*
-%{_kf5_datadir}/man/man1/kjscmd5.1
+%{_kf5_datadir}/man/man1/*
 
 
 %files devel

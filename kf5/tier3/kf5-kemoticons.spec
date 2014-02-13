@@ -59,7 +59,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Emoticons.so.*
-%{_kf5_plugindir}/*.so
+%{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_datadir}/kde5/services/*
 %{_kf5_datadir}/kde5/servicetypes/*
 

@@ -69,7 +69,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libkdeinit5_kded5.so
 %{_kf5_datadir}/dbus-1/services/*.service
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
-%{_kf5_mandir}/man8/kded5.8
+%{_kf5_mandir}/man8/*
 
 %files devel
 %{_kf5_libdir}/cmake/KDED

@@ -87,7 +87,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kgendesignerplugin
-%{_kf5_mandir}/man1/kgendesignerplugin.1
+%{_kf5_mandir}/man1/*
 %{_kf5_qtplugindir}/designer/*.so
 %{_kf5_datadir}/kf5widgets/*
 

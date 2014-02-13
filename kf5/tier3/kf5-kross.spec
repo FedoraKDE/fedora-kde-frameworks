@@ -98,10 +98,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-mkdir -p %{buildroot}/%{_kf5_plugindir}/plugins && \
-       mv %{buildroot}/%{_kf5_plugindir}/KrossModule{Forms,KdeTranslation}.so \
-          %{buildroot}/%{_kf5_plugindir}/plugins/
-
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -116,8 +112,8 @@ mkdir -p %{buildroot}/%{_kf5_plugindir}/plugins && \
 
 %files ui
 %{_kf5_libdir}/libKF5KrossUi.so.*
-%{_kf5_plugindir}/plugins/KrossModuleForms.so
-%{_kf5_plugindir}/plugins/KrossModuleKdeTranslation.so
+%{_kf5_qtplugindir}/kf5/KrossModuleForms.so
+%{_kf5_qtplugindir}/kf5/KrossModuleKdeTranslation.so
 
 %files doc
 %doc COPYING.LIB README.md
