@@ -1,17 +1,18 @@
-%define snapshot  20140110
+%define framework plasma
 
-Name:           plasma-framework
-Version:        4.90.1
-Release:        0.1.%{snapshot}git%{?dist}
-Summary:        Plasma 2 libraries and runtime components
+Name:           kf5-%{framework}
+Version:        4.96.0
+Release:        1
+Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
+# git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -37,7 +38,8 @@ BuildRequires:  qt5-qtbase-postgresql
 BuildRequires:  qt5-qtbase-tds
 
 BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-umbrella
+BuildRequires:  kf5-attica-devel
+BuildRequires:  kf5-kactivities-libs-devel
 BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-kitemmodels-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
@@ -74,12 +76,9 @@ BuildRequires:  kf5-kross-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kdnssd-devel
 
-BuildRequires:  attica-qt5-devel
-BuildRequires:  kactivities-qt5-devel
-
 
 %description
-Plasma 2 libraries and runtime components
+KDE Frameworks 5 Tier 3 module with Plasma 2 libraries and runtime components
 
 
 %package        devel
@@ -99,7 +98,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}-%{snapshot}
+%setup -q -n %{framework}-framework-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -112,6 +111,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+# Rename /usr/bin/plasmapkg to /usr/bin/plasmapkg5 to prevent conflict with kde-workspaces
+mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,5}
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -119,21 +121,22 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md
-%{_kf5_bindir}/plasmapkg
+%{_kf5_bindir}/dpitest
+%{_kf5_bindir}/plasmapkg5
 %{_kf5_bindir}/plasma-shell
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
 %{_kf5_libdir}/platformqml/touch/org/kde/plasma
 %{_kf5_libdir}/qml/org/kde/*
-%{_kf5_libdir}/qml/org/kde/*
-%{_kf5_plugindir}/*.so
-%{_kf5_plugindir}/plasma/dataengine/
+%{_kf5_qtplugindir}/kf5/*.so
+%{_kf5_qtplugindir}/kf5/plasma/dataengine/
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/desktoptheme/*
 %{_kf5_datadir}/plasma/
 %{_kf5_datadir}/kde5/services/*.desktop
 %{_kf5_datadir}/kde5/services/kded/*.desktop
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/plasma_scriptengine_ruby/data_engine.rb
 %{_kf5_sysconfdir}/xdg/autostart/plasma-shell.desktop
 
 
@@ -152,5 +155,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1
+- upgrade to Tier 3 Framework kf5-plasma
+
 * Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version
