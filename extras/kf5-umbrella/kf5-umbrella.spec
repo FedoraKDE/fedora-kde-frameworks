@@ -1,3 +1,5 @@
+# There's nothing to debug
+%global debug_package   %{nil}
 %define framework umbrella
 #%define snapshot 20140205
 
