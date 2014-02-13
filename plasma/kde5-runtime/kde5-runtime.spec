@@ -1,19 +1,19 @@
-%define snapshot  20140116
+%define snapshot  20140213
 
 Name:           kde5-runtime
 Version:        4.90.1
-Release:        4.%{snapshot}git%{?dist}
+Release:        5.%{snapshot}git%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/%{name}.git framework | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}.tar.bz2
+# git archive --format=tar --prefix=%{name}-%{version}/ \
+#             --remote=git://anongit.kde.org/%{name}.git frameworks | \
+# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 
-Patch0:         kde5-runtime-kioexec-crash.patch
+#Patch0:         kde5-runtime-kioexec-crash.patch
 
 # udev
 BuildRequires:  openslp-devel
@@ -35,6 +35,7 @@ BuildRequires:  qt5-qtwebkit-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  phonon-qt5-devel
 
+BuildRequires:  kde5-filesystem
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-kidletime-devel
@@ -80,9 +81,8 @@ BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kde4support-devel
 BuildRequires:  kf5-kdesignerplugin-devel
 BuildRequires:  kf5-kdoctools-devel
-
-BuildRequires:  plasma-framework-devel
-BuildRequires:  attica-qt5-devel
+BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-attica-devel
 
 Requires:       oxygen-icon-theme >= 4.11.0
 Requires:       dbus-x11
@@ -98,14 +98,14 @@ Provides:       dbus-notification-daemon
 KDE core runtime components
 
 %prep
-%setup -q -n %{name}-%{version}-%{snapshot}
+%setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .kioexec
+#%patch0 -p1 -b .kioexec
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kde5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -119,42 +119,43 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING COPYING.LIB
-%{_kf5_bindir}/kglobalaccel
-%{_kf5_bindir}/kuiserver
-%{_kf5_bindir}/ktrash
-%{_kf5_bindir}/kcmshell5
-%{_kf5_bindir}/kioclient
-%{_kf5_bindir}/kdeopen
-%{_kf5_bindir}/kdecp
-%{_kf5_bindir}/kdemv
-%{_kf5_bindir}/ktraderclient
-%{_kf5_libexecdir}/drkonqi
-%{_kf5_libexecdir}/kioexec
-%{_kf5_libdir}/libkdeinit5_*.so
-%{_kf5_plugindir}/kded_*.so
-%{_kf5_plugindir}/kcm_*.so
-%{_kf5_plugindir}/kio_*.so
-%{_kf5_plugindir}/jpegthumbnail.so
-%{_kf5_plugindir}/imagethumbnail.so
-%{_kf5_plugindir}/kcmspellchecking.so
+%{_kde5_bindir}/kglobalaccel
+%{_kde5_bindir}/kuiserver
+%{_kde5_bindir}/ktrash
+%{_kde5_bindir}/kcmshell5
+%{_kde5_bindir}/kioclient
+%{_kde5_bindir}/kdeopen
+%{_kde5_bindir}/kdecp
+%{_kde5_bindir}/kdemv
+%{_kde5_bindir}/ktraderclient
+%{_kde5_bindir}/kiconfinder
+%{_kde5_libexecdir}/drkonqi
+%{_kde5_libexecdir}/kioexec
+%{_kde5_libdir}/libkdeinit5_*.so
+%{_kde5_plugindir}/kf5/kded_*.so
+%{_kde5_plugindir}/kf5/kcm_*.so
+%{_kde5_plugindir}/kf5/kio_*.so
+%{_kde5_plugindir}/kf5/jpegthumbnail.so
+%{_kde5_plugindir}/kf5/imagethumbnail.so
+%{_kde5_plugindir}/kf5/kcmspellchecking.so
 
-%{_kf5_datadir}/config.kcfg/jpegcreatorsettings.kcfg
-%{_kf5_datadir}/dbus-1/services/*.service
-%{_kf5_datadir}/desktop-directories/kde-information.directory
-%{_kf5_datadir}/drkonqi/
-%{_kf5_datadir}/kcm_componentchooser/*.desktop
-%{_kf5_datadir}/kcmlocale/
-%{_kf5_datadir}/kconf_update/*.upd
-%{_kf5_datadir}/kde5/services/*.desktop
-%{_kf5_datadir}/kde5/services/*.protocol
-%{_kf5_datadir}/kde5/services/kded/*.desktop
-%{_kf5_datadir}/kde5/servicetypes/thumbcreator.desktop
-%{_kf5_datadir}/kglobalaccel/
-%{_kf5_datadir}/konqueror/dirtree/remote/smb-network.desktop
-%{_kf5_datadir}/ksmserver/windowmanagers/*.desktop
-%{_kf5_datadir}/remoteview/
-%{_kf5_sysconfdir}/xdg/*.knsrc
-%{_kf5_sysconfdir}/xdg/menus/kde-information.menu
+%{_kde5_datadir}/config.kcfg/jpegcreatorsettings.kcfg
+%{_kde5_datadir}/dbus-1/services/*.service
+%{_kde5_datadir}/desktop-directories/kde-information.directory
+%{_kde5_datadir}/drkonqi/
+%{_kde5_datadir}/kcm_componentchooser/*.desktop
+%{_kde5_datadir}/kcmlocale/
+%{_kde5_datadir}/kconf_update/*.upd
+%{_kde5_datadir}/kde5/services/*.desktop
+%{_kde5_datadir}/kde5/services/*.protocol
+%{_kde5_datadir}/kde5/services/kded/*.desktop
+%{_kde5_datadir}/kde5/servicetypes/thumbcreator.desktop
+%{_kde5_datadir}/kglobalaccel/
+%{_kde5_datadir}/konqueror/dirtree/remote/smb-network.desktop
+%{_kde5_datadir}/ksmserver/windowmanagers/*.desktop
+%{_kde5_datadir}/remoteview/
+%{_kde5_sysconfdir}/xdg/*.knsrc
+%{_kde5_sysconfdir}/xdg/menus/kde-information.menu
 
 # TODO Add subpackages:
 # - drkonqi
@@ -162,6 +163,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-5.20140213git
+- update to latest git snapshot
+
 * Sat Feb 08 2014 Martin Briza <mbriza@redhat.com> 4.90.1-4.20140116git
 - prevent annoying errors on package removing
 
