@@ -14,6 +14,11 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
 
+Patch0:         kf5-plasma-versionh-header-guard.patch
+
+Provides:       plasma-framework
+Obsoletes:      plasma-framework
+
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
 BuildRequires:  libXrender-devel
@@ -100,6 +105,8 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-framework-%{version}
 
+%patch0 -p1 -b .headerguard
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -111,8 +118,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-# Rename /usr/bin/plasmapkg to /usr/bin/plasmapkg5 to prevent conflict with kde-workspaces
-mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,5}
+# Rename /usr/bin/plasmapkg to /usr/bin/plasmapkg2 to prevent conflict with kde-workspaces
+mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,2}
 
 %post -p /sbin/ldconfig
 
