@@ -29,14 +29,15 @@ BuildRequires:  qt5-qtbase-mysql
 BuildRequires:  qt5-qtbase-postgresql
 BuildRequires:  qt5-qtbase-tds
 
+BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kjs-devel
 
 Requires:       kf5-kactivities-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kactivities-runtime%{?_isa} = %{version}-%{release}
