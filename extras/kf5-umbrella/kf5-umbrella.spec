@@ -6,7 +6,7 @@
 Name:           kf5-%{framework}
 Version:        4.96.0
 Epoch:          1
-Release:        1
+Release:        1%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
 
 License:        GPLv2+
