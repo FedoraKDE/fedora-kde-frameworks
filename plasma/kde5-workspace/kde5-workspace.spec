@@ -120,6 +120,7 @@ BuildRequires:  kf5-krunner-devel
 
 Requires:       kf5-kinit
 Requires:       kf5-kded
+Requires:       kf5-kdoctools
 Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 
@@ -183,12 +184,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
 install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 
-# plasma-shell keeps complaining about this ServiceType missing, but it's not
-# installed, because plasmagenericshell is not compiled
-install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
-                    %{buildroot}/%{_kde5_datadir}/kde5/servicetypes/plasma-layout-template.desktop
-
-
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -196,12 +191,11 @@ install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
 %files
 %{_kde5_bindir}/*
 %{_kde5_libdir}/*.so.*
-%{_kde5_plugindir}/*.so
-%{_kde5_plugindir}/plasma/dataengine/*.so
-%{_kde5_plugindir}/plasma/geolocationprovider/*.so
-%{_kde5_plugindir}/plasma/packagestructure/*.so
-%{_kde5_qtplugindir}/styles/oxygen.so
-%{_kde5_qtplugindir}/kf5/*.so
+%{_kde5_plugindir}/kf5/plasma/dataengine/*.so
+%{_kde5_plugindir}/kf5/plasma/geolocationprovider/*.so
+%{_kde5_plugindir}/kf5/plasma/packagestructure/*.so
+%{_kde5_plugindir}/styles/oxygen.so
+%{_kde5_plugindir}/kf5/*.so
 %{_kde5_libdir}/qml/org/kde/*
 %{_kde5_libdir}/kconf_update_bin
 %{_kde5_libexecdir}/*
@@ -248,6 +242,7 @@ install -p -m655 -D ./libs/plasmagenericshell/plasma-layout-template.desktop \
 %{_kde5_datadir}/plasma/packages
 %{_kde5_datadir}/solid
 %{_kde5_datadir}/kstyle
+%{_kde5_datadir}/sounds/pop.wav
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
 %{_datadir}/xsessions/kde5-plasma.desktop
