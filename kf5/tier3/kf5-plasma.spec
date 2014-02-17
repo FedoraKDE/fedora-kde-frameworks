@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.96.0
-Release:        1
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
@@ -43,6 +43,7 @@ BuildRequires:  qt5-qtbase-postgresql
 BuildRequires:  qt5-qtbase-tds
 
 BuildRequires:  extra-cmake-modules
+BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kactivities-libs-devel
 BuildRequires:  kf5-kidletime-devel
