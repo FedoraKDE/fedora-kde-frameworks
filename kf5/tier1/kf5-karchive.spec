@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.96.0
-Release:        1
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        GPLv2+
