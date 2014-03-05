@@ -3,7 +3,7 @@
 
 
 Name:           kf5-attica
-Version:        4.96.0
+Version:        4.97.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with implementation of the Open Collaboration Services API
 
@@ -75,6 +75,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.96.0)
 

@@ -2,7 +2,7 @@
 %define framework sonnet
 
 Name:           kf5-%{framework}
-Version:        4.96.0
+Version:        4.97.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
@@ -85,7 +85,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files devel
 %{_kf5_includedir}/sonnet_version.h
-%{_kf5_includedir}/sonnet
+%{_kf5_includedir}/SonnetCore
+%{_kf5_includedir}/SonnetUi
 %{_kf5_libdir}/libKF5SonnetCore.so
 %{_kf5_libdir}/libKF5SonnetUi.so
 %{_kf5_libdir}/cmake/KF5Sonnet
@@ -93,6 +94,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_SonnetUi.pri
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.96.0)
 
