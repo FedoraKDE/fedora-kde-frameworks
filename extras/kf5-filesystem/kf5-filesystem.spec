@@ -1,8 +1,8 @@
 %define framework filesystem
 
 Name:           kf5-%{framework}
-Version:        4.96.0
-Release:        2
+Version:        4.97.0
+Release:        1
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 
@@ -22,6 +22,9 @@ cp %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 %{_rpmconfigdir}/macros.d/macros.kf5
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 2 (4.97.0)
+
 * Thu Feb 13 2014 Daniel Vrátil <dvraitl@redhat.com> 4.96.0-2
 - Remove unnecessary mkdirs
 
