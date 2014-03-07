@@ -1,7 +1,7 @@
 %define framework plasma
 
 Name:           kf5-%{framework}
-Version:        4.96.0
+Version:        4.97.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
@@ -13,8 +13,6 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
-
-Patch0:         kf5-plasma-versionh-header-guard.patch
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -106,8 +104,6 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-framework-%{version}
 
-%patch0 -p1 -b .headerguard
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -119,10 +115,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-# Rename /usr/bin/plasmapkg to /usr/bin/plasmapkg2 to prevent conflict with kde-workspaces
-mv %{buildroot}/%{_kf5_bindir}/plasmapkg{,2}
-# Installed by kf5-krunner now
-rm %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-runner.desktop
 
 %post -p /sbin/ldconfig
 
@@ -158,13 +150,13 @@ rm %{buildroot}/%{_kf5_datadir}/kde5/servicetypes/plasma-runner.desktop
 %{_kf5_libdir}/libKF5PlasmaQuick.so
 %{_kf5_includedir}/plasma_version.h
 %{_kf5_includedir}/plasma/
-%{_kf5_includedir}/plasmaquick/
 %{_kf5_includedir}/KDE/Plasma/
-%{_kf5_includedir}/KDE/PlasmaQuick/
-
 
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1
 - upgrade to Tier 3 Framework kf5-plasma
 

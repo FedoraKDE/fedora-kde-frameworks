@@ -2,7 +2,7 @@
 %define framework knotifications
 
 Name:           kf5-%{framework}
-Version:        4.96.0
+Version:        4.97.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 solution for notifications
 
@@ -17,10 +17,24 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 BuildRequires:  libX11-devel
 
 BuildRequires:  extra-cmake-modules
+BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kf5-filesystem
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 %description
@@ -67,6 +81,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.96.0)
 

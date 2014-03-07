@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
-Version:        4.96.0
+Version:        4.97.0
 Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
@@ -97,7 +97,6 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kde5/services/kactivitymanagerd.desktop
 %{_kf5_datadir}/kde5/servicetypes/activitymanager-plugin.desktop
 %{_kf5_qtplugindir}/kf5/activitymanager/
-%{_kf5_datadir}/ontology/kde/kao.*
 
 %files libs
 %{_kf5_libdir}/libKF5Activities.so.*
@@ -111,6 +110,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1
 - upgrade to Tier 3 Framework and rename from kactivities-qt5 to kf5-kactivities
 

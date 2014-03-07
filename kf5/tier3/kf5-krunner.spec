@@ -1,9 +1,9 @@
-%define snapshot 20140213
+# %define snapshot 20140213
 %define framework krunner
 
 Name:           kf5-%{framework}
-Version:        4.96.0
-Release:        0.1.%{snapshot}git%{?dist}
+Version:        4.97.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KRunner
 
 License:        GPLv2+
@@ -11,8 +11,8 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+# Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
 BuildRequires:  extra-cmake-modules
@@ -93,5 +93,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KRunner.pri
 
 %changelog
+* Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
+- Update to KDE Frameworks 5 Alpha 1 (4.97.0)
+
 * Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140213git
 - initial version
