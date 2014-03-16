@@ -1,8 +1,8 @@
-%define snapshot  20140213
+%define snapshot  20140315
 
 Name:           kde5-workspace
 Version:        4.90.1
-Release:        5.%{snapshot}git%{?dist}
+Release:        6.%{snapshot}git%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -14,8 +14,6 @@ URL:            http://www.kde.org
 Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source1:        kde5-plasma.desktop
 Source2:        fedora_startkde.sh
-
-Patch0:         kde5-workspace-fix-kactivities-build.patch
 
 # udev
 BuildRequires:  systemd-devel
@@ -103,7 +101,6 @@ BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kross-devel
 BuildRequires:  kf5-knotifyconfig-devel
-BuildRequires:  kf5-kprintutils-devel
 BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-knewstuff-devel
@@ -117,6 +114,7 @@ BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kactivities-libs-devel
 BuildRequires:  kf5-krunner-devel
+BuildRequires:  kf5-kemoticons-devel
 
 Requires:       kf5-kinit
 Requires:       kf5-kded
@@ -167,8 +165,6 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .kactivities
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -205,7 +201,7 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 %{_kde5_datadir}/kde5/services/kded/*.desktop
 %{_kde5_datadir}/kde5/services/ServiceMenus/*.desktop
 %{_kde5_datadir}/kde5/servicetypes/*.desktop
-%{_kde5_datadir}/applications/kde5/*.desktop
+%{_kde5_datadir}/applications/*.desktop
 %{_kde5_datadir}/systemsettings
 %{_kde5_datadir}/config.kcfg
 %{_kde5_datadir}/kwin
@@ -233,6 +229,7 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 %{_kde5_datadir}/kcmview1394
 %{_kde5_datadir}/khotkeys
 %{_kde5_datadir}/kaccess
+%{_kde5_datadir}/kwrited
 %{_kde5_datadir}/plasma/plasmoids
 %{_kde5_datadir}/plasma/services
 %{_kde5_datadir}/plasma/shareprovider
@@ -258,6 +255,7 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 %files devel
 %{_kde5_libdir}/KDE4Workspace/
 %{_kde5_libdir}/*.so
+%{_kde5_libdir}/cmake/KDecorations/
 %{_kde5_includedir}/*
 %{_kde5_datadir}/dbus-1/interfaces/*.xml
 
@@ -269,6 +267,9 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 
 
 %changelog
+* Sat Mar 15 2014 Jan Grulich <jgrulich@redhat.com 4.90.1-6.20140315git
+- update git snapshot
+
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-5.20140213git
 - update to latest git snapshot
 

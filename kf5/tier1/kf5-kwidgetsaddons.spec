@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.97.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtWidgets
 
 License:        GPLv2+
@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+Patch0:         button-box-access.patch
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -32,6 +34,8 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{framework}-%{version}
+
+%patch0 -p1 -b .button-box-access
 
 %build
 mkdir -p %{_target_platform}
@@ -64,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Mar 11 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-2
+- fix button box access
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

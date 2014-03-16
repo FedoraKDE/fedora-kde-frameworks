@@ -1,8 +1,9 @@
+%define snapshot  20140315
 %define framework plasma
 
 Name:           kf5-%{framework}
 Version:        4.97.0
-Release:        1%{?dist}
+Release:        3.%{snapshot}git%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
@@ -11,8 +12,8 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
+Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+# Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -154,6 +155,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sat Mar 15 2014 Jan Grulich <jgrulich@redhat.com 4.97.0-3.20140315git
+- update git snapshot
+
+* Wed Mar 12 2014 Jan Grulich <jgrulich@redhat.com 4.97.0-2.20140312git
+- update to git snapshot
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

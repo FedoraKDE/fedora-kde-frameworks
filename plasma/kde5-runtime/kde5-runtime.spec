@@ -1,8 +1,8 @@
-%define snapshot  20140213
+%define snapshot  20140315
 
 Name:           kde5-runtime
 Version:        4.90.1
-Release:        5.%{snapshot}git%{?dist}
+Release:        6.%{snapshot}git%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -34,6 +34,7 @@ BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtwebkit-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  phonon-qt5-devel
+BuildRequires:  alsa-lib-devel
 
 BuildRequires:  kde5-filesystem
 BuildRequires:  extra-cmake-modules
@@ -83,6 +84,9 @@ BuildRequires:  kf5-kdesignerplugin-devel
 BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-attica-devel
+BuildRequires:  kf5-khtml-devel
+BuildRequires:  kf5-kdesu-devel
+BuildRequires:  kf5-kpty-devel
 
 Requires:       oxygen-icon-theme >= 4.11.0
 Requires:       dbus-x11
@@ -99,8 +103,6 @@ KDE core runtime components
 
 %prep
 %setup -q -n %{name}-%{version}
-
-#%patch0 -p1 -b .kioexec
 
 %build
 mkdir -p %{_target_platform}
@@ -124,38 +126,84 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_bindir}/ktrash
 %{_kde5_bindir}/kcmshell5
 %{_kde5_bindir}/kioclient
+%{_kde5_bindir}/kde4-menu
 %{_kde5_bindir}/kdeopen
 %{_kde5_bindir}/kdecp
 %{_kde5_bindir}/kdemv
 %{_kde5_bindir}/ktraderclient
-%{_kde5_bindir}/kiconfinder
+%{_kde5_bindir}/kdebugdialog
+%{_kde5_bindir}/keditfiletype
+%{_kde5_bindir}/kfile5
+%{_kde5_bindir}/khelpcenter
+%{_kde5_bindir}/khotnewstuff4
+%{_kde5_bindir}/kmimetypefinder
+%{_kde5_bindir}/kreadconfig
+%{_kde5_bindir}/ksvgtopng
+%{_kde5_bindir}/kwriteconfig
+%{_kde5_bindir}/solid-hardware
 %{_kde5_libexecdir}/drkonqi
 %{_kde5_libexecdir}/kioexec
+%{_kde5_libexecdir}/kdeeject
+%{_kde5_libexecdir}/kdesu
+%{_kde5_libexecdir}/kdesud
+%{_kde5_libexecdir}/kdontchangethehostname
+%{_kde5_libexecdir}/khc_docbookdig.pl
+%{_kde5_libexecdir}/khc_htdig.pl
+%{_kde5_libexecdir}/khc_htsearch.pl
+%{_kde5_libexecdir}/khc_indexbuilder
+%{_kde5_libexecdir}/khc_mansearch.pl
+%{_kde5_libexecdir}/knetattach
 %{_kde5_libdir}/libkdeinit5_*.so
+%{_kde5_libdir}/kconf_update_bin/phonon*
 %{_kde5_plugindir}/kf5/kded_*.so
 %{_kde5_plugindir}/kf5/kcm_*.so
 %{_kde5_plugindir}/kf5/kio_*.so
 %{_kde5_plugindir}/kf5/jpegthumbnail.so
 %{_kde5_plugindir}/kf5/imagethumbnail.so
 %{_kde5_plugindir}/kf5/kcmspellchecking.so
+%{_kde5_plugindir}/kf5/fixhosturifilter.so
+%{_kde5_plugindir}/kf5/kurisearchfilter.so
+%{_kde5_plugindir}/kf5/kuriikwsfilter.so
+%{_kde5_plugindir}/kf5/kshorturifilter.so
+%{_kde5_plugindir}/kf5/localdomainurifilter.so
+%{_kde5_plugindir}/kf5/plugins/phonon_platform/kde.so
+%{_kde5_plugindir}/kf5/libkmanpart.so
 
-%{_kde5_datadir}/config.kcfg/jpegcreatorsettings.kcfg
+%{_kde5_datadir}/applications/*.desktop
+%{_kde5_datadir}/desktop-directories/*.directory
+%{_kde5_datadir}/emoticons/kf5/*.png
+%{_kde5_datadir}/emoticons/kf5/emoticons.xml
+%{_kde5_datadir}/icons/hicolor/*/*
+%{_kde5_datadir}/icons/hicolor/index.theme
+%{_kde5_datadir}/khelpcenter/
+%{_kde5_datadir}/config.kcfg/*.kcfg
 %{_kde5_datadir}/dbus-1/services/*.service
-%{_kde5_datadir}/desktop-directories/kde-information.directory
+%{_kde5_datadir}/dbus-1/interfaces/org.kde.khelpcenter.kcmhelpcenter.xml
 %{_kde5_datadir}/drkonqi/
 %{_kde5_datadir}/kcm_componentchooser/*.desktop
 %{_kde5_datadir}/kcmlocale/
+%{_kde5_datadir}/locale/currency/
+%{_kde5_datadir}/locale/l10n/
+%{_kde5_datadir}/sounds/
 %{_kde5_datadir}/kconf_update/*.upd
+%{_kde5_datadir}/libphonon/hardwaredatabase
+%{_kde5_datadir}/kcm_phonon/
+%{_kde5_datadir}/phonon/phonon.notifyrc
 %{_kde5_datadir}/kde5/services/*.desktop
 %{_kde5_datadir}/kde5/services/*.protocol
 %{_kde5_datadir}/kde5/services/kded/*.desktop
-%{_kde5_datadir}/kde5/servicetypes/thumbcreator.desktop
+%{_kde5_datadir}/kde5/services/searchproviders/*.desktop
+%{_kde5_datadir}/kde5/servicetypes/*.desktop
 %{_kde5_datadir}/kglobalaccel/
 %{_kde5_datadir}/konqueror/dirtree/remote/smb-network.desktop
 %{_kde5_datadir}/ksmserver/windowmanagers/*.desktop
 %{_kde5_datadir}/remoteview/
+%{_kde5_datadir}/doc/
+%{_kde5_datadir}/man/
+%{_kde5_datadir}/kio_*
 %{_kde5_sysconfdir}/xdg/*.knsrc
 %{_kde5_sysconfdir}/xdg/menus/kde-information.menu
+%{_kde5_sysconfdir}/xdg/kshorturifilterrc
 
 # TODO Add subpackages:
 # - drkonqi
@@ -163,6 +211,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sat Mar 15 2014 Jan Grulich <jgrulich@redhat.com 4.90.1-6.20140315git
+- update git snapshot
+
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-5.20140213git
 - update to latest git snapshot
 
