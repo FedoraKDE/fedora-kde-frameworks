@@ -1,0 +1,25 @@
+diff --git a/src/kcrash.cpp b/src/kcrash.cpp
+index 87163cc..884d4bd 100644
+--- a/src/kcrash.cpp
++++ b/src/kcrash.cpp
+@@ -209,10 +209,17 @@ void KCrash::setDrKonqiEnabled(bool enabled)
+ {
+     s_launchDrKonqi = enabled ? 1 : 0;
+     if (s_launchDrKonqi && !s_drkonqiPath) {
+-        s_drkonqiPath = qstrdup(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR "/drkonqi");
+-        if (!QFile::exists(QLatin1String(s_drkonqiPath))) {
+-            qWarning() << "Could not find drkonqi at" << s_drkonqiPath;
++        QString drkonqi = QStandardPaths::findExecutable(QLatin1String("drkonqi"));
++        if (drkonqi.isEmpty()) {
++            // Not in PATH, try the install prefix
++            drkonqi = QStandardPaths::findExecutable(QLatin1String("drkonqi"),
++                                                     QStringList()  << QString::fromLatin1(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR));
++        }
++        if (drkonqi.isEmpty()) {
++            qWarning() << "Could not find drkonqi";
+             s_launchDrKonqi = 0;
++        } else {
++            s_drkonqiPath = qstrdup(qPrintable(drkonqi));
+         }
+     }
+ 
