@@ -1,0 +1,54 @@
+diff --git a/src/kdeinit/kinit.cpp b/src/kdeinit/kinit.cpp
+index 9ac0860..9682598 100644
+--- a/src/kdeinit/kinit.cpp
++++ b/src/kdeinit/kinit.cpp
+@@ -406,7 +406,10 @@ QByteArray execpath_avoid_loops(const QByteArray &exec, int envc, const char *en
+         }
+     } else {
+         paths = QString::fromLocal8Bit(qgetenv("PATH")).split(pathSepRegExp, QString::KeepEmptyParts);
+-        paths.prepend(QFile::decodeName(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR));
++        const QString fallback = QFile::decodeName(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR);
++        if (!paths.contains(fallback)) {
++            paths.append(fallback);
++        }
+     }
+     QString execpath = QStandardPaths::findExecutable(QFile::decodeName(exec), paths);
+     if (avoid_loops && !execpath.isEmpty()) {
+@@ -505,7 +508,15 @@ static pid_t launch(int argc, const char *_name, const char *args,
+             } else if (lib.contains(QLatin1String("/bin/"))) {
+                 libpath = QString(lib).replace(QLatin1String("/bin/"),
+                                                QLatin1String(LIB_INSTALL_DIR "/libkdeinit5_")) + QLatin1String(".so");
++            } else { // Fallback to env
++                Q_FOREACH (const QByteArray &path, qgetenv("LD_LIBRARY_PATH").split(':')) {
++                    libpath = QString::fromLatin1(path + "/libkdeinit5_" + lib.toLatin1() + ".so");
++                    if (QFile::exists(libpath)) {
++                        break;
++                    }
++                }
+             }
++
+             // Don't confuse the user with "Could not load libkdeinit5_foo.so" if it doesn't exist
+             if (!QFile::exists(libpath)) {
+                 libpath.clear();
+@@ -1555,11 +1566,20 @@ static int initXconnection()
+ // Completely unrelated to plugins.
+ static QString findSharedLib(const QString &lib)
+ {
++    // First look into possible LD_LIBRARY_PATH overrides
++    Q_FOREACH (const QByteArray &path, qgetenv("LD_LIBRARY_PATH").split(':')) {
++        const QString libpath = QFile::decodeName(path + "/" + lib.toLatin1());
++        if (QFile::exists(libpath)) {
++            return libpath;
++        }
++    }
++
++    // Fallback to install prefix
+     QString path = QFile::decodeName(CMAKE_INSTALL_PREFIX "/" LIB_INSTALL_DIR "/") + lib;
+     if (QFile::exists(path)) {
+         return path;
+     }
+-    // We could also look in LD_LIBRARY_PATH, but really, who installs the main libs in different prefixes?
++
+     return QString();
+ }
+ 
