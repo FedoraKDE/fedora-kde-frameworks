@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Patch0:        remove-public-dependencies.patch
+Patch0:         kio-remove-public-dependencies.patch
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel

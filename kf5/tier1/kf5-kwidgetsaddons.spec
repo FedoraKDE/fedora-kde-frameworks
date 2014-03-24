@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Patch0:         button-box-access.patch
+Patch0:         kwidgetsaddons-button-box-access.patch
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
