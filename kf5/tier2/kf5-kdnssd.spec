@@ -2,7 +2,7 @@
 %define framework kdnssd
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module for DNS-SD services (Zeroconf)
 
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}-framework.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  avahi-devel
 
@@ -34,7 +34,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{framework}-framework-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -63,6 +63,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDNSSD.pri
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

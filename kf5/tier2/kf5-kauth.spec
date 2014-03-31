@@ -2,7 +2,7 @@
 %define framework kauth
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
@@ -76,6 +76,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 
