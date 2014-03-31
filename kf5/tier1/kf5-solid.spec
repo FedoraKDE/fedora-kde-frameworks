@@ -2,8 +2,8 @@
 %define framework solid
 
 Name:           kf5-%{framework}
-Version:        4.97.0
-Release:        1%{?dist}
+Version:        4.98.0
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -36,6 +36,15 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
+%package        runtime
+Summary:        Runtime for %{name}
+Conflicts:      kde-runtime
+
+%description    runtime
+%{summary}.
+The runtime package contains solid-hardware, which is a tool for querying
+your hardware from the command line.
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -70,8 +79,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5Solid
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
+%files runtime
+%{_kf5_bindir}/solid-hardware
+
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-2
+- Move solid-hardware to kf5-solid-runtime
+
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 
