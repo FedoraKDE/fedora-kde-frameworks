@@ -1,10 +1,10 @@
 # There's nothing to debug
 %global debug_package   %{nil}
 #%global snapshot 20140205
-%global frameworksversion 4.97.0
+%global frameworksversion 4.98.0
 
 Name:           extra-cmake-modules
-Version:        0.0.11
+Version:        0.0.12
 Epoch:          1
 Release:        1
 Summary:        Additional modules for CMake build system
@@ -51,6 +51,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 1:0.0.12-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 1:0.0.11-1
 - Update to KDE Frameworks 5 Alpha 2 (4.97.0)
 
