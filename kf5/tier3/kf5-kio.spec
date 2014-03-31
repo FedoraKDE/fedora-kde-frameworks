@@ -2,8 +2,8 @@
 %define framework kio
 
 Name:           kf5-%{framework}
-Version:        4.97.0
-Release:        2%{?dist}
+Version:        4.98.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -13,8 +13,6 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-Patch0:         kio-remove-public-dependencies.patch
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
@@ -51,6 +49,7 @@ BuildRequires:  kf5-kcodecs-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-kwallet-devel
 
 %description
 KDE Frameworks 5 Tier 3 solution for filesystem abstraction
@@ -76,8 +75,6 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .remove-public-dependencies
 
 %build
 mkdir -p %{_target_platform}
@@ -122,9 +119,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files doc
 %{_kf5_mandir}/man8/*
 %{_kf5_datadir}/doc/HTML/en/kioslave/
-
+%{_kf5_datadir}/doc/HTML/en/khelpcenter/documentationnotfound
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Tue Mar 11 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-2
 - remove public dependencies
 

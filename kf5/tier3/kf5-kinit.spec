@@ -2,8 +2,8 @@
 %define framework kinit
 
 Name:           kf5-%{framework}
-Version:        4.97.0
-Release:        2%{?dist}
+Version:        4.98.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -86,7 +86,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %files
-%doc COPYING.LIB README.md README.autostart README.wrapper
+%doc COPYING.LIB README.md
 %{_kf5_bindir}/*
 %{_kf5_libdir}/libkdeinit5_klauncher.so
 %{_kf5_libexecdir}/*
@@ -97,6 +97,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Mon Mar 24 2014 Daniel Vrátil <dvratil@redhat.com> 4.97.0-2
 - Add patch for kinit to respect PATH and LD_LIBRARY_PATH
 

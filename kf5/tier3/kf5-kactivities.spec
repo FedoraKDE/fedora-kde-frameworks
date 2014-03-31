@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
@@ -22,7 +22,7 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
 BuildRequires:  qt5-qtdeclarative-devel
-# FIXME: Why do I need to isntall all backends when depending on QtSql?
+# FIXME: Why do I need to install all backends when depending on QtSql?
 BuildRequires:  qt5-qtbase-ibase
 BuildRequires:  qt5-qtbase-odbc
 BuildRequires:  qt5-qtbase-mysql
@@ -110,6 +110,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

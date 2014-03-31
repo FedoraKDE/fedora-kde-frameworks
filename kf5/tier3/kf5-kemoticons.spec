@@ -2,7 +2,7 @@
 %define framework kemoticons
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for emoticons support
 
@@ -62,6 +62,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_datadir}/kde5/services/*
 %{_kf5_datadir}/kde5/servicetypes/*
+%{_kf5_datadir}/emoticons/Glass
 
 %files devel
 %{_kf5_includedir}/kemoticons_version.h
@@ -72,6 +73,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

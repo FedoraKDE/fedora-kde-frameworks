@@ -2,7 +2,7 @@
 %define framework kwallet
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
@@ -14,6 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+BuildRequires:  libgcrypt-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -94,6 +95,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kwalletd5
 %{_kf5_datadir}/kde5/services/kwalletd5.desktop
 %{_kf5_datadir}/kwalletd/kwalletd.notifyrc
+%{_kf5_datadir}/kconf_update/kwallet-4.13.upd
 %{_kf5_libdir}/libkwalletbackend5.so.*
 
 %files devel
@@ -106,6 +108,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 

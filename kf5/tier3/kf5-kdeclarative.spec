@@ -2,7 +2,7 @@
 %define framework kdeclarative
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
@@ -87,9 +87,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_includedir}/KDeclarative
 %{_kf5_libdir}/libKF5Declarative.so
 %{_kf5_libdir}/cmake/KF5Declarative
+%{_kf5_libdir}/qml/org/kde/draganddrop
+%{_kf5_libdir}/qml/org/kde/kcoreaddons/
+%{_kf5_libdir}/qml/org/kde/kquickcontrols
+%{_kf5_libdir}/qml/org/kde/kquickcontrolsaddons
+%{_kf5_libdir}/qml/org/kde/private/kquickcontrols
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDeclarative.pri
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 
