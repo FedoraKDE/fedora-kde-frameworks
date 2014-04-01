@@ -2,7 +2,7 @@
 #%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.97.0
+Version:        4.98.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
@@ -84,9 +84,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-# This file is installed by kdelibs-common and I currently see no way to work around it
-rm %{buildroot}/%{_kf5_datadir}/locale/en_US/entry.desktop
-
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -105,6 +102,7 @@ rm %{buildroot}/%{_kf5_datadir}/locale/en_US/entry.desktop
 %{_kf5_datadir}/kde5/services/*.desktop
 %{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kdoctools5/customization
 %{_kf5_datadir}/locale/*
 %{_kf5_datadir}/kf5widgets/
 %{_kf5_datadir}/kssl/ca-bundle.crt
@@ -119,6 +117,9 @@ rm %{buildroot}/%{_kf5_datadir}/locale/en_US/entry.desktop
 
 
 %changelog
+* Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
+- Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 
