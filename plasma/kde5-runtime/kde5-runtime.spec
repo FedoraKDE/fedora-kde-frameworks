@@ -1,8 +1,8 @@
 %define snapshot  20140315
 
 Name:           kde5-runtime
-Version:        4.90.1
-Release:        6.%{snapshot}git%{?dist}
+Version:        4.95.0
+Release:        1%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -11,7 +11,8 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        http://download.kde.org/unstable/kde-runtime/%{version}/kde-runtime-%{version}.tar.xz
 
 #Patch0:         kde5-runtime-kioexec-crash.patch
 
@@ -102,12 +103,12 @@ Provides:       dbus-notification-daemon
 KDE core runtime components
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n kde-runtime-%{version}
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde5} ..
+%{cmake_kde5} .. -DCMAKE_MODULE_PATH:PATH=%{_kf5_datadir}/ECM/find-modules
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -121,7 +122,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING COPYING.LIB
-%{_kde5_bindir}/kglobalaccel
 %{_kde5_bindir}/kuiserver
 %{_kde5_bindir}/ktrash
 %{_kde5_bindir}/kcmshell5
@@ -140,13 +140,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_bindir}/kreadconfig
 %{_kde5_bindir}/ksvgtopng
 %{_kde5_bindir}/kwriteconfig
-%{_kde5_bindir}/solid-hardware
+%{_kde5_bindir}/kglobalaccel5
+%{_kde5_bindir}/kstart
 %{_kde5_libexecdir}/drkonqi
-%{_kde5_libexecdir}/kioexec
 %{_kde5_libexecdir}/kdeeject
 %{_kde5_libexecdir}/kdesu
-%{_kde5_libexecdir}/kdesud
-%{_kde5_libexecdir}/kdontchangethehostname
 %{_kde5_libexecdir}/khc_docbookdig.pl
 %{_kde5_libexecdir}/khc_htdig.pl
 %{_kde5_libexecdir}/khc_htsearch.pl
@@ -155,6 +153,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_libexecdir}/knetattach
 %{_kde5_libdir}/libkdeinit5_*.so
 %{_kde5_libdir}/kconf_update_bin/phonon*
+%{_kde5_libdir}/libmolletnetwork.so
+%{_kde5_libdir}/libmolletnetwork.so.*
 %{_kde5_plugindir}/kf5/kded_*.so
 %{_kde5_plugindir}/kf5/kcm_*.so
 %{_kde5_plugindir}/kf5/kio_*.so
@@ -169,16 +169,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_plugindir}/kf5/plugins/phonon_platform/kde.so
 %{_kde5_plugindir}/kf5/libkmanpart.so
 
-%{_kde5_datadir}/applications/*.desktop
+%{_kde5_datadir}/applications/kde5/*.desktop
 %{_kde5_datadir}/desktop-directories/*.directory
-%{_kde5_datadir}/emoticons/kf5/*.png
-%{_kde5_datadir}/emoticons/kf5/emoticons.xml
 %{_kde5_datadir}/icons/hicolor/*/*
-%{_kde5_datadir}/icons/hicolor/index.theme
 %{_kde5_datadir}/khelpcenter/
 %{_kde5_datadir}/config.kcfg/*.kcfg
 %{_kde5_datadir}/dbus-1/services/*.service
-%{_kde5_datadir}/dbus-1/interfaces/org.kde.khelpcenter.kcmhelpcenter.xml
+%{_kde5_datadir}/dbus-1/interfaces/*.xml
 %{_kde5_datadir}/drkonqi/
 %{_kde5_datadir}/kcm_componentchooser/*.desktop
 %{_kde5_datadir}/kcmlocale/
@@ -196,11 +193,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_datadir}/kde5/servicetypes/*.desktop
 %{_kde5_datadir}/kglobalaccel/
 %{_kde5_datadir}/konqueror/dirtree/remote/smb-network.desktop
+%{_kde5_datadir}/konqsidebartng/virtual_folders/remote/virtualfolder_network.desktop
 %{_kde5_datadir}/ksmserver/windowmanagers/*.desktop
 %{_kde5_datadir}/remoteview/
 %{_kde5_datadir}/doc/
 %{_kde5_datadir}/man/
 %{_kde5_datadir}/kio_*
+%{_kde5_datadir}/mime/packages/network.xml
 %{_kde5_sysconfdir}/xdg/*.knsrc
 %{_kde5_sysconfdir}/xdg/menus/kde-information.menu
 %{_kde5_sysconfdir}/xdg/kshorturifilterrc
@@ -211,6 +210,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Apr 02 2014 Daniel Vrátíl <dvratil@redhat.com> 4.95.0-1
+- update to KDE Runtime 4.95.0 (Alpha 1)
+
 * Sat Mar 15 2014 Jan Grulich <jgrulich@redhat.com 4.90.1-6.20140315git
 - update git snapshot
 
