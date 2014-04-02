@@ -88,6 +88,8 @@ BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-kpty-devel
+BuildRequires:  kf5-kdewebkit-devel
+BuildRequires:  kf5-kdnssd-devel
 
 Requires:       oxygen-icon-theme >= 4.11.0
 Requires:       dbus-x11
@@ -169,7 +171,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_plugindir}/kf5/plugins/phonon_platform/kde.so
 %{_kde5_plugindir}/kf5/libkmanpart.so
 
-%{_kde5_datadir}/applications/kde5/*.desktop
+%{_kde5_datadir}/applications/*.desktop
 %{_kde5_datadir}/desktop-directories/*.directory
 %{_kde5_datadir}/icons/hicolor/*/*
 %{_kde5_datadir}/khelpcenter/
