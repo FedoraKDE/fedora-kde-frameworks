@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -87,6 +87,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+# Rename kioslave documentation to kioslave5 to avoid conflict with kdelibs4
+mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
+mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/khelpcenter{,5}
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -118,10 +122,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files doc
 %{_kf5_mandir}/man8/*
-%{_kf5_datadir}/doc/HTML/en/kioslave/
-%{_kf5_datadir}/doc/HTML/en/khelpcenter/documentationnotfound
+%{_kf5_datadir}/doc/HTML/en/kioslave5/
+%{_kf5_datadir}/doc/HTML/en/khelpcenter5/documentationnotfound
 
 %changelog
+* Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Fix conflict of kf5-kio-doc with kdelibs4
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
