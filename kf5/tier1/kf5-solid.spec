@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+Patch0:         solid-rename-solid-hardware-to-solid-hardware5.patch
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -36,10 +38,9 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-
+# TODO: Remove for next release, it no longer conflicts with kde-runtime
 %package        runtime
 Summary:        Runtime for %{name}
-Conflicts:      kde-runtime
 
 %description    runtime
 %{summary}.
@@ -48,6 +49,8 @@ your hardware from the command line.
 
 %prep
 %setup -q -n %{framework}-%{version}
+
+%patch0 -p1 -b .solidhardware5
 
 %build
 mkdir -p %{_target_platform}
@@ -80,10 +83,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
 %files runtime
-%{_kf5_bindir}/solid-hardware
+%{_kf5_bindir}/solid-hardware5
 
 
 %changelog
+* Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3
+- Apply upstream patch to rename solid-hardware to solid-hardware5 to fix conflict with kde-runtime
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-2
 - Move solid-hardware to kf5-solid-runtime
 
