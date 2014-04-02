@@ -1,0 +1,970 @@
+diff --git a/khotkeys/libkhotkeysprivate/CMakeLists.txt b/khotkeys/libkhotkeysprivate/CMakeLists.txt
+index 692f461..8e0f87f 100644
+--- a/khotkeys/libkhotkeysprivate/CMakeLists.txt
++++ b/khotkeys/libkhotkeysprivate/CMakeLists.txt
+@@ -70,7 +70,8 @@ set(khotkeysprivate_SRCS
+ )
+ 
+ add_library(khotkeysprivate SHARED ${khotkeysprivate_SRCS})
+-target_link_libraries(khotkeysprivate
++# Not exported, so just make all links PUBLIC
++target_link_libraries(khotkeysprivate PUBLIC
+     PW::KWorkspace
+     Qt5::X11Extras
+     KF5::GlobalAccel
+@@ -81,7 +82,7 @@ target_link_libraries(khotkeysprivate
+     KF5::KDE4Support
+     ${X11_X11_LIB})
+ if(X11_XTest_FOUND)
+-  target_link_libraries(khotkeysprivate ${X11_XTest_LIB})
++    target_link_libraries(khotkeysprivate PUBLIC ${X11_XTest_LIB})
+ endif()
+ set_target_properties(khotkeysprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+ install(TARGETS khotkeysprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+diff --git a/khotkeys/libkhotkeysprivate/actions/action_list.cpp b/khotkeys/libkhotkeysprivate/actions/action_list.cpp
+index eec46c4..c35d5ff 100644
+--- a/khotkeys/libkhotkeysprivate/actions/action_list.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/action_list.cpp
+@@ -20,6 +20,7 @@
+ #include "actions.h"
+ 
+ #include <kconfiggroup.h>
++#include <ksharedconfig.h>
+ 
+ namespace KHotKeys {
+ 
+diff --git a/khotkeys/libkhotkeysprivate/actions/actions.h b/khotkeys/libkhotkeysprivate/actions/actions.h
+index 58f8d49..1d857aa 100644
+--- a/khotkeys/libkhotkeysprivate/actions/actions.h
++++ b/khotkeys/libkhotkeysprivate/actions/actions.h
+@@ -18,6 +18,7 @@
+ #include <kservice.h>
+ 
+ class KConfig;
++class KConfigGroup;
+ 
+ #include "khotkeysglobal.h"
+ 
+diff --git a/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp b/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
+index 9548a29..5b85cf0 100644
+--- a/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/activate_window_action.cpp
+@@ -21,6 +21,7 @@
+ #include "windows_helper/window_selection_list.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KDebug>
+ 
+ namespace KHotKeys {
+diff --git a/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp b/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
+index 2a5ab7e..cde1ee3 100644
+--- a/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
++++ b/khotkeys/libkhotkeysprivate/actions/keyboard_input_action.cpp
+@@ -25,6 +25,7 @@
+ #include "windows_helper/window_selection_list.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KDebug>
+ 
+ // #include <X11/X.h>
+diff --git a/kwin/CMakeLists.txt b/kwin/CMakeLists.txt
+index 4426b52..8353d48 100644
+--- a/kwin/CMakeLists.txt
++++ b/kwin/CMakeLists.txt
+@@ -192,6 +192,10 @@ if(KWIN_BUILD_OPENGLES)
+   include_directories(${OPENGLES_INCLUDE_DIR})
+ endif()
+ 
++if (XKB_FOUND)
++  include_directories(${XKB_INCLUDE_DIR})
++endif()
++
+ # for things that are also used by kwin libraries
+ configure_file(libkwineffects/kwinconfig.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkwineffects/kwinconfig.h )
+ # for kwin internal things
+diff --git a/kwin/clients/aurorae/src/aurorae.cpp b/kwin/clients/aurorae/src/aurorae.cpp
+index c8b508b..7de7585 100644
+--- a/kwin/clients/aurorae/src/aurorae.cpp
++++ b/kwin/clients/aurorae/src/aurorae.cpp
+@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ #include <KConfig>
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KPluginInfo>
+ #include <KServiceTypeTrader>
+ 
+diff --git a/kwin/cmake/modules/FindXKB.cmake b/kwin/cmake/modules/FindXKB.cmake
+index 99fd785..94a1e93 100644
+--- a/kwin/cmake/modules/FindXKB.cmake
++++ b/kwin/cmake/modules/FindXKB.cmake
+@@ -33,11 +33,9 @@ if(NOT WIN32)
+ 
+     find_path(XKB_INCLUDE_DIR
+         NAMES
+-            xkbcommon.h
++            xkbcommon/xkbcommon.h
+         HINTS
+             ${PKG_XKB_INCLUDE_DIRS}
+-        PATH_SUFFIXES
+-            xkbcommon
+     )
+     find_library(XKB_LIBRARY
+         NAMES
+diff --git a/kwin/cursor.cpp b/kwin/cursor.cpp
+index 20ab785..e8c9f40 100644
+--- a/kwin/cursor.cpp
++++ b/kwin/cursor.cpp
+@@ -50,7 +50,7 @@ Cursor *Cursor::create(QObject *parent)
+         s_self = new InputRedirectionCursor(parent);
+     }
+ #else
+-    Q_UNUSED(parent)
++    s_self = new X11Cursor(parent);
+ #endif
+     return s_self;
+ }
+diff --git a/kwin/effects/startupfeedback/startupfeedback.cpp b/kwin/effects/startupfeedback/startupfeedback.cpp
+index 8143208..bc87ee8 100644
+--- a/kwin/effects/startupfeedback/startupfeedback.cpp
++++ b/kwin/effects/startupfeedback/startupfeedback.cpp
+@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <QtGui/QPainter>
+ // KDE
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KIconLoader>
+ #include <KStartupInfo>
+ #include <KSelectionOwner>
+diff --git a/kwin/libkdecorations/CMakeLists.txt b/kwin/libkdecorations/CMakeLists.txt
+index 5e5f47b..1ac9e4f 100644
+--- a/kwin/libkdecorations/CMakeLists.txt
++++ b/kwin/libkdecorations/CMakeLists.txt
+@@ -13,7 +13,7 @@ target_link_libraries(kdecorations
+     PUBLIC
+         Qt5::Widgets
+         KF5::ConfigCore
+-        KF5::Service # KLibrary
++        KF5::Service # KPluginLoader
+         KF5::WindowSystem # NETWM defines
+     PRIVATE
+         KF5::I18n
+diff --git a/kwin/libkdecorations/kdecoration_plugins_p.cpp b/kwin/libkdecorations/kdecoration_plugins_p.cpp
+index d08aebc..8570b6a 100644
+--- a/kwin/libkdecorations/kdecoration_plugins_p.cpp
++++ b/kwin/libkdecorations/kdecoration_plugins_p.cpp
+@@ -27,7 +27,6 @@ DEALINGS IN THE SOFTWARE.
+ #include "kdecoration_plugins_p.h"
+ 
+ #include <kconfig.h>
+-#include <klibrary.h>
+ #include <KPluginFactory>
+ #include <KPluginLoader>
+ #include <KPluginTrader>
+diff --git a/kwin/scripting/genericscriptedconfig.h b/kwin/scripting/genericscriptedconfig.h
+index 7d76891..8950f3c 100644
+--- a/kwin/scripting/genericscriptedconfig.h
++++ b/kwin/scripting/genericscriptedconfig.h
+@@ -23,6 +23,7 @@
+ 
+ #include <KCModule>
+ #include <KPluginFactory>
++#include <KConfigGroup>
+ 
+ namespace KWin
+ {
+diff --git a/kwin/tabbox/tabboxhandler.cpp b/kwin/tabbox/tabboxhandler.cpp
+index c712a6b..d95c7db 100644
+--- a/kwin/tabbox/tabboxhandler.cpp
++++ b/kwin/tabbox/tabboxhandler.cpp
+@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <QDesktopWidget>
+ #include <QKeyEvent>
+ #include <QModelIndex>
++#include <QStandardPaths>
+ #include <QTimer>
+ #include <QQmlContext>
+ #include <QQmlComponent>
+diff --git a/libksysguard/ksgrd/CMakeLists.txt b/libksysguard/ksgrd/CMakeLists.txt
+index 6a63c3b..3daff17 100644
+--- a/libksysguard/ksgrd/CMakeLists.txt
++++ b/libksysguard/ksgrd/CMakeLists.txt
+@@ -18,13 +18,16 @@ add_library(KF5::SysGuard ALIAS ksgrd)
+ target_include_directories(ksgrd PUBLIC "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard/>")
+ 
+ target_link_libraries(ksgrd
+-    Qt5::Core
+-    Qt5::Network
+-    Qt5::Widgets
+-    KF5::I18n
+-    KF5::CoreAddons
+-    KF5::ConfigWidgets
+-    KF5::KDE4Support
++    PUBLIC
++        Qt5::Core
++        Qt5::Widgets # QWidget in SensorManager.h
++        Qt5::Network # QTcpSocket in SensorSocketAgent.h
++        KF5::ConfigCore # KConfigGroup in SensorManager.h
++    PRIVATE
++        KF5::I18n
++        KF5::CoreAddons
++        KF5::ConfigWidgets
++        KF5::KDE4Support
+ )
+ 
+ set_target_properties(ksgrd PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_VERSION_MINOR} EXPORT_NAME SysGuard)
+diff --git a/libksysguard/lsofui/CMakeLists.txt b/libksysguard/lsofui/CMakeLists.txt
+index 0143f8a..d107611 100644
+--- a/libksysguard/lsofui/CMakeLists.txt
++++ b/libksysguard/lsofui/CMakeLists.txt
+@@ -12,7 +12,13 @@ qt5_wrap_ui( lsofui_LIB_SRCS
+ add_library(lsofui ${lsofui_LIB_SRCS})
+ add_library(KF5::LsofUi ALIAS lsofui)
+ 
+-target_link_libraries(lsofui KF5::KDE4Support KF5::I18n Qt5::Widgets)
++target_link_libraries(lsofui
++    PUBLIC
++        Qt5::Widgets
++        KF5::KDE4Support
++    PRIVATE
++        KF5::I18n
++)
+ set_target_properties(lsofui PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_VERSION_MINOR} EXPORT_NAME LsofUi)
+ install(TARGETS lsofui EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+diff --git a/libksysguard/processcore/CMakeLists.txt b/libksysguard/processcore/CMakeLists.txt
+index fceccf8..f2a84ae 100644
+--- a/libksysguard/processcore/CMakeLists.txt
++++ b/libksysguard/processcore/CMakeLists.txt
+@@ -18,8 +18,9 @@ add_library(KF5::ProcessCore ALIAS processcore)
+ 
+ target_link_libraries(processcore
+    PUBLIC
+-    KF5::I18n
++    Qt5::Core
+    PRIVATE
++    KF5::I18n
+     KF5::KDE4Support
+     ${ZLIB_LIBRARIES}
+ )
+diff --git a/libksysguard/processui/CMakeLists.txt b/libksysguard/processui/CMakeLists.txt
+index 675dc68..599640f 100644
+--- a/libksysguard/processui/CMakeLists.txt
++++ b/libksysguard/processui/CMakeLists.txt
+@@ -27,12 +27,13 @@ if(X11_XRes_FOUND)
+ endif()
+ 
+ target_link_libraries(processui
+-    # FIXME: make some of these private?
+     PUBLIC
++        KF5::ProcessCore
++        Qt5::Widgets
++    PRIVATE
+         Qt5::Script
+         Qt5::WebKitWidgets
+         KF5::KDE4Support
+-        processcore
+ )
+ target_include_directories(processui
+     PUBLIC
+diff --git a/libksysguard/processui/KTextEditVT.h b/libksysguard/processui/KTextEditVT.h
+index 903948a..ccc78c4 100644
+--- a/libksysguard/processui/KTextEditVT.h
++++ b/libksysguard/processui/KTextEditVT.h
+@@ -24,7 +24,6 @@
+ #define _KTextEditVT_h_
+ 
+ #include <QTextEdit>
+-#include <kdemacros.h>
+ 
+ /*
+  *    \class KTextEditVT
+diff --git a/libksysguard/processui/ProcessFilter.h b/libksysguard/processui/ProcessFilter.h
+index 4b23b5d..28a5abd 100644
+--- a/libksysguard/processui/ProcessFilter.h
++++ b/libksysguard/processui/ProcessFilter.h
+@@ -26,7 +26,6 @@
+ 
+ #include <QSortFilterProxyModel>
+ #include <QObject>
+-#include <kdemacros.h>
+ 
+ class QModelIndex;
+ 
+diff --git a/libksysguard/processui/ProcessModel.h b/libksysguard/processui/ProcessModel.h
+index f02ef53..a338536 100644
+--- a/libksysguard/processui/ProcessModel.h
++++ b/libksysguard/processui/ProcessModel.h
+@@ -26,7 +26,6 @@
+ 
+ #include <QAbstractItemModel>
+ 
+-#include <kdemacros.h>
+ #include <processcore/processes.h>
+ 
+ namespace KSysGuard {
+diff --git a/libksysguard/processui/ksysguardprocesslist.h b/libksysguard/processui/ksysguardprocesslist.h
+index ce469d5..c612b2d 100644
+--- a/libksysguard/processui/ksysguardprocesslist.h
++++ b/libksysguard/processui/ksysguardprocesslist.h
+@@ -26,7 +26,9 @@
+ 
+ #include <QWidget>
+ #include <QMetaType>
+-#include <kapplication.h>
++
++#include <KConfigGroup>
++
+ #include "ProcessModel.h"
+ #include "ProcessFilter.h"
+ #include <processcore/processes.h>
+diff --git a/libksysguard/signalplotter/CMakeLists.txt b/libksysguard/signalplotter/CMakeLists.txt
+index 1cfdb78..759aacf 100644
+--- a/libksysguard/signalplotter/CMakeLists.txt
++++ b/libksysguard/signalplotter/CMakeLists.txt
+@@ -9,7 +9,14 @@ set(ksignalplotter_LIB_SRCS
+ add_library(ksignalplotter ${ksignalplotter_LIB_SRCS})
+ add_library(KF5::SignalPlotter ALIAS ksignalplotter)
+ 
+-target_link_libraries(ksignalplotter KF5::KDE4Support KF5::Plasma)
++target_link_libraries(ksignalplotter
++    PUBLIC
++        Qt5::Widgets
++        KF5::I18n # klocalizedstring.h
++    PRIVATE
++        KF5::Plasma
++        KF5::KDE4Support
++)
+ 
+ set_target_properties(ksignalplotter
+    PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING}
+diff --git a/libksysguard/signalplotter/ksignalplotter.h b/libksysguard/signalplotter/ksignalplotter.h
+index fcb2871..520dc03 100644
+--- a/libksysguard/signalplotter/ksignalplotter.h
++++ b/libksysguard/signalplotter/ksignalplotter.h
+@@ -28,8 +28,6 @@
+ #include <QFont>
+ #include <QWidget>
+ #include <klocalizedstring.h>
+-#include <kcomponentdata.h>
+-#include <kdemacros.h>
+ 
+ class QPaintEvent;
+ class QResizeEvent;
+diff --git a/oxygen/kstyle/CMakeLists.txt b/oxygen/kstyle/CMakeLists.txt
+index dc93ead..8c76de3 100644
+--- a/oxygen/kstyle/CMakeLists.txt
++++ b/oxygen/kstyle/CMakeLists.txt
+@@ -77,11 +77,11 @@ kconfig_add_kcfg_files(oxygen_PART_SRCS oxygenstyleconfigdata.kcfgc)
+ add_library(oxygen MODULE ${oxygen_PART_SRCS})
+ 
+ target_link_libraries(oxygen Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus)
+-target_link_libraries(oxygen KF5::Style KF5::WindowSystem)
++target_link_libraries(oxygen KF5::GuiAddons KF5::Style KF5::WindowSystem)
+ target_link_libraries(oxygen oxygenstyle)
+ 
+ if(X11_FOUND)
+-  target_link_libraries(oxygen ${XCB_XCB_LIBRARIES} )
++  target_link_libraries(oxygen ${XCB_LIBRARIES})
+   target_link_libraries(oxygen Qt5::X11Extras)
+ endif()
+ 
+diff --git a/oxygen/kstyle/config/CMakeLists.txt b/oxygen/kstyle/config/CMakeLists.txt
+index 4e41ca3..6e26eb8 100644
+--- a/oxygen/kstyle/config/CMakeLists.txt
++++ b/oxygen/kstyle/config/CMakeLists.txt
+@@ -19,7 +19,7 @@ add_library(kstyle_oxygen_config MODULE
+ )
+ 
+ target_link_libraries(kstyle_oxygen_config Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus)
+-target_link_libraries(kstyle_oxygen_config KF5::Completion)
++target_link_libraries(kstyle_oxygen_config KF5::Completion KF5::I18n)
+ target_link_libraries(kstyle_oxygen_config oxygenstyleconfig)
+ 
+ install(TARGETS kstyle_oxygen_config DESTINATION ${QT_PLUGIN_INSTALL_DIR}/kf5 )
+diff --git a/oxygen/kwin-decoration/CMakeLists.txt b/oxygen/kwin-decoration/CMakeLists.txt
+index ee25c8f..ff99b25 100644
+--- a/oxygen/kwin-decoration/CMakeLists.txt
++++ b/oxygen/kwin-decoration/CMakeLists.txt
+@@ -21,7 +21,7 @@ kconfig_add_kcfg_files(kwin_oxygen_SRCS oxygenconfiguration.kcfgc )
+ 
+ add_library(kwin3_oxygen MODULE ${kwin_oxygen_SRCS})
+ target_link_libraries(kwin3_oxygen Qt5::Widgets )
+-target_link_libraries(kwin3_oxygen KF5::I18n KF5::WindowSystem KF5::Style KF5::Service)
++target_link_libraries(kwin3_oxygen KF5::GuiAddons KF5::I18n KF5::WindowSystem KF5::Style KF5::Service)
+ 
+ target_link_libraries(kwin3_oxygen kdecorations)
+ 
+diff --git a/oxygen/kwin-decoration/config/CMakeLists.txt b/oxygen/kwin-decoration/config/CMakeLists.txt
+index b5826aa..c7e6d49 100644
+--- a/oxygen/kwin-decoration/config/CMakeLists.txt
++++ b/oxygen/kwin-decoration/config/CMakeLists.txt
+@@ -24,7 +24,7 @@ add_library(kwin_oxygen_config MODULE
+     ${kwin_oxygen_config_PART_FORMS_HEADERS})
+ 
+ target_link_libraries(kwin_oxygen_config Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus)
+-target_link_libraries(kwin_oxygen_config KF5::WindowSystem KF5::Completion)
++target_link_libraries(kwin_oxygen_config KF5::I18n KF5::WindowSystem KF5::Completion)
+ target_link_libraries(kwin_oxygen_config kdecorations oxygenstyle  oxygenstyleconfig)
+ 
+ if(X11_FOUND)
+diff --git a/oxygen/liboxygen/CMakeLists.txt b/oxygen/liboxygen/CMakeLists.txt
+index b7da91d..223e900 100644
+--- a/oxygen/liboxygen/CMakeLists.txt
++++ b/oxygen/liboxygen/CMakeLists.txt
+@@ -19,11 +19,21 @@ kconfig_add_kcfg_files(oxygenstyle_LIB_SRCS
+ add_library(oxygenstyle ${oxygenstyle_LIB_SRCS})
+ generate_export_header(oxygenstyle BASE_NAME "OXYGEN" EXPORT_FILE_NAME oxygen_export.h)
+ 
+-target_link_libraries(oxygenstyle Qt5::Core Qt5::Gui Qt5::Widgets
+-                                  KF5::ConfigCore KF5::ConfigWidgets KF5::GuiAddons)
++# NB: although we install no headers, we still need to have a link
++#     interface, since other Oxygen targets link to this library
++target_link_libraries(oxygenstyle
++    PUBLIC
++        Qt5::Core
++        Qt5::Gui
++        Qt5::Widgets
++        KF5::ConfigCore
++        KF5::ConfigWidgets
++    PRIVATE
++        KF5::GuiAddons
++)
+ target_include_directories(oxygenstyle PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+ if( X11_FOUND )
+-  target_link_libraries(oxygenstyle ${XCB_LIBRARIES} Qt5::X11Extras)
++    target_link_libraries(oxygenstyle PRIVATE ${XCB_LIBRARIES} Qt5::X11Extras)
+ endif()
+ 
+ set_target_properties(oxygenstyle PROPERTIES VERSION 5.0.0 SOVERSION 5 )
+@@ -55,8 +65,18 @@ add_library(oxygenstyleconfig
+     ${oxygenstyleconfig_LIB_SRCS}
+     ${oxygenstyleconfig_LIB_FORMS_HEADERS} )
+ 
+-target_link_libraries(oxygenstyleconfig Qt5::Core Qt5::Gui Qt5::Widgets
+-                                        KF5::I18n KF5::KDE4Support oxygenstyle)
++# NB: although we install no headers, we still need to have a link
++#     interface, since other Oxygen targets link to this library
++target_link_libraries(oxygenstyleconfig
++    PUBLIC
++        oxygenstyle
++        Qt5::Core
++        Qt5::Gui
++        Qt5::Widgets
++    PRIVATE
++        KF5::I18n
++        KF5::KDE4Support
++)
+ 
+ set_target_properties(oxygenstyleconfig PROPERTIES VERSION 5.0.0 SOVERSION 5 DEFINE_SYMBOL MAKE_OXYGENSTYLE_LIB )
+ install(TARGETS oxygenstyleconfig ${INSTALL_TARGETS_DEFAULT_ARGS} )
+diff --git a/plasma-desktop/applets/pager/CMakeLists.txt b/plasma-desktop/applets/pager/CMakeLists.txt
+index ca2b88c..6e9ae36 100644
+--- a/plasma-desktop/applets/pager/CMakeLists.txt
++++ b/plasma-desktop/applets/pager/CMakeLists.txt
+@@ -19,5 +19,9 @@ target_link_libraries(pagerplugin
+                       Qt5::DBus
+                       taskmanager)
+ 
++if (X11_FOUND)
++    target_link_libraries(pagerplugin Qt5::X11Extras)
++endif()
++
+ install(TARGETS pagerplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/plasma/private/pager)
+ install(FILES plugin/qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/plasma/private/pager)
+diff --git a/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp b/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
+index 49e68e2..6e18bbd 100644
+--- a/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
++++ b/plasma-desktop/kcms/standard_actions/standard_actions_module.cpp
+@@ -24,6 +24,7 @@
+ #include <KConfigGroup>
+ #include <KDebug>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KShortcutsEditor>
+ #include <KStandardAction>
+ #include <KMessageBox>
+diff --git a/plasma-workspace/dataengines/geolocation/CMakeLists.txt b/plasma-workspace/dataengines/geolocation/CMakeLists.txt
+index d6ede1e..8b2dc3b 100644
+--- a/plasma-workspace/dataengines/geolocation/CMakeLists.txt
++++ b/plasma-workspace/dataengines/geolocation/CMakeLists.txt
+@@ -4,7 +4,13 @@ project(geolocation)
+ 
+ set(plasma_geolocation_interface_SRCS geolocationprovider.cpp)
+ add_library(plasma-geolocation-interface SHARED ${plasma_geolocation_interface_SRCS})
+-target_link_libraries(plasma-geolocation-interface KF5::KIOCore KF5::Plasma)
++target_link_libraries(plasma-geolocation-interface
++    PUBLIC
++        Qt5::Core
++        KF5::Plasma
++    PRIVATE
++        KF5::KIOCore
++)
+ set_target_properties(plasma-geolocation-interface PROPERTIES
+    VERSION ${GENERIC_LIB_VERSION}
+    SOVERSION ${GENERIC_LIB_SOVERSION}
+@@ -40,7 +46,7 @@ install(FILES plasma-geolocationprovider.desktop DESTINATION ${SERVICETYPES_INST
+ 
+ set(plasma_geolocation_ip_SRCS location_ip.cpp)
+ add_library(plasma-geolocation-ip MODULE ${plasma_geolocation_ip_SRCS})
+-target_link_libraries(plasma-geolocation-ip plasma-geolocation-interface)
++target_link_libraries(plasma-geolocation-ip plasma-geolocation-interface KF5::KIOCore)
+ install(FILES plasma-geolocation-ip.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+ install(TARGETS plasma-geolocation-ip DESTINATION ${PLUGIN_INSTALL_DIR}/plasma/geolocationprovider)
+ 
+diff --git a/plasma-workspace/dataengines/systemmonitor/CMakeLists.txt b/plasma-workspace/dataengines/systemmonitor/CMakeLists.txt
+index e34ad03..118bdcf 100644
+--- a/plasma-workspace/dataengines/systemmonitor/CMakeLists.txt
++++ b/plasma-workspace/dataengines/systemmonitor/CMakeLists.txt
+@@ -10,6 +10,7 @@ target_link_libraries(plasma_engine_systemmonitor
+     KF5::Plasma
+     KF5::Service
+     KF5::SysGuard
++    KF5::KDE4Support
+ )
+ 
+ kservice_desktop_to_json(plasma_engine_systemmonitor plasma-dataengine-systemmonitor.desktop)
+diff --git a/plasma-workspace/libkworkspace/CMakeLists.txt b/plasma-workspace/libkworkspace/CMakeLists.txt
+index cc3ea36..2848a65 100644
+--- a/plasma-workspace/libkworkspace/CMakeLists.txt
++++ b/plasma-workspace/libkworkspace/CMakeLists.txt
+@@ -25,16 +25,23 @@ set_target_properties(kworkspace PROPERTIES
+                       )
+ 
+ generate_export_header(kworkspace)
+-target_link_libraries(kworkspace Qt5::DBus Qt5::Core
+-                                 KF5::I18n KF5::WindowSystem KF5::Plasma
+-                                 Xau)
++target_link_libraries(kworkspace
++    PUBLIC
++        Qt5::Core
++    PRIVATE
++        Qt5::DBus
++        KF5::I18n
++        KF5::WindowSystem
++        KF5::Plasma
++        Xau
++)
+ target_include_directories(kworkspace PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+                                       INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kworkspace>" )
+ 
+ configure_file(config-libkworkspace.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-libkworkspace.h)
+ 
+ if(X11_FOUND)
+-    target_link_libraries(kworkspace Qt5::X11Extras ${X11_LIBRARIES})
++    target_link_libraries(kworkspace PRIVATE Qt5::X11Extras ${X11_LIBRARIES})
+ endif()
+ 
+ write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/LibKWorkspaceConfigVersion.cmake VERSION
+diff --git a/plasma-workspace/libtaskmanager/CMakeLists.txt b/plasma-workspace/libtaskmanager/CMakeLists.txt
+index 4a34ca9..94431d7 100644
+--- a/plasma-workspace/libtaskmanager/CMakeLists.txt
++++ b/plasma-workspace/libtaskmanager/CMakeLists.txt
+@@ -39,26 +39,30 @@ add_library(PW::LibTaskManager ALIAS taskmanager)
+ generate_export_header(taskmanager)
+ target_include_directories(taskmanager PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/taskmanager>")
+ target_link_libraries(taskmanager
+-    KF5::ProcessCore
+-    KF5::ConfigCore
+-    KF5::ConfigWidgets
+-    KF5::IconThemes
+-    KF5::I18n
+-    KF5::KIOCore
+-    KF5::KIOWidgets # KRun
+-    KF5::Service
+-    KF5::WindowSystem
++    PUBLIC
++        Qt5::Core
++        Qt5::Gui
++        KF5::WindowSystem # KStartupInfo
++    PRIVATE
++        KF5::ProcessCore
++        KF5::ConfigCore
++        KF5::ConfigWidgets
++        KF5::IconThemes
++        KF5::I18n
++        KF5::KIOCore
++        KF5::KIOWidgets # KRun
++        KF5::Service
+ )
+ if (X11_FOUND)
+-    target_link_libraries(taskmanager ${Qt5X11Extras_LIBRARIES} ${X11_LIBRARIES})
++    target_link_libraries(taskmanager PRIVATE ${Qt5X11Extras_LIBRARIES} ${X11_LIBRARIES})
+     if (X11_Xfixes_FOUND)
+-    target_link_libraries(taskmanager ${X11_Xfixes_LIB})
++    target_link_libraries(taskmanager PRIVATE ${X11_Xfixes_LIB})
+     endif ()
+     if (X11_Xrender_FOUND)
+-    target_link_libraries(taskmanager ${X11_Xrender_LIB})
++    target_link_libraries(taskmanager PRIVATE ${X11_Xrender_LIB})
+     endif ()
+     if (X11_Xcomposite_FOUND)
+-    target_link_libraries(taskmanager ${X11_Xcomposite_LIB})
++    target_link_libraries(taskmanager PRIVATE ${X11_Xcomposite_LIB})
+     endif ()
+ endif()
+ 
+diff --git a/plasma-workspace/libtaskmanager/abstractgroupableitem.h b/plasma-workspace/libtaskmanager/abstractgroupableitem.h
+index 119f929..fa7e7c1 100644
+--- a/plasma-workspace/libtaskmanager/abstractgroupableitem.h
++++ b/plasma-workspace/libtaskmanager/abstractgroupableitem.h
+@@ -28,8 +28,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ #include <QtCore/QUrl>
+ #include <QtGui/QIcon>
+ 
+-#include <KWindowSystem>
+-
+ #include "taskmanager.h"
+ #include "taskmanager_export.h"
+ 
+diff --git a/plasma-workspace/libtaskmanager/groupmanager.cpp b/plasma-workspace/libtaskmanager/groupmanager.cpp
+index 804a03e..83b39ef 100644
+--- a/plasma-workspace/libtaskmanager/groupmanager.cpp
++++ b/plasma-workspace/libtaskmanager/groupmanager.cpp
+@@ -31,6 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ #include <QFile>
+ #include <QDebug>
+ 
++#include <KConfigGroup>
+ #include <KService>
+ #include <KSycoca>
+ #include <KDesktopFile>
+diff --git a/plasma-workspace/libtaskmanager/groupmanager.h b/plasma-workspace/libtaskmanager/groupmanager.h
+index a337de6..76b661e 100644
+--- a/plasma-workspace/libtaskmanager/groupmanager.h
++++ b/plasma-workspace/libtaskmanager/groupmanager.h
+@@ -26,8 +26,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
+ #include <QtCore/QObject>
+ 
+-#include <KConfigGroup>
+-
+ #include <abstractgroupableitem.h>
+ #include <task.h>
+ #include <taskitem.h>
+diff --git a/plasma-workspace/libtaskmanager/launcheritem.cpp b/plasma-workspace/libtaskmanager/launcheritem.cpp
+index bfd06b8..649caca 100644
+--- a/plasma-workspace/libtaskmanager/launcheritem.cpp
++++ b/plasma-workspace/libtaskmanager/launcheritem.cpp
+@@ -24,6 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ #include "launcheritem.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ #include <KDesktopFile>
+ #include <KFileItem>
+ #include <QMimeData>
+diff --git a/plasma-workspace/libtaskmanager/taskmanager.h b/plasma-workspace/libtaskmanager/taskmanager.h
+index a139986..e6ca735 100644
+--- a/plasma-workspace/libtaskmanager/taskmanager.h
++++ b/plasma-workspace/libtaskmanager/taskmanager.h
+@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ #include <QSet>
+ #include <QVector>
+ 
+-#include <KWindowSystem>
++#include <KStartupInfo>
+ 
+ class QUuid;
+ 
+diff --git a/plasma-workspace/runners/bookmarks/bookmarksrunner.cpp b/plasma-workspace/runners/bookmarks/bookmarksrunner.cpp
+index 2ed30f4..f99bf04 100644
+--- a/plasma-workspace/runners/bookmarks/bookmarksrunner.cpp
++++ b/plasma-workspace/runners/bookmarks/bookmarksrunner.cpp
+@@ -31,6 +31,7 @@
+ #include <KToolInvocation>
+ #include <KUrl>
+ #include <KStandardDirs>
++#include <KSharedConfig>
+ #include <QDebug>
+ #include "bookmarkmatch.h"
+ #include "browserfactory.h"
+diff --git a/powerdevil/daemon/CMakeLists.txt b/powerdevil/daemon/CMakeLists.txt
+index 1dac903..6ba950f 100644
+--- a/powerdevil/daemon/CMakeLists.txt
++++ b/powerdevil/daemon/CMakeLists.txt
+@@ -46,12 +46,14 @@ qt5_add_dbus_adaptor(powerdevilcore_SRCS actions/bundled/org.kde.Solid.PowerMana
+ add_library(powerdevilcore SHARED ${powerdevilcore_SRCS} ${powerdevil_bundled_actions_SRCS})
+ set_target_properties(powerdevilcore PROPERTIES VERSION ${POWERDEVIL_CORE_VERSION_STRING} SOVERSION ${POWERDEVIL_CORE_VERSION_MAJOR})
+ 
++# not exported, so just make the deps public
+ target_link_libraries(powerdevilcore
+-    KF5::KDE4Support
+-    KF5::Solid
+-    KF5::IdleTime
+-    KF5::GlobalAccel
+-    PW::KWorkspace
++    PUBLIC
++        KF5::KDE4Support
++        KF5::Solid
++        KF5::IdleTime
++        KF5::GlobalAccel
++        PW::KWorkspace
+ )
+ 
+ # target no.2 - powerdevil kded module
+@@ -82,6 +84,9 @@ target_link_libraries(kded_powerdevil
+     KF5::DBusAddons
+     powerdevilcore
+ )
++if (X11_FOUND)
++    target_link_libraries(kded_powerdevil Qt5::X11Extras)
++endif ()
+ 
+ if (UDEV_FOUND)
+     target_link_libraries(kded_powerdevil ${UDEV_LIBS})
+@@ -98,9 +103,11 @@ set(powerdevilui_SRCS
+ add_library(powerdevilui ${powerdevilui_SRCS})
+ set_target_properties(powerdevilui PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
+ 
++# not exported, so just make the deps public
+ target_link_libraries(powerdevilui
+-    Qt5::Widgets
+-    KF5::ConfigCore
++    PUBLIC
++        Qt5::Widgets
++        KF5::ConfigCore
+ )
+ 
+ set(HAVE_UDEV ${UDEV_FOUND})
+diff --git a/powerdevil/daemon/actions/bundled/brightnesscontrolconfig.cpp b/powerdevil/daemon/actions/bundled/brightnesscontrolconfig.cpp
+index a3853d9..b27ec57 100644
+--- a/powerdevil/daemon/actions/bundled/brightnesscontrolconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/brightnesscontrolconfig.cpp
+@@ -24,6 +24,8 @@
+ #include <QSlider>
+ 
+ #include <KPluginFactory>
++#include <KSharedConfig>
++#include <KConfig>
+ #include <KLocalizedString>
+ 
+ K_PLUGIN_FACTORY(PowerDevilBrightnessControlConfigFactory, registerPlugin<PowerDevil::BundledActions::BrightnessControlConfig>(); )
+diff --git a/powerdevil/daemon/actions/bundled/dimdisplayconfig.cpp b/powerdevil/daemon/actions/bundled/dimdisplayconfig.cpp
+index 4d6c063..fb66d34 100644
+--- a/powerdevil/daemon/actions/bundled/dimdisplayconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/dimdisplayconfig.cpp
+@@ -24,6 +24,7 @@
+ 
+ #include <KIntSpinBox>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KLocalizedString>
+ 
+ K_PLUGIN_FACTORY(PowerDevilDimDisplayConfigFactory, registerPlugin<PowerDevil::BundledActions::DimDisplayConfig>(); )
+diff --git a/powerdevil/daemon/actions/bundled/handlebuttoneventsconfig.cpp b/powerdevil/daemon/actions/bundled/handlebuttoneventsconfig.cpp
+index 74e4777..8e9cd6c 100644
+--- a/powerdevil/daemon/actions/bundled/handlebuttoneventsconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/handlebuttoneventsconfig.cpp
+@@ -27,6 +27,7 @@
+ 
+ #include <KLocalizedString>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KComboBox>
+ #include <KIcon>
+ 
+diff --git a/powerdevil/daemon/actions/bundled/keyboardbrightnesscontrolconfig.cpp b/powerdevil/daemon/actions/bundled/keyboardbrightnesscontrolconfig.cpp
+index 84d5afc..0c27ef8 100644
+--- a/powerdevil/daemon/actions/bundled/keyboardbrightnesscontrolconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/keyboardbrightnesscontrolconfig.cpp
+@@ -24,6 +24,7 @@
+ #include <QSlider>
+ 
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KLocalizedString>
+ 
+ K_PLUGIN_FACTORY(PowerDevilKeyboardBrightnessControlConfigFactory, registerPlugin<PowerDevil::BundledActions::KeyboardBrightnessControlConfig>(); )
+diff --git a/powerdevil/daemon/actions/bundled/runscriptconfig.cpp b/powerdevil/daemon/actions/bundled/runscriptconfig.cpp
+index 896f617..244f360 100644
+--- a/powerdevil/daemon/actions/bundled/runscriptconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/runscriptconfig.cpp
+@@ -27,6 +27,8 @@
+ #include <KComboBox>
+ #include <KIntSpinBox>
+ #include <KPluginFactory>
++#include <KSharedConfig>
++#include <KConfig>
+ 
+ K_PLUGIN_FACTORY(PowerDevilRunScriptConfigFactory, registerPlugin<PowerDevil::BundledActions::RunScriptConfig>(); )
+ 
+diff --git a/powerdevil/daemon/actions/bundled/suspendsessionconfig.cpp b/powerdevil/daemon/actions/bundled/suspendsessionconfig.cpp
+index cbd7855..019b5ad 100644
+--- a/powerdevil/daemon/actions/bundled/suspendsessionconfig.cpp
++++ b/powerdevil/daemon/actions/bundled/suspendsessionconfig.cpp
+@@ -28,6 +28,7 @@
+ #include <KIntSpinBox>
+ #include <KLocalizedString>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KIcon>
+ #include "suspendsession.h"
+ 
+diff --git a/powerdevil/daemon/actions/dpms/powerdevildpmsaction.cpp b/powerdevil/daemon/actions/dpms/powerdevildpmsaction.cpp
+index c7c1516..be079f4 100644
+--- a/powerdevil/daemon/actions/dpms/powerdevildpmsaction.cpp
++++ b/powerdevil/daemon/actions/dpms/powerdevildpmsaction.cpp
+@@ -29,6 +29,7 @@
+ #include <KConfigGroup>
+ #include <KDebug>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ 
+ #include <X11/Xmd.h>
+ #include <X11/X.h>
+diff --git a/powerdevil/daemon/actions/dpms/powerdevildpmsactionconfig.cpp b/powerdevil/daemon/actions/dpms/powerdevildpmsactionconfig.cpp
+index d45648b..4d96273 100644
+--- a/powerdevil/daemon/actions/dpms/powerdevildpmsactionconfig.cpp
++++ b/powerdevil/daemon/actions/dpms/powerdevildpmsactionconfig.cpp
+@@ -22,6 +22,7 @@
+ #include <KIntSpinBox>
+ #include <KLocalizedString>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ 
+ K_PLUGIN_FACTORY(PowerDevilDPMSConfigFactory, registerPlugin<PowerDevilDPMSActionConfig>();)
+ 
+diff --git a/powerdevil/daemon/backends/hal/powerdevilhalbackend.cpp b/powerdevil/daemon/backends/hal/powerdevilhalbackend.cpp
+index 726261d..42a65c5 100644
+--- a/powerdevil/daemon/backends/hal/powerdevilhalbackend.cpp
++++ b/powerdevil/daemon/backends/hal/powerdevilhalbackend.cpp
+@@ -31,6 +31,7 @@
+ #include <Solid/GenericInterface>
+ #include <Solid/AcAdapter>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <QtCore/QTimer>
+ 
+ PowerDevilHALBackend::PowerDevilHALBackend(QObject* parent)
+diff --git a/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp b/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp
+index 51d2316..d38a28f 100644
+--- a/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp
++++ b/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp
+@@ -28,6 +28,7 @@
+ #include <KDebug>
+ #include <kauthexecutejob.h>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KAuth/Action>
+ 
+ #include "xrandrxcbhelper.h"
+diff --git a/powerdevil/daemon/kdedpowerdevil.cpp b/powerdevil/daemon/kdedpowerdevil.cpp
+index 622d575..060a89c 100644
+--- a/powerdevil/daemon/kdedpowerdevil.cpp
++++ b/powerdevil/daemon/kdedpowerdevil.cpp
+@@ -34,6 +34,7 @@
+ #include <KAboutData>
+ #include <KDebug>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KLocalizedString>
+ 
+ K_PLUGIN_FACTORY( PowerDevilFactory,
+diff --git a/powerdevil/daemon/powerdevilaction.h b/powerdevil/daemon/powerdevilaction.h
+index 5d4be5c..8629e73 100644
+--- a/powerdevil/daemon/powerdevilaction.h
++++ b/powerdevil/daemon/powerdevilaction.h
+@@ -26,8 +26,6 @@
+ #include <QtCore/QObject>
+ #include <QtCore/QVariantMap>
+ 
+-#include <kdemacros.h>
+-
+ class KConfigGroup;
+ 
+ namespace PowerDevil
+diff --git a/powerdevil/kcmodule/activities/activitypage.cpp b/powerdevil/kcmodule/activities/activitypage.cpp
+index 7f271e7..48e9c6c 100644
+--- a/powerdevil/kcmodule/activities/activitypage.cpp
++++ b/powerdevil/kcmodule/activities/activitypage.cpp
+@@ -38,6 +38,7 @@
+ #include <KIcon>
+ #include <KMessageWidget>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KTabWidget>
+ #include <KLocalizedString>
+ 
+diff --git a/powerdevil/kcmodule/common/CMakeLists.txt b/powerdevil/kcmodule/common/CMakeLists.txt
+index 0a8d9b8..d978050 100644
+--- a/powerdevil/kcmodule/common/CMakeLists.txt
++++ b/powerdevil/kcmodule/common/CMakeLists.txt
+@@ -7,10 +7,11 @@ set( powerdevil_config_common_private_SRCS
+ 
+ add_library(powerdevilconfigcommonprivate SHARED ${powerdevil_config_common_private_SRCS})
+ 
++# not exported, so just make the links public
+ target_link_libraries(powerdevilconfigcommonprivate
+-     
+-     powerdevilcore
+-     powerdevilui
++    PUBLIC
++        powerdevilcore
++        powerdevilui
+ )
+ 
+ set_target_properties(powerdevilconfigcommonprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+diff --git a/powerdevil/kcmodule/global/GeneralPage.cpp b/powerdevil/kcmodule/global/GeneralPage.cpp
+index c0df82f..d025e42 100644
+--- a/powerdevil/kcmodule/global/GeneralPage.cpp
++++ b/powerdevil/kcmodule/global/GeneralPage.cpp
+@@ -38,6 +38,7 @@
+ 
+ #include <KNotifyConfigWidget>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KAboutData>
+ #include <KLocalizedString>
+ 
+diff --git a/powerdevil/kcmodule/profiles/EditPage.cpp b/powerdevil/kcmodule/profiles/EditPage.cpp
+index 06246ce..a674ccb 100644
+--- a/powerdevil/kcmodule/profiles/EditPage.cpp
++++ b/powerdevil/kcmodule/profiles/EditPage.cpp
+@@ -46,6 +46,7 @@
+ #include <KToolBar>
+ #include <KAboutData>
+ #include <KPluginFactory>
++#include <KSharedConfig>
+ #include <KServiceTypeTrader>
+ #include <KStandardDirs>
+ #include <KLocalizedString>
+diff --git a/systemsettings/core/BaseData.cpp b/systemsettings/core/BaseData.cpp
+index 26ae3ee..389a2e1 100644
+--- a/systemsettings/core/BaseData.cpp
++++ b/systemsettings/core/BaseData.cpp
+@@ -22,6 +22,7 @@
+ #include "MenuItem.h"
+ 
+ #include <KConfigGroup>
++#include <KSharedConfig>
+ 
+ class DataHelper {
+ 
+diff --git a/systemsettings/core/BaseMode.h b/systemsettings/core/BaseMode.h
+index cbb33d4..007df75 100644
+--- a/systemsettings/core/BaseMode.h
++++ b/systemsettings/core/BaseMode.h
+@@ -30,6 +30,7 @@ class MenuItem;
+ class ModuleView;
+ class KAboutData;
+ class KConfigDialog;
++class KConfigGroup;
+ class QAbstractItemView;
+ template<typename T> class QList;
+ 
+diff --git a/oxygen/kstyle/config/CMakeLists.txt b/oxygen/kstyle/config/CMakeLists.txt
+index 6e26eb8..7d72531 100644
+--- a/oxygen/kstyle/config/CMakeLists.txt
++++ b/oxygen/kstyle/config/CMakeLists.txt
+@@ -19,7 +19,7 @@ add_library(kstyle_oxygen_config MODULE
+ )
+ 
+ target_link_libraries(kstyle_oxygen_config Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus)
+-target_link_libraries(kstyle_oxygen_config KF5::Completion KF5::I18n)
++target_link_libraries(kstyle_oxygen_config KF5::Completion KF5::I18n KF5::KDE4Support)
+ target_link_libraries(kstyle_oxygen_config oxygenstyleconfig)
+ 
+ install(TARGETS kstyle_oxygen_config DESTINATION ${QT_PLUGIN_INSTALL_DIR}/kf5 )

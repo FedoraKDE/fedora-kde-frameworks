@@ -1,8 +1,8 @@
-%define snapshot  20140315
+# %define snapshot  20140315
 
 Name:           kde5-workspace
-Version:        4.90.1
-Release:        6.%{snapshot}git%{?dist}
+Version:        4.95.0
+Release:        1%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -11,9 +11,14 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/kde-workspace.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+# Source0:        http://download.kde.org/unstable/plasma/%{version}/kde-workspace-%{version}.tar.xz
+Source0:        kde-workspace-%{version}.tar.xz
 Source1:        kde5-plasma.desktop
 Source2:        fedora_startkde.sh
+Source3:        plasma-shell.desktop
+
+Patch0:         kde-workspace-startkde-fix-kdeinit-lookup.patch
+Patch1:         kde-workspace-fix-build.patch
 
 # udev
 BuildRequires:  systemd-devel
@@ -54,11 +59,18 @@ BuildRequires:  libraw1394-devel
 BuildRequires:  gpsd-devel
 
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtconfiguration-devel
 BuildRequires:  qt5-qtquick1-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtwebkit-devel
+# FIXME: Why do I need to isntall all backends when depending on QtSql?
+BuildRequires:  qt5-qtbase-ibase
+BuildRequires:  qt5-qtbase-odbc
+BuildRequires:  qt5-qtbase-mysql
+BuildRequires:  qt5-qtbase-postgresql
+BuildRequires:  qt5-qtbase-tds
 BuildRequires:  phonon-qt5-devel
 
 BuildRequires:  kde5-filesystem
@@ -163,7 +175,10 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n kde-workspace-%{version}
+
+%patch0 -p1 -b .kde-workspace-startkde-fix-kdeinit-lookup
+%patch1 -p1 -b .fix-build.patch
 
 %build
 mkdir -p %{_target_platform}
@@ -179,6 +194,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 # %%{_datadir} here is intended - we need to install to location where DMs look
 install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
 install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
+install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/plasma-shell.desktop
+
 
 %post -p /sbin/ldconfig
 
@@ -194,6 +211,13 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 %{_kde5_plugindir}/kf5/*.so
 %{_kde5_libdir}/qml/org/kde/*
 %{_kde5_libdir}/kconf_update_bin
+%{_kde5_libdir}/cmake/KF5SysGuard
+%{_kde5_libdir}/cmake/KHotKeysDBusInterface
+%{_kde5_libdir}/cmake/KRunnerAppDBusInterface
+%{_kde5_libdir}/cmake/KSMServerDBusInterface/*.cmake
+%{_kde5_libdir}/cmake/KWinDBusInterface/*.cmake
+%{_kde5_libdir}/cmake/LibKWorkspace/*.cmake
+%{_kde5_libdir}/cmake/LibTaskManager/*.cmake
 %{_kde5_libexecdir}/*
 %{_kde5_datadir}/kde5/services/*.desktop
 %{_kde5_datadir}/kde5/services/*.protocol
@@ -240,24 +264,26 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 %{_kde5_datadir}/solid
 %{_kde5_datadir}/kstyle
 %{_kde5_datadir}/sounds/pop.wav
-
 # %%{_datadir} here is intended - we need to install to location where DMs look
 %{_datadir}/xsessions/kde5-plasma.desktop
+
+%{_kde5_plugindir}/kf5/kwin
+
 
 %{_kde5_sysconfdir}/xdg/*.knsrc
 %{_kde5_sysconfdir}/ksysguarddrc
 %{_kde5_sysconfdir}/xdg/autostart/*.desktop
 
 %files doc
-%doc COPYING COPYING.DOC COPYING.LIB README README.pam
+# %doc COPYING COPYING.DOC COPYING.LIB README README.pam
 %{_kde5_datadir}/doc/HTML/en/*
 
 %files devel
-%{_kde5_libdir}/KDE4Workspace/
 %{_kde5_libdir}/*.so
 %{_kde5_libdir}/cmake/KDecorations/
 %{_kde5_includedir}/*
 %{_kde5_datadir}/dbus-1/interfaces/*.xml
+%{_kde5_datadir}/dbus-1/services/org.kde.krunner.service
 
 # TODO split to subpackages
 # - KCM (?)
@@ -267,6 +293,12 @@ install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
 
 
 %changelog
+* Wed Apr 02 2014 Jan Grulich <jgrulich@redhat.com> 4.95.0-1
+- Update to Alpha 1
+
+* Mon Mar 24 2014 Jan Grulich <jgrulich@redhat.com 4.90.1-7.20140315git
+- fix plasma-shell autostart
+
 * Sat Mar 15 2014 Jan Grulich <jgrulich@redhat.com 4.90.1-6.20140315git
 - update git snapshot
 
