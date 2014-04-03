@@ -1,10 +1,10 @@
-%_kde5_prefix /opt/kde5/
+%_kde5_prefix /usr
 %_kde5_bindir %_kde5_prefix/bin
 %_kde5_datadir %_kde5_prefix/share
 %_kde5_docdir %_kde5_datadir/doc
 %_kde5_includedir %_kde5_prefix/include
 %_kde5_libdir %_kde5_prefix/%{_lib}
-%_kde5_libexecdir %_kde5_prefix/libexec
+%_kde5_libexecdir %_kde5_prefix/libexec/
 %_kde5_plugindir %_kde5_libdir/plugins
 %_kde5_sysconfdir %_kde5_prefix/etc
 %_kde5_mandir %_kde5_datadir/man
