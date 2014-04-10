@@ -1,3 +1,12 @@
+# fedora-live-base.ks
+#
+# Defines the basics for all kickstarts in the fedora-live branch
+# Does not include package selection (other then mandatory)
+# Does not include localization packages or configuration
+#
+# Does includes "default" language configuration (kickstarts including
+# this template can override these settings)
+
 lang en_US.UTF-8
 keyboard us
 timezone US/Eastern
@@ -5,118 +14,39 @@ auth --useshadow --enablemd5
 selinux --enforcing
 firewall --enabled --service=mdns
 xconfig --startxonboot
-part / --size 3000 --fstype ext4
+part / --size 3072 --fstype ext4
 services --enabled=NetworkManager --disabled=network,sshd
-rootpw --iscrypted $1$uw6MV$m6VtUWPed4SqgoW6fKfTZ/
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=kde-frameworks5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
-repo --name=plasma-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-next/fedora-$releasever-$basearch/
+#%include fedora-repo.ks
 
 %packages
 @base-x
+@guest-desktop-agents
 @standard
 @core
 @fonts
+@input-methods
+@dial-up
+@multimedia
+@hardware-support
+@printing
+
+# Explicitly specified here:
+# <notting> walters: because otherwise dependency loops cause yum issues.
 kernel
+
+# This was added a while ago, I think it falls into the category of
+# "Diagnosis/recovery tool useful from a Live OS image".  Leaving this untouched
+# for now.
+memtest86+
+
+# The point of a live image is to install
 anaconda
 @anaconda-tools
+
+# Make live images easy to shutdown and the like in libvirt
 qemu-guest-agent
 
-# DM
-sddm
-
-# Base pkgs
-dbusmenu-qt5
-extra-cmake-modules
-kde5-filesystem
-kf5-filesystem
-kf5-umbrella
-polkit-qt5
-
-# Tier 1
-kf5-attica
-kf5-karchive
-kf5-kcodecs
-kf5-kcoreaddons
-kf5-kdbusaddons
-kf5-kglobalaccel
-kf5-kguiaddons
-kf5-kidletime
-kf5-kimageformats
-kf5-kitemmodels
-kf5-kitemviews
-kf5-kjs
-kf5-kplotting
-kf5-kwidgetsaddons
-kf5-kwindowsystem
-kf5-solid
-kf5-sonnet
-kf5-threadweaver
-
-# Tier 2
-kf5-kauth
-kf5-kcompletion
-kf5-kcrash
-kf5-kdnssd
-kf5-kdoctools
-kf5-ki18n
-kf5-kjobwidgets
-
-# Tier 3
-kf5-kactivities-libs
-kf5-kactivities-runtime
-kf5-kbookmarks
-kf5-kcmutils
-kf5-kconfigwidgets
-kf5-kdeclarative
-kf5-kded
-kf5-kdesignerplugin
-kf5-kdesu
-kf5-kdewebkit
-kf5-kemoticons
-kf5-kiconthemes
-kf5-kinit
-kf5-kio
-kf5-kjsembed
-kf5-kmediaplayer
-kf5-knewstuff
-kf5-knotifications
-kf5-knotifyconfig
-kf5-kparts
-kf5-kpty
-kf5-kross
-kf5-krunner
-kf5-kservice
-kf5-ktextwidgets
-kf5-kunitconversion
-kf5-kwallet
-kf5-kxmlgui
-kf5-plasma
-
-# Tier 4
-kf5-frameworkintegration
-kf5-kapidox
-kf5-kde4support
-kf5-kfileaudiopreview
-kf5-khtml
-
-# Workspace
-kde5-runtime
-kde5-workspace
-oxygen-fonts
-libnm-qt5
-libmm-qt5
-kde5-plasma-nm
-
-# Tools
-xterm
-konsole
-
-# Additional packages
-xorg-x11-drv-qxl
-xorg-x11-drv-vmware
 %end
 
 %post
@@ -241,8 +171,7 @@ fi
 
 # add fedora user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
-#passwd -d liveuser > /dev/null
-echo "liveuser" | passwd liveuser --stdin &> /dev/null
+passwd -d liveuser > /dev/null
 usermod -aG wheel liveuser > /dev/null
 
 # Remove root password lock
@@ -280,24 +209,7 @@ touch /.liveimg-configured
 # https://bugzilla.redhat.com/show_bug.cgi?id=679486
 echo "localhost" > /etc/hostname
 
-# KDE POST
-# add initscript
-if [ -e /usr/share/icons/hicolor/96x96/apps/fedora-logo-icon.png ] ; then
-    # use image also for kdm
-    mkdir -p /usr/share/apps/kdm/faces
-    cp /usr/share/icons/hicolor/96x96/apps/fedora-logo-icon.png /usr/share/apps/kdm/faces/fedora.face.icon
-fi
-
-sed -i 's/LastSession=kde-plasma.desktop/LastSession=kde5-plasma.desktop/' /etc/sddm.conf
-sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
-
-# make liveuser use KDE
-echo "startkde" > /home/liveuser/.xsession
-chmod a+x /home/liveuser/.xsession
-chown liveuser:liveuser /home/liveuser/.xsession
-
 EOF
-
 
 # bah, hal starts way too late
 cat > /etc/rc.d/init.d/livesys-late << EOF
@@ -347,8 +259,8 @@ fi
 if [ -n "\$xdriver" ]; then
    cat > /etc/X11/xorg.conf.d/00-xdriver.conf <<FOE
 Section "Device"
-        Identifier      "Videocard0"
-        Driver  "\$xdriver"
+	Identifier	"Videocard0"
+	Driver	"\$xdriver"
 EndSection
 FOE
 fi
@@ -386,6 +298,7 @@ rm -f /core*
 
 # convince readahead not to collect
 # FIXME: for systemd
+
 %end
 
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -108,6 +108,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Rebuild
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

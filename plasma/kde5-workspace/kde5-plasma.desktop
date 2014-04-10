@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=XSession
-Exec=/opt/kde5/bin/fedora_startkde
-TryExec=/opt/kde5/bin/fedora_startkde
-Name=KDE Plasma Workspace 2
+Exec=/usr/bin/startkde
+TryExec=/usr/bin/startkde
+Name=Plasma Next
 Comment=The next generation desktop made by KDE

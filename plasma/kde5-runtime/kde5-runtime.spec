@@ -2,7 +2,7 @@
 
 Name:           kde5-runtime
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -212,6 +212,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-3
+- build into /usr prefix for live ISO
+
 * Wed Apr 02 2014 Daniel Vrátíl <dvratil@redhat.com> 4.95.0-1
 - update to KDE Runtime 4.95.0 (Alpha 1)
 

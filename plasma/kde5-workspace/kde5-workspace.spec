@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        5%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -15,7 +15,6 @@ URL:            http://www.kde.org
 Source0:        kde-workspace-%{version}.tar.xz
 Source1:        kde5-plasma.desktop
 Source2:        fedora_startkde.sh
-Source3:        plasma-shell.desktop
 
 Patch0:         kde-workspace-startkde-fix-kdeinit-lookup.patch
 Patch1:         kde-workspace-fix-build.patch
@@ -177,7 +176,7 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q -n kde-workspace-%{version}
 
-%patch0 -p1 -b .kde-workspace-startkde-fix-kdeinit-lookup
+#%patch0 -p1 -b .kde-workspace-startkde-fix-kdeinit-lookup
 %patch1 -p1 -b .fix-build.patch
 
 %build
@@ -193,8 +192,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
 install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
-install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
-install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/plasma-shell.desktop
+#install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
+#install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/plasma-shell.desktop
 
 
 %post -p /sbin/ldconfig
@@ -271,8 +270,8 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 
 
 %{_kde5_sysconfdir}/xdg/*.knsrc
-%{_kde5_sysconfdir}/ksysguarddrc
 %{_kde5_sysconfdir}/xdg/autostart/*.desktop
+%{_kde5_sysconfdir}/ksysguarddrc
 
 %files doc
 # %doc COPYING COPYING.DOC COPYING.LIB README README.pam
@@ -293,6 +292,9 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 
 
 %changelog
+* Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-5
+- Install to /usr prefix for live ISO
+
 * Wed Apr 02 2014 Jan Grulich <jgrulich@redhat.com> 4.95.0-1
 - Update to Alpha 1
 
