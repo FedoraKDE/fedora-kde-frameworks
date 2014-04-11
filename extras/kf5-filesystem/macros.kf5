@@ -1,15 +1,16 @@
 %_kf5_prefix %_prefix
 %_kf5_archdatadir %_libdir/qt5
 %_kf5_bindir %_kf5_prefix/bin
-%_kf5_datadir %_datadir
+%_kf5_datadir %_datadir/kf5
 %_kf5_docdir /usr/share/doc
-%_kf5_includedir %_kf5_prefix/include
+%_kf5_includedir %_kf5_prefix/include/kf5/
 %_kf5_libdir %_libdir
 %_kf5_libexecdir %_libexecdir
-%_kf5_plugindir %_kf5_libdir/plugins/kf5
+%_kf5_plugindir %_kf5_libdir/kf5/plugins/
 %_kf5_qtplugindir %_qt5_plugindir
-%_kf5_sysconfdir %_kf5_prefix/etc
+%_kf5_sysconfdir %_sysconfigdir
 %_kf5_mandir %_kf5_datadir/man
+%_kf5_buildtype release
 
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
@@ -17,22 +18,19 @@
   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
-  XDG_DATA_DIRS="%{_kf5_datadir}:$XDG_DATA_DIRS"; export XDG_DATA_DIRS ; \
   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
   %{__cmake} \\\
     -DBUILD_SHARED_LIBS:BOOL=ON \\\
-    -DCMAKE_BUILD_TYPE=release \\\
-    -DCMAKE_INSTALL_PREFIX:PATH=%_kf5_prefix \\\
+    -DCMAKE_BUILD_TYPE=%{_kf5_buildtype} \\\
+    -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
-    -DINCLUDE_INSTALL_DIR:STRINGH=include \\\
-    -DLIB_INSTALL_DIR:STRING=%{_lib} \\\
+    -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
+    -DINCLUDE_INSTALL_DIR:STRINGH=%{_kf5_includedir} \\\
+    -DLIB_INSTALL_DIR:STRING=%{_kf5_libdir} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
 %endif \
-    -DBIN_INSTALL_DIR:STRING=bin \\\
-    -DDATA_INSTALL_DIR:STRING=share \\\
-    -DLIBEXEC_INSTALL_DIR:STRING=libexec \\\
-    -DSYSCONF_INSTALL_DIR:STRING=etc \\\
     -DBUILD_TESTING:BOOL=FALSE \\\
+    -DPLUGIN_INSTALL_DIR:STRING=%{_kf5_plugindir} \\\
     -DQT_PLUGIN_INSTALL_DIR:STRING=%{_qt5_plugindir} \\\
-    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_lib}/qt5/mkspecs/modules
+    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_kf5_libdir}/qt5/mkspecs/modules
