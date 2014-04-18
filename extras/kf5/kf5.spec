@@ -16,9 +16,9 @@ Summary:        Filesystem for KDE Frameworks 5
 %description    filesystem
 Filesystem for KDE Frameworks 5
 
-%package        rpmmacros
+%package        rpm-macros
 Summary:        RPM macros for KDE Frameworks 5
-%description    rpmmacros
+%description    rpm-macros
 RPM macros for building KDE Frameworks 5 packages
 
 
@@ -38,14 +38,14 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 %{_libexecdir}/kf5
 
 
-%files rpmmacros
+%files rpm-macros
 %{_rpmconfigdir}/macros.d/macros.kf5
 
 
 %changelog
 * Wed Apr 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-4
 - Rename base package to kf5
-- Create -filesystem, -rpmmacros subpackges
+- Create -filesystem, -rpm-macros subpackges
 
 * Fri Apr 11 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3
 - Fix build
