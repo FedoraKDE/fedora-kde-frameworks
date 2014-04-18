@@ -1,9 +1,9 @@
-%global snapshot 20140213
+%global snapshot 20140411
 
 Summary:        A Qt implementation of the DBusMenu protocol (Qt5 version)
 Name:           dbusmenu-qt5
 Version:        0.9.2
-Release:        0.2.%{snapshot}bzr%{?dist}
+Release:        0.3.%{snapshot}bzr%{?dist}
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
@@ -12,15 +12,13 @@ URL:            https://launchpad.net/libdbusmenu-qt/
 #Source0 :       https://launchpad.net/libdbusmenu-qt/trunk/%{version}/+download/libdbusmenu-qt-%{version}.tar.bz2
 # bzr branch lp:libdbusmenu-qt && mv libdbusmenu-qt{,5-%{version}} && \
 # tar -c libdbusmenu-qt5-0.9.2 | bzip2 -c > libdbusmenu-qt5-0.9.2-${snapshot}bzr.tar.bz2
+# Last upstream release does not include Qt5 support, so we need to use a snapshot
 Source0:        libdbusmenu-qt5-%{version}-%{snapshot}bzr.tar.bz2
-BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-
 
 BuildRequires:  cmake
 BuildRequires:  doxygen
 BuildRequires:  qjson-devel
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  kf5-filesystem
 
 %description
 This library provides a Qt implementation of the DBusMenu protocol.
@@ -44,7 +42,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} \
+%{cmake} \
         -DUSE_QT4:BOOL=FALSE \
         -DUSE_QT5:BOOL=TRUE \
         -DWITH_DOC:BOOL=TRUE \
@@ -55,7 +53,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
-rm -rf %{buildroot}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 # unpackaged files
@@ -64,7 +61,7 @@ rm -rf %{buildroot}%{_docdir}/dbusmenu-qt
 
 %check
 # verify pkg-config version
-export PKG_CONFIG_PATH=%{buildroot}%{_kf5_datadir}/pkgconfig:%{buildroot}%{_kf5_libdir}/pkgconfig
+export PKG_CONFIG_PATH=%{buildroot}%{_datadir}/pkgconfig:%{buildroot}%{_libdir}/pkgconfig
 test "$(pkg-config --modversion dbusmenu-qt5)" = "%{version}"
 # test suite
 xvfb-run dbus-launch make -C %{_target_platform} check ||:
@@ -80,18 +77,22 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc COPYING README
-%{_kf5_libdir}/libdbusmenu-qt5.so.2*
-%{_kf5_datadir}/doc/libdbusmenu-qt5-doc/
+%{_libdir}/libdbusmenu-qt5.so.2*
+%{_datadir}/doc/libdbusmenu-qt5-doc/
 
 %files devel
 %defattr(-,root,root,-)
-%{_kf5_includedir}/dbusmenu-qt5/
-%{_kf5_libdir}/libdbusmenu-qt5.so
-%{_kf5_libdir}/pkgconfig/dbusmenu-qt5.pc
-%{_kf5_libdir}/cmake/dbusmenu-qt5/
+%{_includedir}/dbusmenu-qt5/
+%{_libdir}/libdbusmenu-qt5.so
+%{_libdir}/pkgconfig/dbusmenu-qt5.pc
+%{_libdir}/cmake/dbusmenu-qt5/
 
 
 %changelog
+* Fri Apr 11 2014 Daniel Vrátil <dvratil@redhat.com> - 0.9.2-0.3.20140411bzr
+- Update to latest git snapshot
+- Remove kf5-filesystem dependency
+
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 0.9.2-0.2.20140213bzr
 - Update to latest git snapshot, rebuild to install to /usr prefix
 
