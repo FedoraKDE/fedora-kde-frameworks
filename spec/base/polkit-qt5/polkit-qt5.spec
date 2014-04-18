@@ -44,7 +44,7 @@ BuildArch: noarch
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} \
+%{cmake} \
   -DBUILD_EXAMPLES:BOOL=OFF \
   ..
 popd
@@ -65,21 +65,21 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc AUTHORS COPYING README
-%{_kf5_libdir}/libpolkit-qt5-core-1.so.1*
-%{_kf5_libdir}/libpolkit-qt5-gui-1.so.1*
-%{_kf5_libdir}/libpolkit-qt5-agent-1.so.1*
+%{_libdir}/libpolkit-qt5-core-1.so.1*
+%{_libdir}/libpolkit-qt5-gui-1.so.1*
+%{_libdir}/libpolkit-qt5-agent-1.so.1*
 
 %files devel
 #%{_kf5_sysconfdir}/rpm/macros.polkit-qt
-%{_kf5_includedir}/polkit-qt5-1/
-%{_kf5_libdir}/libpolkit-qt5-core-1.so
-%{_kf5_libdir}/libpolkit-qt5-gui-1.so
-%{_kf5_libdir}/libpolkit-qt5-agent-1.so
-%{_kf5_libdir}/pkgconfig/polkit-qt5-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt5-core-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt5-gui-1.pc
-%{_kf5_libdir}/pkgconfig/polkit-qt5-agent-1.pc
-%{_kf5_libdir}/cmake/PolkitQt5-1/
+%{_includedir}/polkit-qt5-1/
+%{_ibdir}/libpolkit-qt5-core-1.so
+%{_libdir}/libpolkit-qt5-gui-1.so
+%{_libdir}/libpolkit-qt5-agent-1.so
+%{_libdir}/pkgconfig/polkit-qt5-1.pc
+%{_libdir}/pkgconfig/polkit-qt5-core-1.pc
+%{_libdir}/pkgconfig/polkit-qt5-gui-1.pc
+%{_libdir}/pkgconfig/polkit-qt5-agent-1.pc
+%{_libdir}/cmake/PolkitQt5-1/
 
 %files doc
 %doc html/*
@@ -89,6 +89,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140418git
 - Update to latest git snapshot
 - Drop patch for coinstallibility
+
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140205git
 - Update to latest git snapshot
 
