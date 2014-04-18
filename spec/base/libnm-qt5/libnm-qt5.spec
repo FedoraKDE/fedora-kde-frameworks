@@ -33,7 +33,7 @@ Qt libraries and header files for developing applications
 that use NetworkManager
 
 %prep
-%setup -qn %{name}-%{version}
+%setup -qn libnm-qt-%{version}
 
 %build
 mkdir -p %{_target_platform}
