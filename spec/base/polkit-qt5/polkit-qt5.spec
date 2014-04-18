@@ -41,7 +41,7 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}-%{snapshot}
+%setup -q -n %{name}-%{version}
 
 %patch0 -p1 -b .coinstallable
 
