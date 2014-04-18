@@ -28,7 +28,7 @@ Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Qt libraries and header files for developing applications that use ModemManager
 
 %prep
-%setup -qn libmm-qt-%{version}
+%setup -qn libmm-qt5-%{version}
 
 %build
 mkdir -p %{_target_platform}
