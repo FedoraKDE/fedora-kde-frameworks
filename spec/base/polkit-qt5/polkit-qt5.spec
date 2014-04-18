@@ -1,4 +1,4 @@
-%define snapshot 20140212
+%define snapshot 20140418
 
 Name:           polkit-qt5
 Version:        0.103.0
@@ -13,8 +13,6 @@ URL:            https://projects.kde.org/projects/kdesupport/polkit-qt-1
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
 Source0:        polkit-qt5-bac771e6.tar
 Source1:        Doxyfile
-
-Patch0:         polkit-qt5-qt4-coinstallability.patch
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  polkit-devel >= 0.98
@@ -42,8 +40,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-
-%patch0 -p1 -b .coinstallable
 
 %build
 mkdir -p %{_target_platform}
@@ -92,6 +88,10 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %changelog
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 0.103.0-20140418gitbac771e6
 - Update to git: bac771e6
+
+* Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140418git
+- Update to latest git snapshot
+- Drop patch for coinstallibility
 
 * Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140205git
 - Update to latest git snapshot
