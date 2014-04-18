@@ -1,16 +1,17 @@
 %_kf5_prefix %_prefix
 %_kf5_archdatadir %_libdir/qt5
 %_kf5_bindir %_kf5_prefix/bin
-%_kf5_datadir %_datadir/kf5
+%_kf5_datadir %_datadir
 %_kf5_docdir /usr/share/doc
-%_kf5_includedir %_kf5_prefix/include/kf5/
+%_kf5_includedir %_includedir/KF5
 %_kf5_libdir %_libdir
-%_kf5_libexecdir %_libexecdir
-%_kf5_plugindir %_kf5_libdir/kf5/plugins/
+%_kf5_libexecdir %_libexecdir/kf5
 %_kf5_qtplugindir %_qt5_plugindir
+%_kf5_plugindir %_qt5_plugindir/kf5
 %_kf5_sysconfdir %_sysconfigdir
 %_kf5_mandir %_kf5_datadir/man
 %_kf5_buildtype release
+%_kf5_qmldir %_qt5_prefix/qml
 
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
@@ -21,16 +22,19 @@
   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
   %{__cmake} \\\
     -DBUILD_SHARED_LIBS:BOOL=ON \\\
+    -DBUILD_TESTING:BOOL=FALSE \\\
     -DCMAKE_BUILD_TYPE=%{_kf5_buildtype} \\\
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
-    -DINCLUDE_INSTALL_DIR:STRINGH=%{_kf5_includedir} \\\
-    -DLIB_INSTALL_DIR:STRING=%{_kf5_libdir} \\\
+    -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_includedir} \\\
+    -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
 %endif \
-    -DBUILD_TESTING:BOOL=FALSE \\\
-    -DPLUGIN_INSTALL_DIR:STRING=%{_kf5_plugindir} \\\
-    -DQT_PLUGIN_INSTALL_DIR:STRING=%{_qt5_plugindir} \\\
+    -DKCFG_INSTALL_DIR:PATH=%{_datadir}/config.kcfg \\\
+    -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
+    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
+    -DQML_INSTALL_DIR:PATH=%{_kf5_qmldir} \\\
+    -DIMPORTS_INSTALL_DIR=%{_qt5_importdir} \\\
     -DECM_MKSPECS_INSTALL_DIR:STRING=%{_kf5_libdir}/qt5/mkspecs/modules
