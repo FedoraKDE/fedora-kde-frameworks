@@ -13,7 +13,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 # Package from git snapshots using releaseme scripts
 Source0:        %{name}-%{version}-git%{git_commit}.tar.xz
 
-BuildRequires:  cmake >= 2.6
+BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  ModemManager-devel >= 1.0.0
 
