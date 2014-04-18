@@ -12,8 +12,8 @@ URL:            https://projects.kde.org/projects/extragear/libs/libnm-qt
 # # Package from git snapshots using releaseme scripts
 Source0:        libnm-qt5-537dcdfc.tar
 
-BuildRequires:  cmake >= 2.6
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  extra-cmake-modules
 BuildRequires:  libmm-qt5-devel >= 1.0.0
 BuildRequires:  pkgconfig(NetworkManager) >= 0.9.8
 BuildRequires:  pkgconfig(ModemManager) >= 1.0.0
