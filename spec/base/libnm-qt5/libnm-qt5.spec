@@ -1,7 +1,7 @@
 %global         git_commit 2afe13e
 Name:           libnm-qt5
 Version:        0.9.9.1
-Release:        1.20140403git%{git_commit}%{?dist}
+Release:        1.20140418git537dcdfc%{?dist}
 Epoch:          1
 Summary:        Qt-only wrapper for NetworkManager DBus API
 
@@ -10,7 +10,7 @@ License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/libs/libnm-qt
 # Source0:        http://download.kde.org/unstable/networkmanagement/%{version}/src/%{name}-%{version}.tar.xz
 # # Package from git snapshots using releaseme scripts
-Source0:        %{name}-%{version}-git%{git_commit}.tar.xz
+Source0:        libnm-qt5-537dcdfc.tar
 
 BuildRequires:  cmake >= 2.6
 BuildRequires:  qt5-qtbase-devel
@@ -63,6 +63,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_includedir}/NetworkManagerQt5/
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 0.9.9.1-20140418git537dcdfc
+- Update to git: 537dcdfc
+
 * Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> - 1:0.9.9.1-1.20140403git2afe13e
 - Qt 5 fork of libnm-qt
 
