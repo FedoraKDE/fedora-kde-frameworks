@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 License:        GPLv2+
@@ -13,7 +13,6 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -80,6 +79,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Declarative.so.*
+%{_kf5_libdir}/qml/org/kde/draganddrop
+%{_kf5_libdir}/qml/org/kde/kcoreaddons/
+%{_kf5_libdir}/qml/org/kde/kquickcontrols
+%{_kf5_libdir}/qml/org/kde/kquickcontrolsaddons
+%{_kf5_libdir}/qml/org/kde/private/kquickcontrols
 
 %files devel
 %doc
@@ -87,14 +91,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_includedir}/KDeclarative
 %{_kf5_libdir}/libKF5Declarative.so
 %{_kf5_libdir}/cmake/KF5Declarative
-%{_kf5_libdir}/qml/org/kde/draganddrop
-%{_kf5_libdir}/qml/org/kde/kcoreaddons/
-%{_kf5_libdir}/qml/org/kde/kquickcontrols
-%{_kf5_libdir}/qml/org/kde/kquickcontrolsaddons
-%{_kf5_libdir}/qml/org/kde/private/kquickcontrols
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDeclarative.pri
 
 %changelog
+* Tue Apr 15 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Correctly install declarative plugins
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
