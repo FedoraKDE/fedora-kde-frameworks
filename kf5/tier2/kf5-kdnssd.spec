@@ -16,11 +16,12 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 BuildRequires:  avahi-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 Requires:       nss-mdns
-
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 2 integration module for DNS-SD services (Zeroconf)

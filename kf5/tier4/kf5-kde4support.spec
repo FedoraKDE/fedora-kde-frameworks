@@ -19,6 +19,7 @@ BuildRequires:  libSM-devel
 BuildRequires:  openssl-devel
 BuildRequires:  gettext-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
@@ -57,6 +58,7 @@ BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kdesignerplugin-devel
 BuildRequires:  kf5-kglobalaccel-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4

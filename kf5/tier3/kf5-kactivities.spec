@@ -18,6 +18,7 @@ Provides:       kactivities-qt5
 
 BuildRequires:  boost-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
@@ -48,6 +49,7 @@ consumer, application adding information to them or as an activity manager.
 
 %package libs
 Summary:        Libraries fro KActivities framework
+Requires:       kf5-filesystem
 %description    libs
 %{summary}.
 

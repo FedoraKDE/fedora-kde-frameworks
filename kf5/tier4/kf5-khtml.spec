@@ -23,6 +23,7 @@ BuildRequires:  perl
 BuildRequires:  libpng-devel
 BuildRequires:  zlib-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -60,6 +61,7 @@ BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-sonnet-devel
 
+Requires:       kf5-filesystem
 
 %description
 KHTML is a web rendering engine, based on the KParts technology and using KJS

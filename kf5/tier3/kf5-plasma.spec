@@ -41,6 +41,7 @@ BuildRequires:  qt5-qtbase-mysql
 BuildRequires:  qt5-qtbase-postgresql
 BuildRequires:  qt5-qtbase-tds
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-umbrella
 BuildRequires:  kf5-attica-devel
@@ -81,6 +82,7 @@ BuildRequires:  kf5-kross-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kdnssd-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 module with Plasma 2 libraries and runtime components
@@ -94,7 +96,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-# TODO: Supackages!
+# TODO: Subpackages!
 # -shell
 # -quick
 # -wallpapers

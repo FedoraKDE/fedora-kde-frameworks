@@ -16,6 +16,7 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 BuildRequires:  libX11-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -27,6 +28,7 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kpty-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 module for su integration

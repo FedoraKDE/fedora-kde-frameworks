@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -39,6 +40,8 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kxmlgui-devel
+
+Requires:       kf5-filesystem
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be

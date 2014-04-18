@@ -18,6 +18,7 @@ BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  zlib-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -50,6 +51,8 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kglobalaccel-devel
 BuildRequires:  kf5-kwallet-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 solution for filesystem abstraction

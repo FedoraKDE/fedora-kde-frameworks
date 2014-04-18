@@ -15,6 +15,7 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  phonon-qt5-devel
@@ -48,6 +49,7 @@ BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kdoctools-devel
 
+Requires:       kf5-filesystem
 
 %description
 This is a plugin for KIO that provides a component for previewing audio

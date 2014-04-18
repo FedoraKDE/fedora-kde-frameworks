@@ -19,7 +19,10 @@ BuildRequires:  libX11-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
+
+Requires:       kf5-filesystem
 
 %description
 KDE Framework 5 Tier 1 integration module for global shortcuts

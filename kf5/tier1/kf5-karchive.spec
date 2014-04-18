@@ -19,8 +19,11 @@ BuildRequires:  zlib-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  lzma-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 1 addon with archive functions

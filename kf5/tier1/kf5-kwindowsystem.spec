@@ -14,12 +14,15 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  libX11-devel
 BuildRequires:  xcb-util-keysyms-devel
 BuildRequires:  libXrender-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks tier 1 integration module that provides classes for managing and

@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libgcrypt-devel
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -46,7 +47,7 @@ KDE Frameworks 5 Tier 3 solution for password management.
 
 %package        api
 Summary:        KWallet framework libraries
-
+Requires:       kf5-filesystem
 %description    api
 Provides API to access KWallet data from applications.
 

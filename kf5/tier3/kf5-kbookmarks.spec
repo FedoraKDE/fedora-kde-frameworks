@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -38,6 +39,8 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
+
+Requires:       kf5-filesystem
 
 %description
 KBookmarks lets you access and manipulate bookmarks stored using the

@@ -16,6 +16,7 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 BuildRequires:  libX11-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -40,6 +41,7 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-sonnet-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 solution for generating UI

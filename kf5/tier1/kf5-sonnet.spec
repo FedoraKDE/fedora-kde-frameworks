@@ -21,9 +21,11 @@ BuildRequires:  hspell-devel
 BuildRequires:  hunspell-devel
 BuildRequires:  zlib-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+Requires:       kf5-filesystem
 Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}
 Requires:       kf5-sonnet-ui%{?_isa} = %{version}-%{release}
 
@@ -77,7 +79,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files core
 %{_kf5_libdir}/libKF5SonnetCore.so.*
-%{_kf5_qtplugindir}/kf5/sonnet_clients
+%{_kf5_plugindir}/sonnet_clients
 %{_kf5_datadir}/sonnet/trigrams.map
 
 %files ui

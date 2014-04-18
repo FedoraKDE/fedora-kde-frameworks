@@ -18,6 +18,7 @@ Patch0:         kinit-respect-env-paths.patch
 
 BuildRequires:  libX11-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -46,6 +47,8 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
+
+Requires:       kf5-filesystem
 
 %description
 kdeinit is a process launcher somewhat similar to the 

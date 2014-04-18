@@ -14,9 +14,11 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+Requires:       kf5-filesystem
 Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-gui%{?_isa} = %{version}-%{release}
 

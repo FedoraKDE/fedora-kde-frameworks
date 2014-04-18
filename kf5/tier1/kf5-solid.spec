@@ -19,9 +19,12 @@ Patch0:         solid-rename-solid-hardware-to-solid-hardware5.patch
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
+
+Requires:       kf5-filesystem
 
 %description
 Solid provides the following features for application developers:
@@ -70,7 +73,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc COPYING.LIB README.md TODO
-%{_kf5_libdir}/qml/org/kde/solid/*
+%{_kf5_qmldir}/org/kde/solid
 %{_kf5_libdir}/libKF5Solid.so.*
 
 

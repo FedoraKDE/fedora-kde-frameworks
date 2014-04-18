@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
@@ -47,6 +48,7 @@ BuildRequires:  kf5-kbookmarks-devel
 BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-kio-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 module for KRunner

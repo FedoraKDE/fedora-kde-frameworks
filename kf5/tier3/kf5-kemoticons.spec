@@ -14,6 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -24,6 +25,8 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kservice-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 module for emoticons support

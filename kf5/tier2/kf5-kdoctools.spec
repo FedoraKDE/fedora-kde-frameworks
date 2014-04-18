@@ -19,6 +19,7 @@ BuildRequires:  libxml2-devel
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -26,6 +27,7 @@ BuildRequires:  kf5-karchive-devel
 
 Requires:       docbook-dtds
 Requires:       docbook-style-xsl
+Requires:       kf5-filesystem
 
 %description
 Provides tools to generate documentation in various format from DocBook files.

@@ -18,8 +18,11 @@ URL:            http://www.kde.org
 
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/attica-%{version}.tar.xz
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
+Requires:       kf5-filesystem
 
 Provides:       attica-qt5
 Obsoletes:      attica-qt5
@@ -45,9 +48,7 @@ Obsoletes:      attica-qt5-devel
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} \
-  -DQT4_BUILD:BOOL=FALSE \
-  ..
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}

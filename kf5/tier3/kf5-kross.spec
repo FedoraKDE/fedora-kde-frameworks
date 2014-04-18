@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -67,20 +68,19 @@ developing applications that use %{name}.
 
 %package        core
 Summary:        Non-gui part of the Kross framework
-
+Requires:       kf5-filesystem
 %description    core
 Non-gui part of the Kross framework.
 
 %package        ui
 Summary:        Gui part of the Kross framework
 Requires:       kf5-kross-core%{?_isa} = %{version}-%{release}
-
+Requires:       kf5-filesystem
 %description    ui
 Gui part of the Kross framework.
 
 %package        doc
 Summary:        Documentation and user manuals for the Kross framework
-
 %description    doc
 Documentation and user manuals for the Kross framework
 

@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
@@ -45,6 +46,7 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kxmlgui-devel
 
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 3 module with interfaces for media player features

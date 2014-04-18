@@ -16,6 +16,7 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 BuildRequires:  libX11-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel

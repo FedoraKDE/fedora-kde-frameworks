@@ -18,11 +18,13 @@ Patch0:         kauth-find-polkit-qt5.patch
 
 BuildRequires:  polkit-qt5-devel
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
 
+Requires:       kf5-filesystem
 
 %description
 KAuth is a framework to let applications perform actions as a privileged user.

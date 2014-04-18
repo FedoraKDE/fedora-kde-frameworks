@@ -15,10 +15,13 @@ URL:            http://download.kde.org/
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  python-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 4 module for API documentation generation
