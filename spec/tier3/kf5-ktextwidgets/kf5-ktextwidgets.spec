@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        1.20140418git47299f0d%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with text widgets
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-ktextwidgets-47299f0d.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -82,6 +82,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git47299f0d
+- Update to git: 47299f0d
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

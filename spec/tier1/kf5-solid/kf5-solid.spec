@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3%{?dist}
+Release:        3.20140418git7fc05c66%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-solid-7fc05c66.tar
 
 Patch0:         solid-rename-solid-hardware-to-solid-hardware5.patch
 
@@ -90,6 +90,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git7fc05c66
+- Update to git: 7fc05c66
+
 * Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3
 - Apply upstream patch to rename solid-hardware to solid-hardware5 to fix conflict with kde-runtime
 

@@ -1,7 +1,7 @@
 %global         git_commit d257bb2
 Name:           libmm-qt5
 Version:        1.0.1
-Release:        1.20140403git%{git_commit}%{?dist}
+Release:        1.20140418git4ff37cb3%{?dist}
 Epoch:          1
 Summary:        Qt 5 wrapper for ModemManager DBus API
 
@@ -11,7 +11,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 
 #Source0:        http://download.kde.org/unstable/modemmanager-qt/%{version}/src/%{name}-%{version}.tar.xz
 # Package from git snapshots using releaseme scripts
-Source0:        %{name}-%{version}-git%{git_commit}.tar.xz
+Source0:        libmm-qt5-4ff37cb3.tar
 
 BuildRequires:  cmake >= 2.6
 BuildRequires:  qt5-qtbase-devel
@@ -59,6 +59,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_libdir}/libModemManagerQt5.so
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 1.0.1-20140418git4ff37cb3
+- Update to git: 4ff37cb3
+
 * Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> - 1:1.0.1-1.20140403gitd257bb2
 - Qt 5 fork of libmm-qt
 

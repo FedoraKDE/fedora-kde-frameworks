@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        1.20140418git84a2c68a%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kauth-84a2c68a.tar
 
 Patch0:         kauth-find-polkit-qt5.patch
 
@@ -78,6 +78,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a
+- Update to git: 84a2c68a
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

@@ -2,7 +2,7 @@
 
 Name:           kde5-konsole
 Version:        4.90.1
-Release:        0.1.%{snapshot}git%{?dist}
+Release:        0.20140418gitcc24ae1e%{?dist}
 Summary:        Konsole is a terminal program for KDE 5
 
 License:        GPLv2+
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        kde5-konsole-cc24ae1e.tar
 
 # udev
 
@@ -89,5 +89,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.90.1-20140418gitcc24ae1e
+- Update to git: cc24ae1e
+
 * Fri Feb 07 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-0.1.20140213git
 - Initial version
