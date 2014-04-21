@@ -1,6 +1,6 @@
 Name:           kf5
 Version:        4.98.0
-Release:        4
+Release:        5
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,9 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Mon Apr 21 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-5
+- Fix _kf5_sysconfdir and set some install paths in cmake_kf5
+
 * Wed Apr 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-4
 - Rename base package to kf5
 - Create -filesystem, -rpm-macros subpackges
