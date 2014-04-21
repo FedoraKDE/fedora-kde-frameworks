@@ -8,7 +8,7 @@
 %_kf5_libexecdir %_libexecdir/kf5
 %_kf5_qtplugindir %_qt5_plugindir
 %_kf5_plugindir %_qt5_plugindir/kf5
-%_kf5_sysconfdir %_sysconfigdir
+%_kf5_sysconfdir %_sysconfdir
 %_kf5_mandir %_kf5_datadir/man
 %_kf5_buildtype release
 %_kf5_qmldir %_qt5_prefix/qml
@@ -37,4 +37,6 @@
     -DQT_PLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
     -DQML_INSTALL_DIR:PATH=%{_kf5_qmldir} \\\
     -DIMPORTS_INSTALL_DIR=%{_qt5_importdir} \\\
-    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_kf5_libdir}/qt5/mkspecs/modules
+    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_kf5_libdir}/qt5/mkspecs/modules \\\
+    -DSYSCONF_INSTALL_DIR=%{_kf5_sysconfdir} \\\
+    -DLIBEXEC_INSTALL_DIR=%{_kf5_libexecdir}
