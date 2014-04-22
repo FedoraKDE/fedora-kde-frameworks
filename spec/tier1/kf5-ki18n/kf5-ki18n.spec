@@ -3,8 +3,8 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 2 addon for localization
+Release:        2%{?dist}
+Summary:        KDE Frameworks 5 Tier 1 addon for localization
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -24,7 +24,7 @@ BuildRequires:  qt5-qtscript-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 2 addon for localization
+KDE Frameworks 5 Tier 1 addon for localization
 
 %package        devel
 Summary:        Development files for %{name}
@@ -67,6 +67,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KI18n.pri
 
 %changelog
+* Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Upgrade KI18n to a Tier 1 Framework
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
