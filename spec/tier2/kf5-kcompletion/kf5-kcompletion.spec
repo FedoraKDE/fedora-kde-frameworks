@@ -32,6 +32,8 @@ lower-level completion class which can be used with your own widgets.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kconfig-devel
+Requires:       kf5-kwidgetsaddons-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

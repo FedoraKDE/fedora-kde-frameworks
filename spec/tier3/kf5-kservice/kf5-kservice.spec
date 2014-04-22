@@ -23,10 +23,7 @@ BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 
@@ -37,6 +34,12 @@ KDE Frameworks 5 Tier 3 solution for working with .desktop files
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kconfig-devel
+Requires:       kf5-kcoreaddons-devel
+Requires:       kf5-kcrash-devel
+Requires:       kf5-kdbusaddons-devel
+Requires:       kf5-ki18n-devel
+Requires:       kf5-kdoctools-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

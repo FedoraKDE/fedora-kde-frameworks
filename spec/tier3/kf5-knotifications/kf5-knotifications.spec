@@ -23,21 +23,14 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
 
-BuildRequires:  kf5-filesystem
-BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kcodecs-devel
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kcrash-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-kguiaddons-devel
-BuildRequires:  kf5-kservice-devel
-BuildRequires:  kf5-kwidgetsaddons-devel
-BuildRequires:  kf5-kwindowsystem-devel
+
+Requires:       kf5-filesystem
 
 %description
 KDE Frameworks 5 Tier 2 solution for notifications
@@ -45,6 +38,12 @@ KDE Frameworks 5 Tier 2 solution for notifications
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kwindowsystem-devel
+Requires:       kf5-kservice-devel
+Requires:       kf5-kconfig-devel
+Requires:       kf5-kiconthemes-devel
+Requires:       kf5-kcodecs-devel
+Requires:       kf5-kcoreaddons-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

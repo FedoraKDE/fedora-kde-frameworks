@@ -33,6 +33,7 @@ KAuth is a framework to let applications perform actions as a privileged user.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kcoreaddons-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

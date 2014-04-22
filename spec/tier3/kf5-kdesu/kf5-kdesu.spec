@@ -21,10 +21,6 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kjs-devel
-BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kpty-devel
 
@@ -37,6 +33,9 @@ KDE Frameworks 5 Tier 3 module for su integration
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kcoreaddons-devel
+Requires:       kf5-kservice-devel
+Requires:       kf5-kpty-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

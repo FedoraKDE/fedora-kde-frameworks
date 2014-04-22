@@ -20,7 +20,6 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kjs-devel
 
 Requires:       kf5-filesystem
 
@@ -31,6 +30,9 @@ KDE Frameworks 5 Tier 3 addon for unit conversions
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-ki18n-devel
+Requires:       kf5-kconfig-devel
+
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

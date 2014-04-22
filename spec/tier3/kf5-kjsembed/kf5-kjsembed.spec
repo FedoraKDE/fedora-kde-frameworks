@@ -20,7 +20,6 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtsvg-devel
 
-BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kjs-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdoctools-devel
@@ -34,6 +33,9 @@ KDE Frameworks 5 Tier 3 addon with JS scripting engine
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kjs-devel
+Requires:       kf5-ki18n-devel
+Requires:       kf5-kdoctools-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

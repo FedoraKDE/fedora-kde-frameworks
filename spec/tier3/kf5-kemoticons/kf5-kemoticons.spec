@@ -18,10 +18,6 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kjs-devel
-BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kservice-devel
@@ -35,6 +31,9 @@ KDE Frameworks 5 Tier 3 module for emoticons support
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-karchive-devel
+Requires:       kf5-kconfig-devel
+Requires:       kf5-kservice-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

@@ -28,37 +28,26 @@ BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
 
-BuildRequires:  kf5-attica-devel
-BuildRequires:  kf5-kjs-devel
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kguiaddons-devel
-BuildRequires:  kf5-kwidgetsaddons-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kauth-devel
-BuildRequires:  kf5-kcodecs-devel
-BuildRequires:  kf5-kconfigwidgets-devel
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-kunitconversion-devel
-BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kcompletion-devel
-BuildRequires:  kf5-sonnet-devel
-BuildRequires:  kf5-ktextwidgets-devel
-BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kbookmarks-devel
-BuildRequires:  kf5-kjobwidgets-devel
-BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-karchive-devel
-BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcrash-devel
-BuildRequires:  kf5-knotifications-devel
-BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kdesignerplugin-devel
 BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kparts-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires:  kf5-kunitconversion-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kxmlgui-devel
+
 
 Requires:       kf5-filesystem
 
@@ -71,6 +60,26 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       kf5-kde4support-devel%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kde4support-devel%{?_isa} <= 4.98.0-1
+Requires:       kf5-kcompletion-devel
+Requires:       kf5-kconfig-devel
+Requires:       kf5-kconfigwidgets-devel
+Requires:       kf5-kcrash-devel
+Requires:       kf5-kdesignerplugin-devel
+Requires:       kf5-kglobalaccel-devel
+Requires:       kf5-kdoctools-devel
+Requires:       kf5-kguiaddons-devel
+Requires:       kf5-ki18n-devel
+Requires:       kf5-kiconthemes-devel
+Requires:       kf5-kio-devel
+Requires:       kf5-knotifications-devel
+Requires:       kf5-kparts-devel
+Requires:       kf5-kservice-devel
+Requires:       kf5-ktextwidgets-devel
+Requires:       kf5-kunitconversion-devel
+Requires:       kf5-kwidgetsaddons-devel
+Requires:       kf5-kwindowsystem-devel
+Requires:       kf5-kxmlgui-devel
+
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
