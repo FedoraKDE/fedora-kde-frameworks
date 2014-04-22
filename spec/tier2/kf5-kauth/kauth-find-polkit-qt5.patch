@@ -32,7 +32,7 @@ index f3dc6a6..6042b97 100644
          set (KAUTH_BACKEND "OSX")
      elseif (UNIX)
 -        find_package(PolkitQt-1 0.99.0)
-+        find_package(PolkitQt-1 0.103.0)
++        find_package(PolkitQt5-1 0.103.0)
  
 -        if (PolkitQt-1_FOUND)
 +        if (PolkitQt5-1_FOUND)
@@ -75,7 +75,7 @@ index f3dc6a6..6042b97 100644
      if (KAUTH_BACKEND STREQUAL "POLKITQT-1")
 -        find_package(PolkitQt-1 0.99.0)
 -        set_package_properties(PolkitQt-1 PROPERTIES
-+        find_package(PolkitQt-1 0.103.0)
++        find_package(PolkitQt5-1 0.103.0)
 +        set_package_properties(PolkitQt5-1 PROPERTIES
            URL "http://techbase.kde.org/Polkit-Qt-1"
            DESCRIPTION "PolicyKit API for Qt"

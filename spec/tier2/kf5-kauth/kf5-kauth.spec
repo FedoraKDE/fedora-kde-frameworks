@@ -64,8 +64,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Auth.so.*
 %{_kf5_sysconfdir}/dbus-1/system.d/*
-%{_kf5_qtplugindir}/kf5/plugins/kauth/helper/kauth_helper_plugin.so
-%{_kf5_qtplugindir}/kf5/plugins/kauth/backend/kauth_backend_plugin.so
+%{_kf5_plugindir}/kauth/helper/kauth_helper_plugin.so
+%{_kf5_plugindir}/kauth/backend/kauth_backend_plugin.so
 %{_kf5_datadir}/kauth/
 %{_kf5_libexecdir}/kauth-policy-gen
 
