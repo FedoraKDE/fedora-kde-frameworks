@@ -14,12 +14,12 @@ Filesystem and RPM macros for KDE Frameworks 5
 %package        filesystem
 Summary:        Filesystem for KDE Frameworks 5
 %description    filesystem
-Filesystem for KDE Frameworks 5
+Filesystem for KDE Frameworks 5.
 
 %package        rpm-macros
 Summary:        RPM macros for KDE Frameworks 5
 %description    rpm-macros
-RPM macros for building KDE Frameworks 5 packages
+RPM macros for building KDE Frameworks 5 packages.
 
 
 %install
