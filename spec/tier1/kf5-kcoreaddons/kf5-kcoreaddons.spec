@@ -17,6 +17,7 @@ Source0:        kf5-kcoreaddons-005d0163.tar
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 
