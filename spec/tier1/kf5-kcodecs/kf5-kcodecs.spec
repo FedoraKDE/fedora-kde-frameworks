@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422gita5496b3e%{?dist}
+Release:        2.20140422gita5496b3e%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with string manipulation methods
 
 License:        GPLv2+
@@ -17,6 +17,7 @@ Source0:        kf5-kcodecs-a5496b3e.tar
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 
@@ -65,6 +66,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Add qt5-qttools-devel BR
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gita5496b3e
 - Update to git: a5496b3e
 
