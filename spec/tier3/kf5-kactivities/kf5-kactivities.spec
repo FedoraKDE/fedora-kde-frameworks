@@ -3,7 +3,7 @@
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
 Version:        4.98.0
-Release:        1.20140421git5792c6a7%{?dist}
+Release:        1.20140422git367a5ffe%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
@@ -11,7 +11,7 @@ URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/kactivities.git | \
 # bzip2 -c > ${name}-%{version}-%{snapshot}.tar.bz2
-Source0:        kf5-kactivities-5792c6a7.tar
+Source0:        kf5-kactivities-367a5ffe.tar
 
 Obsoletes:      kactivities-qt5
 Provides:       kactivities-qt5
@@ -112,6 +112,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git367a5ffe
+- Update to git: 367a5ffe
+
 * Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git5792c6a7
 - Update to git: 5792c6a7
 
