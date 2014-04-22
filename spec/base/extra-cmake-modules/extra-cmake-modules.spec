@@ -45,7 +45,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files
-%doc README.md COPYING-CMAKE-SCRIPTS
+%doc README.rst COPYING-CMAKE-SCRIPTS
 %{_datadir}/ECM
 
 
