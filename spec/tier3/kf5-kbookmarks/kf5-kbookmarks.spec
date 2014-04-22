@@ -18,6 +18,7 @@ Source0:        kf5-kbookmarks-5bdf8430.tar
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools-devel
 
 BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kconfigwidgets-devel
