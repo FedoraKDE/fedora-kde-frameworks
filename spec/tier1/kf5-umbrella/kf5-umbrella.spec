@@ -18,8 +18,11 @@ URL:            http://www.kde.org
 #Source0:        kf5umbrella-%{version}-%{snapshot}git.tar.bz2
 Source0:        kf5-umbrella-f5306606.tar
 
+BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+
+Requires:       kf5-filesystem
 
 %description
 Provides CMake configuration file for KDE Frameworks 5
