@@ -27,7 +27,6 @@
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
-    -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
     -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_includedir} \\\
     -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
 %if "%{?_lib}" == "lib64" \

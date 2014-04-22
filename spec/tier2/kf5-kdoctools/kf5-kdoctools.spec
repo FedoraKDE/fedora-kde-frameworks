@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422git87a4ed9b%{?dist}
+Release:        2.20140422git87a4ed9b%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -75,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git87a4ed9b
+- Rebuild against new kf5
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git87a4ed9b
 - Update to git: 87a4ed9b
 

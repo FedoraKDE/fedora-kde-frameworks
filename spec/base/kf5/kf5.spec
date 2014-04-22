@@ -1,6 +1,6 @@
 Name:           kf5
 Version:        4.98.0
-Release:        6
+Release:        7
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,9 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-7
+- Make DATA_INSTALL_DIR relative, so that CMake config files don't point to /usr/usr/share
+
 * Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-6
 - Explicitly set BIN_INSTALL_DIR to be absolute, otherwise CMake complains
 
