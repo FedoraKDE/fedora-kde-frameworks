@@ -26,7 +26,7 @@ Provides CMake configuration file for KDE Frameworks 5
 
 
 %prep
-%setup -q -n kf5umbrella-%{version}
+%setup -q -n umbrella-%{version}
 
 %build
 mkdir -p %{_target_platform}
