@@ -67,7 +67,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/solid-hardware5
 
 %files devel
-%{_kf5_datadir}/dbus-1/interfaces/*
 %{_kf5_includedir}/solid_version.h
 %{_kf5_includedir}/Solid
 %{_kf5_libdir}/libKF5Solid.so
