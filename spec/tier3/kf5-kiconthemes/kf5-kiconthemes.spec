@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418gitf9dd63a5%{?dist}
+Release:        1.20140422git9e37f91b%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for icon themes
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kiconthemes-f9dd63a5.tar
+Source0:        kf5-kiconthemes-9e37f91b.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -77,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git9e37f91b
+- Update to git: 9e37f91b
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitf9dd63a5
 - Update to git: f9dd63a5
 

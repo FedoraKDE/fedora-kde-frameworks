@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418gitc3b38f4c%{?dist}
+Release:        1.20140422git189eb526%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for completion
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kcompletion-c3b38f4c.tar
+Source0:        kf5-kcompletion-189eb526.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCompletion.pri
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git189eb526
+- Update to git: 189eb526
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitc3b38f4c
 - Update to git: c3b38f4c
 

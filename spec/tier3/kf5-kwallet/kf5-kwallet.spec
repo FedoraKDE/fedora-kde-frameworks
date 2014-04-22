@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140421git749c8a69%{?dist}
+Release:        1.20140422git388f0660%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kwallet-749c8a69.tar
+Source0:        kf5-kwallet-388f0660.tar
 
 BuildRequires:  libgcrypt-devel
 BuildRequires:  kf5-rpm-macros
@@ -109,6 +109,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
+- Update to git: 388f0660
+
 * Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git749c8a69
 - Update to git: 749c8a69
 

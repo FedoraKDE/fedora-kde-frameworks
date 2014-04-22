@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418gitf23530ee%{?dist}
+Release:        1.20140422git87a4ed9b%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kdoctools-f23530ee.tar
+Source0:        kf5-kdoctools-87a4ed9b.tar
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
@@ -75,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git87a4ed9b
+- Update to git: 87a4ed9b
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitf23530ee
 - Update to git: f23530ee
 

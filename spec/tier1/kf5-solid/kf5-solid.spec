@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3.20140418git7fc05c66%{?dist}
+Release:        3.20140422gitd0f6350c%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-solid-7fc05c66.tar
+Source0:        kf5-solid-d0f6350c.tar
 
 Patch0:         solid-rename-solid-hardware-to-solid-hardware5.patch
 
@@ -90,6 +90,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitd0f6350c
+- Update to git: d0f6350c
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git7fc05c66
 - Update to git: 7fc05c66
 
