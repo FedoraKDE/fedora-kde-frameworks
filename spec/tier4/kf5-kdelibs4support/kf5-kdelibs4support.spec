@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140421git757bc979%{?dist}
+Release:        2.20140423git52a66644%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kde4support-757bc979.tar
+Source0:        kf5-kdelibs4support-52a66644.tar
 
 Provides:       kf5-kde4support%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kde4support%{?_isa} =< 4.98.0-1
@@ -135,6 +135,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git52a66644
+- Update to git: 52a66644
+
 * Mon Apr 21 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2
 - Rename to KDELibs4Support, following upstream name change
 
