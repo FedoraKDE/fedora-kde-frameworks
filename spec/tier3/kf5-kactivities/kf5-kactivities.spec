@@ -102,7 +102,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files libs
 %{_kf5_libdir}/libKF5Activities.so.*
-%{_kf5_libdir}/qml/org/kde/activities/
+%{_kf5_qmldir}/org/kde/activities/
 
 %files libs-devel
 %{_kf5_libdir}/libKF5Activities.so
