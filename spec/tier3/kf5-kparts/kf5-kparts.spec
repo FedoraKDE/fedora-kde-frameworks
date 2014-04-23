@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418git23cc0704%{?dist}
+Release:        1.20140423git9d0b8008%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for KParts
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kparts-23cc0704.tar
+Source0:        kf5-kparts-9d0b8008.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -92,6 +92,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git9d0b8008
+- Update to git: 9d0b8008
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git23cc0704
 - Update to git: 23cc0704
 

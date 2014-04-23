@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418gitff4cf19b%{?dist}
+Release:        1.20140423git2d24aadf%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for downloading application assets
 
 License:        LGPL2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-knewstuff-ff4cf19b.tar
+Source0:        kf5-knewstuff-2d24aadf.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -93,6 +93,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git2d24aadf
+- Update to git: 2d24aadf
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitff4cf19b
 - Update to git: ff4cf19b
 
