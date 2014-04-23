@@ -82,11 +82,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Declarative.so.*
-%{_kf5_libdir}/qml/org/kde/draganddrop
-%{_kf5_libdir}/qml/org/kde/kcoreaddons/
-%{_kf5_libdir}/qml/org/kde/kquickcontrols
-%{_kf5_libdir}/qml/org/kde/kquickcontrolsaddons
-%{_kf5_libdir}/qml/org/kde/private/kquickcontrols
+%{_kf5_qmldir}/org/kde/draganddrop
+%{_kf5_qmldir}/org/kde/kcoreaddons
+%{_kf5_qmldir}/org/kde/kquickcontrols
+%{_kf5_qmldir}/org/kde/kquickcontrolsaddons
+%{_kf5_qmldir}/org/kde/private/kquickcontrols
 
 %files devel
 %doc
