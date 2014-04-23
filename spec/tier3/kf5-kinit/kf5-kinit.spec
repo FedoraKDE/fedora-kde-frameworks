@@ -47,6 +47,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
 
