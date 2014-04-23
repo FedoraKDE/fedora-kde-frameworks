@@ -92,7 +92,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 # Rename kioslave documentation to kioslave5 to avoid conflict with kdelibs4
 mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
-mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/khelpcenter{,5}
 
 %post -p /sbin/ldconfig
 
@@ -126,7 +125,6 @@ mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/khelpcenter{,5}
 %files doc
 %{_kf5_mandir}/man8/*
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
-%{_kf5_datadir}/doc/HTML/en/khelpcenter5/documentationnotfound
 
 %changelog
 * Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git281f1b04
