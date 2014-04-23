@@ -48,6 +48,7 @@ BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kjobwidgets-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 
@@ -94,6 +95,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/*
 %{_kf5_libdir}/libkdeinit5_klauncher.so
 %{_kf5_libexecdir}/*
+%{_kf5_mandir}/man8/kdeinit5.8.gz
 
 %files devel
 %{_kf5_libdir}/cmake/KF5Init
