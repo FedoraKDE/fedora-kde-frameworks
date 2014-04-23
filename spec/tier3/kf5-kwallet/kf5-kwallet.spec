@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140422git388f0660%{?dist}
+Release:        3.20140422git388f0660%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -39,16 +39,18 @@ BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kservice-devel
 
 
-Requires:       kf5-kwallet-api%{_isa} = %{version}-%{release}
+Requires:       kf5-kwallet-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kwallet-runtime%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 3 solution for password management.
 
-%package        api
+%package        libs
 Summary:        KWallet framework libraries
 Requires:       kf5-filesystem
-%description    api
+Provides:       kf5-kwallet-api%{?_isa} = %{version}-%{release}
+Obsoletes:      kf5-kwallet-api%{?_isa} < 4.98.0-3.20140422git388f0660
+%description    libs
 Provides API to access KWallet data from applications.
 
 %package        runtime
@@ -63,7 +65,7 @@ Provides a runtime deamon that stores passwords.
 # (kf5-kio requires kf5-kwallet, but kf5-kded requires kf5-kinit, which requires kf5-kio)
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}-api%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -91,8 +93,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 
-%files api
+%files libs
 %{_kf5_libdir}/libKF5Wallet.so.*
+%{_kf5_libdir}/libkwalletbackend5.so.*
 
 %files runtime
 %{_kf5_datadir}/dbus-1/services/org.kde.kwalletd5.service
@@ -100,7 +103,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kde5/services/kwalletd5.desktop
 %{_kf5_datadir}/kwalletd/kwalletd.notifyrc
 %{_kf5_datadir}/kconf_update/kwallet-4.13.upd
-%{_kf5_libdir}/libkwalletbackend5.so.*
 
 %files devel
 %{_kf5_datadir}/dbus-1/interfaces/kf5_org.kde.KWallet.xml
@@ -112,6 +114,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140422git388f0660
+- rename -api to -libs to follow naming conventions
+- libkwalletbackend5 belongs to -libs, not -runtime
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git388f0660
 - -devel can only Require -api, otherwise we have circular dependency problem
 
