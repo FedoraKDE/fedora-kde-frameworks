@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422git388f0660%{?dist}
+Release:        2.20140422git388f0660%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -58,9 +58,12 @@ Requires:       kf5-kded
 %description    runtime
 Provides a runtime deamon that stores passwords.
 
+# FIXME: -devel can only depend on -api, otherwise we get circular  dependency
+# problem, because -runtime depends on kf5-kded, which is not compiled at this point
+# (kf5-kio requires kf5-kwallet, but kf5-kded requires kf5-kinit, which requires kf5-kio)
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-api%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -109,6 +112,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git388f0660
+- -devel can only Require -api, otherwise we have circular dependency problem
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
+- Update to git: 388f0660
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
 - Update to git: 388f0660
 
