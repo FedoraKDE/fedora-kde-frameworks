@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140423git2e7d295e%{?dist}
+Release:        1.20140424git7ce31b6b%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-plasma-2e7d295e.tar
+Source0:        kf5-plasma-7ce31b6b.tar
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -81,6 +81,7 @@ BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kross-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kdnssd-devel
+BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
 
@@ -105,7 +106,8 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-framework-%{version}
+#%setup -q -n %{framework}-framework-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -128,11 +130,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/dpitest
 %{_kf5_bindir}/plasmapkg2
-%{_kf5_bindir}/plasma-shell
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
-%{_kf5_libdir}/platformqml/touch/org/kde/plasma
-%{_kf5_libdir}/qml/org/kde/*
+%{_qt5_prefix}/platformqml/touch/org/kde/plasma
+%{_kf5_qmldir}/org/kde/*
 %{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_qtplugindir}/kf5/plasma/dataengine/
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
@@ -142,7 +143,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kde5/services/kded/*.desktop
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
 %{_kf5_datadir}/plasma_scriptengine_ruby/data_engine.rb
-%{_kf5_sysconfdir}/xdg/autostart/plasma-shell.desktop
 
 
 %files devel
@@ -157,8 +157,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git2e7d295e
-- Update to git: 2e7d295e
+* Thu Apr 24 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140424git7ce31b6b
+- Update to git: 7ce31b6b
 
 * Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git0ef526b8
 - Update to git: 0ef526b8

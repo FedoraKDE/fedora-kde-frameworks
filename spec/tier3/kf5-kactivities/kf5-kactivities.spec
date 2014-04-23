@@ -97,8 +97,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files runtime
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_datadir}/kde5/services/kactivitymanagerd.desktop
-%{_kf5_datadir}/kde5/servicetypes/activitymanager-plugin.desktop
-%{_kf5_qtplugindir}/kf5/activitymanager/
+%{_kf5_datadir}/kde5/servicetypes/kactivitymanagerd-plugin.desktop
+%{_kf5_qtplugindir}/kf5/kactivitymanagerd/
 
 %files libs
 %{_kf5_libdir}/libKF5Activities.so.*
