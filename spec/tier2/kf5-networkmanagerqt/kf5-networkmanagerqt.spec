@@ -2,7 +2,7 @@
 %global         git_commit 2afe13e
 Name:           kf5-%{framework}
 Version:        5.0.90
-Release:        1.20140422git75d3be7b%{?dist}
+Release:        2.20140422git75d3be7b%{?dist}
 Summary:        A Tier 2 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries
@@ -29,7 +29,7 @@ A Tier 2 KDE Frameworks 5 Qt library for NetworkManager
 %package devel
 Summary: Development files for %{name}
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
 Qt libraries and header files for developing applications
 that use NetworkManager
