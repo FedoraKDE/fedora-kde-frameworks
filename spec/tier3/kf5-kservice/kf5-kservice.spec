@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140425git9e9982ad%{?dist}
+Release:        2.20140423git81276b32%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for working with .desktop files
 
 License:        GPLv2+
@@ -56,6 +56,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -65,7 +67,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING COPYING.LIB README.md
 %{_kf5_bindir}/kbuildsycoca5
 %{_kf5_libdir}/libKF5Service.so.*
-%{_kf5_sysconfdir}/xdg/menus/applications.menu
+%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
 %{_kf5_mandir}/man8/*
 
