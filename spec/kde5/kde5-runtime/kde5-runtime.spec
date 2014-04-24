@@ -2,7 +2,7 @@
 
 Name:           kde5-runtime
 Version:        4.95.0
-Release:        1.20140421git1a2dbe35%{?dist}
+Release:        1.20140424gitb0e6eb93%{?dist}
 Summary:        Core runtime for KDE 5
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kde5-runtime-1a2dbe35.tar
+Source0:        kde5-runtime-b0e6eb93.tar
 
 #Patch0:         kde5-runtime-kioexec-crash.patch
 
@@ -212,6 +212,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Apr 24 2014 dvratil <dvratil@redhat.com> - 4.95.0-20140424gitb0e6eb93
+- Update to git: b0e6eb93
+
 * Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.95.0-20140421git1a2dbe35
 - Update to git: 1a2dbe35
 
