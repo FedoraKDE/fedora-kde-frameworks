@@ -143,7 +143,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kde5/services/kded/*.desktop
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
 %{_kf5_datadir}/plasma_scriptengine_ruby/data_engine.rb
-${_kf5_mandir}/man1/plasmapkg2.1.gz
+%{_kf5_mandir}/man1/plasmapkg2.1.gz
 
 %files devel
 %doc
