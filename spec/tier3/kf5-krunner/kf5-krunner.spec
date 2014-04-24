@@ -83,7 +83,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %{_kf5_libdir}/libKF5Runner.so.*
-%{_kf5_libdir}/qml/org/kde/runnermodel
+%{_kf5_qmldir}/org/kde/runnermodel
 %{_kf5_datadir}/kde5/servicetypes/plasma-runner.desktop
 
 %files devel
