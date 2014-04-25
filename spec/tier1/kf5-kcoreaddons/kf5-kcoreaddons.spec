@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422git005d0163%{?dist}
+Release:        1.20140425git7a829e7e%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtCore
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kcoreaddons-005d0163.tar
+Source0:        kf5-kcoreaddons-7a829e7e.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCoreAddons.pri
 
 %changelog
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git7a829e7e
+- Update to git: 7a829e7e
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git005d0163
 - Update to git: 005d0163
 

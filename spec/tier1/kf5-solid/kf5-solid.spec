@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        4.20140422gitd0f6350c%{?dist}
+Release:        4.20140425gitff9ff7ff%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-solid-d0f6350c.tar
+Source0:        kf5-solid-ff9ff7ff.tar
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -74,6 +74,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
 %changelog
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitff9ff7ff
+- Update to git: ff9ff7ff
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitd0f6350c
 - Update to git: d0f6350c
 

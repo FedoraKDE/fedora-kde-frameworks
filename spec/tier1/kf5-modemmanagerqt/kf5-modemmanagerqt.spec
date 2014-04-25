@@ -2,7 +2,7 @@
 %global         git_commit d257bb2
 Name:           kf5-%{framework}
 Version:        5.0.90
-Release:        1.20140418git4ff37cb3%{?dist}
+Release:        1.20140425git4988794c%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
 Group:          System Environment/Libraries
@@ -11,7 +11,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 
 #Source0:        http://download.kde.org/unstable/modemmanager-qt/%{version}/src/%{name}-%{version}.tar.xz
 # Package from git snapshots using releaseme scripts
-Source0:        kf5-modemmanagerqt-4ff37cb3.tar
+Source0:        kf5-modemmanagerqt-4988794c.tar
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -60,6 +60,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 5.0.90-20140425git4988794c
+- Update to git: 4988794c
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 5.0.90-20140418git4ff37cb3
 - Update to git: 4ff37cb3
 

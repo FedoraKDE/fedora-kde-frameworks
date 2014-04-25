@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418gitaa0f0f1e%{?dist}
+Release:        1.20140425git24195e3e%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for application scripting
 
 License:        LGPL2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kross-aa0f0f1e.tar
+Source0:        kf5-kross-24195e3e.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -132,6 +132,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git24195e3e
+- Update to git: 24195e3e
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitaa0f0f1e
 - Update to git: aa0f0f1e
 

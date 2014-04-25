@@ -6,7 +6,7 @@ Summary:        Additional modules for CMake build system
 # ECM does not follow the frameworks versioning, but is currently being
 # release together with it
 Version:        0.0.12
-Release:        3.20140422gite7ca63c7%{?dist}
+Release:        3.20140425gitb3bf34a7%{?dist}
 
 License:        BSD
 URL:            http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
@@ -15,7 +15,7 @@ URL:            http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFi
 #             --remote=git://anongit.kde.org/%{name},git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        extra-cmake-modules-e7ca63c7.tar
+Source0:        extra-cmake-modules-b3bf34a7.tar
 
 BuildArch:      noarch
 
@@ -50,6 +50,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 0.0.12-20140425gitb3bf34a7
+- Update to git: b3bf34a7
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 0.0.12-20140422gite7ca63c7
 - Update to git: e7ca63c7
 
