@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3.20140425git67665f38%{?dist}
+Release:        4.20140425git67665f38%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -102,7 +102,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kwalletd5
 %{_kf5_datadir}/kde5/services/kwalletd5.desktop
 %{_kf5_datadir}/kwalletd/kwalletd.notifyrc
-%{_kf5_datadir}/kconf_update/kwallet-4.13.upd
 
 %files devel
 %{_kf5_datadir}/dbus-1/interfaces/kf5_org.kde.KWallet.xml
