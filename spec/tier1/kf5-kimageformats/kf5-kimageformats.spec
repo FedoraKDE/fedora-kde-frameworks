@@ -52,7 +52,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_qtplugindir}/imageformats/*.so
-%{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop
+%{_kf5_datadir}/kservices5/qimageioplugins/*.desktop
 
 
 %changelog

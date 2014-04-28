@@ -60,7 +60,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kjs5
 %{_kf5_libdir}/libKF5JS.so.*
 %{_kf5_libdir}/libKF5JSApi.so.*
-%{_kf5_datadir}/kjs/create_hash_table
+%{_kf5_datadir}/kf5/kjs/create_hash_table
 
 %files devel
 %{_kf5_includedir}/kjs_version.h
