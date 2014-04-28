@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140425git4779adee%{?dist}
+Release:        1.20140428gitb0270b17%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for generating UI
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kxmlgui-4779adee.tar
+Source0:        kf5-kxmlgui-b0270b17.tar
 
 BuildRequires:  libX11-devel
 
@@ -90,6 +90,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb0270b17
+- Update to git: b0270b17
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git4779adee
 - Update to git: 4779adee
 

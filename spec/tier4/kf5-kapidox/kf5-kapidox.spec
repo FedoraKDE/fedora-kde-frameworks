@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418git7d7516c0%{?dist}
+Release:        1.20140428git528f5a72%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module for API documentation generation
 
 License:        GPLv3 BSD  LGPLv3 QPLv1
@@ -12,7 +12,7 @@ URL:            http://download.kde.org/
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kapidox-7d7516c0.tar
+Source0:        kf5-kapidox-528f5a72.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -54,6 +54,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/depdiagram-generate-all
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git528f5a72
+- Update to git: 528f5a72
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git7d7516c0
 - Update to git: 7d7516c0
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140421git5173dbb1%{?dist}
+Release:        1.20140428git5a8445fb%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with KDE Daemon
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kded-5173dbb1.tar
+Source0:        kf5-kded-5a8445fb.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -80,6 +80,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git5a8445fb
+- Update to git: 5a8445fb
+
 * Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git5173dbb1
 - Update to git: 5173dbb1
 

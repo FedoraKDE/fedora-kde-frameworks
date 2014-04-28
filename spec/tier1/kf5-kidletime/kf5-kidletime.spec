@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418git75806c92%{?dist}
+Release:        1.20140428gitdbd5a704%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module for idle time detection
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kidletime-75806c92.tar
+Source0:        kf5-kidletime-dbd5a704.tar
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KIdleTime.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitdbd5a704
+- Update to git: dbd5a704
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git75806c92
 - Update to git: 75806c92
 

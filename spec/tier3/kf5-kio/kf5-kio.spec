@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140425git024ff52a%{?dist}
+Release:        2.20140428git569a0c3f%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kio-024ff52a.tar
+Source0:        kf5-kio-569a0c3f.tar
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
@@ -127,6 +127,9 @@ mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git569a0c3f
+- Update to git: 569a0c3f
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git024ff52a
 - Update to git: 024ff52a
 

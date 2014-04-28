@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418git08f0e704%{?dist}
+Release:        1.20140428git9d1ca8da%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for jobs
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kjobwidgets-08f0e704.tar
+Source0:        kf5-kjobwidgets-9d1ca8da.tar
 
 BuildRequires:  libX11-devel
 
@@ -71,6 +71,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git9d1ca8da
+- Update to git: 9d1ca8da
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git08f0e704
 - Update to git: 08f0e704
 

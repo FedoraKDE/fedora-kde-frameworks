@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140425git774f78e7%{?dist}
+Release:        1.20140428git880da9b1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-plasma-774f78e7.tar
+Source0:        kf5-plasma-880da9b1.tar
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -157,6 +157,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git880da9b1
+- Update to git: 880da9b1
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git774f78e7
 - Update to git: 774f78e7
 

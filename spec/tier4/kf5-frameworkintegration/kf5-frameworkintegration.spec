@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140425gitc5e09f33%{?dist}
+Release:        1.20140428gitd6a6384f%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 addon with framework integration
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-frameworkintegration-c5e09f33.tar
+Source0:        kf5-frameworkintegration-d6a6384f.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -99,6 +99,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitd6a6384f
+- Update to git: d6a6384f
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitc5e09f33
 - Update to git: c5e09f33
 

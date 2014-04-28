@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422gitca62aa32%{?dist}
+Release:        1.20140428git2fc7aeab%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with item models
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kitemmodels-ca62aa32.tar
+Source0:        kf5-kitemmodels-2fc7aeab.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -66,6 +66,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git2fc7aeab
+- Update to git: 2fc7aeab
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitca62aa32
 - Update to git: ca62aa32
 

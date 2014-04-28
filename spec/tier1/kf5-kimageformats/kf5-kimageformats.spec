@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140425git1eb5228c%{?dist}
+Release:        1.20140428git74906dd3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with additional image plugins for QtGui
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kimageformats-1eb5228c.tar
+Source0:        kf5-kimageformats-74906dd3.tar
 
 BuildRequires:  jasper-devel
 BuildRequires:  OpenEXR-devel
@@ -56,6 +56,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git74906dd3
+- Update to git: 74906dd3
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git1eb5228c
 - Update to git: 1eb5228c
 

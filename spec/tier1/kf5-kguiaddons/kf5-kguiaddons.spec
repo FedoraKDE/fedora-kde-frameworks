@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140422git5f72565e%{?dist}
+Release:        1.20140428gitb773eee7%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtGui
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kguiaddons-5f72565e.tar
+Source0:        kf5-kguiaddons-b773eee7.tar
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
+- Update to git: b773eee7
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git5f72565e
 - Update to git: 5f72565e
 
