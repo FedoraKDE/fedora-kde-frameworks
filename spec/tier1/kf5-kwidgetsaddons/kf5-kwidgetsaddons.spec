@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitf8892042%{?dist}
+Release:        2.20140428gitf8892042%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtWidgets
 
 License:        GPLv2+
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitf8892042
+- Update to git: f8892042
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitf8892042
 - Update to git: f8892042
 

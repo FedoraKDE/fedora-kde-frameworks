@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gite715d88c%{?dist}
+Release:        2.20140428gite715d88c%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for downloading application assets
 
 License:        LGPL2+
@@ -93,6 +93,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gite715d88c
+- Update to git: e715d88c
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gite715d88c
 - Update to git: e715d88c
 

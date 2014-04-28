@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git2fc7aeab%{?dist}
+Release:        2.20140428git2fc7aeab%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with item models
 
 License:        GPLv2+
@@ -66,6 +66,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git2fc7aeab
+- Update to git: 2fc7aeab
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git2fc7aeab
 - Update to git: 2fc7aeab
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git72dbb9fa%{?dist}
+Release:        2.20140428git72dbb9fa%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -103,6 +103,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git72dbb9fa
+- Update to git: 72dbb9fa
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git72dbb9fa
 - Update to git: 72dbb9fa
 

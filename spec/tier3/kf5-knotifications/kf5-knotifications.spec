@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git93f79255%{?dist}
+Release:        2.20140428git93f79255%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 solution for notifications
 
 License:        GPLv2+
@@ -83,6 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git93f79255
+- Update to git: 93f79255
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git93f79255
 - Update to git: 93f79255
 

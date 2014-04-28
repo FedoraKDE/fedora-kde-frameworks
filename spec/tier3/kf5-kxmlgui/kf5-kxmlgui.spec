@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitb0270b17%{?dist}
+Release:        2.20140428gitb0270b17%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for generating UI
 
 License:        GPLv2+
@@ -90,6 +90,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitb0270b17
+- Update to git: b0270b17
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb0270b17
 - Update to git: b0270b17
 

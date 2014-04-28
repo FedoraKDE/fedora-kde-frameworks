@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git9d1ca8da%{?dist}
+Release:        2.20140428git9d1ca8da%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for jobs
 
 License:        GPLv2+
@@ -71,6 +71,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git9d1ca8da
+- Update to git: 9d1ca8da
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git9d1ca8da
 - Update to git: 9d1ca8da
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        4.20140428gite874177c%{?dist}
+Release:        5.20140428gite874177c%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -74,6 +74,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140428gite874177c
+- Update to git: e874177c
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428gite874177c
 - Update to git: e874177c
 

@@ -6,7 +6,7 @@ Summary:        Additional modules for CMake build system
 # ECM does not follow the frameworks versioning, but is currently being
 # release together with it
 Version:        0.0.12
-Release:        3.20140428gitf0607b48%{?dist}
+Release:        4.20140428gitf0607b48%{?dist}
 
 License:        BSD
 URL:            http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
@@ -50,6 +50,15 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.0.12-4.20140428gitf0607b48
+- Update to git: f0607b48
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.0.12-3.20140428gitf0607b48
+- Update to git: f0607b48
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.0.12-3.20140428gitf0607b48
+- Update to git: f0607b48
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.0.12-3.20140428gitf0607b48
 - Update to git: f0607b48
 

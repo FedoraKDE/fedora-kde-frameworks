@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitd6a6384f%{?dist}
+Release:        2.20140428gitd6a6384f%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 addon with framework integration
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -99,6 +99,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitd6a6384f
+- Update to git: d6a6384f
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitd6a6384f
 - Update to git: d6a6384f
 

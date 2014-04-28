@@ -6,7 +6,7 @@
 Name:           kf5-%{framework}
 Version:        4.98.0
 Epoch:          1
-Release:        1.20140428gitd83f508d%{?dist}
+Release:        2.20140428gitd83f508d%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
 
 License:        GPLv2+
@@ -48,6 +48,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitd83f508d
+- Update to git: d83f508d
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitd83f508d
 - Update to git: d83f508d
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gita905dd84%{?dist}
+Release:        2.20140428gita905dd84%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for su integration
 
 License:        GPLv2+
@@ -77,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gita905dd84
+- Update to git: a905dd84
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gita905dd84
 - Update to git: a905dd84
 

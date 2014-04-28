@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git5d0d2714%{?dist}
+Release:        2.20140428git5d0d2714%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon for plotting
 
 License:        GPLv2+
@@ -67,6 +67,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KPlotting.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git5d0d2714
+- Update to git: 5d0d2714
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git5d0d2714
 - Update to git: 5d0d2714
 

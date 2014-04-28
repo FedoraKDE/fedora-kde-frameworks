@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gite8df42a8%{?dist}
+Release:        2.20140428gite8df42a8%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 functional module with JavaScript interpret
 
 License:        GPLv2+
@@ -73,6 +73,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KJSApi.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gite8df42a8
+- Update to git: e8df42a8
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gite8df42a8
 - Update to git: e8df42a8
 

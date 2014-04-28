@@ -2,7 +2,7 @@
 %global         git_commit d257bb2
 Name:           kf5-%{framework}
 Version:        5.0.90
-Release:        1.20140425git4988794c%{?dist}
+Release:        2.20140428git4988794c%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
 Group:          System Environment/Libraries
@@ -60,6 +60,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 5.0.90-2.20140428git4988794c
+- Update to git: 4988794c
+
 * Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 5.0.90-20140425git4988794c
 - Update to git: 4988794c
 

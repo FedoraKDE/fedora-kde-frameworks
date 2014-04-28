@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git66b5b4fc%{?dist}
+Release:        2.20140428git66b5b4fc%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for emoticons support
 
 License:        LGPL2+
@@ -76,6 +76,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git66b5b4fc
+- Update to git: 66b5b4fc
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git66b5b4fc
 - Update to git: 66b5b4fc
 

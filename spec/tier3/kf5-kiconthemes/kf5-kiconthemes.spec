@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitc0d575d1%{?dist}
+Release:        2.20140428gitc0d575d1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for icon themes
 
 License:        GPLv2+
@@ -77,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitc0d575d1
+- Update to git: c0d575d1
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitc0d575d1
 - Update to git: c0d575d1
 

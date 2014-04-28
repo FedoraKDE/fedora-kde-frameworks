@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git94856870%{?dist}
+Release:        2.20140428git94856870%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with advanced configuration system
 
 License:        GPLv2+
@@ -96,6 +96,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KConfigGui.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git94856870
+- Update to git: 94856870
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git94856870
+- Update to git: 94856870
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git94856870
+- Update to git: 94856870
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git94856870
 - Update to git: 94856870
 

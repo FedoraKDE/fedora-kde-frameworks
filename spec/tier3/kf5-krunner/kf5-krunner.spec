@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git05d90acd%{?dist}
+Release:        2.20140428git05d90acd%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KRunner
 
 License:        GPLv2+
@@ -95,6 +95,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KRunner.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git05d90acd
+- Update to git: 05d90acd
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git05d90acd
 - Update to git: 05d90acd
 

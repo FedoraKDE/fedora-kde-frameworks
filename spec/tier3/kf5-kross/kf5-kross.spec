@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git4bd7213f%{?dist}
+Release:        2.20140428git4bd7213f%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for application scripting
 
 License:        LGPL2+
@@ -132,6 +132,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git4bd7213f
+- Update to git: 4bd7213f
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git4bd7213f
 - Update to git: 4bd7213f
 

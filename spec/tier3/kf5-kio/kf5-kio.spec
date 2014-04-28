@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git569a0c3f%{?dist}
+Release:        3.20140428git569a0c3f%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -127,6 +127,9 @@ mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git569a0c3f
+- Update to git: 569a0c3f
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git569a0c3f
 - Update to git: 569a0c3f
 

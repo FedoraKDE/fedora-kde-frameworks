@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitfd548aeb%{?dist}
+Release:        2.20140428gitfd548aeb%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon for advanced thread management
 
 License:        GPLv2+
@@ -64,6 +64,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitfd548aeb
+- Update to git: fd548aeb
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitfd548aeb
 - Update to git: fd548aeb
 

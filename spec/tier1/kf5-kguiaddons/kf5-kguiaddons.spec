@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitb773eee7%{?dist}
+Release:        2.20140428gitb773eee7%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtGui
 
 License:        GPLv2+
@@ -68,6 +68,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitb773eee7
+- Update to git: b773eee7
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
+- Update to git: b773eee7
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
+- Update to git: b773eee7
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
 - Update to git: b773eee7
 

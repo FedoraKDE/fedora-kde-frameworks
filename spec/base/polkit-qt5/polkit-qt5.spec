@@ -2,7 +2,7 @@
 
 Name:           polkit-qt5
 Version:        0.103.0
-Release:        0.20140422gitbac771e6%{?dist}
+Release:        1.20140428gitbac771e6%{?dist}
 Summary:        Qt 5 bindings for PolicyKit
 
 License:        GPLv2+
@@ -86,6 +86,15 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-1.20140428gitbac771e6
+- Update to git: bac771e6
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-0.20140428gitbac771e6
+- Update to git: bac771e6
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-0.20140428gitbac771e6
+- Update to git: bac771e6
+
 * Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.2.20140422git
 - Fix install
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git33a29df7%{?dist}
+Release:        2.20140428git33a29df7%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for localization
 
 License:        GPLv2+
@@ -69,6 +69,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KI18n.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git33a29df7
+- Update to git: 33a29df7
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git33a29df7
 - Update to git: 33a29df7
 

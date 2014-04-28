@@ -2,7 +2,7 @@
 %global         git_commit 2afe13e
 Name:           kf5-%{framework}
 Version:        5.0.90
-Release:        2.20140422git75d3be7b%{?dist}
+Release:        3.20140428git75d3be7b%{?dist}
 Summary:        A Tier 2 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries
@@ -63,6 +63,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_NetworkManagerQt.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 5.0.90-3.20140428git75d3be7b
+- Update to git: 75d3be7b
+
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 5.0.90-20140422git75d3be7b
 - Update to git: 75d3be7b
 

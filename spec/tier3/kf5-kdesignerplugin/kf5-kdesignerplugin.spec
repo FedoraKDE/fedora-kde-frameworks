@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428gitdded2def%{?dist}
+Release:        2.20140428gitdded2def%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for QtDesigner
 
 License:        GPLv2+
@@ -99,6 +99,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitdded2def
+- Update to git: dded2def
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitdded2def
 - Update to git: dded2def
 

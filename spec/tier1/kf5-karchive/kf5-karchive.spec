@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140428git1f0c3732%{?dist}
+Release:        2.20140428git1f0c3732%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        GPLv2+
@@ -69,6 +69,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KArchive.pri
 
 %changelog
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
+- Update to git: 1f0c3732
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
 - Update to git: 1f0c3732
 
