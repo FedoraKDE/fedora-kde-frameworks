@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140418git84a2c68a%{?dist}
+Release:        2.20140418git84a2c68a%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        GPLv2+
@@ -79,6 +79,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a
+- Rebuild against kf5-rpm-macros
+
 * Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a
 - Update to git: 84a2c68a
 
