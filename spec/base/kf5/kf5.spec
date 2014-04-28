@@ -1,6 +1,6 @@
 Name:           kf5
 Version:        4.98.0
-Release:        8
+Release:        9
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
