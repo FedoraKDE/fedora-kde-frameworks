@@ -15,9 +15,7 @@ Source0:        %{name}-%{version}.tar
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-modemmanagerqt-devel
 BuildRequires:  pkgconfig(NetworkManager) >= 0.9.8
-BuildRequires:  pkgconfig(ModemManager) >= 1.0.0
 BuildRequires:  pkgconfig(libnm-glib) pkgconfig(libnm-util)
 
 Requires:  NetworkManager >= 0.9.9.0
