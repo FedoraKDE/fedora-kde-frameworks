@@ -4,7 +4,7 @@
 Name:           kf5-%{framework}
 Version:        4.99.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 2 addon for localization
+Summary:        KDE Frameworks 5 Tier 1 addon for localization
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -24,7 +24,7 @@ BuildRequires:  qt5-qtscript-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 addon for localization
+KDE Frameworks 5 Tier 1 addon for localization.
 
 %package        devel
 Summary:        Development files for %{name}

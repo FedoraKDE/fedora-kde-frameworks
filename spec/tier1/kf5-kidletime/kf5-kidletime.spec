@@ -25,7 +25,7 @@ BuildRequires:  qt5-qtx11extras-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 integration module for idle time detection
+KDE Frameworks 5 Tier 1 integration module for idle time detection.
 
 %package        devel
 Summary:        Development files for %{name}

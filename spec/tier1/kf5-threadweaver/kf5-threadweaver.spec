@@ -21,7 +21,7 @@ BuildRequires:  qt5-qtbase-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 addon for advanced thread management
+KDE Frameworks 5 Tier 1 addon for advanced thread management.
 
 %package        devel
 Summary:        Development files for %{name}

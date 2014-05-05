@@ -24,7 +24,7 @@ BuildRequires:  qt5-qtbase-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 1 Tier 1 functional module with JavaScript interpret
+KDE Frameworks 1 Tier 1 functional module with JavaScript interpret.
 
 
 %package        devel

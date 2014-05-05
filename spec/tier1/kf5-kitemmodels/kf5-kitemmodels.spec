@@ -21,7 +21,7 @@ BuildRequires:  qt5-qtbase-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 addon with item models
+KDE Frameworks 5 Tier 1 addon with item models.
 
 
 %package        devel

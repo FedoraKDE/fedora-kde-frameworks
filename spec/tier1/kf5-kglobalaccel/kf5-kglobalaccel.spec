@@ -26,7 +26,7 @@ BuildRequires:  extra-cmake-modules
 Requires:       kf5-filesystem
 
 %description
-KDE Framework 5 Tier 1 integration module for global shortcuts
+KDE Framework 5 Tier 1 integration module for global shortcuts.
 
 
 %package        devel

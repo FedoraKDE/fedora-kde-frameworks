@@ -26,8 +26,8 @@ BuildRequires:  libXrender-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks tier 1 integration module that provides classes for managing and
-working with windows
+KDE Frameworks Tier 1 integration module that provides classes for managing and
+working with windows.
 
 
 %package        devel

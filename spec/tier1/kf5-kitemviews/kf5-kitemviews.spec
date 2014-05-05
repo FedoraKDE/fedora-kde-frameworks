@@ -22,7 +22,7 @@ BuildRequires:  qt5-qttools-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 addon with item views
+KDE Frameworks 5 Tier 1 addon with item views.
 
 
 %package        devel

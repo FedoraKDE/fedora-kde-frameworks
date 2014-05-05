@@ -31,7 +31,7 @@ Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}
 Requires:       kf5-sonnet-ui%{?_isa} = %{version}-%{release}
 
 %description
-KDE Frameworks 5 Tier 1 solution for spell checking
+KDE Frameworks 5 Tier 1 solution for spell checking.
 
 
 %package        devel
