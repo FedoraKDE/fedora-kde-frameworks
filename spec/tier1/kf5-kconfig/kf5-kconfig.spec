@@ -68,6 +68,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kconfig5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
@@ -77,10 +78,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB DESIGN README.md TODO
 
-%files core
-%{_kf5_libexecdir}/kconf_update
+%files core -f kconfig5_qt.lang
+%{_kf5_bindir}/kreadconfig5
+%{_kf5_bindir}/kwriteconfig5
 %{_kf5_bindir}/kconfig_compiler_kf5
 %{_kf5_libdir}/libKF5ConfigCore.so.*
+%{_kf5_libexecdir}/kconf_update
 
 %files gui
 %{_kf5_libdir}/libKF5ConfigGui.so.*

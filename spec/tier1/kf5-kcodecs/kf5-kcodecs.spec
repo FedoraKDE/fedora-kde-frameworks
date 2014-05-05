@@ -22,7 +22,7 @@ BuildRequires:  qt5-qttools-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 addon with string manipulation methods
+KDE Frameworks 5 Tier 1 addon with string manipulation methods.
 
 
 %package        devel
@@ -48,12 +48,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+%find_lang kcodecs5_qt --with-qt --all-name
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kcodecs5_qt.lang
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Codecs.so.*
 

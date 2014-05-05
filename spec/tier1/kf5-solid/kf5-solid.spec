@@ -54,13 +54,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang solid5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f solid5_qt.lang
 %doc COPYING.LIB README.md TODO
 %{_kf5_qmldir}/org/kde/solid
 %{_kf5_libdir}/libKF5Solid.so.*

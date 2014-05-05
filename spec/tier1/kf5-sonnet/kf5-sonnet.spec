@@ -70,6 +70,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang sonnet5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
@@ -83,7 +84,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_plugindir}/sonnet_clients
 %{_kf5_datadir}/kf5/sonnet/trigrams.map
 
-%files ui
+%files ui -f sonnet5_qt.lang
 %{_kf5_libdir}/libKF5SonnetUi.so.*
 
 %files devel
