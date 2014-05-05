@@ -4,8 +4,8 @@
 
 Name:           kf5-attica
 Version:        4.98.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks Tier 1 Addon with implementation of the Open Collaboration Services API
+Release:        2%{?dist}
+Summary:        KDE Frameworks Tier 1 Addon with Open Collaboration Services API
 
 Group:          Development/Libraries
 License:        LGPLv2+
@@ -24,9 +24,6 @@ BuildRequires:  qt5-qtbase-devel
 
 Requires:       kf5-filesystem
 
-Provides:       attica-qt5
-Obsoletes:      attica-qt5
-
 %description
 Attica is a Qt library that implements the Open Collaboration Services
 API version 1.4.
@@ -35,8 +32,6 @@ API version 1.4.
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Provides:       attica-qt5-devel
-Obsoletes:      attica-qt5-devel
 %description    devel
 %{summary}.
 
@@ -76,6 +71,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
+- Remove Provides and Obsoletes (not needed in actual repos)
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
