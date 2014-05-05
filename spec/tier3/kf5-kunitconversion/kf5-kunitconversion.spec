@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git618963a3%{?dist}
+Release:        2.20140505git94219d2c%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for unit conversions
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kunitconversion-618963a3.tar
+Source0:        kf5-kunitconversion-94219d2c.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git94219d2c
+- Update to git: 94219d2c
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git618963a3
 - Update to git: 618963a3
 

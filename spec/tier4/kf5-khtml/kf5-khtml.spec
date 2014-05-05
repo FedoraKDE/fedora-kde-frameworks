@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git18dc6c63%{?dist}
+Release:        2.20140505git0a83b991%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 solution with KHTML engine
 
 License:        GPLv3
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-khtml-18dc6c63.tar
+Source0:        kf5-khtml-0a83b991.tar
 
 
 BuildRequires:  fdupes
@@ -112,6 +112,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git0a83b991
+- Update to git: 0a83b991
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git18dc6c63
 - Update to git: 18dc6c63
 

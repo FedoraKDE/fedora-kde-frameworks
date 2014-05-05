@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git93f79255%{?dist}
+Release:        2.20140505git881fdec9%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 solution for notifications
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-knotifications-93f79255.tar
+Source0:        kf5-knotifications-881fdec9.tar
 
 BuildRequires:  libX11-devel
 
@@ -83,6 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git881fdec9
+- Update to git: 881fdec9
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git93f79255
 - Update to git: 93f79255
 

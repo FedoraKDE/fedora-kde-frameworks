@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git7bcbe788%{?dist}
+Release:        2.20140505git1bfee335%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module with classes for windows management
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kwindowsystem-7bcbe788.tar
+Source0:        kf5-kwindowsystem-1bfee335.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -71,6 +71,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git1bfee335
+- Update to git: 1bfee335
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git7bcbe788
 - Update to git: 7bcbe788
 

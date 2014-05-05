@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428gitc4511767%{?dist}
+Release:        2.20140505gitc88e9e1b%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-sonnet-c4511767.tar
+Source0:        kf5-sonnet-c88e9e1b.tar
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -97,6 +97,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_SonnetUi.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitc88e9e1b
+- Update to git: c88e9e1b
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitc4511767
 - Update to git: c4511767
 

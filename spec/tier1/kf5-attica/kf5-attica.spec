@@ -4,7 +4,7 @@
 
 Name:           kf5-attica
 Version:        4.98.0
-Release:        2.20140428git71b6d36f%{?dist}
+Release:        2.20140505gitc6eb3db7%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with implementation of the Open Collaboration Services API
 
 Group:          Development/Libraries
@@ -16,7 +16,7 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 
-Source0:        kf5-attica-71b6d36f.tar
+Source0:        kf5-attica-c6eb3db7.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -76,6 +76,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitc6eb3db7
+- Update to git: c6eb3db7
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git71b6d36f
 - Update to git: 71b6d36f
 

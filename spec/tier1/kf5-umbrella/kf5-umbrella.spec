@@ -6,7 +6,7 @@
 Name:           kf5-%{framework}
 Version:        4.98.0
 Epoch:          1
-Release:        2.20140428gitd83f508d%{?dist}
+Release:        2.20140505giteb1ba8d9%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
 
 License:        GPLv2+
@@ -16,7 +16,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/kf5umbrella,git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        kf5umbrella-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-umbrella-d83f508d.tar
+Source0:        kf5-umbrella-eb1ba8d9.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -48,6 +48,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505giteb1ba8d9
+- Update to git: eb1ba8d9
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitd83f508d
 - Update to git: d83f508d
 

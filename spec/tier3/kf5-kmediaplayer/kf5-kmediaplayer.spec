@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git06ab59dc%{?dist}
+Release:        2.20140505git8520601c%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module with interface for media player features
 
 License:        X11, LGPLv2
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kmediaplayer-06ab59dc.tar
+Source0:        kf5-kmediaplayer-8520601c.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -93,6 +93,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git8520601c
+- Update to git: 8520601c
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git06ab59dc
 - Update to git: 06ab59dc
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428gita49fd9c6%{?dist}
+Release:        2.20140505gitb7346307%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for WebKit
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kdewebkit-a49fd9c6.tar
+Source0:        kf5-kdewebkit-b7346307.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -94,6 +94,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDEWebKit.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitb7346307
+- Update to git: b7346307
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gita49fd9c6
 - Update to git: a49fd9c6
 

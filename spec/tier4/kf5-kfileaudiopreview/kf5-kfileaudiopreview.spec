@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git8e1768fd%{?dist}
+Release:        2.20140505gitff810e1b%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 addon with audio preview functionality
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kfileaudiopreview-8e1768fd.tar
+Source0:        kf5-kfileaudiopreview-ff810e1b.tar
 
 
 
@@ -81,6 +81,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitff810e1b
+- Update to git: ff810e1b
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git8e1768fd
 - Update to git: 8e1768fd
 

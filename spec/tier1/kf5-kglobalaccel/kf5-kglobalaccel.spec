@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git7e1479b2%{?dist}
+Release:        2.20140505git3cbad6ad%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module for global shortcuts
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kglobalaccel-7e1479b2.tar
+Source0:        kf5-kglobalaccel-3cbad6ad.tar
 
 BuildRequires:  libX11-devel
 
@@ -72,6 +72,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git3cbad6ad
+- Update to git: 3cbad6ad
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git7e1479b2
 - Update to git: 7e1479b2
 

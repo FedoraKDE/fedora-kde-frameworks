@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428gitdded2def%{?dist}
+Release:        2.20140505git2f77ddba%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for QtDesigner
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kdesignerplugin-dded2def.tar
+Source0:        kf5-kdesignerplugin-2f77ddba.tar
 
 
 BuildRequires:  kf5-rpm-macros
@@ -99,6 +99,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git2f77ddba
+- Update to git: 2f77ddba
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitdded2def
 - Update to git: dded2def
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140428git72dbb9fa%{?dist}
+Release:        2.20140505gitef5f0396%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kinit-72dbb9fa.tar
+Source0:        kf5-kinit-ef5f0396.tar
 
 Patch0:         kinit-respect-env-paths.patch
 
@@ -103,6 +103,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitef5f0396
+- Update to git: ef5f0396
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git72dbb9fa
 - Update to git: 72dbb9fa
 

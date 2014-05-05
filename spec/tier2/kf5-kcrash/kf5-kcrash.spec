@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3.20140428git0c24964b%{?dist}
+Release:        3.20140505git389de5e9%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for application crashes
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kcrash-0c24964b.tar
+Source0:        kf5-kcrash-389de5e9.tar
 
 Patch0:         kcrash-find-drkonqi-in-path.patch
 
@@ -75,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCrash.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git389de5e9
+- Update to git: 389de5e9
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git0c24964b
 - Update to git: 0c24964b
 

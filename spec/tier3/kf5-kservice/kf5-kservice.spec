@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3.20140428git00e3b75e%{?dist}
+Release:        3.20140505git9146596a%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for working with .desktop files
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kservice-00e3b75e.tar
+Source0:        kf5-kservice-9146596a.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -81,6 +81,9 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git9146596a
+- Update to git: 9146596a
+
 * Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git00e3b75e
 - Update to git: 00e3b75e
 
