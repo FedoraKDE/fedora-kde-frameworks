@@ -2,8 +2,8 @@
 #%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        3.20140505git72c3b1e3%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kdelibs4support-72c3b1e3.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 Provides:       kf5-kde4support%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kde4support%{?_isa} =< 4.98.0-1
@@ -144,38 +144,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git72c3b1e3
-- Update to git: 72c3b1e3
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428gitb3a9d50e
-- Update to git: b3a9d50e
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitb3a9d50e
-- Update to git: b3a9d50e
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git0c5fa20f
-- Update to git: 0c5fa20f
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git68990538
-- Update to git: 68990538
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423gitcc53438b
-- Update to git: cc53438b
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git52a66644
-- Update to git: 52a66644
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Apr 21 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2
 - Rename to KDELibs4Support, following upstream name change
-
-* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git757bc979
-- Update to git: 757bc979
-
-* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git977151f9
-- Update to git: 977151f9
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git1f563691
-- Update to git: 1f563691
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

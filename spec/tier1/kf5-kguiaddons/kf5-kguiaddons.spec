@@ -2,8 +2,8 @@
 %define framework kguiaddons
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505gitb0ee1f03%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtGui
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kguiaddons-b0ee1f03.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -68,26 +68,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitb0ee1f03
-- Update to git: b0ee1f03
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitb773eee7
-- Update to git: b773eee7
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
-- Update to git: b773eee7
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
-- Update to git: b773eee7
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb773eee7
-- Update to git: b773eee7
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git5f72565e
-- Update to git: 5f72565e
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git9d4cd670
-- Update to git: 9d4cd670
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

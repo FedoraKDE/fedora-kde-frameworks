@@ -2,8 +2,8 @@
 
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
-Version:        4.98.0
-Release:        3.20140505git863dfafa%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
@@ -11,7 +11,7 @@ URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/kactivities.git | \
 # bzip2 -c > ${name}-%{version}-%{snapshot}.tar.bz2
-Source0:        kf5-kactivities-863dfafa.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 Obsoletes:      kactivities-qt5
 Provides:       kactivities-qt5
@@ -113,38 +113,11 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git863dfafa
-- Update to git: 863dfafa
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428gitc84d7181
-- Update to git: c84d7181
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitc84d7181
-- Update to git: c84d7181
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gite1ef22a9
-- Update to git: e1ef22a9
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2.20140425gitd1cbd36f
 - kf5-kactivities-runtime provides kactivities
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitd1cbd36f
-- Update to git: d1cbd36f
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git5cf107cc
-- Update to git: 5cf107cc
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423gita87d66aa
-- Update to git: a87d66aa
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git367a5ffe
-- Update to git: 367a5ffe
-
-* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git5792c6a7
-- Update to git: 5792c6a7
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git4576ec65
-- Update to git: 4576ec65
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

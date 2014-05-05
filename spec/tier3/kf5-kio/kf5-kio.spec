@@ -2,8 +2,8 @@
 %define framework kio
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        3.20140505git8ea1a88c%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kio-8ea1a88c.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
@@ -139,32 +139,8 @@ mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git8ea1a88c
-- Update to git: 8ea1a88c
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git569a0c3f
-- Update to git: 569a0c3f
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git569a0c3f
-- Update to git: 569a0c3f
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git024ff52a
-- Update to git: 024ff52a
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git865f9e7a
-- Update to git: 865f9e7a
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git281f1b04
-- Update to git: 281f1b04
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitdb8087c9
-- Update to git: db8087c9
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitb03063a8
-- Update to git: b03063a8
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitbdc2d142
-- Update to git: bdc2d142
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
 - Fix conflict of kf5-kio-doc with kdelibs4

@@ -2,8 +2,8 @@
 %define framework kwidgetsaddons
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505git7b793f27%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtWidgets
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kwidgetsaddons-7b793f27.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -68,20 +68,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git7b793f27
-- Update to git: 7b793f27
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitf8892042
-- Update to git: f8892042
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitf8892042
-- Update to git: f8892042
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git9f9c9bab
-- Update to git: 9f9c9bab
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitcd653694
-- Update to git: cd653694
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

@@ -2,8 +2,8 @@
 %define framework kmediaplayer
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505git8520601c%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module with interface for media player features
 
 License:        X11, LGPLv2
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kmediaplayer-8520601c.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 
 BuildRequires:  kf5-rpm-macros
@@ -71,17 +71,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git8520601c
-- Update to git: 8520601c
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git06ab59dc
-- Update to git: 06ab59dc
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git06ab59dc
-- Update to git: 06ab59dc
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git1efb5178
-- Update to git: 1efb5178
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

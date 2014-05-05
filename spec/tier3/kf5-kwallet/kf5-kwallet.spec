@@ -2,8 +2,8 @@
 %define framework kwallet
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        5.20140505git75ac811f%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kwallet-75ac811f.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  libgcrypt-devel
 BuildRequires:  kf5-rpm-macros
@@ -114,20 +114,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140505git75ac811f
-- Update to git: 75ac811f
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140428git1000e4a5
-- Update to git: 1000e4a5
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428git1000e4a5
-- Update to git: 1000e4a5
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428gitf5c552f2
-- Update to git: f5c552f2
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git67665f38
-- Update to git: 67665f38
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140422git388f0660
 - rename -api to -libs to follow naming conventions
@@ -135,18 +123,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git388f0660
 - -devel can only Require -api, otherwise we have circular dependency problem
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
-- Update to git: 388f0660
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
-- Update to git: 388f0660
-
-* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git749c8a69
-- Update to git: 749c8a69
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitab162784
-- Update to git: ab162784
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

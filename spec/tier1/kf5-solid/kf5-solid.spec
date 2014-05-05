@@ -2,8 +2,8 @@
 %define framework solid
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        5.20140505git714e3fdf%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-solid-714e3fdf.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -74,23 +74,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140505git714e3fdf
-- Update to git: 714e3fdf
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140428gite874177c
-- Update to git: e874177c
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428gite874177c
-- Update to git: e874177c
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitff9ff7ff
-- Update to git: ff9ff7ff
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitd0f6350c
-- Update to git: d0f6350c
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git7fc05c66
-- Update to git: 7fc05c66
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3
 - Apply upstream patch to rename solid-hardware to solid-hardware5 to fix conflict with kde-runtime

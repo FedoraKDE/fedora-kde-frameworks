@@ -1,6 +1,6 @@
 Name:           kf5
-Version:        4.98.0
-Release:        9
+Version:        4.99.0
+Release:        1
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,9 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.99.0-1
+- KDE Frameworks 4.99.0
+
 * Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-8
 - Remove INCLUDE_INSTALL_DIR, since we use the default one
 

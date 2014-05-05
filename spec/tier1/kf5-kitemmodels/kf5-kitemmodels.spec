@@ -2,8 +2,8 @@
 %define framework kitemmodels
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505git5edef693%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with item models
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kitemmodels-5edef693.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -66,20 +66,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git5edef693
-- Update to git: 5edef693
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git2fc7aeab
-- Update to git: 2fc7aeab
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git2fc7aeab
-- Update to git: 2fc7aeab
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitca62aa32
-- Update to git: ca62aa32
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git88cafaf1
-- Update to git: 88cafaf1
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

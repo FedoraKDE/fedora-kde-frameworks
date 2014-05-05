@@ -2,8 +2,8 @@
 %define framework kservice
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        3.20140505git9146596a%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for working with .desktop files
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kservice-9146596a.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -84,32 +84,8 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git9146596a
-- Update to git: 9146596a
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git00e3b75e
-- Update to git: 00e3b75e
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git00e3b75e
-- Update to git: 00e3b75e
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitc951637f
-- Update to git: c951637f
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git9e9982ad
-- Update to git: 9e9982ad
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git81276b32
-- Update to git: 81276b32
-
-* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git59362034
-- Update to git: 59362034
-
-* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421gitbd57633a
-- Update to git: bd57633a
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitff1082d3
-- Update to git: ff1082d3
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

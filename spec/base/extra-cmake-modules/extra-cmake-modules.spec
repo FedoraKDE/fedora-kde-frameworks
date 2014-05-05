@@ -1,12 +1,12 @@
 #global snapshot 20140205
-%global frameworksversion 4.98.0
+%global frameworksversion 4.99.0
 
 Name:           extra-cmake-modules
 Summary:        Additional modules for CMake build system
 # ECM does not follow the frameworks versioning, but is currently being
 # release together with it
-Version:        0.0.12
-Release:        4.20140505git73992f13%{?dist}
+Version:        0.0.13
+Release:        1%{?dist}
 
 License:        BSD
 URL:            http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
@@ -15,7 +15,7 @@ URL:            http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFi
 #             --remote=git://anongit.kde.org/%{name},git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        extra-cmake-modules-73992f13.tar
+Source0:        http://download.kde.org/unstable/frameworks/%{frameworksversion}/%{name}-%{version}.tar.xz
 
 BuildArch:      noarch
 
@@ -50,6 +50,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 0.0.13-1
+- KDE Frameworks 4.99.0
+
 * Mon May 05 2014 dvratil <dvratil@redhat.com> - 0.0.12-4.20140505git73992f13
 - Update to git: 73992f13
 

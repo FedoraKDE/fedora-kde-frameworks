@@ -91,6 +91,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KFileMetaData
 
 %changelog
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
+
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1
 - Fox kfilemetadata into kf5-kfilemetadata
 

@@ -2,8 +2,8 @@
 %define framework knotifyconfig
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505git08069106%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KNotify configuration
 
 License:        LGPL2
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-knotifyconfig-08069106.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 
 BuildRequires:  kf5-rpm-macros
@@ -78,20 +78,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git08069106
-- Update to git: 08069106
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git2ad2d926
-- Update to git: 2ad2d926
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git2ad2d926
-- Update to git: 2ad2d926
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423gitffdfc7b8
-- Update to git: ffdfc7b8
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitb80b1cf7
-- Update to git: b80b1cf7
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)

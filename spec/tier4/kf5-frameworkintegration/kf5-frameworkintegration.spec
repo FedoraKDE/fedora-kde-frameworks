@@ -2,8 +2,8 @@
 #%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.98.0
-Release:        2.20140505git8e9e4796%{?dist}
+Version:        4.99.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 addon with framework integration
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -11,7 +11,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-frameworkintegration-8e9e4796.tar
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 
 BuildRequires:  kf5-rpm-macros
@@ -88,23 +88,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git8e9e4796
-- Update to git: 8e9e4796
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitd6a6384f
-- Update to git: d6a6384f
-
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitd6a6384f
-- Update to git: d6a6384f
-
-* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitc5e09f33
-- Update to git: c5e09f33
-
-* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423gite5050f34
-- Update to git: e5050f34
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git3af23b3f
-- Update to git: 3af23b3f
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+- KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
