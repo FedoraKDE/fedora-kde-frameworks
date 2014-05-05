@@ -4,7 +4,7 @@
 
 Name:           kf5-attica
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with Open Collaboration Services API
 
 Group:          Development/Libraries
@@ -71,6 +71,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+- Rebuild against updated kf5-rpm-macros
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
 - KDE Frameworks 4.99.0
 

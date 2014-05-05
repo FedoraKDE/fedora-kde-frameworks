@@ -6,7 +6,7 @@
 Name:           kf5-%{framework}
 Version:        4.99.0
 Epoch:          1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
 
 License:        GPLv2+
@@ -48,6 +48,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+- Rebuild against updated kf5-rpm-macros
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
 - KDE Frameworks 4.99.0
 
