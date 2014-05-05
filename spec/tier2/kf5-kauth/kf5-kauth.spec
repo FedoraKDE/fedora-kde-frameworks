@@ -55,20 +55,21 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kauth5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kauth5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Auth.so.*
 %{_kf5_sysconfdir}/dbus-1/system.d/*
 %{_kf5_plugindir}/kauth/helper/kauth_helper_plugin.so
 %{_kf5_plugindir}/kauth/backend/kauth_backend_plugin.so
-%{_kf5_datadir}/kauth/
-%{_kf5_libexecdir}/kauth-policy-gen
+%{_kf5_datadir}/kf5/kauth/
+%{_kf5_libexecdir}/kauth/kauth-policy-gen
 
 
 %files devel

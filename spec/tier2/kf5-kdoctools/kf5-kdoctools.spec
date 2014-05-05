@@ -41,6 +41,11 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+%package        doc
+Summary:        User documentation and help for %{name}
+%description    doc
+Documentation and user help for %{name}.
+
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -66,13 +71,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/checkXML5
 %{_kf5_bindir}/meinproc5
 %{_kf5_datadir}/man/*
-%{_kf5_datadir}/kdoctools5/customization
+%{_kf5_datadir}/kf5/kdoctools/customization
 
 
 %files devel
 %{_kf5_includedir}/XsltKde/*
 %{_kf5_libdir}/libKF5XsltKde.a
 %{_kf5_libdir}/cmake/KF5DocTools
+
+
+%files doc
+%{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
