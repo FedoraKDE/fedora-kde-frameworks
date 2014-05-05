@@ -2,16 +2,16 @@
 
 Name:           polkit-qt5
 Version:        0.103.0
-Release:        0.2.%{snapshot}git%{?dist}
+Release:        1.20140428gitbac771e6%{?dist}
 Summary:        Qt 5 bindings for PolicyKit
 
 License:        GPLv2+
-URL:            https://projects.kde.org/projects/kdesupport/polkit-qt-1 
+URL:            https://projects.kde.org/projects/kdesupport/polkit-qt-1
 
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/polkit-qt-1 qt5 | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2 
+Source0:        polkit-qt5-bac771e6.tar
 Source1:        Doxyfile
 
 BuildRequires:  extra-cmake-modules
@@ -86,8 +86,23 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.2.20140418git
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-1.20140428gitbac771e6
+- Update to git: bac771e6
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-0.20140428gitbac771e6
+- Update to git: bac771e6
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 0.103.0-0.20140428gitbac771e6
+- Update to git: bac771e6
+
+* Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.2.20140422git
 - Fix install
+
+* Mon Apr 21 2014 Daniel Vrátil <dvratil@redhat.com> - 0.103.0-20140421gitbac771e6
+- Bump version, force rebuild
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 0.103.0-20140418gitbac771e6
+- Update to git: bac771e6
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> 0.103.0-0.1.20140418git
 - Update to latest git snapshot

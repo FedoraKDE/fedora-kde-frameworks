@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505git7234537f%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for creating configuration dialogs
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kconfigwidgets-7234537f.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -86,6 +86,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git7234537f
+- Update to git: 7234537f
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git8c785479
+- Update to git: 8c785479
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git8c785479
+- Update to git: 8c785479
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git79f9feb8
+- Update to git: 79f9feb8
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitd9168c6e
+- Update to git: d9168c6e
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git86479300
+- Update to git: 86479300
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

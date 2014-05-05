@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505gitbc26b879%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with JS scripting engine
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kjsembed-bc26b879.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -76,6 +76,21 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitbc26b879
+- Update to git: bc26b879
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git8ba329b0
+- Update to git: 8ba329b0
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git8ba329b0
+- Update to git: 8ba329b0
+
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git6852057f
+- Update to git: 6852057f
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitf0c7d414
+- Update to git: f0c7d414
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

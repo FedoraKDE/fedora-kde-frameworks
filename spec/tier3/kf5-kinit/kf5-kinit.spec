@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505gitef5f0396%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kinit-ef5f0396.tar
 
 Patch0:         kinit-respect-env-paths.patch
 
@@ -28,12 +28,32 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kbookmarks-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-sonnet-devel
+BuildRequires:  kf5-kjobwidgets-devel
+BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 
 %description
-kdeinit is a process launcher somewhat similar to the 
+kdeinit is a process launcher somewhat similar to the
 famous init used for booting UNIX.
 
 It launches processes by forking and then loading a
@@ -83,6 +103,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/*
 %{_kf5_libdir}/libkdeinit5_klauncher.so
 %{_kf5_libexecdir}/*
+%{_kf5_mandir}/man8/kdeinit5.8.gz
 
 %files devel
 %{_kf5_libdir}/cmake/KF5Init
@@ -90,6 +111,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitef5f0396
+- Update to git: ef5f0396
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git72dbb9fa
+- Update to git: 72dbb9fa
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git72dbb9fa
+- Update to git: 72dbb9fa
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git346f375a
+- Update to git: 346f375a
+
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423gitaa682aeb
+- Update to git: aa682aeb
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git044617f0
+- Update to git: 044617f0
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

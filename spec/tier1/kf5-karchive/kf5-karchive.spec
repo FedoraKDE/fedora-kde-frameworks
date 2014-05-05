@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505gitc971c5a5%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-karchive-c971c5a5.tar
 
 BuildRequires:  zlib-devel
 BuildRequires:  bzip2-devel
@@ -69,6 +69,27 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KArchive.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitc971c5a5
+- Update to git: c971c5a5
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git1f0c3732
+- Update to git: 1f0c3732
+
+* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421gitd1535dc8
+- Update to git: d1535dc8
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitc764b839
+- Update to git: c764b839
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

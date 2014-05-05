@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505gita84e2b9d%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtDBus
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kdbusaddons-a84e2b9d.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -66,6 +66,27 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDBusAddons.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gita84e2b9d
+- Update to git: a84e2b9d
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git774c4352
+- Update to git: 774c4352
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git774c4352
+- Update to git: 774c4352
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git774c4352
+- Update to git: 774c4352
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git774c4352
+- Update to git: 774c4352
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git5473c212
+- Update to git: 5473c212
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git55b14371
+- Update to git: 55b14371
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

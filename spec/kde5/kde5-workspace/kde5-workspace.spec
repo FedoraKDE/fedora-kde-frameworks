@@ -2,7 +2,7 @@
 
 Name:           kde5-workspace
 Version:        4.95.0
-Release:        1%{?dist}
+Release:        1.20140418git049113e7%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/kde-workspace.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/plasma/%{version}/kde-workspace-%{version}.tar.xz
-Source0:        kde-workspace-%{version}.tar.xz
+Source0:        kde5-workspace-049113e7.tar
 Source1:        kde5-plasma.desktop
 Source2:        fedora_startkde.sh
 Source3:        plasma-shell.desktop
@@ -293,6 +293,9 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 
 
 %changelog
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.95.0-20140418git049113e7
+- Update to git: 049113e7
+
 * Wed Apr 02 2014 Jan Grulich <jgrulich@redhat.com> 4.95.0-1
 - Update to Alpha 1
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505git08b688b9%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon for advanced thread management
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-threadweaver-08b688b9.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -64,6 +64,21 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git08b688b9
+- Update to git: 08b688b9
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitfd548aeb
+- Update to git: fd548aeb
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitfd548aeb
+- Update to git: fd548aeb
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gita561c079
+- Update to git: a561c079
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitd8ae23ef
+- Update to git: d8ae23ef
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

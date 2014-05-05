@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        2.20140505git491befb8%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
 
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
+Source0:        kf5-plasma-491befb8.tar
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -57,6 +57,7 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kdnssd-devel
 BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
@@ -98,7 +99,8 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-framework-%{version}
+#%setup -q -n %{framework}-framework-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -121,11 +123,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/dpitest
 %{_kf5_bindir}/plasmapkg2
-%{_kf5_bindir}/plasma-shell
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
-%{_kf5_libdir}/platformqml/touch/org/kde/plasma
-%{_kf5_libdir}/qml/org/kde/*
+%{_qt5_prefix}/platformqml/touch/org/kde/plasma
+%{_kf5_qmldir}/org/kde/*
 %{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_qtplugindir}/kf5/plasma/dataengine/
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
@@ -135,8 +136,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kde5/services/kded/*.desktop
 %{_kf5_datadir}/kde5/servicetypes/*.desktop
 %{_kf5_datadir}/plasma_scriptengine_ruby/data_engine.rb
-%{_kf5_sysconfdir}/xdg/autostart/plasma-shell.desktop
-
+%{_kf5_mandir}/man1/plasmapkg2.1.gz
 
 %files devel
 %doc
@@ -150,6 +150,42 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505git491befb8
+- Update to git: 491befb8
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitb9130c7c
+- Update to git: b9130c7c
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitb9130c7c
+- Update to git: b9130c7c
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428git880da9b1
+- Update to git: 880da9b1
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git774f78e7
+- Update to git: 774f78e7
+
+* Thu Apr 24 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140424git7ce31b6b
+- Update to git: 7ce31b6b
+
+* Wed Apr 23 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140423git0ef526b8
+- Update to git: 0ef526b8
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gite1a25552
+- Update to git: e1a25552
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git1d5c6e59
+- Update to git: 1d5c6e59
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitac1e50d3
+- Update to git: ac1e50d3
+
+* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git16ea0c68
+- Update to git: 16ea0c68
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git709d60a7
+- Update to git: 709d60a7
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

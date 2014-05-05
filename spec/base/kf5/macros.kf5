@@ -27,7 +27,6 @@
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
-    -DDATA_INSTALL_DIR:PATH=%{_kf5_datadir} \\\
     -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_includedir} \\\
     -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
 %if "%{?_lib}" == "lib64" \
@@ -37,7 +36,7 @@
     -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
     -DQT_PLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
     -DQML_INSTALL_DIR:PATH=%{_kf5_qmldir} \\\
-    -DIMPORTS_INSTALL_DIR=%{_qt5_importdir} \\\
-    -DECM_MKSPECS_INSTALL_DIR:STRING=%{_kf5_libdir}/qt5/mkspecs/modules \\\
-    -DSYSCONF_INSTALL_DIR=%{_kf5_sysconfdir} \\\
-    -DLIBEXEC_INSTALL_DIR=%{_kf5_libexecdir}
+    -DIMPORTS_INSTALL_DIR:PATH=%{_qt5_importdir} \\\
+    -DECM_MKSPECS_INSTALL_DIR:PATH=%{_kf5_libdir}/qt5/mkspecs/modules \\\
+    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir} \\\
+    -DLIBEXEC_INSTALL_DIR:PATH=%{_kf5_libexecdir}

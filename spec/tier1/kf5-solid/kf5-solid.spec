@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        3%{?dist}
+Release:        5.20140505git714e3fdf%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -12,9 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-Patch0:         solid-rename-solid-hardware-to-solid-hardware5.patch
+Source0:        kf5-solid-714e3fdf.tar
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -42,19 +40,9 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-# TODO: Remove for next release, it no longer conflicts with kde-runtime
-%package        runtime
-Summary:        Runtime for %{name}
-
-%description    runtime
-%{summary}.
-The runtime package contains solid-hardware, which is a tool for querying
-your hardware from the command line.
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .solidhardware5
 
 %build
 mkdir -p %{_target_platform}
@@ -76,21 +64,34 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md TODO
 %{_kf5_qmldir}/org/kde/solid
 %{_kf5_libdir}/libKF5Solid.so.*
-
+%{_kf5_bindir}/solid-hardware5
 
 %files devel
-%{_kf5_datadir}/dbus-1/interfaces/*
 %{_kf5_includedir}/solid_version.h
 %{_kf5_includedir}/Solid
 %{_kf5_libdir}/libKF5Solid.so
 %{_kf5_libdir}/cmake/KF5Solid
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
-%files runtime
-%{_kf5_bindir}/solid-hardware5
-
-
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140505git714e3fdf
+- Update to git: 714e3fdf
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140428gite874177c
+- Update to git: e874177c
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428gite874177c
+- Update to git: e874177c
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425gitff9ff7ff
+- Update to git: ff9ff7ff
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422gitd0f6350c
+- Update to git: d0f6350c
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git7fc05c66
+- Update to git: 7fc05c66
+
 * Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3
 - Apply upstream patch to rename solid-hardware to solid-hardware5 to fix conflict with kde-runtime
 

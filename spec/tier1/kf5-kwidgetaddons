@@ -1,10 +1,10 @@
 #%define snapshot 20140205
-%define framework kidletime
+%define framework kwidgetsaddons
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140505gitbacfeef0%{?dist}
-Summary:        KDE Frameworks 5 Tier 1 integration module for idle time detection
+Release:        2.20140428gitf8892042%{?dist}
+Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtWidgets
 
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -12,20 +12,18 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kf5-kidletime-bacfeef0.tar
-
-BuildRequires:  libX11-devel
-BuildRequires:  libxcb-devel
+Source0:        kf5-kwidgetsaddons-f8892042.tar
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 1 integration module for idle time detection
+KDE Frameworks 5 Tier 1 addon with item views
+
 
 %package        devel
 Summary:        Development files for %{name}
@@ -56,35 +54,37 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %files
-%doc COPYING COPYING.LIB README.md
-%{_kf5_libdir}/libKF5IdleTime.so.*
+%doc COPYING.LIB README.md
+%{_kf5_libdir}/libKF5WidgetsAddons.so.*
+%{_kf5_datadir}/kf5/kcharselect
+
 
 %files devel
-%doc
-%{_kf5_includedir}/kidletime_version.h
-%{_kf5_includedir}/KIdleTime
-%{_kf5_libdir}/libKF5IdleTime.so
-%{_kf5_libdir}/cmake/KF5IdleTime
-%{_kf5_archdatadir}/mkspecs/modules/qt_KIdleTime.pri
+%{_kf5_includedir}/kwidgetsaddons_version.h
+%{_kf5_includedir}/KWidgetsAddons
+%{_kf5_libdir}/libKF5WidgetsAddons.so
+%{_kf5_libdir}/cmake/KF5WidgetsAddons
+%{_kf5_archdatadir}/mkspecs/modules/qt_KWidgetsAddons.pri
+
 
 %changelog
-* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140505gitbacfeef0
-- Update to git: bacfeef0
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitf8892042
+- Update to git: f8892042
 
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428gitdbd5a704
-- Update to git: dbd5a704
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitf8892042
+- Update to git: f8892042
 
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitdbd5a704
-- Update to git: dbd5a704
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git9f9c9bab
+- Update to git: 9f9c9bab
 
-* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-1.20140428gitdbd5a704
-- Update to git: dbd5a704
-
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git75806c92
-- Update to git: 75806c92
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitcd653694
+- Update to git: cd653694
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
+
+* Tue Mar 11 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-2
+- fix button box access
 
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)

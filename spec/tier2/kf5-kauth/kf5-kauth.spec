@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        3.20140505git4a9ceaf2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kauth-4a9ceaf2.tar
 
 Patch0:         kauth-find-polkit-qt5.patch
 
@@ -65,8 +65,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Auth.so.*
 %{_kf5_sysconfdir}/dbus-1/system.d/*
-%{_kf5_qtplugindir}/kf5/plugins/kauth/helper/kauth_helper_plugin.so
-%{_kf5_qtplugindir}/kf5/plugins/kauth/backend/kauth_backend_plugin.so
+%{_kf5_plugindir}/kauth/helper/kauth_helper_plugin.so
+%{_kf5_plugindir}/kauth/backend/kauth_backend_plugin.so
 %{_kf5_datadir}/kauth/
 %{_kf5_libexecdir}/kauth-policy-gen
 
@@ -80,6 +80,21 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git4a9ceaf2
+- Update to git: 4a9ceaf2
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git9be07165
+- Update to git: 9be07165
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git9be07165
+- Update to git: 9be07165
+
+* Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a
+- Rebuild against kf5-rpm-macros
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a
+- Update to git: 84a2c68a
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        3.20140505git91fffc36%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kdoctools-91fffc36.tar
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
@@ -75,6 +75,27 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5DocTools
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140505git91fffc36
+- Update to git: 91fffc36
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140428git520e0d21
+- Update to git: 520e0d21
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140428git520e0d21
+- Update to git: 520e0d21
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git5e67e4c6
+- Update to git: 5e67e4c6
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git87a4ed9b
+- Rebuild against new kf5
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git87a4ed9b
+- Update to git: 87a4ed9b
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitf23530ee
+- Update to git: f23530ee
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 

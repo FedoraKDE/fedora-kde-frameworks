@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1%{?dist}
+Release:        5.20140505git75ac811f%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        kf5-kwallet-75ac811f.tar
 
 BuildRequires:  libgcrypt-devel
 BuildRequires:  kf5-rpm-macros
@@ -30,16 +30,18 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
-Requires:       kf5-kwallet-api%{_isa} = %{version}-%{release}
+Requires:       kf5-kwallet-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kwallet-runtime%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 3 solution for password management.
 
-%package        api
+%package        libs
 Summary:        KWallet framework libraries
 Requires:       kf5-filesystem
-%description    api
+Provides:       kf5-kwallet-api%{?_isa} = %{version}-%{release}
+Obsoletes:      kf5-kwallet-api%{?_isa} < 4.98.0-3.20140422git388f0660
+%description    libs
 Provides API to access KWallet data from applications.
 
 %package        runtime
@@ -49,9 +51,12 @@ Requires:       kf5-kded
 %description    runtime
 Provides a runtime deamon that stores passwords.
 
+# FIXME: -devel can only depend on -api, otherwise we get circular  dependency
+# problem, because -runtime depends on kf5-kded, which is not compiled at this point
+# (kf5-kio requires kf5-kwallet, but kf5-kded requires kf5-kinit, which requires kf5-kio)
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-kcoreaddons-devel
@@ -89,16 +94,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 
-%files api
+%files libs
 %{_kf5_libdir}/libKF5Wallet.so.*
+%{_kf5_libdir}/libkwalletbackend5.so.*
 
 %files runtime
 %{_kf5_datadir}/dbus-1/services/org.kde.kwalletd5.service
 %{_kf5_bindir}/kwalletd5
 %{_kf5_datadir}/kde5/services/kwalletd5.desktop
 %{_kf5_datadir}/kwalletd/kwalletd.notifyrc
-%{_kf5_datadir}/kconf_update/kwallet-4.13.upd
-%{_kf5_libdir}/libkwalletbackend5.so.*
 
 %files devel
 %{_kf5_datadir}/dbus-1/interfaces/kf5_org.kde.KWallet.xml
@@ -110,6 +114,40 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Mon May 05 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140505git75ac811f
+- Update to git: 75ac811f
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-5.20140428git1000e4a5
+- Update to git: 1000e4a5
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428git1000e4a5
+- Update to git: 1000e4a5
+
+* Mon Apr 28 2014 dvratil <dvratil@redhat.com> - 4.98.0-4.20140428gitf5c552f2
+- Update to git: f5c552f2
+
+* Fri Apr 25 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140425git67665f38
+- Update to git: 67665f38
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140422git388f0660
+- rename -api to -libs to follow naming conventions
+- libkwalletbackend5 belongs to -libs, not -runtime
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-2.20140422git388f0660
+- -devel can only Require -api, otherwise we have circular dependency problem
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
+- Update to git: 388f0660
+
+* Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140422git388f0660
+- Update to git: 388f0660
+
+* Mon Apr 21 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140421git749c8a69
+- Update to git: 749c8a69
+
+* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.98.0-20140418gitab162784
+- Update to git: ab162784
+
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
