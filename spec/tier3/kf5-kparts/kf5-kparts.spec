@@ -78,7 +78,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md AUTHORS
 %{_kf5_libdir}/libKF5Parts.so.*
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 
 %files devel
 %{_kf5_includedir}/kparts_version.h

@@ -60,7 +60,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc LICENSE README.md
 %{_kf5_libdir}/libKF5MediaPlayer.so.*
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 
 %files devel
 %{_kf5_includedir}/kmediaplayer_version.h

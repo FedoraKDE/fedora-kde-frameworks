@@ -102,9 +102,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-# Rename kioslave documentation to kioslave5 to avoid conflict with kdelibs4
-mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
-
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -113,17 +110,21 @@ mv $RPM_BUILD_ROOT/%{_kf5_datadir}/doc/HTML/en/kioslave{,5}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
-%{_kf5_bindir}/*
+%{_kf5_bindir}/ktelnetservice5
+%{_kf5_bindir}/kcookiejar5
+%{_kf5_bindir}/kmailservice5
 %{_kf5_sysconfdir}/xdg/accept-languages.codes
 %{_kf5_qtplugindir}/kf5/*.so
-%{_kf5_libexecdir}/*
+%{_kf5_libexecdir}/kio_http_cache_cleaner
+%{_kf5_libexecdir}/kioexec
+%{_kf5_libexecdir}/kpac_dhcp_helper
+%{_kf5_libexecdir}/kioslave
 %{_kf5_datadir}/applications/*.desktop
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
-%{_kf5_datadir}/kconf_update/*
-%{_kf5_datadir}/kde5/services/*
-%{_kf5_datadir}/kde5/servicetypes/*
-%{_kf5_datadir}/proxyscout/
-%{_kf5_datadir}/khtml/domain_info
+%{_kf5_datadir}/kservices5/*
+%{_kf5_datadir}/kservicetypes5/*
+%{_kf5_datadir}/knotifications5/proxyscout.*
+%{_kf5_datadir}/kf5/kcookiejar/domain_info
 
 %files devel
 %{_kf5_includedir}/*

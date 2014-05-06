@@ -28,6 +28,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kglobalaccel-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kguiaddons-devel
+BuildRequires:  kf5-kio-devel
 
 Requires:       kf5-filesystem
 
@@ -46,6 +47,7 @@ Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-kglobalaccel-devel
 Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kguiaddons-devel
+Requires:       kf5-kio-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

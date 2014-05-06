@@ -73,7 +73,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5TextWidgets.so.*
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 
 %files devel
 %{_kf5_includedir}/ktextwidgets_version.h

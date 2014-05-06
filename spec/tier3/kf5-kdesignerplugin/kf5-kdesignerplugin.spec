@@ -82,18 +82,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kdesignerplugin5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kdesignerplugin5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kgendesignerplugin
 %{_kf5_mandir}/man1/*
 %{_kf5_qtplugindir}/designer/*.so
-%{_kf5_datadir}/kf5widgets/*
+%{_kf5_datadir}/kf5/widgets/*
 
 %files devel
 %{_kf5_libdir}/cmake/KF5DesignerPlugin

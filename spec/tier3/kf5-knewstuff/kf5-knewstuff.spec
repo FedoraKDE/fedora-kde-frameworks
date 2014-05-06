@@ -79,7 +79,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5NewStuff.so.*
-%{_kf5_datadir}/knewstuff/
+%{_kf5_datadir}/kf5/knewstuff/
 
 %files devel
 %{_kf5_includedir}/knewstuff_version.h

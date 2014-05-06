@@ -80,7 +80,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .env-paths
+#%patch0 -p1 -b .env-paths
 
 %build
 mkdir -p %{_target_platform}

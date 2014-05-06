@@ -97,8 +97,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files runtime
 %{_kf5_bindir}/kactivitymanagerd
-%{_kf5_datadir}/kde5/services/kactivitymanagerd.desktop
-%{_kf5_datadir}/kde5/servicetypes/kactivitymanagerd-plugin.desktop
+%{_kf5_datadir}/kservices5/kactivitymanagerd.desktop
+%{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
 %{_kf5_qtplugindir}/kf5/kactivitymanagerd/
 
 %files libs
@@ -111,6 +111,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KActivities/
 %{_kf5_includedir}/kactivities_version.h
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
+%{_kf5_archdatadir}/mkspecs/modules/qt_KActivities.pri
 
 %changelog
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0

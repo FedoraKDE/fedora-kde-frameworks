@@ -13,7 +13,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{name}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-framework-4.99.0.tar.xz
 
 Provides:       plasma-framework
 Obsoletes:      plasma-framework
@@ -99,8 +99,7 @@ developing applications that use %{name}.
 
 
 %prep
-#%setup -q -n %{framework}-framework-%{version}
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-framework-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -128,14 +127,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_qt5_prefix}/platformqml/touch/org/kde/plasma
 %{_kf5_qmldir}/org/kde/*
 %{_kf5_qtplugindir}/kf5/*.so
-%{_kf5_qtplugindir}/kf5/plasma/dataengine/
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
-%{_kf5_datadir}/desktoptheme/*
 %{_kf5_datadir}/plasma/
-%{_kf5_datadir}/kde5/services/*.desktop
-%{_kf5_datadir}/kde5/services/kded/*.desktop
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
-%{_kf5_datadir}/plasma_scriptengine_ruby/data_engine.rb
+%{_kf5_datadir}/kservices5/*.desktop
+%{_kf5_datadir}/kservices5/kded/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_mandir}/man1/plasmapkg2.1.gz
 
 %files devel

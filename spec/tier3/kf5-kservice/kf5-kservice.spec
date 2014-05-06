@@ -71,7 +71,7 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 %{_kf5_bindir}/kbuildsycoca5
 %{_kf5_libdir}/libKF5Service.so.*
 %{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_mandir}/man8/*
 
 %files devel

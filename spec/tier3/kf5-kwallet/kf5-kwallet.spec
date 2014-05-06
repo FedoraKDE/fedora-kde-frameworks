@@ -101,8 +101,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files runtime
 %{_kf5_datadir}/dbus-1/services/org.kde.kwalletd5.service
 %{_kf5_bindir}/kwalletd5
-%{_kf5_datadir}/kde5/services/kwalletd5.desktop
-%{_kf5_datadir}/kwalletd/kwalletd.notifyrc
+%{_kf5_datadir}/kservices5/kwalletd5.desktop
+%{_kf5_datadir}/knotifications5/kwalletd.notifyrc
 
 %files devel
 %{_kf5_datadir}/dbus-1/interfaces/kf5_org.kde.KWallet.xml

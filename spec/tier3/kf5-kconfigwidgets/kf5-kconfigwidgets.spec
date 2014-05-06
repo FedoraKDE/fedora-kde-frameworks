@@ -73,7 +73,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5ConfigWidgets.so.*
 %{_kf5_bindir}/preparetips5
-%{_kf5_datadir}/kconfigwidgets
+%{_kf5_datadir}/kf5/kconfigwidgets
 %{_kf5_mandir}/man1/*
 
 %files devel

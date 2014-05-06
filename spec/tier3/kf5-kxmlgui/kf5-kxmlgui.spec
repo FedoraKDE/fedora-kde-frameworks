@@ -80,7 +80,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libKF5XmlGui.so.*
 %{_kf5_sysconfdir}/xdg/ui/ui_standards.rc
 %{_kf5_libexecdir}/ksendbugmail
-%{_kf5_datadir}/kxmlgui/
+%{_kf5_datadir}/kf5/kxmlgui/
 
 %files devel
 %{_kf5_includedir}/kxmlgui_version.h
