@@ -17,6 +17,7 @@ Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
