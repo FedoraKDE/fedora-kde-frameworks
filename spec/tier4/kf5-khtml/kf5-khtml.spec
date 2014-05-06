@@ -96,9 +96,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.GPL3 COPYING.LIB README.md
 %{_kf5_libdir}/libKF5KHtml.so.*
 %{_kf5_qtplugindir}/kf5/*.so
-%{_kf5_datadir}/kjava/
+%{_kf5_datadir}/kf5/kjava/
+%{_kf5_datadir}/kf5/khtml/
 %{_kf5_datadir}/khtml/
-%{_kf5_datadir}/kde5/services/*.desktop
+%{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_sysconfdir}/xdg/khtmlrc
 
 %files devel

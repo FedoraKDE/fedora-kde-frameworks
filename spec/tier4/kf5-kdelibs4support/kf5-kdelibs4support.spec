@@ -117,20 +117,22 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/kf5/*.so
 %{_kf5_qtplugindir}/designer/*.so
 %{_kf5_mandir}/man1/*
-%{_kf5_datadir}/kde5/services/*.protocol
-%{_kf5_datadir}/kde5/services/*.desktop
-%{_kf5_datadir}/kde5/services/qimageioplugins/*.desktop
-%{_kf5_datadir}/kde5/servicetypes/*.desktop
-%{_kf5_datadir}/kde5/services/kded/networkstatus.desktop
-%{_kf5_datadir}/kdoctools5/customization
-%{_kf5_datadir}/locale/*
-%{_kf5_datadir}/kf5widgets/
-%{_kf5_datadir}/kssl/ca-bundle.crt
+%{_kf5_datadir}/kservices5/*.protocol
+%{_kf5_datadir}/kservices5/*.desktop
+%{_kf5_datadir}/kservices5/qimageioplugins/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
+%{_kf5_datadir}/kservices5/kded/networkstatus.desktop
+%{_kf5_datadir}/kf5/kdoctools/customization
+%{_kf5_datadir}/kf5/locale/*
+%{_kf5_datadir}/locale/en_US/kf5_entry.desktop
+%{_kf5_datadir}/locale/kf5_all_languages
+%{_kf5_datadir}/kf5/widgets/
+%{_kf5_datadir}/kf5/kssl/ca-bundle.crt
 %{_kf5_sysconfdir}/xdg/colors
 %{_kf5_sysconfdir}/xdg/kdebug.areas
 %{_kf5_sysconfdir}/xdg/kdebugrc
 %{_kf5_sysconfdir}/xdg/ksslcalist
-%{_kf5_docdir}/HTML/en/kdebugdialog
+%{_kf5_docdir}/HTML/en/kdebugdialog5
 
 %files devel
 %{_kf5_libdir}/libKF5KDELibs4Support.so
