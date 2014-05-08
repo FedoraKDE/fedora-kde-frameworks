@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -36,6 +36,7 @@ Provides tools to generate documentation in various format from DocBook files.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-karchive-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
