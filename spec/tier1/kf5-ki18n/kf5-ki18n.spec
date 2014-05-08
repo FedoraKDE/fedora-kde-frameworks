@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon for localization
 
 License:        GPLv2+
@@ -20,6 +20,7 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
+BuildRequires:  gettext
 
 Requires:       kf5-filesystem
 
@@ -29,6 +30,7 @@ KDE Frameworks 5 Tier 1 addon for localization.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       gettext
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -67,7 +69,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KI18n.pri
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+* Thu May 08 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- BR gettext
+
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Rebuild against updated kf5-rpm-macros
 
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
