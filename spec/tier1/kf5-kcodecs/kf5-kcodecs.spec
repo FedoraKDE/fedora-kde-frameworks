@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with string manipulation methods
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+ and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -68,10 +68,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Rebuild against updated kf5-rpm-macros
 
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Tue Apr 22 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2
