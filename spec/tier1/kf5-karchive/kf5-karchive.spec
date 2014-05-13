@@ -58,7 +58,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %files
-%doc AUTHORS COPYING COPYING.LIB INSTALL README.md
+%doc AUTHORS COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Archive.so.*
 
 %files devel
