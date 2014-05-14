@@ -1,16 +1,17 @@
 %global         framework networkmanagerqt
-%global         git_commit 2afe13e
+%global         git_commit 107e27d
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        2%{?dist}
-Summary:        A Tier 2 KDE Frameworks 5 module that wraps NetworkManager DBus API
+Version:        5.0.90
+Release:        2.20140514git%{git_commit}%{?dist}
+Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/libs/libnm-qt
 # Source0:        http://download.kde.org/unstable/networkmanagement/%{version}/src/%{name}-%{version}.tar.xz
 # # Package from git snapshots using releaseme scripts
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+#Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        %{framework}-%{git_commit}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
@@ -33,7 +34,7 @@ Qt libraries and header files for developing applications
 that use NetworkManager
 
 %prep
-%setup -qn kf5-networkmanagerqt-%{version}
+%setup -qn %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -61,11 +62,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_NetworkManagerQt.pri
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
-- Rebuild against updated kf5-rpm-macros
-
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
-- KDE Frameworks 4.99.0
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-2.20140514git107e27d
+- Update to latest git snapshot
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-1.20140418git2afe13e
 - Upgrade libnm-qt to a Tier 2 KDE Frameworks module kf5-networkmanagerqt

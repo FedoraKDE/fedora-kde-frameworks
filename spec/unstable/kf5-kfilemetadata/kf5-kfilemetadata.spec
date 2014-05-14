@@ -1,8 +1,10 @@
+%define framework kfilemetadata
+%define git_commit dcc52ae
 
-Name:    kf5-kfilemetadata
+Name:    kf5-%{framework}
 Summary: A Tier 3 KDE Framework for extracting file metadata
 Version: 4.97.0
-Release: 1%{?dist}
+Release: 1.20140514git%{git_commit}%{?dist}
 
 # # KDE e.V. may determine that future LGPL versions are accepted
 License: LGPLv2 or LGPLv3
@@ -12,8 +14,9 @@ URL:     https://projects.kde.org/projects/kde/kdelibs/%{name}
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
-Source0: kf5-kfilemetadata-%{version}.tar
+#Source0: kf5-kfilemetadata-%{version}.tar
 ## upstream patches
+Source0:        %{framework}-%{git_commit}.tar.xz
 
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-rpm-macros
@@ -91,8 +94,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KFileMetaData
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
-- KDE Frameworks 4.99.0
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1.20140514gitdcc52ae
+- Updated to latest git snapshot
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1
 - Fox kfilemetadata into kf5-kfilemetadata

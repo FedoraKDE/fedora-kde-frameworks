@@ -1,8 +1,8 @@
 %global         framework modemmanagerqt
-%global         git_commit d257bb2
+%global         git_commit f6c10ff
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        2%{?dist}
+Version:        5.0.90
+Release:        1.20140513git%{git_commit}%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
 Group:          System Environment/Libraries
@@ -11,7 +11,8 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 
 #Source0:        http://download.kde.org/unstable/modemmanager-qt/%{version}/src/%{name}-%{version}.tar.xz
 # Package from git snapshots using releaseme scripts
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+#Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        %{framework}-%{git_commit}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -31,13 +32,12 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Qt 5 libraries and header files for developing applications that use ModemManager
 
 %prep
-%setup -qn kf5-%{framework}-%{version}
+%setup -qn %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-# FIXME: Remove once upstream fixes
-%{cmake_kf5} .. -DINCLUDE_INSTALL_DIR:PATH=%{_kf5_prefix}/include/KF5
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -61,11 +61,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
-- Rebuild against updated kf5-rpm-macros
-
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
-- KDE Frameworks 4.99.0
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-2.20140514gitf6c10ff
+- Update to latest git snapshot
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-1.20140418gitd257bb2
 - Upgrade libmm-qt to Tier 1 KDE Framework kf5-modemmanagerqt
