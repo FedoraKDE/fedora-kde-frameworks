@@ -26,6 +26,9 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
+# FIXME: This should be provided by kf5-kdoctools-devel Requires, but it does not
+# work in Copr for some reason
+BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 
