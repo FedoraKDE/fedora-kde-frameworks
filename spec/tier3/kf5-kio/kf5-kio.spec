@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -45,6 +45,9 @@ BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kwallet-devel
 
 Requires:       kf5-filesystem
+# Workaround for yum being weird and trying to install kf5-kwallet-api even though
+# kf5-kwallet-libs Provides and Obsoletes kf5-kwallet-api.
+Requires:       kf5-kwallet-libs
 
 %description
 KDE Frameworks 5 Tier 3 solution for filesystem abstraction
