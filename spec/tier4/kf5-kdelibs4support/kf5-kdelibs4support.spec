@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
 Provides:       kf5-kde4support%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-kde4support%{?_isa} =< 4.98.0-1
+Obsoletes:      kf5-kde4support%{?_isa} =< 4.99.0-1
 
 BuildRequires:  libX11-devel
 BuildRequires:  libSM-devel
