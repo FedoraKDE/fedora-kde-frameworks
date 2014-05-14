@@ -46,7 +46,7 @@ Requires: kf5-karchive-devel
 
 
 %prep
-%setup -q
+%setup -q -n %{framework}-%{version}
 
 
 %build
@@ -77,21 +77,22 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_plugindir}/kfilemetadata_plaintextextractor.so
 %{_kf5_plugindir}/kfilemetadata_popplerextractor.so
 %{_kf5_plugindir}/kfilemetadata_taglibextractor.so
-%{_kf5_datadir}/kde5/services/kfilemetadata_epubextractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_exiv2extractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_odfextractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_office2007extractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_officeextractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_plaintextextractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_popplerextractor.desktop
-%{_kf5_datadir}/kde5/services/kfilemetadata_taglibextractor.desktop
-%{_kf5_datadir}/kde5/servicetypes/kfilemetadataextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_epubextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_exiv2extractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_odfextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_office2007extractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_officeextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_plaintextextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_popplerextractor.desktop
+%{_kf5_datadir}/kservices5/kfilemetadata_taglibextractor.desktop
+%{_kf5_datadir}/kservicetypes5/kfilemetadataextractor.desktop
 
 %files devel
 #%{_kf5_libdir}/libKF5FileMetaData.so
 %{_kf5_libdir}/libkfilemetadata.so
-%{_kf5_libdir}/cmake/KF5FileMetaData
-%{_kf5_includedir}/KFileMetaData
+%{_kf5_libdir}/cmake/KFileMetaData
+# FIXME
+%{_includedir}/kfilemetadata
 
 %changelog
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1.20140514gitdcc52ae
