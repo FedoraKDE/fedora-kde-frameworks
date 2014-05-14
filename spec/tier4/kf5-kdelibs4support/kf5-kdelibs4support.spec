@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -81,6 +81,8 @@ Requires:       kf5-kunitconversion-devel
 Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-kxmlgui-devel
+# FIXME: Which packages really requires this??
+Requires:       kf5-kemoticons-devel
 
 
 %description    devel
@@ -148,6 +150,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- -devel Requires kf5-kemoticons-devel
+
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Fix typo in Obsoletes
 
