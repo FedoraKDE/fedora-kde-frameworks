@@ -79,7 +79,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_plugindir}/baloo_contactsearchstore.so
 %{_kf5_plugindir}/libbaloo_notesearchstore.so
 %{_kf5_plugindir}/akonadi/akonadi_baloo_searchplugin.so
+%{_kf5_plugindir}/akonadi/akonadibaloosearchplugin.desktop
 %{_kf5_plugindir}/krunner_baloosearchrunner.so
+%{_kf5_plugindir}/kcm_baloofile.so
 %{_kf5_bindir}/baloo_file
 %{_kf5_bindir}/baloo_file_extractor
 %{_kf5_bindir}/baloo_file_cleaner
@@ -103,8 +105,13 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files devel
-%{_kf5_libdir}/Baloo
-%{_include_dir}/baloo
+%{_kf5_libdir}/libbaloocore.so
+%{_kf5_libdir}/libbaloofiles.so
+%{_kf5_libdir}/libbaloopim.so
+%{_kf5_libdir}/libbalooxapian.so
+
+%{_kf5_libdir}/cmake/Baloo
+%{_includedir}/baloo
 %{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 
 
