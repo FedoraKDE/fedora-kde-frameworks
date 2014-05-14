@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        GPLv2+
@@ -24,6 +24,10 @@ BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
+
+Provides:       kf5-solid-runtime = %{version}-%{release}
+Provides:       kf5-solid-runtime%{?_isa} = %{version}-%{release}
+Obsoletes:      kf5-solid-runtime < 4.99.0.1
 
 %description
 Solid provides the following features for application developers:
@@ -75,10 +79,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Obsolotes/Provides kf5-solid-runtime
+
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Rebuild against updated kf5-rpm-macros
 
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Wed Apr 02 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-3

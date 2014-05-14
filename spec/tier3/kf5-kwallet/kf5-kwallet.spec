@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        GPLv2+
@@ -39,8 +39,8 @@ KDE Frameworks 5 Tier 3 solution for password management.
 %package        libs
 Summary:        KWallet framework libraries
 Requires:       kf5-filesystem
-Obsoletes:      kf5-kwallet-api%{?_isa} < 4.99.0-1
-Conflicts:      kf5-kwallet-api%{?_isa} < 4.99.0-1
+Obsoletes:      kf5-kwallet-api < 4.99.0-1
+Provides:       kf5-kwallet-api = %{version}-%{release}
 Provides:       kf5-kwallet-api%{?_isa} = %{version}-%{release}
 %description    libs
 Provides API to access KWallet data from applications.
@@ -115,7 +115,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Fix Provides/Obsoletes
+
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Tue Apr 22 2014 dvratil <dvratil@redhat.com> - 4.98.0-3.20140422git388f0660

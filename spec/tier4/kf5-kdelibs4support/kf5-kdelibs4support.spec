@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -13,8 +13,9 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
+Provides:       kf5-kde4support = %{version}-%{release}
 Provides:       kf5-kde4support%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-kde4support%{?_isa} =< 4.99.0-1
+Obsoletes:      kf5-kde4support < 4.99.0-1
 
 BuildRequires:  libX11-devel
 BuildRequires:  libSM-devel
@@ -58,8 +59,9 @@ KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       kf5-kde4support-devel = %{version}-%{release}
 Provides:       kf5-kde4support-devel%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-kde4support-devel%{?_isa} <= 4.98.0-1
+Obsoletes:      kf5-kde4support-devel < 4.99.0-1
 Requires:       kf5-kcompletion-devel
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kconfigwidgets-devel
@@ -146,7 +148,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
+- Fix typo in Obsoletes
+
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Apr 21 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2
