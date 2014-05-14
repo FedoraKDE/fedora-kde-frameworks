@@ -3,7 +3,7 @@
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
@@ -69,8 +69,7 @@ Conflicts:      kactivities-devel
 
 %package runtime
 Summary:        Runtime for KActivities framework
-Conflicts:      kactivities
-Provides:       kactivities
+Provides:       kactivities%{?_isa} = %{version}-%{release}
 %description    runtime
 %{summary}.
 
@@ -95,6 +94,10 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+
+%files
+%doc README README.md README.packagers README.developers MAINTAINER
+
 %files runtime
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_datadir}/kservices5/kactivitymanagerd.desktop
@@ -114,6 +117,13 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KActivities.pri
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Remove Conflicts: kactivities, per change in kactivties(4) package
+
+* Tue May 13 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
+- Add missing kf5-kactivities package
+- Fix Conflicts/Provides versions
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
 - KDE Frameworks 4.99.0
 
