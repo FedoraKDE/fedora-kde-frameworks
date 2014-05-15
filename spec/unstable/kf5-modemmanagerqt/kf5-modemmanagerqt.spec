@@ -1,5 +1,5 @@
-%global         framework modemmanagerqt
-%global         git_commit f6c10ff
+%define         framework modemmanagerqt
+%define         git_commit f6c10ff
 Name:           kf5-%{framework}
 Version:        5.0.90
 Release:        1.20140513git%{git_commit}%{?dist}

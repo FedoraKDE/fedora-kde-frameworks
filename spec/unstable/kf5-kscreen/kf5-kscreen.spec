@@ -1,5 +1,5 @@
-%global         framework kscreen
-%global         git_commit e24d85e
+%define         framework kscreen
+%define         git_commit e24d85e
 
 Name:           kf5-%{framework}
 Version:        4.90.0

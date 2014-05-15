@@ -1,5 +1,5 @@
-%global         framework baloo
-%global         git_commit 46e3ea7
+%define         framework baloo
+%define         git_commit 46e3ea7
 Name:           kf5-%{framework}
 Version:        4.90.0
 Release:        1.20140514git%{git_commit}%{?dist}

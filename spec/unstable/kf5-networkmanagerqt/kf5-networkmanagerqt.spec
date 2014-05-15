@@ -1,5 +1,5 @@
-%global         framework networkmanagerqt
-%global         git_commit 107e27d
+%define         framework networkmanagerqt
+%define         git_commit 107e27d
 Name:           kf5-%{framework}
 Version:        5.0.90
 Release:        2.20140514git%{git_commit}%{?dist}

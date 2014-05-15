@@ -6,8 +6,8 @@
 #  -xml
 #
 
-%global         framework akonadi
-%global         git_commit dda3e7d
+%define         framework akonadi
+%define         git_commit dda3e7d
 Name:           kf5-%{framework}
 Version:        4.98.0
 Release:        1.20140514git%{git_commit}%{?dist}
