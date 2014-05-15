@@ -28,7 +28,7 @@
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \\\
-    -DLIB_INSTALL_DIR:PATH=%{_kf5_libdir} \\\
+    -DLIB_INSTALL_DIR:PATH=%{_lib} \\\
 %if "%{?_lib}" == "lib64" \
      %{?_cmake_lib_suffix64} \\\
 %endif \
