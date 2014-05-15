@@ -37,7 +37,9 @@ Qt 5 libraries and header files for developing applications that use ModemManage
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. \
+        -DINCLUDE_INSTALL_DIR:PATH=/usr/include \
+        -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
