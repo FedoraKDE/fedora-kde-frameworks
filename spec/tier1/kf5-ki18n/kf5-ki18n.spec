@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon for localization
 
 License:        GPLv2+
@@ -69,6 +69,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KI18n.pri
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-4
+- Rebuild against updated kf5-rpm-macros
+
 * Thu May 08 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - BR gettext
 
