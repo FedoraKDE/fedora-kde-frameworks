@@ -1,19 +1,18 @@
-%define snapshot 20140505
 %define framework ktexteditor
-%define git_commit f18c423
 
 Name:           kf5-%{framework}
-Version:        5.0.90
-Release:        1.20140502git%{git_commit}%{?dist}
-Summary:        KTextEditor Framework
+Version:        4.99.0
+Release:        1%{?_dist}
+Summary:        KDE Frameworks 5 Tier 3 advanced embeddable text editor
 
 License:        GPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}.tar.bz2
 # Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+Source0:        %{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -64,21 +63,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_sysconfdir}/xdg/kate*
 %{_kf5_libdir}/libKF5TextEditor.so.*
+%{_kf5_plugindir}/katepart.so
+%{_kf5_datadir}/kservices5/katepart.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/katepart5/script/
 %{_kf5_datadir}/katepart5/syntax/
 %{_kf5_datadir}/katepart/katepart5ui.rc
-%{_kf5_datadir}/kservices5/katepart.desktop
-%{_kf5_datadir}/kservicetypes5/*.desktop
 
 %files devel
-%{_kf5_includedir}/KF5/ktexteditor_version.h
-%{_kf5_includedir}/KF5/KTextEditor
-%{_kf5_libdir}/qt5/plugins/kf5/katepart.so
 %{_kf5_libdir}/libKF5TextEditor.so
 %{_kf5_libdir}/cmake/KF5TextEditor
+%{_kf5_includedir}/ktexteditor_version.h
+%{_kf5_includedir}/KTextEditor
 %{_kf5_archdatadir}/mkspecs/modules/qt_KTextEditor.pri
 
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
+- KDE Frameworks 4.99.0
+
 * Fri May 02 2014 Jan Grulich <jgrulich@redhat.com> - 5.0.90-1
 - initial version
