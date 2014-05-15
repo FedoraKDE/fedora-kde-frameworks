@@ -1,8 +1,10 @@
 #%define snapshot 20140205
+%define git_commit 61c631c
+%define base_name kwin
 
-Name:           kde5-kwin
-Version:        4.95.0
-Release:        1.20140425gitb92f4a6%{?dist}
+Name:           kde5-%{base_name}
+Version:        4.96.0
+Release:        1.20140514git%{git_commit}%{?dist}
 Summary:        KDE Window manager
 
 License:        GPLv2+
@@ -12,7 +14,7 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-Source0:        kwin-b92f4a6.tar
+Source0:        %{base_name}-%{git_commit}.tar.xz
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -93,9 +95,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
 %{_kde5_bindir}/kwin
-%{_kde5_datadir}/config.kcfg/kwin.kcfg
 %{_kde5_datadir}/kwin
-%{_kde5_datadir}/icons/oxygen/*/actions/*
 %{_kde5_libdir}/libkdeinit5_kwin.so
 %{_kde5_libdir}/libkdeinit5_kwin_rules_dialog.so
 %{_kde5_libdir}/libkdecorations.so.*
@@ -103,37 +103,41 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_libdir}/libkwineffects.so.*
 %{_kde5_libdir}/libkwinglutils.so.*
 %{_kde5_libdir}/libkwin4_effect_builtins.so.*
-%{_kde5_libdir}/plugins/kf5/*.so
-%{_kde5_libdir}/plugins/kf5/kwin
+%{_kde5_libdir}/plugins/*.so
+%{_kde5_libdir}/plugins/kwin
 %{_kde5_libdir}/qml/org/kde/kwin
-%{_kde5_libdir}/kconf_update_bin/kwin_update_default_rules
+%{_kde5_libdir}/kconf_update_bin/kwin5_update_default_rules
 %{_kde5_libexecdir}/kwin_killer_helper
 %{_kde5_libexecdir}/kwin_rules_dialog
 %{_kde5_datadir}/kwincompositing
-%{_kde5_datadir}/kde5/services/*.desktop
-%{_kde5_datadir}/kde5/services/kwin
-%{_kde5_datadir}/kde5/servicetypes/*.desktop
-%{_kde5_datadir}/sounds/pop.wav
+%{_datadir}/kservices5/*.desktop
+%{_datadir}/kservices5/kwin
+%{_datadir}/kservicetypes5/*.desktop
+%{_datadir}/knotifications5/kwin.notifyrc
+%{_datadir}/config.kcfg/kwin.kcfg
+%{_datadir}/icons/oxygen/*/actions/*
 %{_kde5_sysconfdir}/xdg/*.knsrc
 
 %files doc
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
-%{_kde5_datadir}/doc/HTML/en/kcontrol/*
+%{_datadir}/doc/HTML/en/kcontrol/*
 
 %files devel
-%{_kde5_libdir}/cmake/KWinDBusInterface
-%{_kde5_libdir}/cmake/KDecorations
+%{_libdir}/cmake/KWinDBusInterface
+%{_libdir}/cmake/KDecorations
+%{_datadir}/dbus-1/interfaces/*.xml
 %{_kde5_libdir}/libkdecorations.so
 %{_kde5_libdir}/libkwinxrenderutils.so
 %{_kde5_libdir}/libkwineffects.so
 %{_kde5_libdir}/libkwinglutils.so
 %{_kde5_libdir}/libkwin4_effect_builtins.so
-%{_kde5_datadir}/dbus-1/interfaces/*.xml
-%{_kde5_includedir}/kwin_export.h
 %{_kde5_includedir}/*.h
 
 
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1.20140514git61c631c
+- Update to latest upstream git snapshot
+
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1.20140425gitb92f4a6
 - Initial package

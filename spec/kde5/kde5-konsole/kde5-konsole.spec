@@ -1,8 +1,9 @@
-%define snapshot  20140213
+%define base_name konsole
+%define git_commit 57a5f23
 
-Name:           kde5-konsole
-Version:        4.90.1
-Release:        0.20140418gitcc24ae1e%{?dist}
+Name:           kde5-%{base_name}
+Version:        4.96.0
+Release:        0.20140515git%{git_commit}%{?dist}
 Summary:        Konsole is a terminal program for KDE 5
 
 License:        GPLv2+
@@ -11,7 +12,7 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        kde5-konsole-cc24ae1e.tar
+Source0:        %{base_name}-%{git_commit}.tar.xz
 
 # udev
 
@@ -55,7 +56,7 @@ BuildRequires:  kf5-kde4support-devel
 Konsole is a terminal program for KDE 5.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -78,19 +79,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_bindir}/konsoleprofile
 %{_kde5_libdir}/libkdeinit5_konsole.so
 %{_kde5_libdir}/libkonsoleprivate.so
-%{_kde5_plugindir}/kf5/konsolepart.so
+%{_kde5_plugindir}/konsolepart.so
 %{_kde5_datadir}/konsole
 %{_kde5_datadir}/kconf_update/*
-%{_kde5_datadir}/applications/kde5/konsole.desktop
-%{_kde5_datadir}/kde5/servicetypes/terminalemulator.desktop
-%{_kde5_datadir}/kde5/services/konsolepart.desktop
-%{_kde5_datadir}/kde5/services/ServiceMenus/konsolehere.desktop
-%{_kde5_datadir}/doc/HTML/en/konsole/
+%{_datadir}/applications/org.kde.konsole.desktop
+%{_datadir}/kservicetypes5/terminalemulator.desktop
+%{_datadir}/kservices5/konsolepart.desktop
+%{_datadir}/kservices5/ServiceMenus/*.desktop
+%{_datadir}/knotifications5/konsole.notifyrc
+%{_datadir}/doc/HTML/en/konsole/
 
 
 %changelog
-* Fri Apr 18 2014 dvratil <dvratil@redhat.com> - 4.90.1-20140418gitcc24ae1e
-- Update to git: cc24ae1e
+* Thu May 15 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-20140515git57a5f23
+- Updated to latest git snapshot
 
 * Fri Feb 07 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-0.1.20140213git
 - Initial version

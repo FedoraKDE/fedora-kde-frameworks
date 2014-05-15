@@ -1,8 +1,9 @@
-%define snapshot  20140505
+%define git_commit 7c97c92
+%define base_name kde-baseapps
 
 Name:           kde5-baseapps
 Version:        4.90.1
-Release:        0.1.%{snapshot}git%{?dist}
+Release:        1.20140514git%{git_commit}%{?_dist}
 Summary:        Collection of applications used for file and Internet browsing
 
 License:        GPLv2+
@@ -13,7 +14,7 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/kde-baseapps/%{version}/kde-baseapps-%{version}.tar.xz
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{base_name}-%{git_commit}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -72,26 +73,38 @@ fi
 
 %files
 %doc COPYING COPYING.LIB
-%{_kde5_bindir}/kdepasswd
+%{_kde5_bindir}/dolphin
 %{_kde5_bindir}/kdialog
 %{_kde5_bindir}/kfind
-%{_kde5_libdir}/plugins/
+%{_kde5_bindir}/kdepasswd
+%{_kde5_bindir}/servicemenuinstallation
+%{_kde5_bindir}/servicemenudeinstallation
+%{_kde5_plugindir}/*.so
 %{_kde5_libdir}/libkonq.so.*
-%{_kde5_datadir}/templates/
-%{_kde5_datadir}/applications/
-%{_kde5_datadir}/config.kcfg/
-%{_kde5_datadir}/dbus-1/
-%{_kde5_datadir}/icons/hicolor/
+%{_kde5_libdir}/libdolphinprivate.so.*
+%{_kde5_libdir}/libkdeinit4_dolphin.so
 %{_kde5_datadir}/kbookmark/directory_bookmarkbar.desktop
 %{_kde5_datadir}/kdm/
 %{_kde5_datadir}/konqueror/
-%{_kde5_datadir}/kservices5/
-%{_kde5_datadir}/kservicetypes5/
+%{_kde5_datadir}/dolphin
+%{_kde5_datadir}/dolphinpart
+%{_datadir}/kservices5/
+%{_datadir}/kservicetypes5/
+%{_datadir}/templates/
+%{_datadir}/applications/
+%{_datadir}/config.kcfg/
+%{_datadir}/dbus-1/
+%{_datadir}/icons/hicolor/
+%{_kde5_sysconfdir}/xdg/servicemenu.knsrc
 
 %files devel
-%{_kde5_includedir}/*
+%{_kde5_includedir}/*.h
 %{_kde5_libdir}/libkonq.so
+%{_kde5_libdir}/libdolphinprivate.so
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> 4.90.1-1.20140514git7c97c92
+- Update to latest git snapshot
+
 * Mon May 05 2014 Jan Grulich <jgrulich@redhat.com> 4.90.1-1.20140505git
 - initial version

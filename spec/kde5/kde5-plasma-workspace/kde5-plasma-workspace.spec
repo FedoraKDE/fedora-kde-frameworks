@@ -1,8 +1,10 @@
 # %define snapshot  20140315
+%define git_commit 7c97c92
+%define base_name plasma-workspace
 
-Name:           kde5-plasma-workspace
+Name:           kde5-%{base_name}
 Version:        4.95.0
-Release:        1.20140425git25f086a%{?dist}
+Release:        2.20140514git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -12,13 +14,10 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/kde-workspace.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/plasma/%{version}/kde-workspace-%{version}.tar.xz
-Source0:        kde5-plasma-workspace-25f086a.tar
-Source1:        kde5-plasma.desktop
-Source2:        fedora_startkde.sh
-Source3:        plasma-shell.desktop
+Source0:        %{base_name}-%{git_commit}.tar.xz
 
-Patch0:         kde-workspace-startkde-fix-kdeinit-lookup.patch
-Patch1:         kde-workspace-fix-build.patch
+Patch0:         plasma-workspace-fix-build.patch
+Patch1:         plasma-workspace-fix-build-2.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -79,6 +78,12 @@ BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-ksysguard-devel
+BuildRequires:  kf5-kscreen-devel
+# FIXME: Missing kf5-kdepimlibs-umbrella
+
+BuildRequires:  chrpath
+
+BuildRequires:  kde5-kwin
 
 # Optional
 BuildRequires:  kf5-kactivities-libs-devel
@@ -134,12 +139,17 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n plasma-workspace-%{version}
+%setup -q -n %{base_name}-%{version}
+
+%patch0 -R -p1 -b .fixbuild
+%patch1 -R -p1 -b .fixbuild2
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde5} ..
+%{cmake_kde5} .. \
+        -DINCLUDE_INSTALL_DIR:PATH=/usr/include
+# FIXME: Remove ^^ once fixed upstream
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -147,11 +157,35 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-# %%{_datadir} here is intended - we need to install to location where DMs look
-install -p -m644 -D %{SOURCE1} %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
-install -p -m655 -D %{SOURCE2} %{buildroot}/%{_kde5_bindir}/fedora_startkde
-install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/plasma-shell.desktop
+mkdir -p %{buildroot}/%{_datadir}/xsessions
+cat <<EOF >> %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Type=XSession
+Exec=%{_kde5_bindir}/fedora_startkde
+TryExec=%{_kde5_bindir}/fedora_startkde
+Name=Plasma 2
+Comment=The next generation desktop made by the KDE Community
+EOF
 
+
+mkdir -p %{buildroot}/%{_kde5_bindir}
+cat <<EOF >> %{buildroot}/%{_kde5_bindir}/fedora_startkde
+%{_kde5_bindir}/startkde
+EOF
+chmod a+x %{buildroot}/%{_kde5_bindir}/fedora_startkde
+
+mkdir -p %{buildroot}/%{_kde5_plugindir}/phonon_platform
+mv %{buildroot}/%{_kde5_plugindir}/{plugins,}/phonon_platform/kde.so
+chrpath --delete %{buildroot}/%{_kde5_plugindir}/phonon_platform/kde.so
+
+# These two are ignoring CMAKECONFIG_INSTALL_PREFIX
+mv %{buildroot}/%{_kde5_libdir}/cmake/LibKWorkspace %{buildroot}/%{_libdir}/cmake
+mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cmake
+
+# FIXME: I cannot be bothered to fix this in cmake files
+#sed -i 's/\${_IMPORT_PREFIX}\/include/\/usr\/include/g' %{buildroot}/%{_libdir}/cmake/LibKWorkspace/LibKWorkspaceLibraryTargets.cmake
+#sed -i 's/\${_IMPORT_PREFIX}\/include/\/usr\/include/g' %{buildroot}/%{_libdir}/cmake/LibTaskManager/LibTaskManagerLibraryTargets.cmake
 
 %post -p /sbin/ldconfig
 
@@ -160,24 +194,15 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 %files
 %{_kde5_bindir}/*
 %{_kde5_libdir}/*.so.*
-%{_kde5_plugindir}/kf5/plasma/dataengine/*.so
-%{_kde5_plugindir}/kf5/plasma/geolocationprovider/*.so
-%{_kde5_plugindir}/kf5/plasma/packagestructure/*.so
-%{_kde5_plugindir}/kf5/*.so
-%{_kde5_plugindir}/kf5/plugins/phonon_platform/kde.so
+%{_kde5_plugindir}/plasma/dataengine/*.so
+%{_kde5_plugindir}/plasma/geolocationprovider/*.so
+%{_kde5_plugindir}/plasma/packagestructure/*.so
+%{_kde5_plugindir}/*.so
+%{_kde5_plugindir}/phonon_platform/kde.so
 %{_kde5_libdir}/qml/org/kde/*
-%{_kde5_libdir}/kconf_update_bin
 %{_kde5_libexecdir}/*
-%{_kde5_datadir}/kde5/services/*.desktop
-%{_kde5_datadir}/kde5/services/*.protocol
-%{_kde5_datadir}/kde5/services/kded/*.desktop
-%{_kde5_datadir}/kde5/servicetypes/*.desktop
-%{_kde5_datadir}/applications/*.desktop
-%{_kde5_datadir}/config.kcfg
-%{_kde5_datadir}/kconf_update/*
 %{_kde5_datadir}/ksmserver
 %{_kde5_datadir}/ksplash
-%{_kde5_datadir}/freespacenotifier
 %{_kde5_datadir}/plasma/plasmoids
 %{_kde5_datadir}/plasma/services
 %{_kde5_datadir}/plasma/shareprovider
@@ -185,32 +210,38 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 %{_kde5_datadir}/plasma/look-and-feel
 %{_kde5_datadir}/solid
 %{_kde5_datadir}/kstyle
-%{_kde5_datadir}/dbus-1/services/*.service
-%{_kde5_datadir}/desktop-directories/*.directory
 %{_kde5_datadir}/drkonqi/debuggers/external/*
 %{_kde5_datadir}/drkonqi/debuggers/internal/*
 %{_kde5_datadir}/drkonqi/mappings
 %{_kde5_datadir}/drkonqi/pics/*.png
-%{_kde5_datadir}/phonon/phonon.notifyrc
 %{_kde5_sysconfdir}/xdg/*.knsrc
 %{_kde5_sysconfdir}/xdg/autostart/*.desktop
+%{_datadir}/desktop-directories/*.directory
+%{_datadir}/dbus-1/services/*.service
+%{_datadir}/kservices5/*.desktop
+%{_datadir}/kservices5/*.protocol
+%{_datadir}/kservices5/kded/*.desktop
+%{_datadir}/kservicetypes5/*.desktop
+%{_datadir}/knotifications5/*.notifyrc
+%{_datadir}/applications/*.desktop
+%{_datadir}/config.kcfg
 
 # %%{_datadir} here is intended - we need to install to location where DMs look
 %{_datadir}/xsessions/kde5-plasma.desktop
 
 %files doc
 # %doc COPYING COPYING.DOC COPYING.LIB README README.pam
-%{_kde5_datadir}/doc/HTML/en/*
+%{_datadir}/doc/HTML/en/*
 
 %files devel
 %{_kde5_libdir}/*.so
-%{_kde5_libdir}/cmake/KRunnerAppDBusInterface
-%{_kde5_libdir}/cmake/KSMServerDBusInterface
-%{_kde5_libdir}/cmake/LibKWorkspace
-%{_kde5_libdir}/cmake/LibTaskManager
-%{_kde5_libdir}/cmake/ScreenSaverDBusInterface
 %{_kde5_includedir}/*
-%{_kde5_datadir}/dbus-1/interfaces/*.xml
+%{_libdir}/cmake/KRunnerAppDBusInterface
+%{_libdir}/cmake/KSMServerDBusInterface
+%{_libdir}/cmake/LibKWorkspace
+%{_libdir}/cmake/LibTaskManager
+%{_libdir}/cmake/ScreenSaverDBusInterface
+%{_datadir}/dbus-1/interfaces/*.xml
 
 # TODO split to subpackages
 # - KCM (?)
@@ -222,3 +253,4 @@ install -p -m644 -D %{SOURCE3} %{buildroot}/%{_kde5_sysconfdir}/xdg/autostart/pl
 %changelog
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140425git25f086a
 - Initial version of kde5-plasma-workspace
+

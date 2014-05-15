@@ -1,8 +1,9 @@
-# %define snapshot  20140315
+%define         git_commit 532fc47
+%define         base_name plasma-desktop
 
-Name:           kde5-plasma-desktop
-Version:        4.95.0
-Release:        1.20140428git7046caa%{?dist}
+Name:           kde5-%{base_name}
+Version:        4.96.0
+Release:        1.20140515git%{git_commit}%{?dist}
 Summary:        Plasma 2 desktop
 
 License:        GPLv2+
@@ -12,7 +13,9 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/kde-workspace.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/plasma/%{version}/kde-workspace-%{version}.tar.xz
-Source0:        kde5-plasma-desktop-7046caa.tar
+Source0:        %{base_name}-%{git_commit}.tar.xz
+
+Patch0:         plasma-desktop-fix-build.patch
 
 BuildRequires:  libusb-devel
 BuildRequires:  fontconfig-devel
@@ -25,6 +28,7 @@ BuildRequires:  xcb-util-devel
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  qt5-qtsvg-devel
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -45,20 +49,16 @@ BuildRequires:  kde5-kwin-devel
 
 # Optional
 BuildRequires:  kf5-kactivities-libs-devel
+BuildRequires:  libcanberra-devel
+
+BuildRequires:  chrpath
 
 Requires:       kde5-plasma-workspace
 Requires:       kde5-filesystem
 
+
 %description
 Plasma 2 Desktop.
-
-%package        devel
-Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
 
 %package        doc
 Summary:        Documentation and user manuals for %{name}
@@ -68,7 +68,9 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n plasma-desktop-%{version}
+%setup -q -n %{base_name}-%{version}
+
+%patch0 -R -p1 -b .fixbuild
 
 %build
 mkdir -p %{_target_platform}
@@ -81,72 +83,74 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+chrpath --delete %{buildroot}/%{_kde5_libdir}/qml/org/kde/plasma/private/kicker/libkickerplugin.so
+chrpath --delete %{buildroot}/%{_kde5_libdir}/qml/org/kde/plasma/private/kickoff/libkickoffplugin.so
+chrpath --delete %{buildroot}/%{_kde5_libdir}/qml/org/kde/plasma/private/taskmanager/libtaskmanagerplugin.so
+chrpath --delete %{buildroot}/%{_kde5_libdir}/qml/org/kde/plasma/private/pager/libpagerplugin.so
+chrpath --delete %{buildroot}/%{_kde5_plugindir}/kcm_smserver.so
+
+# No -devel
+rm %{buildroot}/%{_kde5_libdir}/libkfontinst{,ui}.so
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%{_kde5_bindir}/*
-%{_kde5_libdir}/*.so.*
-%{_kde5_plugindir}/kf5/plasma/dataengine/*.so
-%{_kde5_plugindir}/kf5/plasma/geolocationprovider/*.so
-%{_kde5_plugindir}/kf5/plasma/packagestructure/*.so
-%{_kde5_plugindir}/kf5/*.so
-%{_kde5_plugindir}/kf5/plugins/phonon_platform/kde.so
-%{_kde5_libdir}/qml/org/kde/*
-%{_kde5_libdir}/kconf_update_bin
-%{_kde5_libexecdir}/*
-%{_kde5_datadir}/kde5/services/*.desktop
-%{_kde5_datadir}/kde5/services/*.protocol
-%{_kde5_datadir}/kde5/services/kded/*.desktop
-%{_kde5_datadir}/kde5/servicetypes/*.desktop
-%{_kde5_datadir}/applications/*.desktop
-%{_kde5_datadir}/config.kcfg
+%{_kde5_bindir}/kapplymousetheme
+%{_kde5_bindir}/kaccess
+%{_kde5_bindir}/kfontinst
+%{_kde5_bindir}/kfontview
+%{_kde5_bindir}/krdb
+%{_kde5_libexecdir}/kcmdatetimehelper
+%{_kde5_libexecdir}/fontinst
+%{_kde5_libexecdir}/fontinst_helper
+%{_kde5_libexecdir}/fontinst_x11
+%{_kde5_libexecdir}/kfontprint
+%{_kde5_libexecdir}/knetattach
+%{_kde5_libdir}/qml/org/kde/plasma/private
+%{_kde5_libdir}/attica_kde.so
+%{_kde5_libdir}/libkdeinit5_kaccess.so
+%{_kde5_libdir}/kconf_update_bin/*
+%{_kde5_libdir}/libkfontinst.so.*
+%{_kde5_libdir}/libkfontinstui.so.*
+%{_kde5_plugindir}/*.so
+%{_kde5_datadir}/plasma/*
+%{_kde5_datadir}/kcminput
+%{_kde5_datadir}/color-schemes
 %{_kde5_datadir}/kconf_update/*
+%{_kde5_datadir}/kthememanager
+%{_kde5_datadir}/kdisplay
+%{_kde5_datadir}/kcontrol
+%{_kde5_datadir}/kcmkeys
+%{_kde5_datadir}/kcm_componentchooser
+%{_kde5_datadir}/kcmlocale
+%{_kde5_datadir}/kcm_phonon
+%{_kde5_datadir}/kfontinst
+%{_kde5_datadir}/kfontview
+%{_kde5_datadir}/kcmkeyboard
 %{_kde5_datadir}/ksmserver
-%{_kde5_datadir}/ksplash
-%{_kde5_datadir}/freespacenotifier
-%{_kde5_datadir}/plasma/plasmoids
-%{_kde5_datadir}/plasma/services
-%{_kde5_datadir}/plasma/shareprovider
-%{_kde5_datadir}/plasma/wallpapers
-%{_kde5_datadir}/plasma/look-and-feel
-%{_kde5_datadir}/solid
-%{_kde5_datadir}/kstyle
-%{_kde5_datadir}/dbus-1/services/*.service
-%{_kde5_datadir}/desktop-directories/*.directory
-%{_kde5_datadir}/drkonqi/debuggers/external/*
-%{_kde5_datadir}/drkonqi/debuggers/internal/*
-%{_kde5_datadir}/drkonqi/mappings
-%{_kde5_datadir}/drkonqi/pics/*.png
-%{_kde5_datadir}/phonon/phonon.notifyrc
+%{_kde5_datadir}/konqsidebartng/virtual_folders/services/fonts.desktop
+%{_kde5_sysconfdir}/dbus-1/system.d/*.conf
 %{_kde5_sysconfdir}/xdg/*.knsrc
-%{_kde5_sysconfdir}/xdg/autostart/*.desktop
+%{_datadir}/kservices5/*.desktop
+%{_datadir}/kservices5/ServiceMenus/installfont.desktop
+%{_datadir}/kservices5/fonts.protocol
+%{_datadir}/kservices5/kded/*.desktop
+%{_datadir}/knotifications5/*.notifyrc
+%{_datadir}/icons/*/*/*/*
+%{_datadir}/applications/*.desktop
+%{_datadir}/dbus-1/services/*.service
+%{_datadir}/dbus-1/system-services/*.service
+%{_datadir}/polkit-1/actions/*.policy
 
-# %%{_datadir} here is intended - we need to install to location where DMs look
-%{_datadir}/xsessions/kde5-plasma.desktop
+
 
 %files doc
 # %doc COPYING COPYING.DOC COPYING.LIB README README.pam
-%{_kde5_datadir}/doc/HTML/en/*
-
-%files devel
-%{_kde5_libdir}/*.so
-%{_kde5_libdir}/cmake/KRunnerAppDBusInterface
-%{_kde5_libdir}/cmake/KSMServerDBusInterface
-%{_kde5_libdir}/cmake/LibKWorkspace
-%{_kde5_libdir}/cmake/LibTaskManager
-%{_kde5_libdir}/cmake/ScreenSaverDBusInterface
-%{_kde5_includedir}/*
-%{_kde5_datadir}/dbus-1/interfaces/*.xml
-
-# TODO split to subpackages
-# - KCM (?)
-# - plasmoids
-# - icons
-# - individual tools
+%{_datadir}/doc/HTML/en/*
 
 
 %changelog
-* Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140428git7046caa
+* Thu May 15 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140515git532fc47
 - Initial version of kde5-plasma-desktop

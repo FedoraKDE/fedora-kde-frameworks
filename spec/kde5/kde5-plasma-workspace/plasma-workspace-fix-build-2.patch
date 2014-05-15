@@ -1,0 +1,23 @@
+From: Andreas Hartmetz <ahartmetz@gmail.com>
+Date: Wed, 14 May 2014 03:16:04 +0000
+Subject: Adapt to changes in KAboutData - one more file.
+X-Git-Url: http://quickgit.kde.org/?p=plasma-workspace.git&a=commitdiff&h=3b23c0aafe5bce8b443ce81d23601efe66e0e865
+---
+Adapt to changes in KAboutData - one more file.
+---
+
+
+--- a/drkonqi/tests/bugzillalibtest/bugzillalibtest.cpp
++++ b/drkonqi/tests/bugzillalibtest/bugzillalibtest.cpp
+@@ -127,8 +127,8 @@
+ int main (int argc, char ** argv)
+ {
+     QApplication app(argc, argv);
+-    KAboutData aboutData( "bzlibtest", "bzlibtest", i18n("BugzillaLib Test (DrKonqi2)"),
+-        "1.0", i18n("Test application for bugtracker manager lib"), KAboutData::License_GPL,
++    KAboutData aboutData( "bzlibtest", i18n("BugzillaLib Test (DrKonqi2)"),
++        "1.0", i18n("Test application for bugtracker manager lib"), KAboutLicense::GPL,
+         i18n("(c) 2009, DrKonqi2 Developers"));
+ 
+     QCommandLineParser parser;
+

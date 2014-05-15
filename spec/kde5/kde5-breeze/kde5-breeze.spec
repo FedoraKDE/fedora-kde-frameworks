@@ -1,8 +1,10 @@
-%define snapshot  20140502
+%define base_name    breeze
+%define git_commit 73a19ea
 
-Name:           kde5-breeze
+Name:           kde5-%{base_name}
 Version:        4.90.1
-Release:        0.1.%{snapshot}git%{?dist}
+Release:        1.20140514git%{git_commit}%{?_dist}
+BuildArch:      noarch
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
 License:        GPLv2+
@@ -11,16 +13,16 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{name}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{name}.git frameworks | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+Source0:        %{base_name}-%{git_commit}.tar.xz
 
-BuildRequires:  kde5-filesystem
+BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
 
 %description
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -39,5 +41,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde5_datadir}/icons/breeze/index.theme
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-1.20140514git73a19ea
+- Update to latest upstream
+
 * Fri May 02 2014 Jan Grulich <jgrulich@redhat.com> 4.90.1-0.1.20140502git
 - Initial version

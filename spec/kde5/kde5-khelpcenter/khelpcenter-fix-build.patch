@@ -1,0 +1,26 @@
+diff --git a/application.cpp b/application.cpp
+index bf200e9..6fddd74 100644
+--- a/application.cpp
++++ b/application.cpp
+@@ -77,7 +77,7 @@ extern "C" int Q_DECL_EXPORT kdemain( int argc, char **argv )
+   KAboutData aboutData( "khelpcenter", i18n("KDE Help Center"),
+                         HELPCENTER_VERSION,
+                         i18n("The KDE Help Center"),
+-                        KAboutLicense::GPL,
++                        KAboutData::License_GPL,
+                         i18n("(c) 1999-2011, The KHelpCenter developers") );
+ 
+   aboutData.addAuthor( "Cornelius Schumacher", QString(), "schumacher@kde.org" );
+diff --git a/khc_indexbuilder.cpp b/khc_indexbuilder.cpp
+index ff08c4c..fca10e7 100644
+--- a/khc_indexbuilder.cpp
++++ b/khc_indexbuilder.cpp
+@@ -157,7 +157,7 @@ int main( int argc, char **argv )
+                         i18n("KHelpCenter Index Builder"),
+                         HELPCENTER_VERSION,
+                         i18n("The KDE Help Center"),
+-                        KAboutLicense::GPL,
++                        KAboutData::License_GPL,
+                         i18n("(c) 2003, The KHelpCenter developers") );
+ 
+   aboutData.addAuthor( i18n("Cornelius Schumacher"), QString(), "schumacher@kde.org" );
