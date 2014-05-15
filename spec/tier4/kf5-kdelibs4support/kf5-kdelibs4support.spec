@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -62,27 +62,21 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       kf5-kde4support-devel = %{version}-%{release}
 Provides:       kf5-kde4support-devel%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kde4support-devel < 4.99.0-1
-Requires:       kf5-kcompletion-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kconfigwidgets-devel
+Requires:       kf5-kauth-devel
+Requires:       kf5-configwidgets-devel
+Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kcrash-devel
 Requires:       kf5-kdesignerplugin-devel
-Requires:       kf5-kglobalaccel-devel
 Requires:       kf5-kdoctools-devel
 Requires:       kf5-kguiaddons-devel
-Requires:       kf5-ki18n-devel
 Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kio-devel
+Requires:       kf5-kitemmodels-devel
+Requires:       kf5-kinit-devel
 Requires:       kf5-knotifications-devel
 Requires:       kf5-kparts-devel
-Requires:       kf5-kservice-devel
 Requires:       kf5-ktextwidgets-devel
 Requires:       kf5-kunitconversion-devel
-Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-kxmlgui-devel
-# FIXME: Which packages really requires this??
-Requires:       kf5-kemoticons-devel
 
 
 %description    devel
@@ -150,6 +144,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-4
+- Fix -devel Requires
+
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - -devel Requires kf5-kemoticons-devel
 
