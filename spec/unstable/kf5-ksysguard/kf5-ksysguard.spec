@@ -1,9 +1,12 @@
 #%define snapshot 20140205
-%define framework ksysguard
 
-Name:           kf5-ksysguard
-Version:        4.99.0
-Release:        1%{?dist}
+# libksysguard
+%define framework ksysguard
+%define git_commit f7a2bbe
+
+Name:           kf5-%{framework}
+Version:        4.96.0
+Release:        1.20140514git%{git_commit}%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
 License:        GPLv2+
@@ -11,9 +14,9 @@ URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
+
 #Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        %{framework}-%{git_commit}.tar.xz
 
 BuildRequires:  zlib-devel
 BuildRequires:  libXres-devel
@@ -38,6 +41,7 @@ KSysGuard library provides API to read and manage processes running on the syste
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+
 # FIXME: Until ksysguard is correctly frameworkized, it conflicts with kde-workspace-devel
 Conflicts:      kde-workspace-devel
 
@@ -52,7 +56,7 @@ developing applications that use %{name}.
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. -DINCLUDE_INSTALL_DIR=%{_kf5_includedir}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -84,8 +88,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
-- KDE Frameworks 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140514gitf7a2bbe
+- Update to latest git snapshot
 
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1.20140425git1908ec8
 - Initial package
