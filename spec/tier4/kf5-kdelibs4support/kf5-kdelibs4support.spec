@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        4%{?dist}
+Release:        6%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -63,11 +63,12 @@ Provides:       kf5-kde4support-devel = %{version}-%{release}
 Provides:       kf5-kde4support-devel%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kde4support-devel < 4.99.0-1
 Requires:       kf5-kauth-devel
-Requires:       kf5-configwidgets-devel
+Requires:       kf5-kconfigwidgets-devel
 Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kcrash-devel
 Requires:       kf5-kdesignerplugin-devel
 Requires:       kf5-kdoctools-devel
+Requires:       kf5-kemoticons-devel
 Requires:       kf5-kguiaddons-devel
 Requires:       kf5-kiconthemes-devel
 Requires:       kf5-kitemmodels-devel
@@ -144,6 +145,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri May 16 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-6
+- Fix typo
+
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-4
 - Fix -devel Requires
 
