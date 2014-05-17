@@ -19,6 +19,7 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
+BuildRequires:  libXrandr-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules

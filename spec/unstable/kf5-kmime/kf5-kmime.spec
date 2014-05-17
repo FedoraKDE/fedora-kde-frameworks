@@ -20,6 +20,7 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-kcodecs-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  boost-devel
 
 Requires:       kf5-filesystem
 
@@ -33,6 +34,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kcodecs-devel
 Requires:       kf5-kitemviews-devel
 Requires:       kf5-kdelibs4support-devel
+Requires:       boost-devel
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.

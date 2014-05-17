@@ -24,6 +24,8 @@ BuildRequires:  kf5-kcalcore-devel
 BuildRequires:  kf5-syndication-devel
 BuildRequires:  kf5-kxmlrpcclient-devel
 
+BuildRequires:  boost-devel
+
 Requires:       kf5-filesystem
 
 %description

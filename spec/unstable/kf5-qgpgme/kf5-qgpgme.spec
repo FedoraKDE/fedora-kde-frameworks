@@ -20,6 +20,8 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-gpgme++-devel
 
+BuildRequires:  gpgme-devel
+
 Requires:       kf5-filesystem
 
 %description
@@ -59,9 +61,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %files devel
 %{_kf5_libdir}/libKF5QGpgme.so
 %{_kf5_libdir}/cmake/KF5QGpgme
-%{_kf5_includedir}/QGpgme
+%{_kf5_includedir}/qgpgme
 %{_kf5_includedir}/qgpgme_version.h
-%{_kf5_archdatadir}/mkspecs/modules/qt_QGpgme.pri
 
 %changelog
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-1.20140514gitdda3e7d

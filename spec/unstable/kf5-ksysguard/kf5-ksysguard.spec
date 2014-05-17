@@ -32,6 +32,7 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-knewstuff-devel
 
 Requires:       kf5-filesystem
 
