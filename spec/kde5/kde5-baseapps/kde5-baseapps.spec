@@ -35,6 +35,8 @@ BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-kactivities-libs-devel
+BuildRequires:  kf5-knewstuff-devel
+BuildRequires:  kf5-kfilemetadata-devel
 
 Requires:       kde5-filesystem
 
