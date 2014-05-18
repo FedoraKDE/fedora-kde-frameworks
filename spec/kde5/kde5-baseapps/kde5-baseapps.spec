@@ -3,7 +3,7 @@
 
 Name:           kde5-baseapps
 Version:        4.90.1
-Release:        1.20140514git%{git_commit}%{?_dist}
+Release:        1.20140514git%{git_commit}%{?dist}
 Summary:        Collection of applications used for file and Internet browsing
 
 License:        GPLv2+

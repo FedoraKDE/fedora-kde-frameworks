@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140515git%{git_commit}%{?_dist}
+Release:        1.20140515git%{git_commit}%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+

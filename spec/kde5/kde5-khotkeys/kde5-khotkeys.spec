@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140524git%{git_commit}%{?_dist}
+Release:        1.20140524git%{git_commit}%{?dist}
 Summary:        Application to show KDE Application's documentation
 
 License:        GPLv2+

@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140514git%{git_commit}%{?_dist}
+Release:        1.20140514git%{git_commit}%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
 License:        GPLv2+

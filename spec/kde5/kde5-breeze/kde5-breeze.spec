@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.90.1
-Release:        1.20140514git%{git_commit}%{?_dist}
+Release:        1.20140514git%{git_commit}%{?dist}
 BuildArch:      noarch
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 

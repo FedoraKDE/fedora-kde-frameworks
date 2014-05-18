@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140515git%{git_commit}%{?_dist}
+Release:        1.20140515git%{git_commit}%{?dist}
 Summary:        A dedicated KDE search application built on top of Baloo
 
 License:        GPLv2+
