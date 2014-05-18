@@ -15,6 +15,7 @@ URL:            http://www.kde.org
 Source0:        %{base_name}-%{git_commit}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -28,6 +29,8 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-frameworkintegration-devel
 BuildRequires:  kf5-kwindowsystem-devel
+
+BuildRequires:  kde5-kwin-devel
 
 Requires:       kde5-filesystem
 
