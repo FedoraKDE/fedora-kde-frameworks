@@ -10,7 +10,7 @@
 %define         git_commit dda3e7d
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        2.20140514git%{git_commit}%{?dist}
+Release:        3.20140514git%{git_commit}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library that provides access to PIM storage
 
 Group:          System Environment/Libraries
@@ -108,6 +108,9 @@ chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/akonadiwidgets.so
 %{_kf5_bindir}/akonadi2xml
 
 %changelog
+* Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-3.20140514gitdda3e7d
+- Rebuild
+
 * Sat May 17 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2.20140514gitdda3e7d
 - Update -devel Requires
 
