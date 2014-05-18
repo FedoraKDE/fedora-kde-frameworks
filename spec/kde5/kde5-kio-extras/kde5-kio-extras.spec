@@ -36,6 +36,12 @@ BuildRequires:  phonon-qt5-devel
 BuildRequires:  openslp-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh-devel
+BuildRequires:  bzip2-devel
+BuildRequires:  libexiv2-devel
+BuildRequires:  OpenEXR-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  lzma-devel
+
 
 Requires:       kde5-filesystem
 

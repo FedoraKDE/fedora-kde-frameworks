@@ -22,6 +22,8 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtmultimedia-devel
+BuildRequires:  qt5-qttools-devel
+BuildRequires:  qt5-qttools-static
 
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libEGL-devel

@@ -1,6 +1,6 @@
 Name:           kde5
 Version:        4.90.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Filesystem and RPM macros for KDE 5 and Plasma Workspaces 2
 BuildArch:      noarch
 
@@ -40,7 +40,10 @@ install -pm644 %{_sourcedir}/macros.kde5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.3
+* Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.3-2
+- Add /usr/share to XDG_DATA_DIRS
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.3-1
 - split to -filesystem and -rpm-macros
 
 * Thu Feb 13 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.2
