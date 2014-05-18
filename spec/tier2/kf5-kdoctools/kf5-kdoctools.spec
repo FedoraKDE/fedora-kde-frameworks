@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -13,6 +13,9 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+
+# Upstream
+Patch0:         kdoctools-improve-error-reporting-in-meinproc.patch
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
@@ -51,6 +54,8 @@ Documentation and user help for %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+%patch0 -p1 -b .erorr-reporting
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -85,7 +90,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Apply upstream patch to improve error reporting in meinproc
+
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
