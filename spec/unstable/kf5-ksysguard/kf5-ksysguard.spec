@@ -27,6 +27,7 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtwebkit-devel
+BuildRequires:  qt5-qtscript-devel
 
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kdelibs4support-devel
