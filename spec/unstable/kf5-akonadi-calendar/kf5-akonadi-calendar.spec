@@ -28,6 +28,8 @@ BuildRequires:  kf5-kcalcore-devel
 BuildRequires:  kf5-kcalutils-devel
 BuildRequires:  kf5-akonadi-contact-devel
 
+BuildRequires:  phonon-qt5-devel
+
 Requires:       kf5-filesystem
 
 %description
