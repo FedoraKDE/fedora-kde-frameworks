@@ -28,5 +28,6 @@ kf5-akonadi-calendar
 kf5-akonadi-notes
 kf5-akonadi-socialutils
 kf5-baloo
+kf5-baloo-widgets
 kf5-ksysguard
 kf5-kscreen
