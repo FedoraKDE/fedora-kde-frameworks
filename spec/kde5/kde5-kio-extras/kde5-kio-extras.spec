@@ -1,5 +1,5 @@
 %define base_name    kio-extras
-%define git_commit   f7a2bbe
+%define git_commit   8d996a1
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
@@ -37,7 +37,7 @@ BuildRequires:  openslp-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh-devel
 BuildRequires:  bzip2-devel
-BuildRequires:  libexiv2-devel
+BuildRequires:  exiv2-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  lzma-devel
