@@ -31,6 +31,10 @@ BuildRequires:  kf5-kmime-devel
 BuildRequires:  kf5-kpimutils-devel
 BuildRequires:  kf5-akonadi-kmime-devel
 
+BuildRequires:  kf5-kidletime-devel
+BuildRequires:  kf5-kcmutils-devel
+BuildRequires:  kf5-krunner-devel
+
 Requires:       kf5-filesystem
 
 %description
