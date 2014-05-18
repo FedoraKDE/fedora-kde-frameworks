@@ -47,6 +47,8 @@ BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kcmutils-devel
+BuildRequires:  kf5-knewstuff-devel
 
 # Optional
 BuildRequires:  kf5-kactivities-libs-devel
