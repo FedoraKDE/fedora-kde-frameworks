@@ -29,6 +29,7 @@ BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-kdoctools-devel
 
 BuildRequires:  kde5-plasma-workspace-devel
 

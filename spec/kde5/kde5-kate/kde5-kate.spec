@@ -33,6 +33,7 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-ktexteditor-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kitemmodels-devel
 BuildRequires:  kf5-kxmlgui-devel
 
 Requires:       kde5-filesystem

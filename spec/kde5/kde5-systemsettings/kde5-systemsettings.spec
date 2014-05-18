@@ -32,6 +32,7 @@ BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kde5-filesystem
 

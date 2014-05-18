@@ -37,6 +37,8 @@ BuildRequires:  openslp-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh-devel
 
+Requires:       kde5-filesystem
+
 %description
 %{summary}.
 

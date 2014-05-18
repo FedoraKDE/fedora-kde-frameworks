@@ -29,6 +29,7 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-ksysguard-devel
+BuildRequires:  kf5-kdoctools-devel
 
 BuildRequires:  lm_sensors-devel
 

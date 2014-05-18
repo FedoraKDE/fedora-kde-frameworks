@@ -28,6 +28,7 @@ BuildRequires:  kf5-kinit-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kde5-filesystem
 

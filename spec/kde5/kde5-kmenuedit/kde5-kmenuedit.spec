@@ -28,6 +28,7 @@ BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kde5-filesystem
 

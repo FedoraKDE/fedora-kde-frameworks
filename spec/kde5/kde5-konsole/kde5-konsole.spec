@@ -19,7 +19,7 @@ Source0:        %{base_name}-%{git_commit}.tar.xz
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
 
-BuildRequires:  kde5-filesystem
+BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -51,6 +51,9 @@ BuildRequires:  kf5-knotifyconfig-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kross-devel
 BuildRequires:  kf5-kde4support-devel
+BuildRequires:  kf5-kdoctools-devel
+
+Requires:       kde5-filesystem
 
 %description
 Konsole is a terminal program for KDE 5.

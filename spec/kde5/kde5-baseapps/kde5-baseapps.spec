@@ -20,7 +20,9 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  zlib-devel
 
-BuildRequires:  kde5-filesystem
+BuildRequires:  kde5-rpm-macros
+BuildRequires:  kf5-rpm-macros
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kbookmarks-devel
@@ -33,6 +35,8 @@ BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-kactivities-libs-devel
+
+Requires:       kde5-filesystem
 
 %description
 %{summary}.
