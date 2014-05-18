@@ -42,6 +42,8 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLES-devel
 BuildRequires:  mesa-libEGL-devel
 BuildRequires:  libX11-devel
+BuildRequires:  pciutils-devel
+BuildRequires:  libraw1394-devel
 
 Requires:       kde5-filesystem
 
