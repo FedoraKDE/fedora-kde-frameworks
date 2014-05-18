@@ -16,6 +16,4 @@ kde5-systemsettings
 kde5-khotkeys
 kde5-powerdevil
 kde5-plasma-nm
-
-
-plasma-desktop
+kde5-plasma-desktop
