@@ -23,6 +23,7 @@ BuildRequires:  kf5-akonadi-devel
 BuildRequires:  kf5-kcalcore-devel
 BuildRequires:  kf5-kpimidentities-devel
 BuildRequires:  kf5-kholidays-devel
+BuildRequires:  boost-devel
 
 Requires:       kf5-filesystem
 
