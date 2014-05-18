@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140524git%{git_commit}%{?dist}
+Release:        2.20140524git%{git_commit}%{?dist}
 Summary:        KDE menu editor
 
 License:        GPLv2+
@@ -67,5 +67,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-1.20140514git1b86b1a
+* Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0.2-20140514git1b86b1a
+- Rebuild due to build-id conflict with kf5-kded
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140514git1b86b1a
 - Intial snapshot
