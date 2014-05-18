@@ -1,6 +1,6 @@
 Name:           kde5
 Version:        4.90.3
-Release:        1
+Release:        1%{?dist}
 Summary:        Filesystem and RPM macros for KDE 5 and Plasma Workspaces 2
 BuildArch:      noarch
 
