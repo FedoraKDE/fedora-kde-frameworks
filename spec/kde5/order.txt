@@ -1,3 +1,4 @@
+kde5
 kde5-breeze
 kde5-kate
 kde5-khelpcenter
