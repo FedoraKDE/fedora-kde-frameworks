@@ -17,6 +17,9 @@ Source0:        %{base_name}-%{git_commit}.tar.xz
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
+
+Requires:       kde5-filesystem
 
 %description
 %{summary}.
@@ -37,8 +40,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 %doc cursors/src/README COPYING
-%{_kde5_datadir}/icons/breeze/cursors/*
-%{_kde5_datadir}/icons/breeze/index.theme
+%{_datadir}/icons/breeze/cursors/*
+%{_datadir}/icons/breeze/index.theme
 
 %changelog
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-1.20140514git73a19ea
