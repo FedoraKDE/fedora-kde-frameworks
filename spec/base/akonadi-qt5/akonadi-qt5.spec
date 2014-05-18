@@ -6,7 +6,7 @@
 Summary: PIM Storage Service (Qt 5 version)
 Name:    akonadi-qt5
 Version: 1.73.44
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: LGPLv2+
 URL:     http://community.kde.org/KDE_PIM/Akonadi 
@@ -56,7 +56,7 @@ Conflicts:      akonadi
 
 %package devel
 Summary: Developer files for %{name}
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Conflicts: akonadi-devel
 %description devel
 %{summary}.
@@ -197,5 +197,8 @@ fi
 
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 1.73.0-1
+* Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 1.73.44-2
+- Fix deps
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 1.73.44-1
 - Fork a Qt 5 version from Akonadi
