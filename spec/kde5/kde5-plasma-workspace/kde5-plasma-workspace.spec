@@ -207,6 +207,9 @@ mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cma
 # Makes kcheckpass work
 install -m455 -p -D %{SOURCE10} %{buildroot}%{_kde5_sysconfdir}/pam.d/kde
 
+# Fix startkde being stupid and broken
+sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/startkde
+
 
 %post -p /sbin/ldconfig
 
