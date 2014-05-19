@@ -9,9 +9,13 @@ part / --size 3072 --fstype ext4
 services --enabled=NetworkManager --disabled=network,sshd
 rootpw --iscrypted $1$uw6MV$m6VtUWPed4SqgoW6fKfTZ/
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 repo --name=kde-frameworks5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
+repo --name=kde-frameworks5-unstable --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks-unstable/fedora-$releasever-$basearch/
+repo --name=plasma-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-next/fedora-$releasever-$basearch/
 
 %packages
 @core
@@ -20,77 +24,34 @@ kernel
 anaconda
 @anaconda-tools
 @base-x
-gtk3
-attica-qt5
-dbusmenu-qt5
-extra-cmake-modules
-kactivities-qt5
-kde5-runtime
-kde5-workspace
-kf5-filesystem
-kf5-frameworkintegration
-kf5-kapidox
-kf5-karchive
-kf5-kauth
-kf5-kbookmarks
-kf5-kcmutils
-kf5-kcodecs
-kf5-kcompletion
-kf5-kconfig
-kf5-kconfigwidgets
-kf5-kcoreaddons
-kf5-kcrash
-kf5-kdbusaddons
-kf5-kde4support
-kf5-kdeclarative
-kf5-kded
-kf5-kdesignerplugin
-kf5-kdesu
-kf5-kdewebkit
-kf5-kdnssd
-kf5-kdoctools
-kf5-kemoticons
-kf5-kfileaudiopreview
-kf5-kglobalaccel
-kf5-kguiaddons
-kf5-khtml
-kf5-ki18n
-kf5-kiconthemes
-kf5-kidletime
-kf5-kimageformats
-kf5-kinit
-kf5-kio
-kf5-kitemmodels
-kf5-kjobwidgets
-kf5-kjs
-kf5-kjsembed
-kf5-kmediaplayer
-kf5-knewstuff
-kf5-knotifications
-kf5-knotifyconfig
-kf5-kparts
-kf5-kplotting
-kf5-kprintutils
-kf5-kpty
-kf5-kross
-kf5-kservice
-kf5-ktextwidgets
-kf5-kunitconversion
-kf5-kwallet
-kf5-kwidgetsaddons
-kf5-kwindowsystem
-kf5-kxmlgui
-kf5-solid
-kf5-sonnet
-kf5-threadweaver
-kf5-umbrella
-plasma-framework
-polkit-qt5
+kde5-baseapps
+kde5-breeze
+kde5-kate
+kde5-khelpcenter
+kde5-khotkeys
+kde5-kinfocenter
+kde5-kio-extras
+kde5-kmenuedit
+kde5-konsole
+kde5-ksysguard
+kde5-kwin
+kde5-kwrited
+kde5-milou
+kde5-oxygen
+kde5-plasma-desktop
+kde5-plasma-nm
+kde5-plasma-workspace
+kde5-powerdevil
+kde5-systemsettings
 xterm
-konsole
 sddm
 xorg-x11-drv-qxl
 xorg-x11-drv-vmware
+
+# Needed by start_kde - remove once pkg is rebuilt with deps
+xmessage
+socat
+
 %end
 
 %post
@@ -219,6 +180,13 @@ fi
 # add fedora user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
 passwd -d liveuser > /dev/null
+echo "root" | passwd --stdin root > /dev/null
+
+# fix broken start_kde
+sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' /usr/bin/startkde
+
+# autologin
+sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
 
 # turn off firstboot for livecd boots
 systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
