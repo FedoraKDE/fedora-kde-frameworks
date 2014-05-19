@@ -9,10 +9,10 @@ part / --size 3072 --fstype ext4
 services --enabled=NetworkManager --disabled=network,sshd
 rootpw --iscrypted $1$uw6MV$m6VtUWPed4SqgoW6fKfTZ/
 
-#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
+repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+#repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 repo --name=kde-frameworks5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
 repo --name=kde-frameworks5-unstable --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks-unstable/fedora-$releasever-$basearch/
 repo --name=plasma-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-next/fedora-$releasever-$basearch/
@@ -41,12 +41,24 @@ kde5-oxygen
 kde5-plasma-desktop
 kde5-plasma-nm
 kde5-plasma-workspace
+kde5-plasma-workspace-artwork
 kde5-powerdevil
 kde5-systemsettings
+kde5-cli-tools
+
+# Fancy looks
+oxygen-icon-theme
+kde-wallpaper
+
+# When everything else fails, you can always rely on xterm
 xterm
-sddm
+
+# Drivers for VMs
 xorg-x11-drv-qxl
 xorg-x11-drv-vmware
+
+# We need this to log us in!
+sddm
 
 # Needed by start_kde - remove once pkg is rebuilt with deps
 xmessage
@@ -180,7 +192,6 @@ fi
 # add fedora user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
 passwd -d liveuser > /dev/null
-echo "root" | passwd --stdin root > /dev/null
 
 # fix broken start_kde
 sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' /usr/bin/startkde
