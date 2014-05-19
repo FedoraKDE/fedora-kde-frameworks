@@ -1,10 +1,10 @@
 # %define snapshot  20140315
-%define git_commit 7c97c92
+%define git_commit a85f5bc
 %define base_name plasma-workspace
 
 Name:           kde5-%{base_name}
-Version:        4.95.0
-Release:        2.20140514git%{git_commit}%{?dist}
+Version:        4.96.0
+Release:        1.20140519git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -58,6 +58,8 @@ BuildRequires:  gpsd-devel
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  qt5-qtscript-devel
+BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -251,6 +253,9 @@ mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cma
 
 
 %changelog
-* Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140425git25f086a
+* Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140519gita85f5bc
+- Update to latest git snapshot
+
+* Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140425git7c97c92
 - Initial version of kde5-plasma-workspace
 
