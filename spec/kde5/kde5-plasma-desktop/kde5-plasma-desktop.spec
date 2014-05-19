@@ -20,15 +20,19 @@ Patch0:         plasma-desktop-fix-build.patch
 BuildRequires:  libusb-devel
 BuildRequires:  fontconfig-devel
 BuildRequires:  libX11-devel
+BuildRequires:  libxkbfile-devel
 BuildRequires:  libxcb-devel
 BuildRequires:  xcb-util-keysyms-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-renderutil-devel
 BuildRequires:  xcb-util-devel
+BuildRequires:  libxkbcommon-devel
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtsvg-devel
+BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  phonon-qt5-devel
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -44,6 +48,7 @@ BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-krunner-devel
+BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kde5-plasma-workspace-devel
 BuildRequires:  kde5-kwin-devel
 
