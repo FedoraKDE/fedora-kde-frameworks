@@ -19,13 +19,32 @@ Source10: 01-fedora-plasma-nm.js
 
 BuildRequires:  gettext
 
-BuildRequires:  kde5-filesystem
+BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qttools-devel
 
-
+BuildRequires:  kf5-umbrella
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kwallet-devel
+BuildRequires:  kf5-kitemviews-devel
+BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-kdeclarative-devel
+BuildRequires:  kf5-kinit-devel
+BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-modemmanagerqt-devel
 BuildRequires:  kf5-networkmanagerqt-devel
 
@@ -38,6 +57,8 @@ BuildRequires:  pkgconfig(openconnect) >= 4.00
 
 Requires:  NetworkManager >= 0.9.8
 Requires:  kf5-networkmanagerqt
+
+Requires:  kde5-filesystem
 
 Obsoletes: kde-plasma-networkmanagement < 1:0.9.1.0
 Obsoletes: kde-plasma-networkmanagement-libs < 1:0.9.1.0
