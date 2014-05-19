@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        GPLv2+
@@ -85,7 +85,9 @@ developing applications that use %{name}.
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+# Generates path on startup using CMAKE_INSTALL_PREFIX / BIN_INSTALL_DIR
+%{cmake_kf5} .. -DBIN_INSTALL_DIR=bin \
+                -DKF5_LIBEXEC_INSTALL_DIR=libexec/kf5
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -111,7 +113,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Rebuild with new BIN_INSTALL_DIR and KF5_LIBEXEC_INSTALL_DIR
+
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
