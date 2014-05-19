@@ -48,7 +48,7 @@ kde5-cli-tools
 
 # Fancy looks
 oxygen-icon-theme
-kde-wallpaper
+kde-wallpapers
 
 # When everything else fails, you can always rely on xterm
 xterm
@@ -192,9 +192,6 @@ fi
 # add fedora user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
 passwd -d liveuser > /dev/null
-
-# fix broken start_kde
-sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' /usr/bin/startkde
 
 # autologin
 sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
