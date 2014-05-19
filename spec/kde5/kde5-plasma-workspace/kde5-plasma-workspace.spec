@@ -4,7 +4,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140519git%{git_commit}%{?dist}
+Release:        3.20140519git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -15,6 +15,9 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/plasma/%{version}/kde-workspace-%{version}.tar.xz
 Source0:        %{base_name}-%{git_commit}.tar.xz
+
+# This goes to PAM
+Source10:       kde
 
 Patch0:         plasma-workspace-fix-build.patch
 Patch1:         plasma-workspace-fix-build-2.patch
@@ -171,18 +174,27 @@ cat <<EOF >> %{buildroot}/%{_datadir}/xsessions/kde5-plasma.desktop
 [Desktop Entry]
 Encoding=UTF-8
 Type=XSession
-Exec=%{_kde5_bindir}/fedora_startkde
-TryExec=%{_kde5_bindir}/fedora_startkde
+Exec=%{_kde5_bindir}/startkde
+TryExec=%{_kde5_bindir}/startkde
 Name=Plasma 2
 Comment=The next generation desktop made by the KDE Community
 EOF
 
+#mkdir -p %{buildroot}/%{_kde5_bindir}
+#cat <<EOF >> %{buildroot}/%{_kde5_bindir}/fedora_startkde
+#%{_kde5_bindir}/startkde
+#EOF
+#chmod a+x %{buildroot}/%{_kde5_bindir}/fedora_startkde
 
-mkdir -p %{buildroot}/%{_kde5_bindir}
-cat <<EOF >> %{buildroot}/%{_kde5_bindir}/fedora_startkde
-%{_kde5_bindir}/startkde
+mkdir -p %{buildroot}/%{_kde5_sysconfdir}/profile.d
+cat > %{buildroot}/%{_kde5_sysconfdir}/profile.d/kde5.sh << EOF
+export XDG_DATA_DIRS="/usr/share/kf5:/usr/share/kde5:/usr/share"
+export QT_PLUGIN_PATH="/usr/lib64/kde5/plugins:/usr/lib64/qt5/plugins/kf5:/usr/lib64/qt5/plugins"
+export QML2_IMPORT_PATH="/usr/lib64/qt5/qml:/usr/lib64/kde5/qml"
+export LD_LIBRARY_PATH="/usr/lib64/kde5:/usr/lib64"
+export XDG_ICON_DIRS="/usr/share/icons"
 EOF
-chmod a+x %{buildroot}/%{_kde5_bindir}/fedora_startkde
+
 
 mkdir -p %{buildroot}/%{_kde5_plugindir}/phonon_platform
 mv %{buildroot}/%{_kde5_plugindir}/{plugins,}/phonon_platform/kde.so
@@ -192,9 +204,9 @@ chrpath --delete %{buildroot}/%{_kde5_plugindir}/phonon_platform/kde.so
 mv %{buildroot}/%{_kde5_libdir}/cmake/LibKWorkspace %{buildroot}/%{_libdir}/cmake
 mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cmake
 
-# FIXME: I cannot be bothered to fix this in cmake files
-#sed -i 's/\${_IMPORT_PREFIX}\/include/\/usr\/include/g' %{buildroot}/%{_libdir}/cmake/LibKWorkspace/LibKWorkspaceLibraryTargets.cmake
-#sed -i 's/\${_IMPORT_PREFIX}\/include/\/usr\/include/g' %{buildroot}/%{_libdir}/cmake/LibTaskManager/LibTaskManagerLibraryTargets.cmake
+# Makes kcheckpass work
+install -m455 -p -D %{SOURCE10} %{buildroot}%{_kde5_sysconfdir}/pam.d/kde
+
 
 %post -p /sbin/ldconfig
 
@@ -235,8 +247,14 @@ mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cma
 %{_datadir}/applications/*.desktop
 %{_datadir}/config.kcfg
 
-# %%{_datadir} here is intended - we need to install to location where DMs look
+
 %{_datadir}/xsessions/kde5-plasma.desktop
+
+# PAM
+%{_kde5_sysconfdir}/pam.d/kde
+
+# Profile.d
+%{_kde5_sysconfdir}/profile.d/kde5.sh
 
 %files doc
 # %doc COPYING COPYING.DOC COPYING.LIB README README.pam
@@ -260,8 +278,10 @@ mv %{buildroot}/%{_kde5_libdir}/cmake/LibTaskManager %{buildroot}/%{_libdir}/cma
 
 
 %changelog
-* Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140519gita85f5bc
+* Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-3.20140519gita85f5bc
 - Update to latest git snapshot
+- Add PAM file
+- Add profile.d entry
 
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140425git7c97c92
 - Initial version of kde5-plasma-workspace
