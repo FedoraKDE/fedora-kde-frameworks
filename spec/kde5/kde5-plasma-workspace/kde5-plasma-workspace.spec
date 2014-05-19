@@ -60,6 +60,8 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  qt5-qtwebkit-devel
+BuildRequires:  phonon-qt5-devel
 
 BuildRequires:  kde5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -81,6 +83,9 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kf5-kscreen-devel
+
+BuildRequires:  kde5-kwin-devel
+
 # FIXME: Missing kf5-kdepimlibs-umbrella
 
 BuildRequires:  chrpath
@@ -103,6 +108,8 @@ Requires:       kde5-filesystem
 # startkde
 Requires:       coreutils
 Requires:       dbus-x11
+Requires:       socat
+Requires:       xmessage
 
 Requires:       xorg-x11-utils
 Requires:       xorg-x11-server-utils
