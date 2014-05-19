@@ -13,6 +13,7 @@ kde5-kwrited
 kde5-milou
 kde5-oxygen
 kde5-plasma-workspace
+kde5-plasma-workspace-artwork
 kde5-systemsettings
 kde5-khotkeys
 kde5-powerdevil
