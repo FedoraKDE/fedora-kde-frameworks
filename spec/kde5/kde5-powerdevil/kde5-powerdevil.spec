@@ -14,6 +14,11 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        %{base_name}-%{git_commit}.tar.xz
 
+BuildRequires:  libxcb-devel
+BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  xcb-util-wm-devel
+
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
@@ -76,18 +81,14 @@ rm %{buildroot}/%{_kde5_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 %files
 %doc COPYING
-%{_kde5_sysconfdir}/dbus-1/system.d/org.kde.powerdevil.backlighthelper.conf
 %{_kde5_libdir}/libpowerdevilconfigcommonprivate.so.*
 %{_kde5_libdir}/libpowerdevilcore.so.*
 %{_kde5_libdir}/libpowerdevilui.so.*
 %{_kde5_plugindir}/*.so
-%{_kf5_libexecdir}/kauth/backlighthelper
-%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 %{_datadir}/knotifications5/powerdevil.notifyrc
 %{_datadir}/kservices5/*.desktop
 %{_datadir}/kservices5/kded/*.desktop
 %{_datadir}/kservicetypes5/*.desktop
-%{_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
 
 
 %changelog
