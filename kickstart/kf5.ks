@@ -7,15 +7,15 @@ firewall --enabled --service=mdns
 xconfig --startxonboot
 part / --size 3072 --fstype ext4
 services --enabled=NetworkManager --disabled=network,sshd
-rootpw --iscrypted $1$uw6MV$m6VtUWPed4SqgoW6fKfTZ/
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
-#repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-#repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --exclude=sddm
+repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/ --exclude=sddm
 repo --name=kde-frameworks5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
 repo --name=kde-frameworks5-unstable --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks-unstable/fedora-$releasever-$basearch/
 repo --name=plasma-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-next/fedora-$releasever-$basearch/
+repo --name=sddm --baseurl=http://copr-be.cloud.fedoraproject.org/results/mbriza/sddm/fedora-$releasever-$basearch/
 
 %packages
 @core
@@ -46,8 +46,12 @@ kde5-powerdevil
 kde5-systemsettings
 kde5-cli-tools
 kde5-kwalletmanager
+kde5-sddm-theme
+
+redhat-menus
 
 # Fancy looks
+oxygen-fonts
 oxygen-icon-theme
 kde-wallpapers
 
@@ -68,6 +72,10 @@ socat
 %end
 
 %post
+
+ln -s /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+rm /etc/systemd/system/default.target
+ln -s /usr/lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 
 # FIXME: it'd be better to get this installed from a package
 cat > /etc/rc.d/init.d/livesys << EOF
@@ -199,6 +207,7 @@ passwd -d root > /dev/null
 # autologin and fancy login screen
 sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
 sed -i 's/CurrentTheme=fedora/CurrentTheme=plasma-next/' /etc/sddm.conf
+sed -i 's/LastSession=kde-plasma.desktop/LastSession=kde5-plasma.desktop/' /etc/sddm.conf
 
 # default wallpaper
 sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/plasma/desktoptheme/default/metadata.desktop
@@ -210,7 +219,6 @@ systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
 systemctl --no-reload disable firstboot-graphical.service 2> /dev/null || :
 systemctl stop firstboot-text.service 2> /dev/null || :
 systemctl stop firstboot-graphical.service 2> /dev/null || :
-systemctl start sdd.service 2> /dev/null || :
 
 # don't use prelink on a running live image
 sed -i 's/PRELINKING=yes/PRELINKING=no/' /etc/sysconfig/prelink &>/dev/null || :
@@ -339,4 +347,5 @@ if [ "$(uname -i)" = "i386" -o "$(uname -i)" = "x86_64" ]; then
   if [ ! -d $LIVE_ROOT/LiveOS ]; then mkdir -p $LIVE_ROOT/LiveOS ; fi
   cp /usr/bin/livecd-iso-to-disk $LIVE_ROOT/LiveOS
 fi
+
 %end
