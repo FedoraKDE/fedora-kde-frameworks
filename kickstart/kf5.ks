@@ -193,9 +193,17 @@ fi
 # add fedora user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
 passwd -d liveuser > /dev/null
+usermod -aG wheel liveuser > /dev/null
 
-# autologin
+# autologin and fancy login screen
 sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
+sed -i 's/CurrentTheme=fedora/CurrentTheme=plasma-next/' /etc/sddm.conf
+
+# default wallpaper
+sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+sed -i 's/defaultWidth=[0-9]*/defaultWidth=1920/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+sed -i 's/defaultHeight=[0-9]*/defaultHeight=1080/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+
 
 # turn off firstboot for livecd boots
 systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
