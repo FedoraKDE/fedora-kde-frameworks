@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for application crashes
 
 License:        GPLv2+
@@ -47,7 +47,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .drkonqi-path
+%patch0 -p1 -b .drkonqi-patch
 
 %build
 mkdir -p %{_target_platform}
@@ -77,7 +77,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCrash.pri
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
+- Update the lookup patch
+
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-2

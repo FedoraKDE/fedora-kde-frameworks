@@ -1,25 +1,41 @@
-diff --git a/src/kcrash.cpp b/src/kcrash.cpp
-index 87163cc..884d4bd 100644
+From: Dan Vrátil <dvratil@redhat.com>
+Date: Tue, 20 May 2014 09:11:06 +0000
+Subject: Allow specifying drkonqi executable path via LIBEXEC_PATH
+X-Git-Url: http://quickgit.kde.org/?p=kcrash.git&a=commitdiff&h=feafc2bab39d1a088fc38905674111a8b361870d
+---
+Allow specifying drkonqi executable path via LIBEXEC_PATH
+
+Since drkonqi can be installed in a different prefix than the framework,
+we need a way to specify where KCrash should look for the drkonqi exec.
+
+This is now possible by specifiying LIBEXEC_PATH env variable, which is
+analogous to PATH or LD_LIBRARY_PATH
+
+Review: 117016
+---
+
+
 --- a/src/kcrash.cpp
 +++ b/src/kcrash.cpp
-@@ -209,10 +209,17 @@ void KCrash::setDrKonqiEnabled(bool enabled)
+@@ -209,10 +209,16 @@
  {
      s_launchDrKonqi = enabled ? 1 : 0;
      if (s_launchDrKonqi && !s_drkonqiPath) {
 -        s_drkonqiPath = qstrdup(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR "/drkonqi");
 -        if (!QFile::exists(QLatin1String(s_drkonqiPath))) {
 -            qWarning() << "Could not find drkonqi at" << s_drkonqiPath;
-+        QString drkonqi = QStandardPaths::findExecutable(QLatin1String("drkonqi"));
-+        if (drkonqi.isEmpty()) {
-+            // Not in PATH, try the install prefix
-+            drkonqi = QStandardPaths::findExecutable(QLatin1String("drkonqi"),
-+                                                     QStringList()  << QString::fromLatin1(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR));
-+        }
-+        if (drkonqi.isEmpty()) {
-+            qWarning() << "Could not find drkonqi";
-             s_launchDrKonqi = 0;
+-            s_launchDrKonqi = 0;
++        const QList<QString> paths = QFile::decodeName(qgetenv("LIBEXEC_PATH")).split(QLatin1Char(':'));
++        const QString exec = QStandardPaths::findExecutable(QLatin1String("drkonqi"), paths);
++        if (exec.isEmpty()) {
++            s_drkonqiPath = qstrdup(CMAKE_INSTALL_PREFIX "/" LIBEXEC_INSTALL_DIR "/drkonqi");
++            if (!QFile::exists(QLatin1String(s_drkonqiPath))) {
++                qWarning() << "Could not find drkonqi at" << s_drkonqiPath;
++                s_launchDrKonqi = 0;
++            }
 +        } else {
-+            s_drkonqiPath = qstrdup(qPrintable(drkonqi));
++            s_drkonqiPath = qstrdup(qPrintable(exec));
          }
      }
  
+
