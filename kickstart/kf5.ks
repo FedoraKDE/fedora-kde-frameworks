@@ -45,6 +45,7 @@ kde5-plasma-workspace-artwork
 kde5-powerdevil
 kde5-systemsettings
 kde5-cli-tools
+kde5-kwalletmanager
 
 # Fancy looks
 oxygen-icon-theme

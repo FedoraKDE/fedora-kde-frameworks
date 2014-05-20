@@ -20,3 +20,4 @@ kde5-powerdevil
 kde5-plasma-nm
 kde5-plasma-desktop
 kde5-cli-tools
+kde5-kwalletmanager
