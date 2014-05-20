@@ -4,7 +4,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        3.20140519git%{git_commit}%{?dist}
+Release:        4.20140519git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -193,6 +193,7 @@ export QT_PLUGIN_PATH="/usr/lib64/kde5/plugins:/usr/lib64/qt5/plugins/kf5:/usr/l
 export QML2_IMPORT_PATH="/usr/lib64/qt5/qml:/usr/lib64/kde5/qml"
 export LD_LIBRARY_PATH="/usr/lib64/kde5:/usr/lib64"
 export XDG_ICON_DIRS="/usr/share/icons"
+export LIBEXEC_PATH="/usr/libexec/kde5:/usr/libexec/kf5:/usr/libexec"
 EOF
 
 
@@ -281,6 +282,9 @@ sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/star
 
 
 %changelog
+* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-4.20140519gita85f5bc
+- Add LIBEXEC_PATH to kde5 profile to fix drkonqi lookup
+
 * Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-3.20140519gita85f5bc
 - Update to latest git snapshot
 - Add PAM file
