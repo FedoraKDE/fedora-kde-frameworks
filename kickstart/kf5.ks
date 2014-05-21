@@ -2,11 +2,12 @@ lang en_US.UTF-8
 keyboard us
 timezone US/Eastern
 auth --useshadow --enablemd5
-selinux --enforcing
+# Enforcing seems to break sddm because of DBus
+selinux --permissive
 firewall --enabled --service=mdns
-xconfig --startxonboot
+#xconfig --startxonboot
 part / --size 3072 --fstype ext4
-services --enabled=NetworkManager --disabled=network,sshd
+services --enabled=NetworkManager --disabled=sshd
 
 #repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
 #repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
@@ -76,7 +77,9 @@ socat
 
 ln -s /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
 rm /etc/systemd/system/default.target
-ln -s /usr/lib/systemd/system/multi-user.target /etc/systemd/system/default.target
+ln -s /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
+
+
 
 # FIXME: it'd be better to get this installed from a package
 cat > /etc/rc.d/init.d/livesys << EOF
