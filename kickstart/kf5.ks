@@ -277,8 +277,15 @@ kdeglobals Locale Language ''
 *
 " > /home/liveuser/.config/startupconfigfiles
 
-chown -R liveuser:liveuser /home/liveuser/.config
+mkdir /home/liveuser/{Desktop,Documents,Downloads,Music,Video}
+echo -e "[Desktop Entry]\nIcon=user-home" > /home/liveuser/.directory
+echo -e "[Desktop Entry]\nIcon=user-desktop" > /home/liveuser/Desktop/.directory
+echo -e "[Desktop Entry]\nIcon=folder-documents" > /home/liveuser/Documents/.directory
+echo -e "[Desktop Entry]\nIcon=folder-downloads" > /home/liveuser/Downloads/.directory
+echo -e "[Desktop Entry]\nIcon=folder-sound" > /home/liveuser/Music/.directory
+echo -e "[Desktop Entry]\nIcon=folder-video" > /home/liveuser/Video/.directory
 
+chown -R liveuser:liveuser /home/liveuser/
 
 # turn off firstboot for livecd boots
 systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
