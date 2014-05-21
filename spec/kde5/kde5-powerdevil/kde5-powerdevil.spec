@@ -3,7 +3,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        1.20140515git%{git_commit}%{?dist}
+Release:        3.20140515git%{git_commit}%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
@@ -14,10 +14,14 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        %{base_name}-%{git_commit}.tar.xz
 
+Patch0:         powerdevil-enable-upower.patch
+
 BuildRequires:  libxcb-devel
 BuildRequires:  xcb-util-keysyms-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-wm-devel
+BuildRequires:  libXrandr-devel
+BuildRequires:  systemd-devel
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -54,6 +58,8 @@ Provides:       powerdevil = %{version}-%{release}
 %prep
 %setup -q -n %{base_name}-%{version}
 
+%patch0 -p1 -b .enable-upower
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -81,16 +87,24 @@ rm %{buildroot}/%{_kde5_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 %files
 %doc COPYING
+%{_kde5_sysconfdir}/dbus-1/system.d/org.kde.powerdevil.backlighthelper.conf
 %{_kde5_libdir}/libpowerdevilconfigcommonprivate.so.*
 %{_kde5_libdir}/libpowerdevilcore.so.*
 %{_kde5_libdir}/libpowerdevilui.so.*
 %{_kde5_plugindir}/*.so
+%{_kf5_libexecdir}/kauth/backlighthelper
+%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 %{_datadir}/knotifications5/powerdevil.notifyrc
 %{_datadir}/kservices5/*.desktop
 %{_datadir}/kservices5/kded/*.desktop
 %{_datadir}/kservicetypes5/*.desktop
+%{_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
 
 
 %changelog
+* Wed May 21 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-3.20140515gitf7a2bbe
+- Fix missing BR
+- Add a patch to fix UPower support
+
 * Thu May 15 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-1.20140515gitf7a2bbe
 - Intial snapshot
