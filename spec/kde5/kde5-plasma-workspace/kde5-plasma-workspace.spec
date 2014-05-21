@@ -4,7 +4,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        5.20140519git%{git_commit}%{?dist}
+Release:        6.20140519git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -221,6 +221,7 @@ sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/star
 %files
 %{_kde5_bindir}/*
 %{_kde5_libdir}/*.so.*
+%{_kde5_libdir}/libkdeinit5_*.so
 %{_kde5_plugindir}/plasma/dataengine/*.so
 %{_kde5_plugindir}/plasma/geolocationprovider/*.so
 %{_kde5_plugindir}/plasma/packagestructure/*.so
@@ -267,7 +268,10 @@ sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/star
 %{_datadir}/doc/HTML/en/*
 
 %files devel
-%{_kde5_libdir}/*.so
+%{_kde5_libdir}/libweather_ion.so
+%{_kde5_libdir}/libtaskmanager.so
+%{_kde5_libdir}/libkworkspace.so
+%{_kde5_libdir}/libplasma-geolocation-interface.so
 %{_kde5_includedir}/*
 %{_libdir}/cmake/KRunnerAppDBusInterface
 %{_libdir}/cmake/KSMServerDBusInterface
@@ -284,8 +288,9 @@ sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/star
 
 
 %changelog
-* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-5.20140519gita85f5bc
+* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-6.20140519gita85f5bc
 - Add LIBEXEC_PATH to kde5 profile to fix drkonqi lookup
+- Fix install 
 
 * Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-3.20140519gita85f5bc
 - Update to latest git snapshot
