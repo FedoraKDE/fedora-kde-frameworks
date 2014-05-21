@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with advanced configuration system
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -24,9 +24,8 @@ Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-gui%{?_isa} = %{version}-%{release}
 
 %description
-KDE Frameworks 5 Tier 1 addon with advanced configuration system made of two parts:
-KConfigCore and KConfigGui.
-
+KDE Frameworks 5 Tier 1 addon with advanced configuration system made of two
+parts: KConfigCore and KConfigGui.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -40,12 +39,8 @@ developing applications that use %{name}.
 Summary:        Non-GUI part of KConfig framework
 
 %description    core
-KConfigCore provides access to the configuration files themselves. It features:
-
-- centralized definition: define your configuration in an XML file and use
-`kconfig_compiler` to generate classes to read and write configuration entries.
-
-- lock-down (kiosk) support.
+KConfigCore provides access to the configuration files themselves. It features
+centralized definition and lock-down (kiosk) support.
 
 %package        gui
 Summary:        GUI part of KConfig framework
@@ -71,10 +66,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kconfig5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post core -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun core -p /sbin/ldconfig
 
+%post gui -p /sbin/ldconfig
+
+%postun gui -p /sbin/ldconfig
 
 %files
 %doc COPYING.LIB DESIGN README.md TODO
@@ -100,6 +98,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KConfigGui.pri
 
 %changelog
+* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Fix license and description
+- Add %%post and %%postun to subpackages
+
 * Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Rebuild against updated kf5-rpm-macros
 
