@@ -218,6 +218,65 @@ sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/p
 sed -i 's/defaultWidth=[0-9]*/defaultWidth=1920/' /usr/share/plasma/desktoptheme/default/metadata.desktop
 sed -i 's/defaultHeight=[0-9]*/defaultHeight=1080/' /usr/share/plasma/desktoptheme/default/metadata.desktop
 
+
+# default configuration of liveuser profile
+# FIXME: This should be read from /usr/share or some other default, like with kde-settings
+
+mkdir -p /home/liveuser/.config
+echo "[General]
+XftHintAlias=true
+XftHintStyle=hintmedium
+XftSubPixel=none
+desktopFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+fixed=Oxygen Mono,9,-1,5,50,0,0,0,0,0
+font=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+menuFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+smallestReadableFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
+taskbarFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+toolBarFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
+" > /home/liveuser/.config/kdeglobals
+
+echo "#! /bin/sh
+kcminputrc_mouse_cursortheme=breeze
+kcminputrc_mouse_cursorsize=''
+ksplashrc_ksplash_theme=Breeze
+ksplashrc_ksplash_engine=KSplashQML
+kcmfonts_general_forcefontdpi=0
+kdeglobals_locale_language=''
+klocale_languages=en_US
+" > /home/liveuser/.config/startupconfig
+
+echo "#kcminputrc Mouse cursorTheme 'breeze'
+kcminputrc Mouse cursorSize ''
+ksplashrc KSplash Theme Breeze
+ksplashrc KSplash Engine KSplashQML
+kcmfonts General forceFontDPI 0
+kdeglobal Locale Language ''
+" > /home/liveuser/.config/startupconfigkeys
+
+echo "kcminputrc Mouse cursorTheme 'breeze'
+!/usr/share/config/kcminputrc
+*
+kcminputrc Mouse cursorSize ''
+!/usr/share/config/kmcinputrc
+*
+ksplashrc KSplash Theme Breeze
+!/usr/share/config/ksplashrc
+*
+ksplashrc KSplash Engine KSplashQML
+!/usr/share/config/ksplashrc
+*
+kcmfonts General forceFontDPI 0
+!/usr/share/config/kcmfonts
+*
+kdeglobals Locale Language ''
+!/usr/share/config/kdeglobals
+*
+" > /home/liveuser/.config/startupconfigfiles
+
+chown -R liveuser:liveuser /home/liveuser/.config
+
+
 # turn off firstboot for livecd boots
 systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
 systemctl --no-reload disable firstboot-graphical.service 2> /dev/null || :
