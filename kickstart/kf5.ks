@@ -80,6 +80,8 @@ ln -s /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.s
 rm /etc/systemd/system/default.target
 ln -s /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
+# Disable drkonqi until I figure out why everything is crashing so much
+echo "export KDE_DEBUG=1" >> /etc/profile.d/kde5.sh
 
 
 # FIXME: it'd be better to get this installed from a package
