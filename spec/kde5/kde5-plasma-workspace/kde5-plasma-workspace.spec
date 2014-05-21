@@ -4,7 +4,7 @@
 
 Name:           kde5-%{base_name}
 Version:        4.96.0
-Release:        4.20140519git%{git_commit}%{?dist}
+Release:        5.20140519git%{git_commit}%{?dist}
 Summary:        Plasma 2 workspace applications and applets
 
 License:        GPLv2+
@@ -21,6 +21,7 @@ Source10:       kde
 
 Patch0:         plasma-workspace-fix-build.patch
 Patch1:         plasma-workspace-fix-build-2.patch
+Patch2:         plasma-workspace-fix-build-3.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -155,6 +156,7 @@ Documentation and user manuals for %{name}.
 
 %patch0 -R -p1 -b .fixbuild
 %patch1 -R -p1 -b .fixbuild2
+%patch2 -p1 -b .fixbuild3
 
 %build
 mkdir -p %{_target_platform}
@@ -282,7 +284,7 @@ sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/star
 
 
 %changelog
-* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-4.20140519gita85f5bc
+* Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-5.20140519gita85f5bc
 - Add LIBEXEC_PATH to kde5 profile to fix drkonqi lookup
 
 * Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-3.20140519gita85f5bc
