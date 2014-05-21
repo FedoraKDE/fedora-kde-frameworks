@@ -47,6 +47,7 @@ kde5-systemsettings
 kde5-cli-tools
 kde5-kwalletmanager
 kde5-sddm-theme
+kde5-rekonq
 
 redhat-menus
 
