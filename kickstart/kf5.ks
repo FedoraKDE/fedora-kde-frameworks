@@ -58,6 +58,9 @@ kde-wallpapers
 # When everything else fails, you can always rely on xterm
 xterm
 
+# Until polkit-kde-agent is ready
+lxpolkit
+
 # Drivers for VMs
 xorg-x11-drv-qxl
 xorg-x11-drv-vmware
