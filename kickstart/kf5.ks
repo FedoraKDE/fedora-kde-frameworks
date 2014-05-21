@@ -22,8 +22,6 @@ repo --name=sddm --baseurl=http://copr-be.cloud.fedoraproject.org/results/mbriza
 @core
 @fonts
 kernel
-anaconda
-@anaconda-tools
 @base-x
 kde5-baseapps
 kde5-breeze
@@ -344,16 +342,6 @@ for o in \`cat /proc/cmdline\` ; do
         ;;
     esac
 done
-
-# if liveinst or textinst is given, start anaconda
-if strstr "\`cat /proc/cmdline\`" liveinst ; then
-   plymouth --quit
-   /usr/sbin/liveinst \$ks
-fi
-if strstr "\`cat /proc/cmdline\`" textinst ; then
-   plymouth --quit
-   /usr/sbin/liveinst --text \$ks
-fi
 
 # configure X, allowing user to override xdriver
 if [ -n "\$xdriver" ]; then
