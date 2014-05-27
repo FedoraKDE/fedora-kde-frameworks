@@ -3,10 +3,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.99.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -72,9 +72,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang sonnet5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post core -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun core -p /sbin/ldconfig
+
+%post ui -p /sbin/ldconfig
+
+%postun ui -p /sbin/ldconfig
 
 %files
 %doc COPYING.LIB README.md
@@ -98,10 +102,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_SonnetUi.pri
 
 %changelog
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
+* Tue May 27 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
+- Fix license
+- Fix changelog
+- Add missing ldconfig for subpackages, remove ldconfig from base package
+
+* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Rebuild against updated kf5-rpm-macros
 
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1

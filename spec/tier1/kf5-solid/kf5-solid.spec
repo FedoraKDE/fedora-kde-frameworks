@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
