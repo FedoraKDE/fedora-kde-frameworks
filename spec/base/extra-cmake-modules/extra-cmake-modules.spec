@@ -5,7 +5,7 @@ Name:           extra-cmake-modules
 Summary:        Additional modules for CMake build system
 # ECM does not follow the frameworks versioning, but is currently being
 # release together with it
-Version:        0.0.13
+Version:        0.0.14
 Release:        1%{?dist}
 
 License:        BSD
@@ -50,6 +50,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 0.0.14-1
+- KDE Frameworks 4.100.0
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 0.0.13-1
 - KDE Frameworks 4.99.0
 
