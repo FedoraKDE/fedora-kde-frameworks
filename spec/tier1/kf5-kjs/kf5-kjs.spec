@@ -2,8 +2,8 @@
 %define framework kjs
 
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        3%{?dist}
+Version:        4.100.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 functional module with JavaScript interpret
 
 License:        GPLv2+ and BSD
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/portingAids/%{framework}-4.99.0.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  perl
 BuildRequires:  pcre-devel
@@ -75,6 +75,9 @@ chmod +x %{buildroot}/%{_kf5_datadir}/kf5/kjs/create_hash_table
 %{_kf5_archdatadir}/mkspecs/modules/qt_KJSApi.pri
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Tue May 27 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - Fix license
 - Fix changelog

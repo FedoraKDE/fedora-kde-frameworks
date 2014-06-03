@@ -2,8 +2,8 @@
 %define framework kcrash
 
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        2%{?dist}
+Version:        4.100.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for application crashes
 
 License:        LGPLv2+
@@ -12,9 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
-
-Patch0:         kcrash-find-drkonqi-in-path.patch
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 
@@ -47,8 +45,6 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .drkonqi-patch
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -77,6 +73,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCrash.pri
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-2
 - Update the lookup patch
 

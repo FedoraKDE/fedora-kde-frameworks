@@ -2,8 +2,8 @@
 %define framework kio
 
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        2%{?dist}
+Version:        4.100.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
@@ -143,6 +143,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
 - KDE Frameworks 4.99.0
 

@@ -2,8 +2,8 @@
 
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
-Version:        4.99.0
-Release:        5%{?dist}
+Version:        4.100.0
+Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
@@ -11,7 +11,7 @@ URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/kactivities.git | \
 # bzip2 -c > ${name}-%{version}-%{snapshot}.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 Obsoletes:      kactivities-qt5
 Provides:       kactivities-qt5
@@ -119,6 +119,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KActivities.pri
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-5
 - Fix provides: kactivities(4) has an epoch set
 

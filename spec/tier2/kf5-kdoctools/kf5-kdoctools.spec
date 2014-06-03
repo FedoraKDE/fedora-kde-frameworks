@@ -2,8 +2,8 @@
 %define framework kdoctools
 
 Name:           kf5-%{framework}
-Version:        4.99.0
-Release:        3%{?dist}
+Version:        4.100.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for documentation
 
 License:        GPLv2+
@@ -12,10 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
-
-# Upstream
-Patch0:         kdoctools-improve-error-reporting-in-meinproc.patch
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
@@ -54,8 +51,6 @@ Documentation and user help for %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .erorr-reporting
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -90,6 +85,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - Apply upstream patch to improve error reporting in meinproc
 

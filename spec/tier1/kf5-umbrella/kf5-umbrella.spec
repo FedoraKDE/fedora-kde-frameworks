@@ -4,7 +4,7 @@
 #%define snapshot 20140205
 
 Name:           kf5-%{framework}
-Version:        4.99.0
+Version:        4.100.0
 Epoch:          1
 Release:        1%{?dist}
 Summary:        CMake configuration for KDE Frameworks 5
@@ -16,7 +16,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/kf5umbrella,git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        kf5umbrella-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -48,6 +48,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
+- KDE Frameworks 4.100.0
+
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
