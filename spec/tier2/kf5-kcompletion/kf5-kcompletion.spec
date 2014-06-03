@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for completion
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -72,7 +72,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCompletion.pri
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1

@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/4.99.0/%{framework}-4.99.0.tar.xz
 
-Patch0:         kauth-find-polkit-qt5.patch
+#Patch0:         kauth-find-polkit-qt5.patch
 
 BuildRequires:  polkit-qt5-devel
 
@@ -43,7 +43,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .polkitqt5
+#%patch0 -p1 -b .polkitqt5
 
 %build
 mkdir -p %{_target_platform}
@@ -81,7 +81,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Apr 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-20140418git84a2c68a

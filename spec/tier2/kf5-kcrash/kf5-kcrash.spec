@@ -6,7 +6,7 @@ Version:        4.99.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for application crashes
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
