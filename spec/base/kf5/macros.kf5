@@ -33,7 +33,7 @@
      %{?_cmake_lib_suffix64} \\\
 %endif \
     -DKCFG_INSTALL_DIR:PATH=%{_datadir}/config.kcfg \\\
-    -DPLUGIN_INSTALL_DIR:PATH=%{_kf5_plugindir} \\\
+    -DPLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
     -DQT_PLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
     -DQML_INSTALL_DIR:PATH=%{_kf5_qmldir} \\\
     -DIMPORTS_INSTALL_DIR:PATH=%{_qt5_importdir} \\\
