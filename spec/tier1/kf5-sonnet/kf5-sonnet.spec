@@ -85,7 +85,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files core
 %{_kf5_libdir}/libKF5SonnetCore.so.*
-%{_kf5_plugindir}/sonnet_clients
+%{_kf5_plugindir}/sonnet
 %{_kf5_datadir}/kf5/sonnet/trigrams.map
 
 %files ui -f sonnet5_qt.lang
