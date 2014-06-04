@@ -49,13 +49,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang ki18n5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f ki18n5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5I18n.so.*
 %{_kf5_qtplugindir}/kf5/ktranscript.so
