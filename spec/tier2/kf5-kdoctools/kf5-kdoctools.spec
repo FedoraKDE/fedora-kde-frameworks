@@ -4,7 +4,7 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 2 addon for documentation
+Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
 License:        GPLv2+
 URL:            http://www.kde.org
