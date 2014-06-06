@@ -1,0 +1,76 @@
+From: Alex Merry <alex.merry@kde.org>
+Date: Mon, 02 Jun 2014 22:00:26 +0000
+Subject: Put transcript plugin in kf5 subdir and simplify search logic
+X-Git-Url: http://quickgit.kde.org/?p=ki18n.git&a=commitdiff&h=8bb821a959fa71c405a1e94bc73aa20920254122
+---
+Put transcript plugin in kf5 subdir and simplify search logic
+
+Putting the plugin in a versioned subdirectory ensures there will not be
+any coinstallability issues with KF6 if it is Qt5-based. Using
+QPluginLoader to find the plugin makes for simpler, more reliable code.
+
+REVIEW: 118486
+---
+
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -46,10 +46,9 @@
+ )
+ add_library(ktranscript MODULE ${ktranscript_LIB_SRCS})
+ generate_export_header(ktranscript BASE_NAME KTranscript)
+-set_target_properties(ktranscript PROPERTIES PREFIX "") # remove lib prefix
+ target_link_libraries(ktranscript PRIVATE Qt5::Script Qt5::Core)
+ 
+-install(TARGETS ktranscript DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS ktranscript DESTINATION ${PLUGIN_INSTALL_DIR}/kf5)
+ 
+ 
+ include(ECMGeneratePriFile)
+
+--- a/src/klocalizedstring.cpp
++++ b/src/klocalizedstring.cpp
+@@ -31,6 +31,7 @@
+ #include <QFile>
+ #include <QFileInfo>
+ #include <QLibrary>
++#include <QPluginLoader>
+ #include <QDir>
+ #include <QCoreApplication>
+ #include <qstandardpaths.h>
+@@ -1362,29 +1363,14 @@
+     s->loadTranscriptCalled = true;
+     s->ktrs = NULL; // null indicates that Transcript is not available
+ 
+-#if 0
+-    // FIXME: Automatic plugin path resolution does not work at the moment,
+-    // so search manually through library paths.
+-    QString pluginPathNoExt = QLatin1String("kf5/ktranscript");
+-#else
+-    QString pluginPathNoExt;
+-    QStringList nameFilters;
+-    QString pluginName = QLatin1String("ktranscript");
+-    nameFilters.append(pluginName + QLatin1String(".*"));
+-    foreach (const QString &dirPath, QCoreApplication::libraryPaths()) {
+-        QString dirPathKf = dirPath + QLatin1Char('/');
+-        if (!QDir(dirPathKf).entryList(nameFilters).isEmpty()) {
+-            pluginPathNoExt = dirPathKf + QLatin1Char('/') + pluginName;
+-            break;
+-        }
+-    }
+-    if (pluginPathNoExt.isEmpty()) {
++    // QPluginLoader is just used to find the plugin
++    QPluginLoader loader(QStringLiteral("kf5/ktranscript"));
++    if (loader.fileName().isEmpty()) {
+         qWarning() << QString::fromLatin1("Cannot find Transcript plugin.");
+         return;
+     }
+-#endif
+-
+-    QLibrary lib(pluginPathNoExt);
++
++    QLibrary lib(loader.fileName());
+     if (!lib.load()) {
+         qWarning() << QString::fromLatin1("Cannot load Transcript plugin:")
+                    << lib.errorString();
+
