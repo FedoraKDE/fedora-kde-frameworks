@@ -1,10 +1,10 @@
 %define framework kfilemetadata
-%define git_commit dcc52ae
+%define git_commit 034abaa
 
 Name:    kf5-%{framework}
 Summary: A Tier 3 KDE Framework for extracting file metadata
 Version: 4.97.0
-Release: 1.20140514git%{git_commit}%{?dist}
+Release: 3.20140611git%{git_commit}%{?dist}
 
 # # KDE e.V. may determine that future LGPL versions are accepted
 License: LGPLv2 or LGPLv3
@@ -95,7 +95,10 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_includedir}/kfilemetadata
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1.20140514gitdcc52ae
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-3.20140611git034abaa
+- Update to latest git snapshot
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-2.20140611gitdcc52ae
 - Updated to latest git snapshot
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1

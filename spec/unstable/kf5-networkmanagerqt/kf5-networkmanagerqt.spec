@@ -1,8 +1,8 @@
 %define         framework networkmanagerqt
-%define         git_commit 107e27d
+%define         git_commit ef654fd
 Name:           kf5-%{framework}
 Version:        5.0.90
-Release:        2.20140514git%{git_commit}%{?dist}
+Release:        3.20140611git%{git_commit}%{?dist}
 Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries
@@ -64,6 +64,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_NetworkManagerQt.pri
 
 %changelog
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-3.20140611gitef654fd
+- Update to latest git snapshot
+
 * Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.90-2.20140514git107e27d
 - Update to latest git snapshot
 

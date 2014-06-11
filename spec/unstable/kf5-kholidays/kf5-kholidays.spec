@@ -1,8 +1,8 @@
 %define         framework kholidays
-%define         git_commit dda3e7d
+%define         git_commit 887e946
 Name:           kf5-%{framework}
 Version:        4.98.0
-Release:        1.20140514git%{git_commit}%{?dist}
+Release:        2.20140611git%{git_commit}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library with API that determines holiday
 
 Group:          System Environment/Libraries
@@ -79,5 +79,9 @@ chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/holidayswidgets.so
 %{_kf5_archdatadir}/mkspecs/modules/qt_KHolidays.pri
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-1.20140514gitdda3e7d
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2.20140611git887e946
+- Update to latest git snapshot
+
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-2.20140611gitdda3e7d
 - KF5 KHolidays 4.98.0 (git snapshot built from common kdepimlibs/frameworks repo)

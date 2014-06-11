@@ -2,10 +2,10 @@
 
 # libksysguard
 %define framework ksysguard
-%define git_commit 87ae01f
+%define git_commit 2eb9a02
 
 Name:           kf5-%{framework}
-Version:        4.96.0
+Version:        4.97.0
 Release:        2.20140514git%{git_commit}%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
@@ -90,10 +90,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-2.20140611git887e946
+- Update to latest git snapshot
+
+
 * Sat May 17 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-2.20140514git87ae01f
 - Fix Source
 
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-1.20140514gitf7a2bbe
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-2.20140611gitf7a2bbe
 - Update to latest git snapshot
 
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1.20140425git1908ec8

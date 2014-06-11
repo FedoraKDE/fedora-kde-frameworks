@@ -1,8 +1,8 @@
 %define         framework baloo
-%define         git_commit 46e3ea7
+%define         git_commit 84bc23c
 Name:           kf5-%{framework}
 Version:        4.90.0
-Release:        1.20140514git%{git_commit}%{?dist}
+Release:        3.20140611git%{git_commit}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
@@ -74,10 +74,11 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%{_kf5_libdir}/libbaloocore.so.*
-%{_kf5_libdir}/libbalooxapian.so.*
-%{_kf5_libdir}/libbaloofiles.so.*
+%{_kf5_libdir}/libKF5BalooCore.so.*
+%{_kf5_libdir}/libKF5BalooXapian.so.*
+%{_kf5_libdir}/libKF5BalooFiles.so.*
 %{_kf5_libdir}/libbaloopim.so.*
+%{_kf5_libdir}/libbalooqueryparser.so.*
 %{_kf5_plugindir}/baloo_filesearchstore.so
 %{_kf5_plugindir}/baloo_emailsearchstore.so
 %{_kf5_plugindir}/baloo_contactsearchstore.so
@@ -109,10 +110,11 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %files devel
-%{_kf5_libdir}/libbaloocore.so
-%{_kf5_libdir}/libbaloofiles.so
+%{_kf5_libdir}/libKF5BalooCore.so
+%{_kf5_libdir}/libKF5BalooXapian.so
+%{_kf5_libdir}/libKF5BalooFiles.so
 %{_kf5_libdir}/libbaloopim.so
-%{_kf5_libdir}/libbalooxapian.so
+%{_kf5_libdir}/libbalooqueryparser.so
 
 %{_kf5_libdir}/cmake/Baloo
 %{_includedir}/baloo
@@ -120,5 +122,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.0-1.20140514git46e3ea7
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 4.98.0-3.20140611git84bc23c
+- Update to latest git snapshot
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.0-2.20140611git46e3ea7
 - KF5 Baloo 4.90.0 (git snapshot built from common kdepimlibs/frameworks repo)

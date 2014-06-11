@@ -1,9 +1,9 @@
 %define         framework kscreen
-%define         git_commit e24d85e
+%define         git_commit 4ab583f
 
 Name:           kf5-%{framework}
 Version:        4.90.0
-Release:        1.20140514git%{git_commit}%{?dist}
+Release:        2.20140611git%{git_commit}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library with API to control screen settings
 
 Group:          System Environment/Libraries
@@ -68,8 +68,11 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KScreen
 %{_kf5_includedir}/kscreen_version.h
 %{_kf5_archdatadir}/mkspecs/modules/qt_KScreen.pri
-%{_kf5_libdir}/pkgconfig/kscreen.pc
+%{_kf5_libdir}/pkgconfig/kscreen2.pc
 
 %changelog
-* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 2.0.0-1.20140514gitdda3e7d
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.0-2.20140611git4ab583f
+- Update to latest git snapshot
+
+* Wed May 14 2014 Daniel Vrátil <dvratil@redhat.com> - 2.0.0-2.20140611gitdda3e7d
 - Initial version

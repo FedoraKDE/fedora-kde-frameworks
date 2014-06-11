@@ -2,7 +2,7 @@ kf5-gpgme++
 kf5-akonadi
 kf5-kabc
 kf5-kcalcore
-kf5-kkfilemetadata
+kf5-kfilemetadata
 kf5-kholidays
 kf5-kldap
 kf5-kmime
