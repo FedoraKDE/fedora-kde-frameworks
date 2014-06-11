@@ -94,13 +94,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kinit5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kinit5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/*
 %{_kf5_libdir}/libkdeinit5_klauncher.so

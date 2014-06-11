@@ -126,7 +126,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
 %{_qt5_prefix}/platformqml/touch/org/kde/plasma
 %{_kf5_qmldir}/org/kde/*
-%{_kf5_qtplugindir}/kf5/*.so
+%{_kf5_qtplugindir}/*.so
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/plasma/
 %{_kf5_datadir}/kservices5/*.desktop

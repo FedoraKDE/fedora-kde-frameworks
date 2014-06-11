@@ -89,6 +89,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kross5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
@@ -96,16 +97,16 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files
 
-%files core
+%files core -f kross5_qt.lang
 %{_kf5_bindir}/kf5kross
 %{_kf5_libdir}/libKF5KrossCore.so.*
 %{_kf5_qtplugindir}/krossqts.so
-%{_kf5_qtplugindir}/script/libkrossqtsplugin.so.*
+%{_kf5_qtplugindir}/script/krossqtsplugin.so
 
 %files ui
 %{_kf5_libdir}/libKF5KrossUi.so.*
-%{_kf5_qtplugindir}/kf5/KrossModuleForms.so
-%{_kf5_qtplugindir}/kf5/KrossModuleKdeTranslation.so
+%{_kf5_qtplugindir}/KrossModuleForms.so
+%{_kf5_qtplugindir}/KrossModuleKdeTranslation.so
 
 %files doc
 %doc COPYING.LIB README.md
@@ -117,7 +118,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_includedir}/KrossCore
 %{_kf5_libdir}/libKF5KrossCore.so
 %{_kf5_libdir}/libKF5KrossUi.so
-%{_kf5_qtplugindir}/script/libkrossqtsplugin.so
 %{_kf5_libdir}/cmake/KF5Kross
 %{_kf5_archdatadir}/mkspecs/modules/qt_KrossCore.pri
 %{_kf5_archdatadir}/mkspecs/modules/qt_KrossUi.pri

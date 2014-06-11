@@ -64,13 +64,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang ktextwidgets5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f ktextwidgets5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5TextWidgets.so.*
 %{_kf5_datadir}/kservicetypes5/*.desktop

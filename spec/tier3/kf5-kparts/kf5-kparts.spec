@@ -69,13 +69,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kparts5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kparts5_qt.lang
 %doc COPYING.LIB README.md AUTHORS
 %{_kf5_libdir}/libKF5Parts.so.*
 %{_kf5_datadir}/kservicetypes5/*.desktop

@@ -69,13 +69,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kxmlgui5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kxmlgui5_qt.lang
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5XmlGui.so.*
 %{_kf5_sysconfdir}/xdg/ui/ui_standards.rc

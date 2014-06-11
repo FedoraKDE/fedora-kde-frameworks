@@ -39,6 +39,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kjs-devel
+BuildRequires:  kf5-kio-devel
 
 Requires:       kf5-kactivities-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kactivities-runtime%{?_isa} = %{version}-%{release}
@@ -92,6 +93,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kactivities5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -104,9 +106,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_datadir}/kservices5/kactivitymanagerd.desktop
 %{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
-%{_kf5_qtplugindir}/kf5/kactivitymanagerd/
+%{_kf5_qtplugindir}/kactivitymanagerd/
 
-%files libs
+%files libs -f kactivities5_qt.lang
 %{_kf5_libdir}/libKF5Activities.so.*
 %{_kf5_qmldir}/org/kde/activities/
 

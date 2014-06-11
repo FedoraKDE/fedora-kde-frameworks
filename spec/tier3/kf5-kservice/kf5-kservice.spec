@@ -58,6 +58,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kservice5_qt --with-qt --all-name
 
 mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 
@@ -66,7 +67,7 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kservice5_qt.lang
 %doc COPYING COPYING.LIB README.md
 %{_kf5_bindir}/kbuildsycoca5
 %{_kf5_libdir}/libKF5Service.so.*

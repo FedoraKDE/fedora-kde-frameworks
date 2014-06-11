@@ -104,20 +104,24 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kio5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f kio5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/*.so.*
 %{_kf5_bindir}/ktelnetservice5
 %{_kf5_bindir}/kcookiejar5
 %{_kf5_bindir}/kmailservice5
+%{_kf5_sysconfdir}/xdg/kshorturifilterrc
 %{_kf5_sysconfdir}/xdg/accept-languages.codes
-%{_kf5_qtplugindir}/kf5/*.so
+%{_kf5_plugindir}/kio/*.so
+%{_kf5_plugindir}/urifilters/*.so
+%{_kf5_qtplugindir}/*.so
 %{_kf5_libexecdir}/kio_http_cache_cleaner
 %{_kf5_libexecdir}/kioexec
 %{_kf5_libexecdir}/kpac_dhcp_helper
