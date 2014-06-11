@@ -1,12 +1,12 @@
 ##base pkg default to SQLITE now, install -mysql if you want that instead
 # FIXME: Go back to SQLITE once it's available in Qt 5 build
 %global database_backend MYSQL
-%global snap a6c1eba
+%global snap f36fad6
 
 Summary: PIM Storage Service (Qt 5 version)
 Name:    akonadi-qt5
-Version: 1.73.44
-Release: 2%{?dist}
+Version: 1.76.47
+Release: 1%{?dist}
 
 License: LGPLv2+
 URL:     http://community.kde.org/KDE_PIM/Akonadi 
@@ -197,6 +197,9 @@ fi
 
 
 %changelog
+* Wed Jun 11 2014 Daniel Vrátil <dvratil@redhat.com> - 1.76.47-1
+- Update to latest upstream
+
 * Sun May 18 2014 Daniel Vrátil <dvratil@redhat.com> - 1.73.44-2
 - Fix deps
 
