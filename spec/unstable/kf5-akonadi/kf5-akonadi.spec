@@ -22,9 +22,6 @@ URL:            https://www.kde.org
 #Source0:        %{framework}-%{git_commit}.tar.xz
 Source0:        kdepimlibs-frameworks-%{git_commit}.tar.xz
 
-Patch0:         akonadi-selftest.patch
-Patch1:         akonadi-fix-config.patch
-
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -59,8 +56,6 @@ developing applications that use %{name}.
 %prep
 %setup -qn kdepimlibs-%{version}
 
-%patch0 -p1 -b .selftest
-%patch1 -p1 -b .config
 
 %build
 mkdir -p %{_target_platform}/%{framework}
