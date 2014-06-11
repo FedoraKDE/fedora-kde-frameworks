@@ -67,17 +67,18 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang frameworkintegration5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 
-%files
+%files -f frameworkintegration5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Style.so.*
 %{_kf5_datadir}/kf5/infopage/*
-%{_kf5_qtplugindir}/kf5/FrameworkIntegrationPlugin.so
+%{_kf5_plugindir}/FrameworkIntegrationPlugin.so
 %{_kf5_qtplugindir}/platformthemes/KDEPlatformTheme.so
 
 %files devel
