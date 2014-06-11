@@ -16,7 +16,7 @@ Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framewo
 
 Patch0:         kauth-find-polkit-qt5.patch
 
-BuildRequires:  polkit-qt5-devel
+BuildRequires:  polkit-qt5-1-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -48,7 +48,9 @@ developing applications that use %{name}.
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+
+# Remove once 9be07165 is fixed/explained
+%{cmake_kf5} .. -DLIBEXEC_INSTALL_DIR=%{_kf5_libexecdir}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -65,7 +67,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files -f kauth5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Auth.so.*
-%{_kf5_sysconfdir}/dbus-1/system.d/*
+%config %{_kf5_sysconfdir}/dbus-1/system.d/*
 %{_kf5_qtplugindir}/kauth/helper/kauth_helper_plugin.so
 %{_kf5_qtplugindir}/kauth/backend/kauth_backend_plugin.so
 %{_kf5_datadir}/kf5/kauth/

@@ -3,10 +3,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
-License:        GPLv2+
+License:        GPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -51,6 +51,7 @@ Documentation and user help for %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -71,7 +72,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/checkXML5
 %{_kf5_bindir}/meinproc5
-%{_kf5_datadir}/man/*
+%{_kf5_datadir}/man/man1/*
+%{_kf5_datadir}/man/man7/*
+%{_kf5_datadir}/man/man8/*
 %{_kf5_datadir}/kf5/kdoctools/customization
 
 
@@ -85,6 +88,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Fix license
+- Fix installation of man pages
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 
