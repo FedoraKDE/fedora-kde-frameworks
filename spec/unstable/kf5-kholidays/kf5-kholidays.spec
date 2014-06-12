@@ -61,7 +61,7 @@ make %{?_smp_mflags} -C %{_target_platform}/%{framework}
 make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 
 # Manually strip rpath
-chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/holidayswidgets.so
+chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/holidays5widgets.so
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -69,7 +69,7 @@ chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/holidayswidgets.so
 %files
 %{_kf5_libdir}/libKF5Holidays.so.*
 %{_kf5_datadir}/kf5/libkholidays
-%{_kf5_qtplugindir}/designer/holidayswidgets.so
+%{_kf5_qtplugindir}/designer/holidays5widgets.so
 
 %files devel
 %{_kf5_libdir}/libKF5Holidays.so

@@ -1,0 +1,13 @@
+diff --git a/mailtransport/src/resourcesendjob.cpp b/mailtransport/src/resourcesendjob.cpp
+index 945afcb..4181fd4 100644
+--- a/mailtransport/src/resourcesendjob.cpp
++++ b/mailtransport/src/resourcesendjob.cpp
+@@ -31,7 +31,7 @@
+ #include <itemcreatejob.h>
+ #include <itemfetchjob.h>
+ #include <itemfetchscope.h>
+-#include <addressattribute.h>
++#include <kmime/addressattribute.h>
+ 
+ using namespace Akonadi;
+ using namespace KMime;

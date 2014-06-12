@@ -35,6 +35,8 @@ BuildRequires:  qt5-qttools-devel
 BuildRequires:  qt5-qttools-static
 BuildRequires:  boost-devel
 BuildRequires:  libxml2-devel
+# For XML files
+BuildRequires:  akonadi
 
 BuildRequires:  chrpath
 
@@ -69,7 +71,7 @@ make %{?_smp_mflags} -C %{_target_platform}/%{framework}
 %install
 make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 
-chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/akonadiwidgets.so
+chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/akonadi5widgets.so
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -80,7 +82,7 @@ chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/designer/akonadiwidgets.so
 %{_kf5_libdir}/libKF5AkonadiWidgets.so.*
 %{_kf5_libdir}/libKF5AkonadiXml.so.*
 %{_kf5_bindir}/akonadiselftest
-%{_kf5_qtplugindir}/designer/akonadiwidgets.so
+%{_kf5_qtplugindir}/designer/akonadi5widgets.so
 %{_kf5_datadir}/config.kcfg/resourcebase.kcfg
 
 %files devel

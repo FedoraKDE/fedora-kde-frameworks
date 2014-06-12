@@ -52,7 +52,9 @@ Requires: kf5-karchive-devel
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. \
+        -DPLUGIN_INSTALL_DIR=%{_kf5_plugindir}
+# FIXME: Remove once fixed upstream
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -60,7 +62,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

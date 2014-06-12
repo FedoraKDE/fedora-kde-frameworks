@@ -14,6 +14,8 @@ URL:            https://www.kde.org
 #Source0:        %{framework}-%{git_commit}.tar.xz
 Source0:        kdepimlibs-frameworks-%{git_commit}.tar.xz
 
+Patch0:         mailtransport-fix-include.patch
+
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -50,10 +52,14 @@ developing applications that use %{name}.
 %prep
 %setup -qn kdepimlibs-%{version}
 
+%patch0 -p1 -b .include
+
 %build
 mkdir -p %{_target_platform}/%{framework}
 pushd %{_target_platform}/%{framework}
-%{cmake_kf5} ../../%{framework}
+%{cmake_kf5} ../../%{framework} \
+        -DPLUGIN_INSTALL_DIR=%{_kf5_plugindir}
+# FIXME: Remove once fixed upstream
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}/%{framework}

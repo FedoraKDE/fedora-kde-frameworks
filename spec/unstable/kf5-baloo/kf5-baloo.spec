@@ -14,9 +14,6 @@ URL:            https://www.kde.org
 #Source0:        %{framework}-%{git_commit}.tar.xz
 Source0:        baloo-%{git_commit}.tar.xz
 
-Patch0:         baloo-mime.patch
-Patch1:         baloo-fix-build.patch
-
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -51,16 +48,14 @@ developing applications that use %{name}.
 %prep
 %setup -qn %{framework}-%{version}
 
-%patch0 -p1 -b .mime
-%patch1 -p1 -b .build
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ../ \
          -DKDEPIM_SUPPORT_BUILD:BOOL=ON \
          -DINCLUDE_INSTALL_DIR:PATH=/usr/include \
-         -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5
+         -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5 \
+         -DPLUGIN_INSTALL_DIR=%{_kf5_plugindir}
 # FIXME: Remove ^^ once fixed upstream
 popd
 

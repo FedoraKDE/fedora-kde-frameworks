@@ -63,7 +63,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %files devel
 %{_kf5_libdir}/libKF5AkonadiSocialUtils.so
 %{_kf5_libdir}/cmake/KF5AkonadiSocialUtils
-%{_kf5_includedir}/Akonadi/socialutils
+%{_kf5_includedir}/Akonadi/SocialUtils
+%{_kf5_includedir}/akonadi/socialutils
 %{_kf5_includedir}/akonadi-socialutils_version.h
 
 %changelog

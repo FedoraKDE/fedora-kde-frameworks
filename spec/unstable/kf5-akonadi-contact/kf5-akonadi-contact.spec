@@ -57,7 +57,8 @@ mkdir -p %{_target_platform}/%{framework}
 pushd %{_target_platform}/%{framework}
 %{cmake_kf5} ../../%{framework} \
          -DINCLUDE_INSTALL_DIR:PATH=/usr/include \
-         -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5
+         -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5 \
+         -DPLUGIN_INSTALL_DIR=%{_kf5_plugindir}
 # FIXME: Remove ^^ once fixed upstream
 popd
 
@@ -83,6 +84,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %{_kf5_libdir}/libKF5AkonadiContact.so
 %{_kf5_libdir}/cmake/KF5AkonadiContact
 %{_kf5_includedir}/Akonadi/Contact
+%{_kf5_includedir}/akonadi/contact
 %{_kf5_includedir}/akonadi-contact_version.h
 %{_kf5_archdatadir}/mkspecs/modules/qt_AkonadiContact.pri
 

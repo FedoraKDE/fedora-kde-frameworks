@@ -64,6 +64,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %{_kf5_libdir}/libKF5Mime.so
 %{_kf5_libdir}/cmake/KF5Mime
 %{_kf5_includedir}/KMime
+%{_kf5_includedir}/kmime
 %{_kf5_includedir}/kmime_version.h
 %{_kf5_archdatadir}/mkspecs/modules/qt_KMime.pri
 

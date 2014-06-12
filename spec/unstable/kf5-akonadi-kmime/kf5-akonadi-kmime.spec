@@ -69,6 +69,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %{_kf5_libdir}/libKF5AkonadiMime.so
 %{_kf5_libdir}/cmake/KF5AkonadiMime
 %{_kf5_includedir}/Akonadi/KMime
+%{_kf5_includedir}/akonadi/kmime
 %{_kf5_includedir}/akonadi-kmime_version.h
 
 %changelog

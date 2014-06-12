@@ -79,6 +79,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %{_kf5_libdir}/libKF5AkonadiCalendar.so
 %{_kf5_libdir}/cmake/KF5AkonadiCalendar
 %{_kf5_includedir}/Akonadi/Calendar
+%{_kf5_includedir}/akonadi/calendar
 %{_kf5_includedir}/akonadi-calendar_version.h
 %{_kf5_archdatadir}/mkspecs/modules/qt_AkonadiCalendar.pri
 

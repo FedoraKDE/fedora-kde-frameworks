@@ -65,7 +65,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}/%{framework}
 %files devel
 %{_kf5_libdir}/libKF5AkonadiNotes.so
 %{_kf5_libdir}/cmake/KF5AkonadiNotes
-%{_kf5_includedir}/Akonadi/notes
+%{_kf5_includedir}/Akonadi/Notes
+%{_kf5_includedir}/akonadi/notes
 %{_kf5_includedir}/akonadi-notes_version.h
 %{_kf5_archdatadir}/mkspecs/modules/qt_AkonadiNotes.pri
 
