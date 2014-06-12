@@ -1,10 +1,9 @@
-#%define snapshot 20140205
 %define framework kpty
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 module providing Pty abstraction
+Release:        2%{?dist}
+Summary:        KDE Frameworks 5 Tier 2 module providing Pty abstraction
 
 License:        LGPL2+
 URL:            http://www.kde.org
@@ -71,6 +70,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Jun 12 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Upgrade to Tier 2 framework
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 
