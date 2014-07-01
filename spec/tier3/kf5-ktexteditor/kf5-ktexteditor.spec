@@ -2,10 +2,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?_dist}
-Summary:        KDE Frameworks 5 Tier 3 advanced embeddable text editor
+Release:        3%{?_dist}
+Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -13,6 +13,9 @@ URL:            http://www.kde.org
 # Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+# Upstream patch
+Patch0:         ktexteditor-move-katepart-into-kf5-parts-sudir-of-plugin-dir.patch
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -30,7 +33,14 @@ BuildRequires:  kf5-sonnet-devel
 Requires:       kf5-filesystem
 
 %description
-%{summary}.
+KTextEditor provides a powerful text editor component that you can embed in your
+application, either as a KPart or using the KF5::TextEditor library (if you need
+more control).
+
+The text editor component contains many useful features, from syntax
+highlighting and automatic indentation to advanced scripting support, making it
+suitable for everything from a simple embedded text-file editor to an advanced
+IDE.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -44,6 +54,8 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+%patch0 -p1 -b .katepartInstallDir
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -56,16 +68,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang ktexteditor5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
 
 
 %files -f ktexteditor5_qt.lang
 %doc COPYING.LIB README.md
-%{_sysconfdir}/xdg/kate*
+%config %{_sysconfdir}/xdg/kate*
 %{_kf5_libdir}/libKF5TextEditor.so.*
-%{_kf5_plugindir}/katepart.so
+%{_kf5_plugindir}/parts/katepart.so
 %{_kf5_datadir}/kservices5/katepart.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/katepart5/script/
@@ -81,6 +97,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Jul 01 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
+- Add %%config and call to update-desktop-database
+
+* Sun Jun 29 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Import upstream patch to fix installation destination of katepart.so
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

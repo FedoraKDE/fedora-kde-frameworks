@@ -1,0 +1,35 @@
+From: Alex Merry <alex.merry@kde.org>
+Date: Mon, 02 Jun 2014 21:16:06 +0000
+Subject: Move katepart into a kf5/parts subdir of plugin dir
+X-Git-Url: http://quickgit.kde.org/?p=ktexteditor.git&a=commitdiff&h=59190f1542bbe77da0cc10fda7470c2d93df102e
+---
+Move katepart into a kf5/parts subdir of plugin dir
+
+This makes sure the file is properly versioned.
+
+REVIEW: 118484
+---
+
+
+--- a/src/part/CMakeLists.txt
++++ b/src/part/CMakeLists.txt
+@@ -9,5 +9,5 @@
+ target_link_libraries (katepart KF5TextEditor)
+ 
+ # install the part
+-install (TARGETS katepart DESTINATION ${PLUGIN_INSTALL_DIR})
++install (TARGETS katepart DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/parts)
+ 
+
+--- a/src/part/katepart.desktop
++++ b/src/part/katepart.desktop
+@@ -51,7 +51,7 @@
+ Name[x-test]=xxEmbedded Advanced Text Editorxx
+ Name[zh_CN]=嵌入式高级文本编辑器
+ Name[zh_TW]=嵌入式進階文字編輯器
+-X-KDE-Library=katepart
++X-KDE-Library=kf5/parts/katepart
+ Icon=accessories-text-editor
+ X-KDE-ServiceTypes=KParts/ReadOnlyPart,KParts/ReadWritePart,KTextEditor/Document
+ Type=Service
+

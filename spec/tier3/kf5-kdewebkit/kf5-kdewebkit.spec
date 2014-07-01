@@ -1,12 +1,11 @@
-#%define snapshot 20140205
 %define framework kdewebkit
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 integration module for WebKit
+Release:        2%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 integration module for QtWebKit
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -29,12 +28,9 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwallet-devel
 
 Requires:       kf5-filesystem
-# FIXME: Work around a bug in yum that tries to get in kf5-kwallet-api instead of
-# kf5-kwallet-libs
-Requires:       kf5-kwallet-libs
 
 %description
-KDE Frameworks 5 Tier 3 integration module for WebKit
+KDE Frameworks 5 Tier 3 integration module for the HTML rendering engine WebKit.
 
 
 %package        devel
@@ -84,6 +80,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDEWebKit.pri
 
 %changelog
+* Sun Jun 29 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Remove explicit Requires kf5-kwallet-libs
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

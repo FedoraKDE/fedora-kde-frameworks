@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
-License:        GPLv2+
+License:        GPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \

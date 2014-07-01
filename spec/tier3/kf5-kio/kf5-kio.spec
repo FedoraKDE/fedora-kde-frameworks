@@ -3,10 +3,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
-License:        GPLv2+
+License:        GPLv2+ and MIT and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -45,9 +45,6 @@ BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kwallet-devel
 
 Requires:       kf5-filesystem
-# Workaround for yum being weird and trying to install kf5-kwallet-api even though
-# kf5-kwallet-libs Provides and Obsoletes kf5-kwallet-api.
-Requires:       kf5-kwallet-libs
 
 %description
 KDE Frameworks 5 Tier 3 solution for filesystem abstraction
@@ -106,9 +103,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kio5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
 
 
 %files -f kio5_qt.lang
@@ -117,8 +118,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/ktelnetservice5
 %{_kf5_bindir}/kcookiejar5
 %{_kf5_bindir}/kmailservice5
-%{_kf5_sysconfdir}/xdg/kshorturifilterrc
-%{_kf5_sysconfdir}/xdg/accept-languages.codes
+%config %{_kf5_sysconfdir}/xdg/kshorturifilterrc
+%config %{_kf5_sysconfdir}/xdg/accept-languages.codes
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_plugindir}/urifilters/*.so
 %{_kf5_qtplugindir}/*.so
@@ -147,6 +148,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
+* Sat Jun 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- fixed licenses
+- added %%config
+- added update-desktop-database
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 
