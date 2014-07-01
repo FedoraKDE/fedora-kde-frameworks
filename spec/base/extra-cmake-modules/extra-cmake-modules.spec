@@ -1,5 +1,5 @@
 #global snapshot 20140205
-%global frameworksversion 4.99.0
+%global frameworksversion 4.100.0
 
 Name:           extra-cmake-modules
 Summary:        Additional modules for CMake build system

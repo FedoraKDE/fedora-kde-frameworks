@@ -1,11 +1,13 @@
 %global fontname oxygen
+%global fontconf oxygen-fontconfig.conf
 
 Name:           oxygen-fonts
 Version:        0.3.95
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Oxygen fonts created by the KDE Community
 
-License:        GPLv2+
+# See LICENSE-GPL+FE for details about the exception
+License:        OFL or GPLv3 with exceptions
 URL:            http://www.kde.org
 Source0:        http://download.kde.org/unstable/plasma/4.95.0/%{name}-%{version}.tar.xz
 Source1:        %{fontname}-fontconfig.conf
@@ -63,5 +65,9 @@ rm -fr %{buildroot}
 %{_kf5_libdir}/cmake/OxygenFont
 
 %changelog
+* Sun Jun 29 2014 Daniel Vrátil <dvratil@redhat.com> - 0.3.95-2
+- fix license
+- fix rpmlint warnings
+
 * Thu Apr 03 2014 Daniel Vrátil <dvratil@redhat.com> - 0.3.95-1
 - Initial vrsion
