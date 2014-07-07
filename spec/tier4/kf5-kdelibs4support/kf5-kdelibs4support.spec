@@ -5,7 +5,7 @@ Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
-License:        LGPLv2+
+License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -53,7 +53,9 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
+This framework provides code and utilities to ease the transition from kdelibs 4
+to KDE Frameworks 5. This includes CMake macros and C++ classes whose
+functionality has been replaced by code in CMake, Qt and other frameworks.
 
 
 %package        devel
@@ -91,7 +93,8 @@ developing applications that use %{name}.
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 # Set absolute BIN_INSTALL_DIR, otherwise CMake will complain about mixed use of
-# absolute and relative paths for some reason.
+# absolute and relative paths for some reason
+# Remove once fixed upstream
 %{cmake_kf5} \
         -DBIN_INSTALL_DIR=/usr/bin \
         ..

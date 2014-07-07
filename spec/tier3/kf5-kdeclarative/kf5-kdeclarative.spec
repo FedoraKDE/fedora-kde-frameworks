@@ -4,8 +4,7 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
-
+Summary:        KDE Frameworks 5 Tier 3 addon for QML integration
 License:        GPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
@@ -33,7 +32,8 @@ BuildRequires:  kf5-kio-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 addon for Qt declarative
+KDE Frameworks 5 Tier 3 addon that provides integration between QML and
+KDE frameworks.
 
 
 %package        devel

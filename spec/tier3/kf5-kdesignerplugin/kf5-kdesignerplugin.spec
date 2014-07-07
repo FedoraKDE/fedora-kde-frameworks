@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 integration module for QtDesigner
+Summary:        KDE Frameworks 5 Tier 3 integration module for Qt Designer
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -45,7 +45,11 @@ BuildRequires:  kf5-kdewebkit-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 integration module for QtDesigner
+This framework provides plugins for Qt Designer that allow it to display
+the widgets provided by various KDE frameworks, as well as a utility
+(kgendesignerplugin) that can be used to generate other such plugins
+from ini-style description files.
+
 
 %package        devel
 Summary:        Development files for %{name}

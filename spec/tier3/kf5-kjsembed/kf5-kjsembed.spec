@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 addon with JS scripting engine
+Summary:        KDE Frameworks 5 Tier 3 addon for binding JS objects to QObjects
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -27,7 +27,8 @@ BuildRequires:  kf5-kdoctools-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 addon with JS scripting engine
+KSJEmbed provides a method of binding JavaScript objects to QObjects, so you
+can script your applications.
 
 
 %package        devel

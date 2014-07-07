@@ -1,20 +1,17 @@
 %define framework kactivities
 
 Name:           kf5-%{framework}
-Summary:        A KDE Frameworks 5 Tier 3 runtime and library to organize the user work in separate activitie
+Summary:        A KDE Frameworks 5 Tier 3 run-time and library to organize user work into separate activities
 Version:        4.100.0
 Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
-URL:            https://projects.kde.org/projects/kde/kdelibs/kactivities
+URL:            http://www.kde.org
 
 # git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
 #             --remote=git://anongit.kde.org/kactivities.git | \
 # bzip2 -c > ${name}-%{version}-%{snapshot}.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-Obsoletes:      kactivities-qt5
-Provides:       kactivities-qt5
 
 BuildRequires:  boost-devel
 
@@ -23,30 +20,25 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
 BuildRequires:  qt5-qtdeclarative-devel
-# FIXME: Why do I need to install all backends when depending on QtSql?
-BuildRequires:  qt5-qtbase-ibase
-BuildRequires:  qt5-qtbase-odbc
-BuildRequires:  qt5-qtbase-mysql
-BuildRequires:  qt5-qtbase-postgresql
-BuildRequires:  qt5-qtbase-tds
 
-BuildRequires:  kf5-umbrella
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kdbusaddons-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kjs-devel
-BuildRequires:  kf5-kio-devel
 
 Requires:       kf5-kactivities-libs%{?_isa} = %{version}-%{release}
-Requires:       kf5-kactivities-runtime%{?_isa} = %{version}-%{release}
+
+Conflicts:      kactivities < 0:4.90.0
+Provides:       kactivities%{?_isa} = 0:%{version}-%{release}
+Provides:       kactivities = 0:%{version}-%{release}
 
 %description
 A KDE Frameworks 5 Tier 3 API for using and interacting with Activities as a
 consumer, application adding information to them or as an activity manager.
+
 
 %package libs
 Summary:        Libraries fro KActivities framework
@@ -54,30 +46,12 @@ Requires:       kf5-filesystem
 %description    libs
 %{summary}.
 
-# We have libs-devel and not -devel, so that we can have Requires %{name}-libs
-# and prevent kactivities dragging in kactivities-runtime, which conflicts with
-# KDE 4 KActivities. This solves the co-installibility at least a bit
-%package libs-devel
+
+%package devel
 Summary:        Developer files for %{name}-libs
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-
-Obsoletes:      kactivties-qt5-devel
-Provides:       kactivties-qt5-devel
-Conflicts:      kactivities-devel
-%description    libs-devel
+%description    devel
 %{summary}.
-
-
-%package runtime
-Summary:        Runtime for KActivities framework
-Conflicts:      kactivities < 0:4.90.0
-Provides:       kactivities%{?_isa} = 0:%{version}-%{release}
-Provides:       kactivities = 0:%{version}-%{release}
-%description    runtime
-%{summary}.
-
-The runtime module is a drop-in replacement for KActivities runtime module from
-KDE 4 and can be safely used with KDE 4.
 
 
 %prep
@@ -95,14 +69,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kactivities5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 
 %files
 %doc README README.md README.packagers README.developers MAINTAINER
-
-%files runtime
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_datadir}/kservices5/kactivitymanagerd.desktop
 %{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
@@ -112,13 +84,14 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5Activities.so.*
 %{_kf5_qmldir}/org/kde/activities/
 
-%files libs-devel
+%files devel
 %{_kf5_libdir}/libKF5Activities.so
 %{_kf5_libdir}/cmake/KF5Activities/
 %{_kf5_includedir}/KActivities/
 %{_kf5_includedir}/kactivities_version.h
 %{_kf5_libdir}/pkgconfig/libKActivities.pc
 %{_kf5_archdatadir}/mkspecs/modules/qt_KActivities.pri
+
 
 %changelog
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1

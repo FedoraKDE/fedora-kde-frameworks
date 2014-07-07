@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 integration module for icon themes
+Summary:        KDE Frameworks 5 Tier 3 integration module with icon themes
 
-License:        GPLv2+
+License:        LGPLv2+ and GPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -27,7 +27,7 @@ BuildRequires:  kf5-kitemviews-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 integration module for icon themes
+KDE Frameworks 5 Tier 3 integration module with icon themes
 
 
 %package        devel

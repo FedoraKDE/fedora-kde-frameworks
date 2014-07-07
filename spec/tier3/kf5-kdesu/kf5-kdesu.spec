@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 module for su integration
+Summary:        KDE Frameworks 5 Tier 3 integration with su
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -27,7 +27,7 @@ BuildRequires:  kf5-kpty-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for su integration
+KDE Frameworks 5 Tier 3 integration with su for elevated privileges.
 
 
 %package        devel

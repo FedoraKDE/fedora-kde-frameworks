@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KNotify configuration
 
-License:        LGPL2
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -30,7 +30,7 @@ BuildRequires:  kf5-kservice-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for KNotify configuration
+%{summary}.
 
 
 %package        devel

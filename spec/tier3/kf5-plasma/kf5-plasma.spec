@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 framework with Plasma 2 libraries and runtime components
+Summary:        KDE Frameworks 5 Tier 3 framework with foundations to build a primary user interface
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 
 # git archive --format=tar --prefix=%{name}-%{version}/ \
@@ -34,16 +34,10 @@ BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtscript-devel
-# FIXME: Why do I need to isntall all backends when depending on QtSql?
-BuildRequires:  qt5-qtbase-ibase
-BuildRequires:  qt5-qtbase-odbc
-BuildRequires:  qt5-qtbase-mysql
-BuildRequires:  qt5-qtbase-postgresql
-BuildRequires:  qt5-qtbase-tds
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-kactivities-libs-devel
+BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -63,7 +57,7 @@ BuildRequires:  kf5-kdoctools-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module with Plasma 2 libraries and runtime components
+%{summary}.
 
 
 %package        devel
@@ -89,13 +83,6 @@ Requires:       kf5-kdoctools-devel
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
-
-# TODO: Subpackages!
-# -shell
-# -quick
-# -wallpapers
-# -plasmoids
-# -icons (-desktopthemes?)
 
 
 %prep

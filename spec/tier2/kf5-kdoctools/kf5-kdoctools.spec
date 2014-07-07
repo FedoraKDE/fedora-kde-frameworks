@@ -3,7 +3,7 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
 License:        GPLv2+ and MIT
@@ -36,6 +36,7 @@ Provides tools to generate documentation in various format from DocBook files.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       kf5-kdoctools-static = %{version}-%{release}
 Requires:       kf5-karchive-devel
 
 %description    devel
@@ -44,6 +45,7 @@ developing applications that use %{name}.
 
 %package        doc
 Summary:        User documentation and help for %{name}
+Requires:       kf5-filesystem
 %description    doc
 Documentation and user help for %{name}.
 
@@ -63,10 +65,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
 
 %files
 %doc COPYING.LIB README.md
@@ -75,11 +73,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/man/man1/*
 %{_kf5_datadir}/man/man7/*
 %{_kf5_datadir}/man/man8/*
-%{_kf5_datadir}/kf5/kdoctools/customization
+%{_kf5_datadir}/kf5/kdoctools
 
 
 %files devel
-%{_kf5_includedir}/XsltKde/*
+%{_kf5_includedir}/XsltKde
 %{_kf5_libdir}/libKF5XsltKde.a
 %{_kf5_libdir}/cmake/KF5DocTools
 
@@ -88,6 +86,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
+* Wed Jun 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
+- -devel Provides -static (RHBZ#1113070)
+- -doc Requires kf5-filesystem
+- Remove %%post and %%postun ldconfig, there are no shared libs
+- Fix directory ownership
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
 - Fix license
 - Fix installation of man pages

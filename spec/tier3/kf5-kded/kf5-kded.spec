@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 addon with KDE Daemon
+Summary:        KDE Frameworks 5 Tier 3 addon with extensible daemon for system-level services
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -29,9 +29,11 @@ BuildRequires:  kf5-kservice-devel
 Requires:       kf5-filesystem
 
 %description
-KDED stands for KDE Daemon which isn't very descriptive.
-KDED runs in the background and performs a number of small tasks.
-Some of these tasks are built in, others are started on demand.
+KDED stands for KDE Daemon which isn't very descriptive. KDED runs in the
+background and performs a number of small tasks. Some of these tasks are built in,
+others are started on demand.
+
+Custom KDED modules can be provided by 3rd party frameworks and applications.
 
 
 %package        devel

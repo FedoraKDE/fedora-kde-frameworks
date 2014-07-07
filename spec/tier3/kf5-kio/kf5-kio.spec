@@ -5,7 +5,6 @@ Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
-
 License:        GPLv2+ and MIT and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
@@ -47,7 +46,7 @@ BuildRequires:  kf5-kwallet-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution for filesystem abstraction
+KDE Frameworks 5 Tier 3 solution for resource and network access abstraction.
 
 
 %package        devel
@@ -86,7 +85,6 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    doc
 Documentation for %{name}.
 
-# TODO: Split the package
 
 %prep
 %setup -q -n %{framework}-%{version}

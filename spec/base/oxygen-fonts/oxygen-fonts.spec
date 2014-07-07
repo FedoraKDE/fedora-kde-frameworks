@@ -22,7 +22,7 @@ BuildRequires:  fontpackages-devel
 Requires:       fontpackages-filesystem
 
 %description
-Oxygen fonts created by the KDE Community.
+%{summary}.
 
 %package        devel
 Summary:        Development files for %{name}

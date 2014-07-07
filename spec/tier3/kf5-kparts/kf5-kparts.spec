@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for KParts
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -34,7 +34,9 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution for KParts
+KDE Frameworks 5 Tier 3 solution that implements the framework for KDE parts,
+which are elaborate widgets with a user-interface defined in terms of actions
+(menu items, toolbar icons).
 
 
 %package        devel

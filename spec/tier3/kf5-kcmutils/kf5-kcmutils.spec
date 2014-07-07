@@ -1,12 +1,11 @@
-#%define snapshot 20140205
 %define framework kcmutils
 
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 addon for interacting with KCModules
+Summary:        KDE Frameworks 5 Tier 3 addon with extra API to write KConfigModules
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \

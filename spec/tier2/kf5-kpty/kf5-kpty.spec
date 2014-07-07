@@ -5,7 +5,7 @@ Version:        4.100.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 module providing Pty abstraction
 
-License:        LGPL2+
+License:        LGPLv2+ and GPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -23,7 +23,7 @@ BuildRequires:  kf5-ki18n-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 tier 3 module providing Pty abstraction
+KDE Frameworks 5 tier 2 module providing Pty abstraction.
 
 
 %package        devel

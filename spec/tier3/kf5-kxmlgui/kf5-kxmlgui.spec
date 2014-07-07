@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 solution for generating UI
+Summary:        KDE Frameworks 5 Tier 3 solution for user-configurable main windows
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -35,7 +35,7 @@ BuildRequires:  kf5-attica-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution for generating UI
+KDE Frameworks 5 Tier 3 solution for user-configurable main windows.
 
 
 %package        devel
@@ -78,8 +78,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files -f kxmlgui5_qt.lang
 %doc COPYING COPYING.LIB README.md
+%config %{_kf5_sysconfdir}/xdg/ui/ui_standards.rc
 %{_kf5_libdir}/libKF5XmlGui.so.*
-%{_kf5_sysconfdir}/xdg/ui/ui_standards.rc
 %{_kf5_libexecdir}/ksendbugmail
 %{_kf5_datadir}/kf5/kxmlgui/
 

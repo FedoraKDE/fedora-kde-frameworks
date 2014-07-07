@@ -4,7 +4,7 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 4 addon with framework integration
+Summary:        KDE Frameworks 5 Tier 4 module with workspace and cross-framework integration plugins
 License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \

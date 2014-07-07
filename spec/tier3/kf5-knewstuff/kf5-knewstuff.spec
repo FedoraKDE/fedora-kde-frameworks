@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for downloading application assets
 
-License:        LGPL2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -35,7 +35,8 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for downloading application assets
+KDE Frameworks 5 Tier 3 module for downloading and sharing additional application
+data like plugins, themes, motives, etc.
 
 
 %package        devel

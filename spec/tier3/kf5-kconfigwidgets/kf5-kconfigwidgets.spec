@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for creating configuration dialogs
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -26,9 +26,6 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
-# FIXME: This should be provided by kf5-kdoctools-devel Requires, but it does not
-# work in Copr for some reason
-BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 

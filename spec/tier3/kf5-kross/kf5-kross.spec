@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 solution for application scripting
+Summary:        KDE Frameworks 5 Tier 3 solution for multi-language application scripting
 
-License:        LGPL2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -37,7 +37,8 @@ Requires:       kf5-kross-core%{_isa} = %{version}-%{release}
 Requires:       kf5-kross-ui%{?_isa} = %{version}-%{release}
 
 %description
-KDE Frameworks 5 Tier 3 solution for application scripting
+Kross is a scripting bridge to embed scripting functionality into an application.
+It supports QtScript as a scripting interpreter backend.
 
 
 %package        devel
@@ -91,9 +92,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kross5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post core -p /sbin/ldconfig
+%postun core -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%post ui -p /sbin/ldconfig
+%postun ui -p /sbin/ldconfig
 
 %files
 

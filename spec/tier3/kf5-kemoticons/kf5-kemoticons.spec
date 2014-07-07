@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 module for emoticons support
+Summary:        KDE Frameworks 5 Tier 3 module with support for emoticons and emoticons themes
 
-License:        LGPL2+
+License:        GPLv2+ and LGPL2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -25,7 +25,8 @@ BuildRequires:  kf5-kservice-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for emoticons support
+KDE Frameworks 5 Tier 3 module that provides emoticons themes as well as
+helper classes to automatically convert text emoticons to graphical emoticons.
 
 
 %package        devel

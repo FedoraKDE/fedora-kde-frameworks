@@ -5,7 +5,7 @@ Version:        4.100.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for unit conversions
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -23,7 +23,7 @@ BuildRequires:  kf5-kconfig-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 addon for unit conversions
+KDE Frameworks 5 Tier 2 addon for unit conversions.
 
 
 %package        devel

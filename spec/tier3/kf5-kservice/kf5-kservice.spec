@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 solution for working with .desktop files
+Summary:        KDE Frameworks 5 Tier 3 solution for advanced plugin and service introspection
 
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -28,7 +28,8 @@ BuildRequires:  kf5-kdoctools-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution for working with .desktop files
+KDE Frameworks 5 Tier 3 solution for advanced plugin and service
+introspection.
 
 
 %package        devel
@@ -69,9 +70,9 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 %files -f kservice5_qt.lang
 %doc COPYING COPYING.LIB README.md
+%config %{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 %{_kf5_bindir}/kbuildsycoca5
 %{_kf5_libdir}/libKF5Service.so.*
-%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_mandir}/man8/*
 

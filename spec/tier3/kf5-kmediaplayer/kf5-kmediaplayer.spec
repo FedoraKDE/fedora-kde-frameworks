@@ -3,16 +3,16 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module with interface for media player features
 
-License:        X11, LGPLv2
+License:        MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
 
 BuildRequires:  kf5-rpm-macros
@@ -25,7 +25,7 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module with interfaces for media player features
+KDE Frameworks 5 Tier 3 module with plugin interfaces for media player features.
 
 
 %package        devel
@@ -71,6 +71,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- fixed license
+- fixed Source0 URL
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

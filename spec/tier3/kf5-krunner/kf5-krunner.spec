@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 module for KRunner
+Summary:        KDE Frameworks 5 Tier 3 solution with parallelized query system
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -31,7 +31,7 @@ BuildRequires:  kf5-threadweaver-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for KRunner
+KRunner provides a parallelized query system extendable via plugins.
 
 
 %package        devel

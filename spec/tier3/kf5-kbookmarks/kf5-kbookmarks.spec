@@ -6,7 +6,7 @@ Version:        4.100.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for bookmarks manipulation
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -30,7 +30,7 @@ Requires:       kf5-filesystem
 
 %description
 KBookmarks lets you access and manipulate bookmarks stored using the
-[XBEL format][1].
+XBEL format.
 
 %package        devel
 Summary:        Development files for %{name}

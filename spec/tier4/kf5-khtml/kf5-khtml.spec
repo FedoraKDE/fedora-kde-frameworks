@@ -4,9 +4,9 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 4 solution with KHTML engine
+Summary:        KDE Frameworks 5 Tier 4 solution with KHTML, a HTML rendering engine
 
-License:        GPLv3
+License:        LGPLv2+ and GPLv3
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \

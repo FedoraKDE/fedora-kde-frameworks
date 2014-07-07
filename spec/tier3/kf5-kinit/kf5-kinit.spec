@@ -5,7 +5,6 @@ Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        2%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
-
 License:        LGPLv2+ and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \

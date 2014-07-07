@@ -3,10 +3,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
-License:        GPLv2+
+License:        LGPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -34,20 +34,16 @@ Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       %{name}-runtime%{?_isa} = %{version}-%{release}
 
 %description
-KDE Frameworks 5 Tier 3 solution for password management.
+KWallet is a secure and unified container for user passwords.
 
 %package        libs
 Summary:        KWallet framework libraries
 Requires:       kf5-filesystem
-Obsoletes:      kf5-kwallet-api < 4.99.0-1
-Provides:       kf5-kwallet-api = %{version}-%{release}
-Provides:       kf5-kwallet-api%{?_isa} = %{version}-%{release}
 %description    libs
 Provides API to access KWallet data from applications.
 
 %package        runtime
 Summary:        KWallet runtime deamon
-Requires:       kf5-kded
 
 %description    runtime
 Provides a runtime deamon that stores passwords.
@@ -87,9 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-%post -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 
 %files
@@ -115,6 +111,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Tue Jun 24 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Fix %%post and %%postun
+- Removed kf5-kded from Requires to avoid circular dependency
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

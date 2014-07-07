@@ -4,7 +4,7 @@
 Name:           kf5-%{framework}
 Version:        4.100.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 4 module for API documentation generation
+Summary:        KDE Frameworks 5 Tier 4 module with scripts and data for building API documentation
 
 License:        GPLv3 BSD  LGPLv3 QPLv1
 URL:            http://download.kde.org/
@@ -24,7 +24,8 @@ BuildRequires:  python-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 4 module for API documentation generation
+Scripts and data for building API documentation (dox) in a standard format and
+style.
 
 %prep
 %setup -q -n %{framework}-%{version}
