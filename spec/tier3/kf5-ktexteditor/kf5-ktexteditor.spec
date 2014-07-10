@@ -1,8 +1,8 @@
 %define framework ktexteditor
 
 Name:           kf5-%{framework}
-Version:        4.100.0
-Release:        3%{?_dist}
+Version:        5.0.0
+Release:        1%{?_dist}
 Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
 License:        LGPLv2+
@@ -12,10 +12,7 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-# Upstream patch
-Patch0:         ktexteditor-move-katepart-into-kf5-parts-sudir-of-plugin-dir.patch
+Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -53,8 +50,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .katepartInstallDir
 
 %build
 mkdir -p %{_target_platform}
@@ -97,6 +92,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+- KDE Frameworks 5.0.0
+
 * Tue Jul 01 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
 - Add %%config and call to update-desktop-database
 

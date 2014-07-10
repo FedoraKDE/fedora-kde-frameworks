@@ -2,8 +2,8 @@
 #%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.100.0
-Release:        2%{?dist}
+Version:        5.0.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 scripts and data for building API documentation
 BuildArch:      noarch
 
@@ -13,7 +13,7 @@ URL:            http://download.kde.org/
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
 BuildRequires:  kf5-rpm-macros
@@ -57,6 +57,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/depdiagram-generate-all
 
 %changelog
+* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+- KDE Frameworks 5.0.0
+
 * Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
 - Fixed License
 - Fixed summary

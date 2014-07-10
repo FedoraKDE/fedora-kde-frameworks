@@ -2,8 +2,8 @@
 #%define snapshot 20140206
 
 Name:           kf5-%{framework}
-Version:        4.100.0
-Release:        2%{?dist}
+Version:        5.0.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 solution with KHTML, a HTML rendering engine
 
 License:        LGPLv2+ and GPLv3 and MIT and BSD
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/stable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
 
 BuildRequires:  fdupes
@@ -113,6 +113,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+- KDE Frameworks 5.0.0
+
 * Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
 - Fixed license
 - Fixed installation of config files

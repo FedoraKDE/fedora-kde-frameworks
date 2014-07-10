@@ -1,6 +1,6 @@
 Name:           kf5
-Version:        4.99.0
-Release:        6
+Version:        5.0.0
+Release:        1
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,12 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+- KDE Frameworks 5.0.0
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.99.0-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed Jun 04 2014 Daniel Vrátil <dvratil@redhat.com> 4.99.0-6
 - Remove kf5 suffix from -DPLUGIN_INSTALL_DIR as packages now specify that on their own
 

@@ -2,8 +2,8 @@
 %define framework kdoctools
 
 Name:           kf5-%{framework}
-Version:        4.100.0
-Release:        3%{?dist}
+Version:        5.0.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
 License:        GPLv2+ and MIT
@@ -12,7 +12,7 @@ URL:            http://www.kde.org
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libxslt-devel
 BuildRequires:  libxml2-devel
@@ -86,6 +86,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
+* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+- KDE Frameworks 5.0.0
+
 * Wed Jun 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
 - -devel Provides -static (RHBZ#1113070)
 - -doc Requires kf5-filesystem
