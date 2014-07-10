@@ -3,19 +3,15 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
-License:        GPLv2+ and LGPLv2+
+License:        GPLv2+ and LGPLv2+ and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-Provides:       kf5-kde4support = %{version}-%{release}
-Provides:       kf5-kde4support%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-kde4support < 4.99.0-1
+Source0:        http://download.kde.org/unstable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 BuildRequires:  libSM-devel
@@ -61,9 +57,6 @@ functionality has been replaced by code in CMake, Qt and other frameworks.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Provides:       kf5-kde4support-devel = %{version}-%{release}
-Provides:       kf5-kde4support-devel%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-kde4support-devel < 4.99.0-1
 Requires:       kf5-kauth-devel
 Requires:       kf5-kconfigwidgets-devel
 Requires:       kf5-kcoreaddons-devel
@@ -131,10 +124,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/locale/kf5_all_languages
 %{_kf5_datadir}/kf5/widgets/
 %{_kf5_datadir}/kf5/kssl/ca-bundle.crt
-%{_kf5_sysconfdir}/xdg/colors
-%{_kf5_sysconfdir}/xdg/kdebug.areas
-%{_kf5_sysconfdir}/xdg/kdebugrc
-%{_kf5_sysconfdir}/xdg/ksslcalist
+%config %{_kf5_sysconfdir}/xdg/colors
+%config %{_kf5_sysconfdir}/xdg/kdebug.areas
+%config %{_kf5_sysconfdir}/xdg/kdebugrc
+%config %{_kf5_sysconfdir}/xdg/ksslcalist
 %{_kf5_docdir}/HTML/en/kdebugdialog5
 
 %files devel
@@ -149,6 +142,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Fixed license
+- Fixed Source0 URL
+- Fixed installation of config files
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

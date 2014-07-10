@@ -1,7 +1,7 @@
 %define framework kactivities
 
 Name:           kf5-%{framework}
-Summary:        A KDE Frameworks 5 Tier 3 run-time and library to organize user work into separate activities
+Summary:        A KDE Frameworks 5 Tier 3 to organize user work into separate activities
 Version:        4.100.0
 Release:        1%{?dist}
 

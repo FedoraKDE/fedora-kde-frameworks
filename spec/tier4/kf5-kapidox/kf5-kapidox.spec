@@ -3,10 +3,11 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 4 module with scripts and data for building API documentation
+Release:        2%{?dist}
+Summary:        KDE Frameworks 5 Tier 4 scripts and data for building API documentation
+BuildArch:      noarch
 
-License:        GPLv3 BSD  LGPLv3 QPLv1
+License:        BSD
 URL:            http://download.kde.org/
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -19,7 +20,7 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 
 Requires:       kf5-filesystem
 
@@ -46,8 +47,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%{_kf5_prefix}/lib/python2.7/site-packages/kapidox
-%{_kf5_prefix}/lib/python2.7/site-packages/kapidox-5.0.0-py2.7.egg-info
+%doc LICENSE
+%{python2_sitelib}/kapidox
+%{python2_sitelib}/kapidox-5.0.0-py2.7.egg-info
 %{_kf5_bindir}/kgenapidox
 %{_kf5_bindir}/depdiagram-prepare
 %{_kf5_bindir}/depdiagram-generate
@@ -55,6 +57,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/depdiagram-generate-all
 
 %changelog
+* Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Fixed License
+- Fixed summary
+- Fixed BR
+- Made package noarch
+- Added license
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

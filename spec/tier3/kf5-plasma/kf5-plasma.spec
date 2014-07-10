@@ -3,10 +3,10 @@
 
 Name:           kf5-%{framework}
 Version:        4.100.0
-Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 framework with foundations to build a primary user interface
+Release:        3%{?dist}
+Summary:        KDE Frameworks 5 Tier 3 framework is foundation to build a primary user interface
 
-License:        GPLv2+ and LGPLv2+
+License:        GPLv2+ and LGPLv2+ and BSD
 URL:            http://www.kde.org
 
 # git archive --format=tar --prefix=%{name}-%{version}/ \
@@ -14,9 +14,6 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 # Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-framework-%{version}.tar.xz
-
-Provides:       plasma-framework
-Obsoletes:      plasma-framework
 
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -64,7 +61,7 @@ Requires:       kf5-filesystem
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       extra-cmake-modules
-Requires:       kf5-kactivities-libs-devel
+Requires:       kf5-kactivities-devel
 Requires:       kf5-karchive-devel
 Requires:       kf5-kconfigwidgets-devel
 Requires:       kf5-kcoreaddons-devel
@@ -133,6 +130,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
+- Fix BR
+
+* Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
+- Fixed license
+- Removed old Provides/Obsoleted
+
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 

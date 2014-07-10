@@ -35,8 +35,8 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 module for downloading and sharing additional application
-data like plugins, themes, motives, etc.
+KDE Frameworks 5 Tier 3 module for downloading and sharing additional
+application data like plugins, themes, motives, etc.
 
 
 %package        devel
