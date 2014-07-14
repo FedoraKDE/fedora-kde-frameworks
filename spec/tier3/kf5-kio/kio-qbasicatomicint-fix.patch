@@ -1,0 +1,13 @@
+diff --git a/src/core/connectionbackend.cpp b/src/core/connectionbackend.cpp
+index 06981b4..18faa07 100644
+--- a/src/core/connectionbackend.cpp
++++ b/src/core/connectionbackend.cpp
+@@ -138,7 +138,7 @@ bool ConnectionBackend::listenForRemote()
+         const QString prefix = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+         static QBasicAtomicInt s_socketCounter = Q_BASIC_ATOMIC_INITIALIZER(0);
+         s_socketCounter.ref();
+-        QTemporaryFile socketfile(prefix + QLatin1Char('/') + QCoreApplication::instance()->applicationName() + QString("XXXXXX.%1.slave-socket").arg(s_socketCounter));
++        QTemporaryFile socketfile(prefix + QLatin1Char('/') + QCoreApplication::instance()->applicationName() + QString("XXXXXX.%1.slave-socket").arg(s_socketCounter.load()));
+         if (!socketfile.open()) {
+             errorString = i18n("Unable to create io-slave: %1", strerror(errno));
+             return false;

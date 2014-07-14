@@ -112,6 +112,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/designer/*.so
 %{_kf5_plugindir}/kio/metainfo.so
+%{_kf5_plugindir}/kded/networkstatus.so
 %{_kf5_mandir}/man1/*
 %{_kf5_datadir}/kservices5/*.protocol
 %{_kf5_datadir}/kservices5/*.desktop

@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+Patch0:         kio-qbasicatomicint-fix.patch
+
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  zlib-devel
@@ -89,6 +91,8 @@ Documentation for %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+%patch0 -p1 -b .qbasicatomicint
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -120,7 +124,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %config %{_kf5_sysconfdir}/xdg/accept-languages.codes
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_plugindir}/urifilters/*.so
-%{_kf5_qtplugindir}/*.so
+%{_kf5_plugindir}/kded/*.so
 %{_kf5_libexecdir}/kio_http_cache_cleaner
 %{_kf5_libexecdir}/kioexec
 %{_kf5_libexecdir}/kpac_dhcp_helper

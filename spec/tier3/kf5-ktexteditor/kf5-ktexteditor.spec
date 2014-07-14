@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.0.0
-Release:        1%{?_dist}
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
 License:        LGPLv2+
