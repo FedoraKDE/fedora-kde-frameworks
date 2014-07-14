@@ -14,6 +14,8 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+Patch0:		kconfig-qbasicatomicint-conversion.patch
+
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -53,6 +55,8 @@ their changes to their respective configuration files.
 
 %prep
 %setup -q -n %{framework}-%{version}
+
+%patch0 -p1 -b .qbasicatomicint
 
 %build
 mkdir -p %{_target_platform}

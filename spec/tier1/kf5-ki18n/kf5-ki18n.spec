@@ -14,8 +14,6 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Patch0:		ki18n-plugin-install-dir.patch
-
 BuildRequires:  perl
 
 BuildRequires:  kf5-rpm-macros
@@ -40,8 +38,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .pluginInstall
 
 %build
 mkdir -p %{_target_platform}
