@@ -96,7 +96,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files -f khtml5_qt.lang
 %doc COPYING.GPL3 COPYING.LIB README.md
 %{_kf5_libdir}/libKF5KHtml.so.*
-%{_kf5_qtplugindir}/*.so
+%{_kf5_plugindir}/parts/*.so
 %{_kf5_datadir}/kf5/kjava/
 %{_kf5_datadir}/kf5/khtml/
 %{_kf5_datadir}/khtml/
