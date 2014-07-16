@@ -1,0 +1,180 @@
+diff --git a/ksgrd/CMakeLists.txt b/ksgrd/CMakeLists.txt
+index ffb7b89..7fd6065 100644
+--- a/ksgrd/CMakeLists.txt
++++ b/ksgrd/CMakeLists.txt
+@@ -13,11 +13,11 @@ set(ksgrd_LIB_SRCS
+ add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+ remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_STRICT_ITERATORS -DQT_NO_CAST_FROM_BYTEARRAY -DQT_NO_KEYWORDS)
+ 
+-add_library(ksgrd ${ksgrd_LIB_SRCS})
+-add_library(KF5::SysGuard ALIAS ksgrd)
+-target_include_directories(ksgrd PUBLIC "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard/>")
++add_library(KF5SGrd ${ksgrd_LIB_SRCS})
++add_library(KF5::SysGuard ALIAS KF5SGrd)
++target_include_directories(KF5SGrd PUBLIC "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard/>")
+ 
+-target_link_libraries(ksgrd
++target_link_libraries(KF5SGrd
+     PUBLIC
+         Qt5::Core
+         Qt5::Widgets # QWidget in SensorManager.h
+@@ -30,8 +30,8 @@ target_link_libraries(ksgrd
+         KF5::KDE4Support
+ )
+ 
+-set_target_properties(ksgrd PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME SysGuard)
+-install(TARGETS ksgrd EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
++set_target_properties(KF5SGrd PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME SysGuard)
++install(TARGETS KF5SGrd EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+ install(FILES SensorAgent.h SensorClient.h SensorManager.h SensorShellAgent.h SensorSocketAgent.h DESTINATION ${INCLUDE_INSTALL_DIR}/ksysguard/ksgrd COMPONENT Devel)
+ 
+diff --git a/lsofui/CMakeLists.txt b/lsofui/CMakeLists.txt
+index 83498ac..06e43c9 100644
+--- a/lsofui/CMakeLists.txt
++++ b/lsofui/CMakeLists.txt
+@@ -9,18 +9,18 @@ qt5_wrap_ui( lsofui_LIB_SRCS
+    LsofSearchWidget.ui 
+ )
+ 
+-add_library(lsofui ${lsofui_LIB_SRCS})
+-add_library(KF5::LsofUi ALIAS lsofui)
++add_library(KF5LsofUi ${lsofui_LIB_SRCS})
++add_library(KF5::LsofUi ALIAS KF5LsofUi)
+ 
+-target_link_libraries(lsofui
++target_link_libraries(KF5LsofUi
+     PUBLIC
+         Qt5::Widgets
+         KF5::KDE4Support
+     PRIVATE
+         KF5::I18n
+ )
+-set_target_properties(lsofui PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME LsofUi)
+-install(TARGETS lsofui EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
++set_target_properties(KF5LsofUi PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME LsofUi)
++install(TARGETS KF5LsofUi EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+ ########### install files ###############
+ 
+diff --git a/processcore/CMakeLists.txt b/processcore/CMakeLists.txt
+index 9fef4ec..79fab0b 100644
+--- a/processcore/CMakeLists.txt
++++ b/processcore/CMakeLists.txt
+@@ -13,10 +13,10 @@ set(ksysguard_LIB_SRCS
+ 
+ 
+ 
+-add_library(processcore ${ksysguard_LIB_SRCS})
+-add_library(KF5::ProcessCore ALIAS processcore)
++add_library(KF5ProcessCore ${ksysguard_LIB_SRCS})
++add_library(KF5::ProcessCore ALIAS KF5ProcessCore)
+ 
+-target_link_libraries(processcore
++target_link_libraries(KF5ProcessCore
+    PUBLIC
+     Qt5::Core
+    PRIVATE
+@@ -27,12 +27,12 @@ target_link_libraries(processcore
+ 
+ if( ${CMAKE_SYSTEM_NAME} MATCHES "NetBSD" )
+   message(STATUS "Adding kvm library on NetBSD")
+-  target_link_libraries(processcore kvm)
++  target_link_libraries(KF5ProcessCore kvm)
+ endif()
+ 
+-target_include_directories(processcore PUBLIC "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard>")
+-set_target_properties(processcore PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME ProcessCore)
+-install(TARGETS processcore EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
++target_include_directories(KF5ProcessCore PUBLIC "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard>")
++set_target_properties(KF5ProcessCore PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING} SOVERSION ${LIBKSYSGUARD_SOVERSION} EXPORT_NAME ProcessCore)
++install(TARGETS KF5ProcessCore EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+ ########### install files ###############
+ 
+diff --git a/processui/CMakeLists.txt b/processui/CMakeLists.txt
+index e457f02..2bb7945 100644
+--- a/processui/CMakeLists.txt
++++ b/processui/CMakeLists.txt
+@@ -18,15 +18,15 @@ qt5_wrap_ui( processui_LIB_SRCS
+    ProcessWidgetUI.ui
+ )
+ 
+-add_library(processui ${processui_LIB_SRCS})
+-add_library(KF5::ProcessUi ALIAS processui)
++add_library(KF5ProcessUi ${processui_LIB_SRCS})
++add_library(KF5::ProcessUi ALIAS KF5ProcessUi)
+ 
+ if(X11_XRes_FOUND)
+-    target_link_libraries(processui PRIVATE ${X11_XRes_LIB} ${X11_LIBRARIES})
++    target_link_libraries(KF5ProcessUi PRIVATE ${X11_XRes_LIB} ${X11_LIBRARIES})
+     include_directories(${X11_XRes_INCLUDE_PATH})
+ endif()
+ 
+-target_link_libraries(processui
++target_link_libraries(KF5ProcessUi
+     PUBLIC
+         KF5::ProcessCore
+         Qt5::Widgets
+@@ -35,23 +35,23 @@ target_link_libraries(processui
+         Qt5::WebKitWidgets
+         KF5::KDE4Support
+ )
+-target_include_directories(processui
++target_include_directories(KF5ProcessUi
+     PUBLIC
+         "$<BUILD_INTERFACE:${libksysguard_SOURCE_DIR}>"
+         "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ksysguard>"
+ )
+ 
+ if(X11_FOUND)
+-    target_link_libraries(processui PRIVATE Qt5::X11Extras KF5::WindowSystem)
++    target_link_libraries(KF5ProcessUi PRIVATE Qt5::X11Extras KF5::WindowSystem)
+ endif()
+ 
+-set_target_properties(processui
++set_target_properties(KF5ProcessUi
+    PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING}
+    SOVERSION ${LIBKSYSGUARD_SOVERSION}
+    EXPORT_NAME ProcessUi
+ )
+ 
+-install(TARGETS processui EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
++install(TARGETS KF5ProcessUi EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+ #----------------------
+ 
+diff --git a/signalplotter/CMakeLists.txt b/signalplotter/CMakeLists.txt
+index d5b12b2..cb6d810 100644
+--- a/signalplotter/CMakeLists.txt
++++ b/signalplotter/CMakeLists.txt
+@@ -6,10 +6,10 @@ set(ksignalplotter_LIB_SRCS
+     kgraphicssignalplotter.cpp
+ )
+ # kde4_moc_headers(ksignalplotter ksignalplotter.h kgraphicssignalplotter.h)
+-add_library(ksignalplotter ${ksignalplotter_LIB_SRCS})
+-add_library(KF5::SignalPlotter ALIAS ksignalplotter)
++add_library(KF5SignalPlotter ${ksignalplotter_LIB_SRCS})
++add_library(KF5::SignalPlotter ALIAS KF5SignalPlotter)
+ 
+-target_link_libraries(ksignalplotter
++target_link_libraries(KF5SignalPlotter
+     PUBLIC
+         Qt5::Widgets
+         KF5::I18n # klocalizedstring.h
+@@ -18,13 +18,13 @@ target_link_libraries(ksignalplotter
+         KF5::KDE4Support
+ )
+ 
+-set_target_properties(ksignalplotter
++set_target_properties(KF5SignalPlotter
+    PROPERTIES VERSION ${LIBKSYSGUARD_VERSION_STRING}
+    SOVERSION ${LIBKSYSGUARD_SOVERSION}
+    EXPORT_NAME SignalPlotter
+ )
+ 
+-install(TARGETS ksignalplotter EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
++install(TARGETS KF5SignalPlotter EXPORT libksysguardLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS} )
+ 
+ #----------------------
+ 
