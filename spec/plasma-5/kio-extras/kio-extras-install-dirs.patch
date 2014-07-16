@@ -1,0 +1,612 @@
+diff --git a/archive/CMakeLists.txt b/archive/CMakeLists.txt
+index ec2cf7a..9ead5e1 100644
+--- a/archive/CMakeLists.txt
++++ b/archive/CMakeLists.txt
+@@ -1,9 +1,9 @@
+ add_subdirectory(tests)
+ 
+-add_library(kio_archive MODULE kio_archive.cpp)
+-target_link_libraries(kio_archive KF5::KIOCore KF5::Archive KF5::KDE4Support)
++add_library(archive MODULE kio_archive.cpp)
++target_link_libraries(archive KF5::KIOCore KF5::Archive KF5::KDE4Support)
+ 
+-install(TARGETS kio_archive DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS archive DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ install( FILES tar.protocol ar.protocol zip.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
+ 
+ 
+diff --git a/archive/ar.protocol b/archive/ar.protocol
+index 7a848e5..6e2babb 100644
+--- a/archive/ar.protocol
++++ b/archive/ar.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_archive
++exec=archive
+ protocol=ar
+ archiveMimetype=application/x-archive
+ input=filesystem
+diff --git a/archive/tar.protocol b/archive/tar.protocol
+index 19447a5..f7ade07 100644
+--- a/archive/tar.protocol
++++ b/archive/tar.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_archive
++exec=archive
+ protocol=tar
+ archiveMimetype=application/x-tar,application/x-compressed-tar,application/x-bzip-compressed-tar,application/x-webarchive,application/x-lzma-compressed-tar,application/x-xz-compressed-tar
+ input=filesystem
+diff --git a/archive/zip.protocol b/archive/zip.protocol
+index ce7c54b..20178bf 100644
+--- a/archive/zip.protocol
++++ b/archive/zip.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_archive
++exec=archive
+ protocol=zip
+ archiveMimetype=application/zip
+ input=filesystem
+diff --git a/bookmarks/CMakeLists.txt b/bookmarks/CMakeLists.txt
+index 703b109..8da22eb 100644
+--- a/bookmarks/CMakeLists.txt
++++ b/bookmarks/CMakeLists.txt
+@@ -2,11 +2,11 @@
+ 
+ set(kio_bookmarks_PART_SRCS kio_bookmarks.cpp kio_bookmarks_html.cpp kio_bookmarks_pixmap.cpp)
+ 
+-add_library(kio_bookmarks MODULE ${kio_bookmarks_PART_SRCS})
++add_library(bookmarks MODULE ${kio_bookmarks_PART_SRCS})
+ 
+-target_link_libraries(kio_bookmarks KF5::KIOCore KF5::KDE4Support KF5::Solid)
++target_link_libraries(bookmarks KF5::KIOCore KF5::KDE4Support KF5::Solid)
+ 
+-install(TARGETS kio_bookmarks  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS bookmarks  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ 
+ 
+ ########### install files ###############
+diff --git a/bookmarks/bookmarks.protocol b/bookmarks/bookmarks.protocol
+index 0642bd2..26e23dc 100644
+--- a/bookmarks/bookmarks.protocol
++++ b/bookmarks/bookmarks.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_bookmarks
++exec=bookmarks
+ protocol=bookmarks
+ input=none
+ output=stream
+diff --git a/desktop/CMakeLists.txt b/desktop/CMakeLists.txt
+index f7bd670..649d3d4 100644
+--- a/desktop/CMakeLists.txt
++++ b/desktop/CMakeLists.txt
+@@ -1,18 +1,18 @@
+ add_subdirectory(tests)
+ 
+-add_library(kio_desktop MODULE kio_desktop.cpp)
++add_library(desktop MODULE kio_desktop.cpp)
+ 
+-target_link_libraries(kio_desktop KF5::KIOCore KF5::KDE4Support)
++target_link_libraries(desktop KF5::KIOCore KF5::KDE4Support)
+ 
+-install(TARGETS kio_desktop DESTINATION  ${PLUGIN_INSTALL_DIR} )
++install(TARGETS desktop DESTINATION  ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ ########### next target ###############
+ 
+-add_library(kded_desktopnotifier MODULE desktopnotifier.cpp)
++add_library(desktopnotifier MODULE desktopnotifier.cpp)
+ 
+-target_link_libraries(kded_desktopnotifier KF5::KIOCore KF5::DBusAddons KF5::KDE4Support)
++target_link_libraries(desktopnotifier KF5::KIOCore KF5::DBusAddons KF5::KDE4Support)
+ 
+-install(TARGETS kded_desktopnotifier  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS desktopnotifier  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kded )
+ 
+ ########### install files ###############
+ 
+diff --git a/desktop/desktopnotifier.desktop b/desktop/desktopnotifier.desktop
+index a32ee6f..c7eb15c 100644
+--- a/desktop/desktopnotifier.desktop
++++ b/desktop/desktopnotifier.desktop
+@@ -71,7 +71,7 @@ Name[zh_CN]=目录监视器
+ Name[zh_TW]=目錄監控器
+ ServiceTypes=KDEDModule
+ X-KDE-ServiceTypes=KDEDModule
+-X-KDE-Library=desktopnotifier
++X-KDE-Library=kf5/kded/desktopnotifier
+ X-KDE-FactoryName=desktopnotifier
+ X-KDE-DBus-ModuleName=desktopnotifier
+ X-KDE-Kded-load-on-demand=true
+diff --git a/filter/CMakeLists.txt b/filter/CMakeLists.txt
+index 240cc7b..c13feeb 100644
+--- a/filter/CMakeLists.txt
++++ b/filter/CMakeLists.txt
+@@ -14,10 +14,10 @@ set_package_properties(LibLZMA PROPERTIES DESCRIPTION "A very high compression r
+                       )
+ 
+ 
+-add_library(kio_filter MODULE filter.cc)
+-target_link_libraries(kio_filter KF5::KDE4Support KF5::Archive KF5::KIOCore)
++add_library(filter MODULE filter.cc)
++target_link_libraries(filter KF5::KDE4Support KF5::Archive KF5::KIOCore)
+ 
+-install(TARGETS kio_filter DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS filter DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ install( FILES gzip.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
+ 
+ if(BZIP2_FOUND)
+diff --git a/filter/bzip.protocol b/filter/bzip.protocol
+index 7d3cb57..5896d6d 100644
+--- a/filter/bzip.protocol
++++ b/filter/bzip.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_filter
++exec=filter
+ protocol=bzip
+ archiveMimetype=application/x-bzip
+ determineMimetypeFromExtension=false
+diff --git a/filter/bzip2.protocol b/filter/bzip2.protocol
+index 1baaf7d..af10dda 100644
+--- a/filter/bzip2.protocol
++++ b/filter/bzip2.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_filter
++exec=filter
+ protocol=bzip2
+ archiveMimetype=application/x-bzip2
+ determineMimetypeFromExtension=false
+diff --git a/filter/gzip.protocol b/filter/gzip.protocol
+index 8ed55ec..64ac565 100644
+--- a/filter/gzip.protocol
++++ b/filter/gzip.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_filter
++exec=filter
+ protocol=gzip
+ archiveMimetype=application/gzip
+ determineMimetypeFromExtension=false
+diff --git a/filter/lzma.protocol b/filter/lzma.protocol
+index 13bb28e..f0f866e 100644
+--- a/filter/lzma.protocol
++++ b/filter/lzma.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_filter
++exec=filter
+ protocol=lzma
+ archiveMimetype=application/x-lzma
+ determineMimetypeFromExtension=true
+diff --git a/filter/xz.protocol b/filter/xz.protocol
+index f4fb7f0..6ec874d 100644
+--- a/filter/xz.protocol
++++ b/filter/xz.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_filter
++exec=filter
+ protocol=xz
+ archiveMimetype=application/x-xz
+ determineMimetypeFromExtension=false
+diff --git a/fish/CMakeLists.txt b/fish/CMakeLists.txt
+index 24136d4..694f456 100644
+--- a/fish/CMakeLists.txt
++++ b/fish/CMakeLists.txt
+@@ -41,15 +41,15 @@ if (MD5SUM_EXECUTABLE)
+ 
+    set(kio_fish_PART_SRCS fish.cpp ${CMAKE_CURRENT_BINARY_DIR}/fishcode.h)
+ 
+-   add_library(kio_fish MODULE ${kio_fish_PART_SRCS})
++   add_library(fish MODULE ${kio_fish_PART_SRCS})
+ 
+-   target_link_libraries(kio_fish KF5::KIOCore KF5::KDE4Support)
++   target_link_libraries(fish KF5::KIOCore KF5::KDE4Support)
+ 
+    if (UTIL_LIBRARIES)
+-      target_link_libraries(kio_fish ${UTIL_LIBRARIES})
++      target_link_libraries(fish ${UTIL_LIBRARIES})
+    endif ()
+ 
+-   install(TARGETS kio_fish  DESTINATION ${PLUGIN_INSTALL_DIR} )
++   install(TARGETS fish  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ 
+    ########### install files ###############
+diff --git a/fish/fish.protocol b/fish/fish.protocol
+index ff5784e..39015ee 100644
+--- a/fish/fish.protocol
++++ b/fish/fish.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_fish
++exec=fish
+ protocol=fish
+ input=none
+ output=filesystem
+diff --git a/info/CMakeLists.txt b/info/CMakeLists.txt
+index 0163e82..3035167 100644
+--- a/info/CMakeLists.txt
++++ b/info/CMakeLists.txt
+@@ -1,11 +1,11 @@
+-add_library(kio_info MODULE info.cc)
+-target_link_libraries(kio_info
++add_library(info MODULE info.cc)
++target_link_libraries(info
+     KF5::I18n
+     KF5::IconThemes
+     KF5::KIOCore
+ )
+ 
+-install(TARGETS kio_info  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS info  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ install( FILES kde-info2html.conf DESTINATION  ${DATA_INSTALL_DIR}/kio_info )
+ install( FILES info.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
+ install( PROGRAMS kde-info2html DESTINATION  ${DATA_INSTALL_DIR}/kio_info )
+diff --git a/info/info.protocol b/info/info.protocol
+index fa8cbb4..67f3fe9 100644
+--- a/info/info.protocol
++++ b/info/info.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_info
++exec=info
+ protocol=info
+ input=none
+ output=filesystem
+diff --git a/man/CMakeLists.txt b/man/CMakeLists.txt
+index 3343ed8..ca30612 100644
+--- a/man/CMakeLists.txt
++++ b/man/CMakeLists.txt
+@@ -3,10 +3,10 @@ add_subdirectory( tests )
+ ########### next target ###############
+ 
+ set(kio_man_PART_SRCS man2html.cpp kio_man.cpp request_hash.cpp )
+-add_library(kio_man MODULE ${kio_man_PART_SRCS})
++add_library(man MODULE ${kio_man_PART_SRCS})
+ 
+-target_link_libraries(kio_man KF5::KIOCore Qt5::Widgets KF5::Archive KF5::KDE4Support)
+-install(TARGETS kio_man  DESTINATION ${PLUGIN_INSTALL_DIR} )
++target_link_libraries(man KF5::KIOCore Qt5::Widgets KF5::Archive KF5::KDE4Support)
++install(TARGETS man  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ ########### next target ###############
+ 
+@@ -14,6 +14,6 @@ add_library(kmanpart kmanpart.cpp)
+ 
+ target_link_libraries(kmanpart KF5::KHtml KF5::KDE4Support)
+ 
+-install(TARGETS kmanpart  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS kmanpart  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/parts )
+ install(FILES man.protocol kmanpart.desktop  DESTINATION  ${SERVICES_INSTALL_DIR})
+ 
+diff --git a/man/kmanpart.desktop b/man/kmanpart.desktop
+index cc5df64..b38bf80 100644
+--- a/man/kmanpart.desktop
++++ b/man/kmanpart.desktop
+@@ -183,4 +183,4 @@ Name[x-test]=xxKManPartxx
+ Name[zh_CN]=KManPart
+ Name[zh_TW]=KManPart
+ X-KDE-ServiceTypes=KParts/ReadOnlyPart,Browser/View
+-X-KDE-Library=libkmanpart
++X-KDE-Library=kf5/parts/libkmanpart
+diff --git a/man/man.protocol b/man/man.protocol
+index cc100ce..8e25220 100644
+--- a/man/man.protocol
++++ b/man/man.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_man
++exec=man
+ protocol=man
+ input=none
+ output=filesystem
+diff --git a/network/ioslave/CMakeLists.txt b/network/ioslave/CMakeLists.txt
+index 67fc482..588657d 100644
+--- a/network/ioslave/CMakeLists.txt
++++ b/network/ioslave/CMakeLists.txt
+@@ -16,11 +16,11 @@ set( kio_network_SRCS
+ 
+ # qt5_add_dbus_interface( kio_network_SRCS  ../kded/org.kde.network.xml networkdbusproxy )
+ 
+-add_library(kio_network MODULE  ${kio_network_SRCS} )
++add_library(network MODULE  ${kio_network_SRCS} )
+ 
+-target_link_libraries( kio_network  molletnetwork KF5::KIOCore )
++target_link_libraries( network  molletnetwork KF5::KIOCore )
+ 
+-install( TARGETS kio_network  DESTINATION ${PLUGIN_INSTALL_DIR})
++install( TARGETS network  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ 
+ install( FILES network.protocol  DESTINATION ${SERVICES_INSTALL_DIR})
+ install( FILES network.desktop  DESTINATION ${DATA_INSTALL_DIR}/remoteview)
+diff --git a/network/ioslave/network.protocol b/network/ioslave/network.protocol
+index 1e10cc6..a38ceb8 100644
+--- a/network/ioslave/network.protocol
++++ b/network/ioslave/network.protocol
+@@ -78,7 +78,7 @@ Description[wa]=On vårlet d' I/R po betchter el rantoele
+ Description[x-test]=xxA kioslave to browse the networkxx
+ Description[zh_CN]=浏览网络的 KIO slave
+ Description[zh_TW]=瀏覽網路的 kioslave
+-exec=kio_network
++exec=network
+ 
+ reading=true
+ listing=Name
+diff --git a/network/kded/CMakeLists.txt b/network/kded/CMakeLists.txt
+index 3be676e..762e848 100644
+--- a/network/kded/CMakeLists.txt
++++ b/network/kded/CMakeLists.txt
+@@ -12,11 +12,11 @@ set( kded_networkwatcher_SRCS
+ 
+ qt5_add_dbus_adaptor( kded_networkwatcher_SRCS  org.kde.network.kioslavenotifier.xml kioslavenotifier.h Mollet::KioSlaveNotifier )
+ 
+-add_library(kded_networkwatcher MODULE  ${kded_networkwatcher_SRCS} )
++add_library(networkwatcher MODULE  ${kded_networkwatcher_SRCS} )
+ 
+-target_link_libraries( kded_networkwatcher KF5::DBusAddons KF5::KIOCore molletnetwork )
++target_link_libraries( networkwatcher KF5::DBusAddons KF5::KIOCore molletnetwork )
+ 
+-install( TARGETS kded_networkwatcher  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install( TARGETS networkwatcher  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kded )
+ 
+ install( FILES networkwatcher.desktop  DESTINATION ${SERVICES_INSTALL_DIR}/kded )
+ install( FILES org.kde.network.kioslavenotifier.xml  DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} RENAME kf5_org.kde.network.kioslavenotifier.xml )
+diff --git a/network/kded/networkwatcher.desktop b/network/kded/networkwatcher.desktop
+index f9fdce3..990901d 100644
+--- a/network/kded/networkwatcher.desktop
++++ b/network/kded/networkwatcher.desktop
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=KDEDModule
+-X-KDE-Library=networkwatcher
++X-KDE-Library=kf5/kded/networkwatcher
+ X-KDE-DBus-ModuleName=networkwatcher
+ X-KDE-Kded-autoload=false
+ X-KDE-Kded-load-on-demand=true
+diff --git a/nfs/CMakeLists.txt b/nfs/CMakeLists.txt
+index dfc6eae..df1f483 100644
+--- a/nfs/CMakeLists.txt
++++ b/nfs/CMakeLists.txt
+@@ -1,7 +1,7 @@
+-add_library(kio_nfs MODULE kio_nfs.cpp mount_xdr.c nfs_prot_xdr.c)
+-target_link_libraries(kio_nfs KF5::KIOCore KF5::I18n)
++add_library(nfs MODULE kio_nfs.cpp mount_xdr.c nfs_prot_xdr.c)
++target_link_libraries(nfs KF5::KIOCore KF5::I18n)
+ 
+-install(TARGETS kio_nfs  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS nfs  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ ########### install files ###############
+ 
+diff --git a/nfs/nfs.protocol b/nfs/nfs.protocol
+index 85cf203..1a553fa 100644
+--- a/nfs/nfs.protocol
++++ b/nfs/nfs.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_nfs
++exec=nfs
+ protocol=nfs
+ input=none
+ output=filesystem
+diff --git a/recentdocuments/CMakeLists.txt b/recentdocuments/CMakeLists.txt
+index bc2b9db..2046e6c 100644
+--- a/recentdocuments/CMakeLists.txt
++++ b/recentdocuments/CMakeLists.txt
+@@ -1,14 +1,14 @@
+-add_library(kio_recentdocuments MODULE recentdocuments.cpp)
+-target_link_libraries(kio_recentdocuments KF5::KIOCore Qt5::DBus KF5::KDE4Support)
++add_library(recentdocuments MODULE recentdocuments.cpp)
++target_link_libraries(recentdocuments KF5::KIOCore Qt5::DBus KF5::KDE4Support)
+ 
+-install(TARGETS kio_recentdocuments  DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS recentdocuments  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ 
+ ########### next target ###############
+ 
+-add_library(kded_recentdocumentsnotifier MODULE recentdocumentsnotifier.cpp)
+-target_link_libraries(kded_recentdocumentsnotifier KF5::KIOCore KF5::DBusAddons KF5::KDE4Support)
++add_library(recentdocumentsnotifier MODULE recentdocumentsnotifier.cpp)
++target_link_libraries(recentdocumentsnotifier KF5::KIOCore KF5::DBusAddons KF5::KDE4Support)
+ 
+-install(TARGETS kded_recentdocumentsnotifier  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS recentdocumentsnotifier  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kded )
+ 
+ ########### install files ###############
+ 
+diff --git a/recentdocuments/recentdocuments.protocol b/recentdocuments/recentdocuments.protocol
+index c0bf1eb..337ebc4 100644
+--- a/recentdocuments/recentdocuments.protocol
++++ b/recentdocuments/recentdocuments.protocol
+@@ -1,6 +1,6 @@
+ [Protocol]
+ DocPath=kioslave/kio_recentdocuments.html
+-exec=kio_recentdocuments
++exec=recentdocuments
+ protocol=recentdocuments
+ Icon=document-open-recent
+ input=none
+diff --git a/recentdocuments/recentdocumentsnotifier.desktop b/recentdocuments/recentdocumentsnotifier.desktop
+index 096b14b..c396aee 100644
+--- a/recentdocuments/recentdocumentsnotifier.desktop
++++ b/recentdocuments/recentdocumentsnotifier.desktop
+@@ -61,7 +61,7 @@ Name[zh_CN]=最近文档监视器
+ Name[zh_TW]=最近文件監控器
+ ServiceTypes=KDEDModule
+ X-KDE-ServiceTypes=KDEDModule
+-X-KDE-Library=recentdocumentsnotifier
++X-KDE-Library=kf5/kded/recentdocumentsnotifier
+ X-KDE-FactoryName=recentdocumentsnotifier
+ X-KDE-DBus-ModuleName=recentdocumentsnotifier
+ X-KDE-Kded-load-on-demand=true
+diff --git a/settings/CMakeLists.txt b/settings/CMakeLists.txt
+index 5a57a18..17cb116 100644
+--- a/settings/CMakeLists.txt
++++ b/settings/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-add_library(kio_settings MODULE kio_settings.cpp)
++add_library(settings MODULE kio_settings.cpp)
+ 
+-target_link_libraries(kio_settings KF5::KDE4Support KF5::KIOCore)
++target_link_libraries(settings KF5::KDE4Support KF5::KIOCore)
+ 
+-install(TARGETS kio_settings  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS settings  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ install( FILES settings.protocol DESTINATION  ${SERVICES_INSTALL_DIR} )
+diff --git a/settings/settings.protocol b/settings/settings.protocol
+index efb03e8..ab03546 100644
+--- a/settings/settings.protocol
++++ b/settings/settings.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_settings
++exec=settings
+ protocol=settings
+ input=none
+ output=filesystem
+diff --git a/sftp/CMakeLists.txt b/sftp/CMakeLists.txt
+index defb7dd..7fee364 100644
+--- a/sftp/CMakeLists.txt
++++ b/sftp/CMakeLists.txt
+@@ -1,9 +1,9 @@
+ include_directories(${LIBSSH_INCLUDE_DIR})
+ 
+-add_library(kio_sftp MODULE kio_sftp.cpp)
+-target_link_libraries(kio_sftp KF5::KIOCore ${LIBSSH_LIBRARIES} KF5::KDE4Support)
++add_library(sftp MODULE kio_sftp.cpp)
++target_link_libraries(sftp KF5::KIOCore ${LIBSSH_LIBRARIES} KF5::KDE4Support)
+ 
+-install(TARGETS kio_sftp  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS sftp  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ install( FILES sftp.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
+ 
+diff --git a/sftp/sftp.protocol b/sftp/sftp.protocol
+index ec15eeb..9719055 100644
+--- a/sftp/sftp.protocol
++++ b/sftp/sftp.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_sftp
++exec=sftp
+ protocol=sftp
+ input=none
+ listing=Name,Type,Size,Date,AccessDate,Access,Owner,Group,Link,MimeType
+diff --git a/smb/CMakeLists.txt b/smb/CMakeLists.txt
+index a3a772f..56f8bef 100644
+--- a/smb/CMakeLists.txt
++++ b/smb/CMakeLists.txt
+@@ -18,20 +18,20 @@ set(kio_smb_PART_SRCS
+ 
+ include_directories(${SAMBA_INCLUDE_DIR})
+ 
+-add_library(kio_smb MODULE ${kio_smb_PART_SRCS})
++add_library(smb MODULE ${kio_smb_PART_SRCS})
+ 
+ 
+-target_link_libraries(kio_smb KF5::KIOCore KF5::I18n ${SAMBA_LIBRARIES} )
++target_link_libraries(smb KF5::KIOCore KF5::I18n ${SAMBA_LIBRARIES} )
+ else()
+ set(kio_smb_PART_SRCS 
+    kio_smb_win.cpp)
+ 
+-add_library(kio_smb MODULE ${kio_smb_PART_SRCS})
++add_library(smb MODULE ${kio_smb_PART_SRCS})
+ 
+-target_link_libraries(kio_smb KF5::KIOCore KF5::I18n mpr)    
++target_link_libraries(smb KF5::KIOCore KF5::I18n mpr)
+ endif()
+ 
+-install(TARGETS kio_smb  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS smb  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ 
+ ########### install files ###############
+diff --git a/smb/smb.protocol b/smb/smb.protocol
+index e585978..d3192ed 100644
+--- a/smb/smb.protocol
++++ b/smb/smb.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_smb
++exec=smb
+ protocol=smb
+ input=none
+ output=filesystem
+diff --git a/thumbnail/CMakeLists.txt b/thumbnail/CMakeLists.txt
+index f3733d4..bb9477a 100644
+--- a/thumbnail/CMakeLists.txt
++++ b/thumbnail/CMakeLists.txt
+@@ -31,9 +31,9 @@ include_directories(${CMAKE_BINARY_DIR})
+ 
+ set(kio_thumbnail_PART_SRCS thumbnail.cpp imagefilter.cpp)
+ 
+-add_library(kio_thumbnail MODULE ${kio_thumbnail_PART_SRCS})
++add_library(thumbnail MODULE ${kio_thumbnail_PART_SRCS})
+ 
+-target_link_libraries(kio_thumbnail
++target_link_libraries(thumbnail
+ 	KF5::CoreAddons
+ 	KF5::KIOCore
+ 	KF5::KIOWidgets
+@@ -43,7 +43,7 @@ target_link_libraries(kio_thumbnail
+ 	KF5::KDE4Support
+ )
+ 
+-install(TARGETS kio_thumbnail DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS thumbnail DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
+ 
+ ########### next target ###############
+ 
+diff --git a/thumbnail/thumbnail.protocol b/thumbnail/thumbnail.protocol
+index eef743a..8b7dcf9 100644
+--- a/thumbnail/thumbnail.protocol
++++ b/thumbnail/thumbnail.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_thumbnail
++exec=thumbnail
+ protocol=thumbnail
+ input=stream
+ output=stream
+diff --git a/trash/CMakeLists.txt b/trash/CMakeLists.txt
+index 4ee0358..cf3401a 100644
+--- a/trash/CMakeLists.txt
++++ b/trash/CMakeLists.txt
+@@ -26,16 +26,16 @@ if(WIN32)
+ else()
+   set(kio_trash_PART_SRCS kio_trash.cpp ${trashcommon_PART_SRCS})
+ endif()
+-add_library(kio_trash MODULE ${kio_trash_PART_SRCS})
++add_library(trash MODULE ${kio_trash_PART_SRCS})
+ 
+-target_link_libraries(kio_trash
++target_link_libraries(trash
+ 	KF5::Solid
+         KF5::KDE4Support
+ 	KF5::KIOCore
+         Qt5::DBus
+         KF5::I18n KF5::ConfigCore KF5::ConfigGui 
+         )
+-install(TARGETS kio_trash  DESTINATION ${PLUGIN_INSTALL_DIR} )
++install(TARGETS trash  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
+ 
+ set(ktrash_SRCS ktrash.cpp )
+ 
+diff --git a/trash/trash.protocol b/trash/trash.protocol
+index 2776985..c940a89 100644
+--- a/trash/trash.protocol
++++ b/trash/trash.protocol
+@@ -1,5 +1,5 @@
+ [Protocol]
+-exec=kio_trash
++exec=trash
+ protocol=trash
+ input=none
+ output=filesystem
