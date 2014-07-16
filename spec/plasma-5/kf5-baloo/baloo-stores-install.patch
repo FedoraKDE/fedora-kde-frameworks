@@ -1,0 +1,150 @@
+diff --git a/src/file/search/CMakeLists.txt b/src/file/search/CMakeLists.txt
+index 1bf2160..9fac4ac 100644
+--- a/src/file/search/CMakeLists.txt
++++ b/src/file/search/CMakeLists.txt
+@@ -1,9 +1,9 @@
+-add_library(baloo_filesearchstore MODULE
++add_library(filesearchstore MODULE
+     wildcardpostingsource.cpp
+     pathfilterpostingsource.cpp
+     filesearchstore.cpp)
+ 
+-target_link_libraries(baloo_filesearchstore
++target_link_libraries(filesearchstore
+     Qt5::Core
+     Qt5::Sql
+     ${XAPIAN_LIBRARIES}
+@@ -14,6 +14,6 @@ target_link_libraries(baloo_filesearchstore
+ )
+ 
+ install(FILES baloo_filesearchstore.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+-install(TARGETS baloo_filesearchstore DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS filesearchstore DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/baloo)
+ 
+ add_subdirectory(autotest)
+diff --git a/src/file/search/baloo_filesearchstore.desktop b/src/file/search/baloo_filesearchstore.desktop
+index e8a4689..8148037 100644
+--- a/src/file/search/baloo_filesearchstore.desktop
++++ b/src/file/search/baloo_filesearchstore.desktop
+@@ -1,4 +1,4 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=BalooSearchStore
+-X-KDE-Library=baloo_filesearchstore
++X-KDE-Library=kf5/baloo/filesearchstore
+diff --git a/src/pim/search/calendar/CMakeLists.txt b/src/pim/search/calendar/CMakeLists.txt
+index 5542203..4231520 100644
+--- a/src/pim/search/calendar/CMakeLists.txt
++++ b/src/pim/search/calendar/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-add_library(baloo_calendarsearchstore MODULE calendarsearchstore.cpp ../pimsearchstore.cpp)
++add_library(calendarsearchstore MODULE calendarsearchstore.cpp ../pimsearchstore.cpp)
+ 
+-target_link_libraries(baloo_calendarsearchstore
++target_link_libraries(calendarsearchstore
+     Qt5::Core
+     ${XAPIAN_LIBRARIES}
+     KF5::BalooCore
+@@ -8,4 +8,4 @@ target_link_libraries(baloo_calendarsearchstore
+ )
+ 
+ install(FILES baloo_calendarsearchstore.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+-install(TARGETS baloo_calendarsearchstore DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS calendarsearchstore DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/baloo)
+diff --git a/src/pim/search/calendar/baloo_calendarsearchstore.desktop b/src/pim/search/calendar/baloo_calendarsearchstore.desktop
+index 898925a..2524d84 100644
+--- a/src/pim/search/calendar/baloo_calendarsearchstore.desktop
++++ b/src/pim/search/calendar/baloo_calendarsearchstore.desktop
+@@ -1,4 +1,4 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=BalooSearchStore
+-X-KDE-Library=baloo_calendarsearchstore
++X-KDE-Library=kf5/baloo/calendarsearchstore
+diff --git a/src/pim/search/contact/CMakeLists.txt b/src/pim/search/contact/CMakeLists.txt
+index bf63f8f..4f68c50 100644
+--- a/src/pim/search/contact/CMakeLists.txt
++++ b/src/pim/search/contact/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-add_library(baloo_contactsearchstore MODULE contactsearchstore.cpp ../pimsearchstore.cpp)
++add_library(contactsearchstore MODULE contactsearchstore.cpp ../pimsearchstore.cpp)
+ 
+-target_link_libraries(baloo_contactsearchstore
++target_link_libraries(contactsearchstore
+     Qt5::Core
+     ${XAPIAN_LIBRARIES}
+     KF5::BalooCore
+@@ -8,4 +8,4 @@ target_link_libraries(baloo_contactsearchstore
+ )
+ 
+ install(FILES baloo_contactsearchstore.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+-install(TARGETS baloo_contactsearchstore DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS contactsearchstore DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/baloo)
+diff --git a/src/pim/search/contact/baloo_contactsearchstore.desktop b/src/pim/search/contact/baloo_contactsearchstore.desktop
+index 42edf10..5849660 100644
+--- a/src/pim/search/contact/baloo_contactsearchstore.desktop
++++ b/src/pim/search/contact/baloo_contactsearchstore.desktop
+@@ -1,4 +1,4 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=BalooSearchStore
+-X-KDE-Library=baloo_contactsearchstore
++X-KDE-Library=kf5/baloo/contactsearchstore
+diff --git a/src/pim/search/email/CMakeLists.txt b/src/pim/search/email/CMakeLists.txt
+index 35757e4..e736320 100644
+--- a/src/pim/search/email/CMakeLists.txt
++++ b/src/pim/search/email/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-add_library(baloo_emailsearchstore MODULE agepostingsource.cpp emailsearchstore.cpp ../pimsearchstore.cpp)
++add_library(emailsearchstore MODULE agepostingsource.cpp emailsearchstore.cpp ../pimsearchstore.cpp)
+ 
+-target_link_libraries(baloo_emailsearchstore
++target_link_libraries(emailsearchstore
+     Qt5::Core
+     ${XAPIAN_LIBRARIES}
+     KF5::BalooCore
+@@ -8,4 +8,4 @@ target_link_libraries(baloo_emailsearchstore
+ )
+ 
+ install(FILES baloo_emailsearchstore.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+-install(TARGETS baloo_emailsearchstore DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS emailsearchstore DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/baloo)
+diff --git a/src/pim/search/email/baloo_emailsearchstore.desktop b/src/pim/search/email/baloo_emailsearchstore.desktop
+index 65dea8e..d505059 100644
+--- a/src/pim/search/email/baloo_emailsearchstore.desktop
++++ b/src/pim/search/email/baloo_emailsearchstore.desktop
+@@ -1,4 +1,4 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=BalooSearchStore
+-X-KDE-Library=baloo_emailsearchstore
++X-KDE-Library=kf5/baloo/emailsearchstore
+diff --git a/src/pim/search/note/CMakeLists.txt b/src/pim/search/note/CMakeLists.txt
+index 0fe03b5..cc34f74 100644
+--- a/src/pim/search/note/CMakeLists.txt
++++ b/src/pim/search/note/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-add_library(baloo_notesearchstore MODULE notesearchstore.cpp ../pimsearchstore.cpp)
++add_library(notesearchstore MODULE notesearchstore.cpp ../pimsearchstore.cpp)
+ 
+-target_link_libraries(baloo_notesearchstore
++target_link_libraries(notesearchstore
+     Qt5::Core
+     ${XAPIAN_LIBRARIES}
+     KF5::BalooCore
+@@ -8,4 +8,4 @@ target_link_libraries(baloo_notesearchstore
+ )
+ 
+ install(FILES baloo_notesearchstore.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+-install(TARGETS baloo_notesearchstore DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS notesearchstore DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/baloo)
+diff --git a/src/pim/search/note/baloo_notesearchstore.desktop b/src/pim/search/note/baloo_notesearchstore.desktop
+index c11e28e..abc7b76 100644
+--- a/src/pim/search/note/baloo_notesearchstore.desktop
++++ b/src/pim/search/note/baloo_notesearchstore.desktop
+@@ -1,4 +1,4 @@
+ [Desktop Entry]
+ Type=Service
+ X-KDE-ServiceTypes=BalooSearchStore
+-X-KDE-Library=baloo_notesearchstore
++X-KDE-Library=kf5/baloo/notesearchstore
