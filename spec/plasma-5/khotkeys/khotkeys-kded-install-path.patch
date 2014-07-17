@@ -1,0 +1,35 @@
+diff --git a/app/CMakeLists.txt b/app/CMakeLists.txt
+index 7062bed..c3f52fe 100644
+--- a/app/CMakeLists.txt
++++ b/app/CMakeLists.txt
+@@ -13,6 +13,8 @@ target_link_libraries(kded_khotkeys
+     KF5::DBusAddons
+     KF5::KDE4Support)
+ 
++set_target_properties(kded_khotkeys PROPERTIES REAL_NAME khotkeys)
++
+ # I'm not sure if this is needed anymore. Check it
+ if(X11_XTest_FOUND)
+     target_link_libraries(kded_khotkeys ${X11_XTest_LIB})
+@@ -28,7 +30,7 @@ ecm_configure_package_config_file(KHotKeysDBusInterfaceConfig.cmake.in
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/KHotKeysDBusInterfaceConfig.cmake
+     DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+ 
+-install(TARGETS kded_khotkeys  DESTINATION ${PLUGIN_INSTALL_DIR})
++install(TARGETS kded_khotkeys  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kded)
+ 
+ install(FILES khotkeys.desktop DESTINATION  ${SERVICES_INSTALL_DIR}/kded)
+ 
+diff --git a/app/khotkeys.desktop b/app/khotkeys.desktop
+index f8fd536..a6efc24 100644
+--- a/app/khotkeys.desktop
++++ b/app/khotkeys.desktop
+@@ -147,7 +147,7 @@ Comment[zh_CN]=输入动作服务可在按下键位时执行预配置的动作
+ Comment[zh_TW]=輸入動作服務，在按下按鍵時執行設定好的動作。
+ Type=Service
+ X-KDE-ServiceTypes=KDEDModule
+-X-KDE-Library=khotkeys
++X-KDE-Library=kf5/kded/khotkeys
+ X-KDE-DBus-ModuleName=khotkeys
+ X-KDE-Kded-autoload=true
+ OnlyShowIn=KDE;
