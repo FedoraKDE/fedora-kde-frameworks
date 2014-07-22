@@ -1,0 +1,1268 @@
+execve("/bin/startkde", ["startkde"], [/* 44 vars */]) = 0
+brk(0)                                  = 0x1368000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098eb1000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/opt/kde-devel/lib64/tls/x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/lib64/tls/x86_64", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/opt/kde-devel/lib64/tls/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/lib64/tls", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/opt/kde-devel/lib64/x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/lib64/x86_64", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/opt/kde-devel/lib64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/lib64", {st_mode=S_IFDIR|0775, st_size=11162, ...}) = 0
+open("/usr/local/lib64/tls/x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/local/lib64/tls/x86_64", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/usr/local/lib64/tls/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/local/lib64/tls", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/usr/local/lib64/x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/local/lib64/x86_64", 0x7fff14798980) = -1 ENOENT (No such file or directory)
+open("/usr/local/lib64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/local/lib64", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+open("tls/x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("tls/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("x86_64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("libtinfo.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=278964, ...}) = 0
+mmap(NULL, 278964, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fa098e6c000
+close(3)                                = 0
+open("/lib64/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\316\200\276>\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=175560, ...}) = 0
+mmap(0x3ebe800000, 2268928, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x3ebe800000
+mprotect(0x3ebe825000, 2097152, PROT_NONE) = 0
+mmap(0x3ebea25000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x3ebea25000
+close(3)                                = 0
+open("/opt/kde-devel/lib64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/local/lib64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("tls/x86_64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("tls/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("x86_64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("libdl.so.2", O_RDONLY|O_CLOEXEC)  = -1 ENOENT (No such file or directory)
+open("/lib64/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\320\16 \264>\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=22440, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098e6b000
+mmap(0x3eb4200000, 2109744, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x3eb4200000
+mprotect(0x3eb4203000, 2093056, PROT_NONE) = 0
+mmap(0x3eb4402000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x3eb4402000
+close(3)                                = 0
+open("/opt/kde-devel/lib64/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/local/lib64/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("tls/x86_64/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("tls/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("x86_64/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("libc.so.6", O_RDONLY|O_CLOEXEC)   = -1 ENOENT (No such file or directory)
+open("/lib64/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0p\36\342\263>\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=2100672, ...}) = 0
+mmap(0x3eb3e00000, 3924576, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x3eb3e00000
+mprotect(0x3eb3fb4000, 2097152, PROT_NONE) = 0
+mmap(0x3eb41b4000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b4000) = 0x3eb41b4000
+mmap(0x3eb41ba000, 16992, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x3eb41ba000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098e6a000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098e68000
+arch_prctl(ARCH_SET_FS, 0x7fa098e68740) = 0
+mprotect(0x6dc000, 4096, PROT_READ)     = 0
+mprotect(0x3ebea25000, 16384, PROT_READ) = 0
+mprotect(0x3eb4402000, 4096, PROT_READ) = 0
+mprotect(0x3eb41b4000, 16384, PROT_READ) = 0
+mprotect(0x3eb3c1f000, 4096, PROT_READ) = 0
+munmap(0x7fa098e6c000, 278964)          = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/dev/tty", O_RDWR|O_NONBLOCK)     = 3
+close(3)                                = 0
+brk(0)                                  = 0x1368000
+brk(0x1389000)                          = 0x1389000
+brk(0)                                  = 0x1389000
+open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=106070960, ...}) = 0
+mmap(NULL, 106070960, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fa09293f000
+close(3)                                = 0
+brk(0)                                  = 0x1389000
+getuid()                                = 1000
+getgid()                                = 1000
+geteuid()                               = 1000
+getegid()                               = 1000
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098eb0000
+read(3, "MemTotal:       16116280 kB\nMemF"..., 1024) = 1024
+close(3)                                = 0
+munmap(0x7fa098eb0000, 4096)            = 0
+rt_sigaction(SIGCHLD, {SIG_DFL, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigaction(SIGCHLD, {SIG_DFL, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigaction(SIGQUIT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigaction(SIGQUIT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigaction(SIGQUIT, {SIG_IGN, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+uname({sys="Linux", node="Thor", ...})  = 0
+stat("/home/dvratil/Packages/fedora-kde-frameworks/spec/tier3/kf5-kinit", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+getpid()                                = 6403
+open("/usr/lib64/gconv/gconv-modules.cache", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=26254, ...}) = 0
+mmap(NULL, 26254, PROT_READ, MAP_SHARED, 3, 0) = 0x7fa098eaa000
+close(3)                                = 0
+getppid()                               = 6400
+getpgrp()                               = 6400
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+getrlimit(RLIMIT_NPROC, {rlim_cur=1024, rlim_max=125747}) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/bin/startkde", O_RDONLY)         = 3
+ioctl(3, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, 0x7fff14799030) = -1 ENOTTY (Inappropriate ioctl for device)
+lseek(3, 0, SEEK_CUR)                   = 0
+read(3, "#!/bin/sh\n#\n#  DEFAULT KDE START"..., 80) = 80
+lseek(3, 0, SEEK_SET)                   = 0
+getrlimit(RLIMIT_NOFILE, {rlim_cur=1024, rlim_max=4*1024}) = 0
+fcntl(255, F_GETFD)                     = -1 EBADF (Bad file descriptor)
+dup2(3, 255)                            = 255
+close(3)                                = 0
+fcntl(255, F_SETFD, FD_CLOEXEC)         = 0
+fcntl(255, F_GETFL)                     = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+fstat(255, {st_mode=S_IFREG|0755, st_size=14992, ...}) = 0
+lseek(255, 0, SEEK_CUR)                 = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "#!/bin/sh\n#\n#  DEFAULT KDE START"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigaction(SIGHUP, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigaction(SIGHUP, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [HUP], [], 8) = 0
+rt_sigaction(SIGHUP, {0x453ee0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7582, SEEK_CUR)             = 610
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6404
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/bin\n", 128)                  = 5
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6404, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6404
+wait4(-1, 0x7fff147984d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "if [ -n \"$bindir\" ]; then\n  qbin"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7974, SEEK_CUR)             = 828
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6407
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/usr/lib64/qt5/bin\n", 128)    = 19
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6407, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6407
+wait4(-1, 0x7fff14798190, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Check if a KDE session alread"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/kcheckrunning", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kcheckrunning", X_OK)      = 0
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kcheckrunning", R_OK)      = 0
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kcheckrunning", X_OK)      = 0
+stat("/bin/kcheckrunning", {st_mode=S_IFREG|0755, st_size=7144, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kcheckrunning", R_OK)      = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -8091, SEEK_CUR)             = 929
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6408
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 1}], 0, NULL) = 6408
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6408, si_status=1, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "kcheckrunning_result=$?\nif test "..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7013, SEEK_CUR)             = 2108
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6409
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/home/dvratil/.config\n", 128) = 22
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6409, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6409
+wait4(-1, 0x7fff147983d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\nmkdir -p $configDir\n\n#This is b"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/mkdir", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/mkdir", X_OK)              = 0
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/mkdir", R_OK)              = 0
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/mkdir", X_OK)              = 0
+stat("/bin/mkdir", {st_mode=S_IFREG|0755, st_size=56672, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/mkdir", R_OK)              = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -8171, SEEK_CUR)             = 2129
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6410
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6410
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6410, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n#This is basically setting defa"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/cat", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/cat", X_OK)                = 0
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/cat", R_OK)                = 0
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/cat", X_OK)                = 0
+stat("/bin/cat", {st_mode=S_IFREG|0755, st_size=56736, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/cat", R_OK)                = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7821, SEEK_CUR)             = 2500
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6411
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6411
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6411, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# export LC_* variables set by "..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/home/dvratil/.config/plasma-locale-settings.sh", {st_mode=S_IFREG|0664, st_size=217, ...}) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+open("/home/dvratil/.config/plasma-locale-settings.sh", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0664, st_size=217, ...}) = 0
+read(3, "# Generated script, do not edit\n"..., 217) = 217
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/usr/lib64/gconv/ISO8859-2.so", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0p\5\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=12560, ...}) = 0
+mmap(NULL, 2105400, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fa09273c000
+mprotect(0x7fa09273e000, 2093056, PROT_NONE) = 0
+mmap(0x7fa09293d000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7fa09293d000
+close(3)                                = 0
+mprotect(0x7fa09293d000, 4096, PROT_READ) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/home/dvratil/.config/kdeglobals", {st_mode=S_IFREG|0664, st_size=374, ...}) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/kstartupconfig5", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kstartupconfig5", X_OK)    = 0
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kstartupconfig5", R_OK)    = 0
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kstartupconfig5", X_OK)    = 0
+stat("/bin/kstartupconfig5", {st_mode=S_IFREG|0755, st_size=11352, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kstartupconfig5", R_OK)    = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -6506, SEEK_CUR)             = 4186
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6412
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6412
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6412, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "returncode=$?\nif test $returncod"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+faccessat(AT_FDCWD, "/home/dvratil/.config/startupconfig", R_OK) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+open("/home/dvratil/.config/startupconfig", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0664, st_size=477, ...}) = 0
+read(3, "#! /bin/sh\n# kcminputrc Mouse cu"..., 477) = 477
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/kapplymousetheme", 0x7fff147989c0) = -1 ENOENT (No such file or directory)
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kapplymousetheme", X_OK)   = 0
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kapplymousetheme", R_OK)   = 0
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kapplymousetheme", X_OK)   = 0
+stat("/bin/kapplymousetheme", {st_mode=S_IFREG|0755, st_size=11344, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/kapplymousetheme", R_OK)   = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7306, SEEK_CUR)             = 5072
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6414
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6414
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6414, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798510, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\nif test \"$kcmfonts_general_forc"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7724, SEEK_CUR)             = 5540
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6415
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "6416\n", 128)                  = 5
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6415, si_status=0, si_utime=1, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6415
+wait4(-1, 0x7fff147982d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Source scripts found in <conf"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7378, SEEK_CUR)             = 6354
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6417
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/home/dvratil/.config/plasma-wor"..., 128) = 65
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6417, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6417
+wait4(-1, 0x7fff147984d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Add /env/ to the directory to"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -8007, SEEK_CUR)             = 6539
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6422
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/home/dvratil/.config/plasma-wor"..., 128) = 65
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6422, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6422
+wait4(-1, 0x7fff14798690, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+openat(AT_FDCWD, "/home/dvratil/.config/plasma-workspace/env/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+faccessat(AT_FDCWD, "/home/dvratil/.config/plasma-workspace/env/*.sh", R_OK) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+openat(AT_FDCWD, "/etc/xdg/plasma-workspace/env/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+faccessat(AT_FDCWD, "/etc/xdg/plasma-workspace/env/*.sh", R_OK) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Set the path for Qt plugins p"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -8073, SEEK_CUR)             = 6658
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6423
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/usr/lib64/qt5/plugins\n", 128) = 23
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6423, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6423
+wait4(-1, 0x7fff147984d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "# TODO: Do we really need this?\n"..., 8192) = 8192
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -7164, SEEK_CUR)             = 7686
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6424
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "/opt/kde-devel\n", 128)        = 15
+read(3, "", 128)                        = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6424, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6424
+wait4(-1, 0x7fff14798190, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# We run mkfontdir on the user'"..., 8192) = 7306
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/opt/kde-devel/share/fonts/override", 0x7fff14798c40) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/home/dvratil/.fonts/kde-override", 0x7fff14798c40) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/home/dvratil/.fonts", 0x7fff14798c40) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/opt/kde-devel/share/fonts", 0x7fff14798c40) = -1 ENOENT (No such file or directory)
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/xset", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xset", X_OK)               = 0
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xset", R_OK)               = 0
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xset", X_OK)               = 0
+stat("/bin/xset", {st_mode=S_IFREG|0755, st_size=32512, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xset", R_OK)               = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -6745, SEEK_CUR)             = 8247
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6427
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6427
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6427, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Set a left cursor instead of "..., 8192) = 6745
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/xsetroot", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xsetroot", X_OK)           = 0
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xsetroot", R_OK)           = 0
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xsetroot", X_OK)           = 0
+stat("/bin/xsetroot", {st_mode=S_IFREG|0755, st_size=19864, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xsetroot", R_OK)           = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -6333, SEEK_CUR)             = 8659
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6428
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6428
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6428, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n# Get Ghostscript to look into "..., 8192) = 6333
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+fcntl(1, F_GETFD)                       = 0
+fcntl(1, F_DUPFD, 10)                   = 10
+fcntl(1, F_GETFD)                       = 0
+fcntl(10, F_SETFD, FD_CLOEXEC)          = 0
+dup2(2, 1)                              = 1
+fcntl(2, F_GETFD)                       = 0
+fstat(1, {st_mode=S_IFREG|0664, st_size=57353, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fa098ea9000
+write(1, "startkde: Starting up...\n", 25startkde: Starting up...
+) = 25
+dup2(10, 1)                             = 1
+fcntl(10, F_GETFD)                      = 0x1 (flags FD_CLOEXEC)
+close(10)                               = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -5497, SEEK_CUR)             = 9495
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6429
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "DBUS_SESSION_BUS_ADDRESS='unix:a"..., 128) = 128
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6429, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6429
+wait4(-1, 0x7fff147984d0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 128
+read(3, "RESS;\nDBUS_SESSION_BUS_PID=6433;"..., 128) = 33
+read(3, "", 128)                        = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "if $qdbus >/dev/null 2>/dev/null"..., 8192) = 5497
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -5220, SEEK_CUR)             = 9772
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6435
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6435
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6435, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798710, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\n\n# Mark that full KDE session i"..., 8192) = 5220
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/xprop", 0x7fff14798cf0) = -1 ENOENT (No such file or directory)
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", X_OK)              = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", R_OK)              = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", X_OK)              = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", R_OK)              = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -3903, SEEK_CUR)             = 11089
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6436
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6436
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6436, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\nKDE_SESSION_VERSION=5\nexport KD"..., 8192) = 3903
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", X_OK)              = 0
+stat("/bin/xprop", {st_mode=S_IFREG|0755, st_size=43136, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xprop", R_OK)              = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -3787, SEEK_CUR)             = 11205
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6437
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6437
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6437, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "\nKDE_SESSION_UID=`id -ru`\nexport"..., 8192) = 3787
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -3761, SEEK_CUR)             = 11231
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6438
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, {0x440f30, [], SA_RESTORER|SA_RESTART, 0x3eb3e35cb0}, 8) = 0
+close(4)                                = 0
+read(3, "1000\n", 128)                  = 5
+read(3, "", 128)                        = 0
+close(3)                                = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6438, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 6438
+wait4(-1, 0x7fff14798510, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "export KDE_SESSION_UID\n\nXDG_CURR"..., 8192) = 3761
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -3350, SEEK_CUR)             = 11642
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6439
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6439
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6439, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "if test $? -ne 0; then\n  # Start"..., 8192) = 3350
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -2908, SEEK_CUR)             = 12084
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6440
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, start_kdeinit: No such file or directory
+[{WIFEXITED(s) && WEXITSTATUS(s) == 1}], 0, NULL) = 6440
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6440, si_status=1, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798810, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "if test $? -ne 0; then\n  # Start"..., 8192) = 2908
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+fcntl(1, F_GETFD)                       = 0
+fcntl(1, F_DUPFD, 10)                   = 10
+fcntl(1, F_GETFD)                       = 0
+fcntl(10, F_SETFD, FD_CLOEXEC)          = 0
+dup2(2, 1)                              = 1
+fcntl(2, F_GETFD)                       = 0
+write(1, "startkde: Could not start kdeini"..., 61startkde: Could not start kdeinit5. Check your installation.
+) = 61
+dup2(10, 1)                             = 1
+fcntl(10, F_GETFD)                      = 0x1 (flags FD_CLOEXEC)
+close(10)                               = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+open("/dev/null", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+fcntl(2, F_GETFD)                       = 0
+fcntl(2, F_DUPFD, 10)                   = 10
+fcntl(2, F_GETFD)                       = 0
+fcntl(10, F_SETFD, FD_CLOEXEC)          = 0
+dup2(3, 2)                              = 2
+close(3)                                = 0
+kill(6416, SIGTERM)                     = 0
+dup2(10, 2)                             = 2
+fcntl(10, F_GETFD)                      = 0x1 (flags FD_CLOEXEC)
+close(10)                               = 0
+stat(".", {st_mode=S_IFDIR|0775, st_size=88, ...}) = 0
+stat("/opt/kde-devel/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/opt/kde-devel/libexec/kde4/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/qt-3.3/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/usr/lib64/ccache/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/usr/libexec/icecc/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/usr/local/bin/xmessage", 0x7fff147989e0) = -1 ENOENT (No such file or directory)
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xmessage", X_OK)           = 0
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xmessage", R_OK)           = 0
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xmessage", X_OK)           = 0
+stat("/bin/xmessage", {st_mode=S_IFREG|0755, st_size=20856, ...}) = 0
+geteuid()                               = 1000
+getegid()                               = 1000
+getuid()                                = 1000
+getgid()                                = 1000
+access("/bin/xmessage", R_OK)           = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -2637, SEEK_CUR)             = 12355
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fa098e68a10) = 6442
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 6442
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=6442, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0x7fff14798510, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn()                          = 0
+rt_sigaction(SIGINT, {SIG_DFL, [], SA_RESTORER, 0x3eb3e35cb0}, {0x43e3b0, [], SA_RESTORER, 0x3eb3e35cb0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+exit_group(1)                           = ?
++++ exited with 1 +++

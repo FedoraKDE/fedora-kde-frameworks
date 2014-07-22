@@ -3,8 +3,9 @@
 
 Name:           kf5-%{framework}
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
+
 License:        LGPLv2+ and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
@@ -12,6 +13,10 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+# kdeinit_start and kdeinit_start_wrapper have some libexec paths hardocded
+# at build-time, but they are wrong
+Patch0:         kinit-kdeinit-pathfix.patch
 
 BuildRequires:  libX11-devel
 
@@ -56,6 +61,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+%patch0 -p1 -b .kdeinit
 
 %build
 mkdir -p %{_target_platform}
@@ -87,7 +93,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Fri Jul 18 2014 Daniel Vr�til <dvratil@redhat.com> - 5.0.0-2
+- Downstream patch to fix hardcoded libexec paths in start_kdeinit_wrapper
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Sun Jun 29 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
