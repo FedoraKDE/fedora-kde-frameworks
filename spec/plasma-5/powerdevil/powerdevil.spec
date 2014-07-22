@@ -40,7 +40,7 @@ BuildRequires:  chrpath
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-workspace <= 4.60.0-1
+Obsoletes:      kde-workspace < 5.0.0-1
 
 %description
 %{summary}.

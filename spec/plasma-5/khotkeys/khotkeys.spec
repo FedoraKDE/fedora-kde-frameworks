@@ -33,8 +33,7 @@ BuildRequires:  chrpath
 
 Requires:       kf5-filesystem
 
-Conflicts:      kde-runtime
-Provides:       khotkeys = %{version}-%{release}
+Obsoletes:      kde-workspace < 5.0.0-1
 
 %description
 An advanced editor component which is used in numerous KDE applications

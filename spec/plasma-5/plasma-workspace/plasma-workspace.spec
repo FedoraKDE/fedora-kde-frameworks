@@ -73,6 +73,7 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kf5-kscreen-devel
+BuildRequires:  kf5-baloo-devel
 
 BuildRequires:  kwin-devel
 
@@ -92,6 +93,7 @@ Requires:       kf5-kdoctools
 #Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 Requires:       kf5-filesystem
+Requires:       kf5-baloo
 
 # startkde
 Requires:       coreutils

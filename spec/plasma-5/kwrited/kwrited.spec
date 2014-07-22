@@ -18,8 +18,6 @@ BuildRequires:  kf5-kdelibs4support-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-runtime <= 4.60.0-1
-
 %description
 %{summary}.
 

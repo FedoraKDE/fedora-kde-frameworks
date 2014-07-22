@@ -67,7 +67,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_qtplugindir}/kfilemetadata_plaintextextractor.so
 %{_kf5_qtplugindir}/kfilemetadata_popplerextractor.so
 %{_kf5_qtplugindir}/kfilemetadata_taglibextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_ffmpegextractor.so
+#%{_kf5_qtplugindir}/kfilemetadata_ffmpegextractor.so
 %{_kf5_datadir}/kservices5/kfilemetadata_epubextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_exiv2extractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_odfextractor.desktop
@@ -77,7 +77,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/kfilemetadata_popplerextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_taglibextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_ffmpegextractor.desktop
-%{_kf5_datadir}/kservicetypes5/kfilemetadataextractor.desktop
+#%{_kf5_datadir}/kservicetypes5/kfilemetadataextractor.desktop
 
 %files devel
 %{_kf5_libdir}/libKF5FileMetaData.so

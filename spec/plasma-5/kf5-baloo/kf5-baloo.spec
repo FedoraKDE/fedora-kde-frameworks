@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
@@ -26,8 +26,6 @@ BuildRequires:  kf5-krunner-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      baloo <= 4.50.0
-
 %description
 %{Summary}.
 
@@ -35,6 +33,7 @@ Obsoletes:      baloo <= 4.50.0
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-kfilemetadata-devel
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -116,6 +115,10 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Tue Jul 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- -devel Requires kf5-kfilemetadata-devel
+- does not obsolete baloo < 5.0.0 (coinstallability)
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 

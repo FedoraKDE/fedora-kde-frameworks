@@ -68,7 +68,7 @@ the default NetworkManager service.
 Summary: Mobile support for %{name}
 Requires:  ModemManager
 Requires:  mobile-broadband-provider-info
-Requires:  libmm-qt5 >= 1.0.0
+Requires:  kf5-libmm-qt >= 5.0.0-1
 Obsoletes: kde-plasma-networkmanagement-mobile < 1:0.9.1.0
 Obsoletes: kde-plasma-nm-mobile < 5.0.0-1
 %description mobile

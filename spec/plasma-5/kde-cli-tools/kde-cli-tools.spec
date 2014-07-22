@@ -26,7 +26,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 Requires:       kf5-filesystem
 
 # kde-cli-tools contains utilities that were part of kde-runtime in the past
-Obsoletes:      kde-runtime <= 4.60.0-1
+#Obsoletes:      kde-runtime-cli-tools < 5.0.0-1
 
 %description
 %{summary}.
@@ -38,6 +38,13 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
+%package	doc
+Summary:        Documentation and user manuals for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Conflicts:      kde-runtime < 5.0.0-1
+%description    doc
+%{summary}.
 
 %prep
 %setup -q
@@ -74,8 +81,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/kcm_filetypes.so
 %{_libexecdir}/kdeeject
 %{_libexecdir}/kdesu
-%{_datadir}/doc/HTML/en/kdesu
 %{_kf5_datadir}/kservices5/filetypes.desktop
+
+%files doc
+%{_datadir}/doc/HTML/en/kdesu
 %{_mandir}/man1/kdesu.1.gz
 
 %changelog

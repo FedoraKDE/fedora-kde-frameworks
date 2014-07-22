@@ -45,7 +45,7 @@ BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-knewstuff-devel
 
 # Optional
-BuildRequires:  kf5-kactivities-libs-devel
+BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem

@@ -27,6 +27,8 @@ BuildRequires:  lm_sensors-devel
 
 Requires:       kf5-filesystem
 
+Obsoletes:     ksysguardd < 5.0.0-1
+
 %description
 %{summary}.
 

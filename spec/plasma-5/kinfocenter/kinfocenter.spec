@@ -40,7 +40,7 @@ BuildRequires:  libraw1394-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-runtime < 4.60.0-1
+Obsoletes:      kde-workspace < 5.0.0-1
 
 %description
 %{summary}.

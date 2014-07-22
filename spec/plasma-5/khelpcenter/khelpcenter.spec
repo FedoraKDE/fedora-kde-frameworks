@@ -23,7 +23,7 @@ BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-runtime <= 4.60.0-1
+Obsoletes:      kde-runtime-khelpcenter < 5.0.0-1
 
 %description
 An advanced editor component which is used in numerous KDE applications
