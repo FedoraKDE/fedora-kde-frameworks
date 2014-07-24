@@ -1,6 +1,6 @@
 Name:           kinfocenter
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Info Center
 
 License:        GPLv2+
@@ -83,6 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Rebuild
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 

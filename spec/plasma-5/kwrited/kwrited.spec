@@ -1,6 +1,6 @@
 Name:           kwrited
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE's kwrited daemon
 
 License:        GPLv2+
@@ -47,8 +47,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Jul 23 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Rebuild
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
-- Plasmas 5.0.0
+- Plasma 5.0.0
 
 * Thu May 15 2014 Daniel Vrátil <dvratil@redhat.com> - 4.90.1-1.20140515gitc11b832c
 - Intial snapshot

@@ -1,6 +1,6 @@
 Name:           kde-cli-tools
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system.
 
 License:        GPLv2+
@@ -24,9 +24,6 @@ BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 Requires:       kf5-filesystem
-
-# kde-cli-tools contains utilities that were part of kde-runtime in the past
-#Obsoletes:      kde-runtime-cli-tools < 5.0.0-1
 
 %description
 %{summary}.
@@ -88,6 +85,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_mandir}/man1/kdesu.1.gz
 
 %changelog
+* Wed Jul 23 2014 Daniel Vrátil <dvratli@redhat.com> - 5.0.0-2
+- Rebuild
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 

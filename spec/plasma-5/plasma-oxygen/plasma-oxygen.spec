@@ -2,7 +2,7 @@
 
 Name:           plasma-%{base_name}
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma 5 and KDE default style and look
 
 License:        GPLv2+
@@ -27,8 +27,6 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kwin-devel
 
 Requires:       kf5-filesystem
-
-Obsoletes:      kde-style-oxygen < 5.0.0-1
 
 %description
 %{summary}.
@@ -77,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/*.so
 
 %changelog
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Does not conflict with kde-style-oxygen 4
+
 * Thu Jul 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 

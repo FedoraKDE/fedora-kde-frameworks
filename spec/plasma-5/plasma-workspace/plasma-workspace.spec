@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -139,7 +139,7 @@ sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. -DBIN_INSTALL_DIR=bin
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -152,9 +152,6 @@ chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/phonon_platform/kde.so
 # Makes kcheckpass work
 install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %find_lang plasmaworkspace5 --with-qt --all-name
-
-# Fix startkde being stupid and broken
-#sed -i 's/lib\(\|64\)\/kde5\/libexec/libexec/' %{buildroot}/%{_kde5_bindir}/startkde
 
 %post -p /sbin/ldconfig
 
@@ -227,6 +224,12 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-3
+- Use relative BIN_INSTALL_DIR so that built-in paths are correctly generated
+
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Fix /usr//usr/ in generated files
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 
