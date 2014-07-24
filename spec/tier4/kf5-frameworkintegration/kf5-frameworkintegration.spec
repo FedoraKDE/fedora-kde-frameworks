@@ -1,16 +1,11 @@
 %define framework frameworkintegration
-#%define snapshot 20140206
 
 Name:           kf5-%{framework}
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 workspace and cross-framework integration plugins
 License:        LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 
@@ -89,6 +84,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Rebuild against Qt 5.3 in Copr
+
 * Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
