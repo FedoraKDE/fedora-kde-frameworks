@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.0.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -9,6 +9,8 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 
 # This goes to PAM
 Source10:       kde
+
+Patch0:         plasma-workspace-buildtime-dir-fix.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -133,13 +135,15 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q
 
+%patch0 -p1 -b .bindirfix
+
 %build
 
 sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} .. -DBIN_INSTALL_DIR=bin
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -224,6 +228,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-4
+- Add patch to fix build-time generated paths
+
 * Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-3
 - Use relative BIN_INSTALL_DIR so that built-in paths are correctly generated
 

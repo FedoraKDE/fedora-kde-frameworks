@@ -1,0 +1,57 @@
+diff --git a/ksmserver/config-ksmserver.h.cmake b/ksmserver/config-ksmserver.h.cmake
+index a454a4d..fa78eff 100644
+--- a/ksmserver/config-ksmserver.h.cmake
++++ b/ksmserver/config-ksmserver.h.cmake
+@@ -4,11 +4,11 @@
+ #cmakedefine COMPILE_SCREEN_LOCKER 1
+ 
+ #ifndef KSMSERVER_UNIT_TEST
+-#define KCHECKPASS_BIN "${CMAKE_INSTALL_PREFIX}/${LIBEXEC_INSTALL_DIR}/kcheckpass"
++#define KCHECKPASS_BIN "${LIBEXEC_INSTALL_DIR}/kcheckpass"
+ #else
+ #define KCHECKPASS_BIN "${CMAKE_CURRENT_BINARY_DIR}/screenlocker/greeter/autotests/fakekcheckpass"
+ #endif
+ 
+-#define KSCREENLOCKER_GREET_BIN "${CMAKE_INSTALL_PREFIX}/${LIBEXEC_INSTALL_DIR}/kscreenlocker_greet"
++#define KSCREENLOCKER_GREET_BIN "${LIBEXEC_INSTALL_DIR}/kscreenlocker_greet"
+ 
+-#define KWIN_BIN "${KWIN_BIN}"
+\ No newline at end of file
++#define KWIN_BIN "${KWIN_BIN}"
+diff --git a/plasma.desktop.cmake b/plasma.desktop.cmake
+index 324a4af..c05813b 100644
+--- a/plasma.desktop.cmake
++++ b/plasma.desktop.cmake
+@@ -1,8 +1,8 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+ Type=XSession
+-Exec=${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/startkde
+-TryExec=${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/startkde
++Exec=${CMAKE_INSTALL_BINDIR}/startkde
++TryExec=${CMAKE_INSTALL_BINDIR}/startkde
+ DesktopNames=KDE
+ Name=Plasma
+ Name[ar]=بلازما
+diff --git a/startkde/startkde.cmake b/startkde/startkde.cmake
+index 281bd43..d31a90f 100644
+--- a/startkde/startkde.cmake
++++ b/startkde/startkde.cmake
+@@ -349,7 +349,7 @@ if test -n "$PAM_KWALLET_LOGIN" ; then
+ fi
+ 
+ # At this point all environment variables are set, let's send it to the DBus session server to update the activation environment
+-@CMAKE_INSTALL_PREFIX@/@LIBEXEC_INSTALL_DIR@/ksyncdbusenv
++@LIBEXEC_INSTALL_DIR@/ksyncdbusenv
+ if test $? -ne 0; then
+   # Startup error
+   echo 'startkde: Could not sync environment to dbus.'  1>&2
+@@ -360,7 +360,7 @@ fi
+ 
+ # We set LD_BIND_NOW to increase the efficiency of kdeinit.
+ # kdeinit unsets this variable before loading applications.
+-LD_BIND_NOW=true @CMAKE_INSTALL_PREFIX@/@KF5_LIBEXEC_INSTALL_DIR@/start_kdeinit_wrapper --kded +kcminit_startup
++LD_BIND_NOW=true @KF5_LIBEXEC_INSTALL_DIR@/start_kdeinit_wrapper --kded +kcminit_startup
+ if test $? -ne 0; then
+   # Startup error
+   echo 'startkde: Could not start kdeinit5. Check your installation.'  1>&2
