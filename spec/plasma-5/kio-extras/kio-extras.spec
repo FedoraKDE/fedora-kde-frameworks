@@ -1,6 +1,6 @@
 Name:           kio-extras
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
 License:        GPLv2+
@@ -40,6 +40,13 @@ BuildRequires:  lzma-devel
 Requires:       kf5-filesystem
 
 %description
+%{summary}.
+
+%package        docs
+Summary:        Documentation and user manuals for %{name}
+Obsoletes:      kde-runtime-docs < 5.0.0-1
+Requires:       %{name} = %{version}-%{release}
+%description    docs
 %{summary}.
 
 %prep
@@ -86,12 +93,18 @@ rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 %{_kf5_datadir}/kservicetypes5/thumbcreator.desktop
 %{_datadir}/dbus-1/interfaces/kf5_org.kde.network.kioslavenotifier.xml
 %{_datadir}/mime/packages/kf5_network.xml
+%{_datadir}/config.kcfg/jpegcreatorsettings.kcfg
+
+%files docs
 %{_datadir}/doc/HTML/en/kioslave5
 %{_datadir}/doc/HTML/en/kcontrol
-%{_datadir}/config.kcfg/jpegcreatorsettings.kcfg
+
 
 
 %changelog
+* Tue Jul 29 2014 Daniel Vrátil <dvratil@redhat.cim> - 5.0.0-2
+- Split -docs to improve coinstallability with KDE 4
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 
