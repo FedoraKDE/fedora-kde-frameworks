@@ -1,6 +1,6 @@
 Name:           khelpcenter
 Version:        5.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application to show KDE Application's documentation
 
 License:        GPLv2+
@@ -22,8 +22,6 @@ BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
-
-Obsoletes:      kde-runtime-khelpcenter < 5.0.0-1
 
 %description
 An advanced editor component which is used in numerous KDE applications
@@ -70,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/doc/HTML/en/onlinehelp
 
 %changelog
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- No longer obsoletes kde-runtime-khelpcenter
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 
