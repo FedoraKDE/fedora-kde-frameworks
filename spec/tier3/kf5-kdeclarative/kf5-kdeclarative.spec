@@ -2,9 +2,10 @@
 %define framework kdeclarative
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 3 addon for QML integration
+Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
+
 License:        GPLv2+ and MIT
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
@@ -32,8 +33,7 @@ BuildRequires:  kf5-kio-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 addon that provides integration between QML and
-KDE frameworks.
+KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 
 %package        devel
@@ -91,7 +91,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDeclarative.pri
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1

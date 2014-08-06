@@ -2,8 +2,8 @@
 %define framework kinit
 
 Name:           kf5-%{framework}
-Version:        5.0.0
-Release:        2%{?dist}
+Version:        5.1.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        LGPLv2+ and BSD
@@ -93,6 +93,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Aug 06 2014 Daniel Vr√°til <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
 * Fri Jul 18 2014 Daniel Vr·til <dvratil@redhat.com> - 5.0.0-2
 - Downstream patch to fix hardcoded libexec paths in start_kdeinit_wrapper
 

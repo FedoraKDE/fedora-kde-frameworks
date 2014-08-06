@@ -3,18 +3,13 @@
 
 
 Name:           kf5-attica
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with Open Collaboration Services API
 
 Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.kde.org
-
-# git archive --format=tar --prefix=%{name}-%{version}/ \
-#             --remote=git://anongit.kde.org/attica,git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
@@ -71,16 +66,19 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.100.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 
-* Tue May 06 2014 Daniel Vrátil <dvratil@redhat.com>
-- Rebuild against updated kf5-rpm-macros
-
-* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.98.0-2

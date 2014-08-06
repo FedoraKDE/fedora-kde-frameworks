@@ -2,7 +2,7 @@
 %define framework kdoctools
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
@@ -86,14 +86,16 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_docdir}/HTML/*/kdoctools5-common
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Wed Jun 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3
-- -devel Provides -static (RHBZ#1113070)
-- -doc Requires kf5-filesystem
+- Add Provides -static to -devel (RHBZ#1113070)
+- Add Requires kf5-filesystem to -doc
 - Remove %%post and %%postun ldconfig, there are no shared libs
-- Fix directory ownership
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
 - Fix license

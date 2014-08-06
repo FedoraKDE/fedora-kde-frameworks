@@ -2,7 +2,7 @@
 %define framework plasma
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework is foundation to build a primary user interface
 
@@ -131,7 +131,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Mon Jul 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Fix plugin installation path
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Mon Jul 07 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-3

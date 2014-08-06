@@ -2,7 +2,7 @@
 %define framework sonnet
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
@@ -16,9 +16,10 @@ Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
-BuildRequires:  aspell-devel
-BuildRequires:  hspell-devel
 BuildRequires:  hunspell-devel
+# legacy spellcheckers: We don't want to drag these in, we use Hunspell.
+#BuildRequires:  aspell-devel
+#BuildRequires:  hspell-devel
 BuildRequires:  zlib-devel
 
 BuildRequires:  kf5-rpm-macros
@@ -102,11 +103,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_SonnetUi.pri
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.100.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
+
+* Thu May 29 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 4.99.0-4
+- Drop BR aspell-devel and hspell-devel to avoid dragging the legacy checkers in
 
 * Tue May 27 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - Fix license

@@ -2,11 +2,11 @@
 %define framework kparts
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for KParts
 
-License:        LGPLv2+
+License:        GPLv2+
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
 #             --remote=git://anongit.kde.org/%{framework}.git master | \
@@ -34,9 +34,7 @@ BuildRequires:  kf5-kxmlgui-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution that implements the framework for KDE parts,
-which are elaborate widgets with a user-interface defined in terms of actions
-(menu items, toolbar icons).
+KDE Frameworks 5 Tier 3 solution for KParts
 
 
 %package        devel
@@ -92,7 +90,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1

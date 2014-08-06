@@ -2,7 +2,7 @@
 %define framework kded
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with extensible daemon for system-level services
 
@@ -29,11 +29,12 @@ BuildRequires:  kf5-kservice-devel
 Requires:       kf5-filesystem
 
 %description
-KDED stands for KDE Daemon which isn't very descriptive. KDED runs in the
-background and performs a number of small tasks. Some of these tasks are built in,
-others are started on demand.
+KDED stands for KDE Daemon which isn't very descriptive. KDED runs
+in the background and performs a number of small tasks. Some of these
+tasks are built in, others are started on demand.
 
-Custom KDED modules can be provided by 3rd party frameworks and applications.
+Custom KDED modules can be provided by 3rd party frameworks and
+applications.
 
 
 %package        devel
@@ -85,7 +86,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1

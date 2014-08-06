@@ -2,9 +2,10 @@
 %define framework kio
 
 Name:           kf5-%{framework}
-Version:        5.0.0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
+
 License:        GPLv2+ and MIT and BSD
 URL:            http://www.kde.org
 # git archive --format=tar --prefix=%{framework}-%{version}/ \
@@ -12,8 +13,6 @@ URL:            http://www.kde.org
 # bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
-
-Patch0:         kio-qbasicatomicint-fix.patch
 
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
@@ -48,7 +47,7 @@ BuildRequires:  kf5-kwallet-devel
 Requires:       kf5-filesystem
 
 %description
-KDE Frameworks 5 Tier 3 solution for resource and network access abstraction.
+KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 
 %package        devel
@@ -87,11 +86,10 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    doc
 Documentation for %{name}.
 
+# TODO: Split the package
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .qbasicatomicint
 
 %build
 mkdir -p %{_target_platform}
@@ -150,7 +148,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
-* Thu Jul 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- KDE Frameworks 5.1.0
+
+* Mon Jul 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
+- Fix plugin install path
+
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
 * Sat Jun 28 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
