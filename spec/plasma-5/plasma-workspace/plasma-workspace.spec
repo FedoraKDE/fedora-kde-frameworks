@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.0.0
-Release:        4%{?dist}
+Release:        7%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -109,9 +109,21 @@ Requires:       xorg-x11-server-utils
 # KDM is dead in Plasma 5, so let's use SDDM.
 Requires:       sddm
 
+Requires:       kde-settings
+
 Requires:       systemd
 
+# SysTray support for Qt 4 apps
+Requires:       sni-qt
+
 Obsoletes:      kde-workspace < 5.0.0-1
+# There was circular dependency between kde-workspace and -libs, so remove explictly
+# both. This is fixed in latest kde-workspace
+Obsoletes:      kde-workspace-libs < 5.0.0-1
+Obsoletes:      kdeplasma-addons < 5.0.0-1
+# Hmm, really? This is needed for smooth upgrade, but something else should do this,
+# maybe plasma-dsektop? 
+Obsoletes:      plasma-scriptengine-python < 5.0.0-1
 
 %description
 Plasma 5 libraries and runtime components
@@ -228,6 +240,11 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-7
+- Add more Obsoletes to make upgrade from KDE 4 smooth
+- Add sni-qt to Requires so that Qt 4 apps are working with Plasma 5 systray
+- Requires kde-settings
+
 * Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-4
 - Add patch to fix build-time generated paths
 

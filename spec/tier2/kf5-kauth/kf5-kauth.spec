@@ -14,7 +14,7 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Patch0:         kauth-find-polkit-qt5.patch
+Patch0:         kauth-include-polkitqt.patch
 
 BuildRequires:  polkit-qt5-1-devel
 
@@ -43,7 +43,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .polkitqt5
+%patch0 -p1 -b .polkitqt
 
 %build
 mkdir -p %{_target_platform}
@@ -83,6 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Updated upstream patch to find PolkitQt5
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 
