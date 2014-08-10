@@ -123,6 +123,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_plugindir}/urifilters/*.so
 %{_kf5_plugindir}/kded/*.so
+%{_kf5_qtplugindir}/kcm_webshortcuts.so
 %{_kf5_libexecdir}/kio_http_cache_cleaner
 %{_kf5_libexecdir}/kioexec
 %{_kf5_libexecdir}/kpac_dhcp_helper

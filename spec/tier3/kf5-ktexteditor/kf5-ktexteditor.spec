@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.1.0
-Release:        1%{?_dist}
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
 License:        LGPLv2+
@@ -81,7 +81,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/katepart5/script/
 %{_kf5_datadir}/katepart5/syntax/
-%{_kf5_datadir}/katepart/katepart5ui.rc
+%{_kf5_datadir}/kxmlgui5/katepart/katepart5ui.rc
 
 %files devel
 %{_kf5_libdir}/libKF5TextEditor.so
