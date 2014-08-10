@@ -99,7 +99,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_plugindir}/parts/*.so
 %{_kf5_datadir}/kf5/kjava/
 %{_kf5_datadir}/kf5/khtml/
-%{_kf5_datadir}/khtml/
+%{_kf5_datadir}/kxmlgui5/khtml/
 %{_kf5_datadir}/kservices5/*.desktop
 %config %{_kf5_sysconfdir}/xdg/khtmlrc
 
