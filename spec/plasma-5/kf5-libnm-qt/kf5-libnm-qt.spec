@@ -1,7 +1,7 @@
 %define         framework libnm-qt
 
 Name:           kf5-%{framework}
-Version:        5.0.91
+Version:        5.0.92
 Release:        1%{?dist}
 Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
@@ -59,6 +59,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_NetworkManagerQt.pri
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.92-1
+- Plasma 5.0.1
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.91-1
 - Plasma 5.0.0
 

@@ -1,5 +1,5 @@
 Name:           ksysguard
-Version:        5.0.0
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        KDE Process Management application
 
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
 

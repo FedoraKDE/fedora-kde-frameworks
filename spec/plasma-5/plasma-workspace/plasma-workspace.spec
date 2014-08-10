@@ -1,6 +1,6 @@
 Name:           plasma-workspace
-Version:        5.0.0
-Release:        7%{?dist}
+Version:        5.0.1
+Release:        1%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -9,8 +9,6 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 
 # This goes to PAM
 Source10:       kde
-
-Patch0:         plasma-workspace-buildtime-dir-fix.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -147,15 +145,15 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q
 
-%patch0 -p1 -b .bindirfix
-
 %build
 
 sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. \
+	-DCMAKE_INSTALL_FULL_LIBEXECDIR=${_libexecdir} \
+	-DCMAKE_INSTALL_FULL_LIBEXECDIR_KF=${_kf5_libexecdir}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -240,6 +238,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-7
 - Add more Obsoletes to make upgrade from KDE 4 smooth
 - Add sni-qt to Requires so that Qt 4 apps are working with Plasma 5 systray

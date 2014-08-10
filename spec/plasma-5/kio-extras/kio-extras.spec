@@ -1,6 +1,6 @@
 Name:           kio-extras
-Version:        5.0.0
-Release:        2%{?dist}
+Version:        5.0.1
+Release:        1%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
 License:        GPLv2+
@@ -102,6 +102,9 @@ rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Tue Jul 29 2014 Daniel Vrátil <dvratil@redhat.cim> - 5.0.0-2
 - Split -docs to improve coinstallability with KDE 4
 

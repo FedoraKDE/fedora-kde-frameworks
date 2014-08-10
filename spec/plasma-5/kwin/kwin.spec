@@ -1,5 +1,5 @@
 Name:           kwin
-Version:        5.0.0
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        KDE Window manager
 
@@ -136,6 +136,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Wed Jul 16 2014 Daniel Vrátil <dvratil@redhat.com> 5.0.0-1
 - Plasma 5.0.0
 

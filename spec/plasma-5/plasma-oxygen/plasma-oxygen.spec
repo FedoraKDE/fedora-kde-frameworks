@@ -1,8 +1,8 @@
 %define base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.0.0
-Release:        2%{?dist}
+Version:        5.0.1
+Release:        1%{?dist}
 Summary:        Plasma 5 and KDE default style and look
 
 License:        GPLv2+
@@ -75,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/*.so
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Thu Jul 24 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
 - Does not conflict with kde-style-oxygen 4
 

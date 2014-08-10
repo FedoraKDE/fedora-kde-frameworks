@@ -1,17 +1,14 @@
 %define         framework baloo
 
 Name:           kf5-%{framework}
-Version:        5.0.0
-Release:        4%{?dist}
+Version:        5.0.1
+Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://www.kde.org
 Source0:        http://download.kde.org/stable/plasma/%{version}/%{framework}-%{version}.tar.xz
-
-Patch0:         baloo-kioslaves-install.patch
-Patch1:         baloo-stores-install.patch
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
@@ -48,9 +45,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -qn %{framework}-%{version}
-
-%patch0 -p1 -b .kioslaves
-%patch1 -p1 -b .stores
 
 %build
 
@@ -132,6 +126,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Tue Jul 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-4
 - -devel Requires xapian-core-devel
 

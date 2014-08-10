@@ -1,6 +1,6 @@
 Name:           khelpcenter
-Version:        5.0.0
-Release:        2%{?dist}
+Version:        5.0.1
+Release:        1%{?dist}
 Summary:        Application to show KDE Application's documentation
 
 License:        GPLv2+
@@ -68,6 +68,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/doc/HTML/en/onlinehelp
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
 - No longer obsoletes kde-runtime-khelpcenter
 

@@ -1,5 +1,5 @@
 Name:           plasma5
-Version:        5.0.0
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
@@ -34,5 +34,8 @@ Requires:       kde-cli-tools
 
 
 %changelog
+* Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
+- Plasma 5.0.1
+
 * Wed Jul 23 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - Plasma 5.0.0
