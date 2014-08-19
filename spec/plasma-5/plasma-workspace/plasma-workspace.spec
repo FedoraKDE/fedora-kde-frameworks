@@ -13,7 +13,6 @@ Source10:       kde
 # udev
 BuildRequires:  zlib-devel
 BuildRequires:  dbusmenu-qt5-devel
-BuildRequires:  qimageblitz-devel
 BuildRequires:  libGL-devel
 BuildRequires:  mesa-libGLES-devel
 #BuildRequires:  wayland-devel
@@ -177,7 +176,6 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %{_kf5_libdir}/libkdeinit5_*.so
 %{_libdir}/libKF5XmlRpcClientPrivate.so
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
-%{_kf5_qtplugindir}/plasma/geolocationprovider/*.so
 %{_kf5_qtplugindir}/plasma/packagestructure/*.so
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/phonon_platform/kde.so
