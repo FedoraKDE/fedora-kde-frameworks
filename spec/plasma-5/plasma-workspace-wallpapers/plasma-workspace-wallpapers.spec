@@ -9,6 +9,7 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
+BuildRequires:  qt5-qtbase-devel
 
 Requires:       kf5-filesystem
 

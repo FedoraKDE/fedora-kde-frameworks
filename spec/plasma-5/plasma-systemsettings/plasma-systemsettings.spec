@@ -30,8 +30,6 @@ BuildRequires:  kf5-kdoctools-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-workspaces < 5.0.0-1
-
 %description
 %{summary}.
 
@@ -67,7 +65,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files -f systemsettings5.lang
 %doc COPYING COPYING.DOC
-%{_bindir}/systemsettings
+%{_bindir}/systemsettings5
 %{_libdir}/libsystemsettingsview.so.*
 %{_kf5_qtplugindir}/*.so
 %{_datadir}/systemsettings

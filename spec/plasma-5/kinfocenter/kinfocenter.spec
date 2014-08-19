@@ -74,12 +74,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/kinfocenter
 %{_datadir}/kcmview1394
 %{_datadir}/kcmusb
-%{_sysconfdir}/xdg/menus/kde-information.menu
+%{_sysconfdir}/xdg/menus/kinfocenter.menu
 %{_datadir}/applications/kinfocenter.desktop
 %{_datadir}/doc/HTML/en/kinfocenter
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
-%{_datadir}/desktop-directories/kde-information.directory
+%{_datadir}/desktop-directories/kinfocenter.directory
 
 
 %changelog

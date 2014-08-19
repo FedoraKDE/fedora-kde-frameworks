@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
@@ -29,7 +29,8 @@ Requires:       kf5-filesystem
 %package tools
 Summary:        Command line tools to interact with Baloo
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Obsoletes:      baloo < 5.0.0-1
+Provides:       baloo = %{version}-%{release}
+Obsoletes:      baloo < 5.0.0-1.2
 %description    tools
 %{summary}.
 
@@ -42,6 +43,14 @@ Requires:       xapian-core-devel
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
+%package file
+Summary:        File indexing and search for Baloo
+Obsoletes:      %{name} < 5.0.1-2
+Obsoletes:      baloo-file < 5.0.1-2
+Requires:       %{name} = %{version}-%{release}
+%description    file
+%{summary}.
 
 %prep
 %setup -qn %{framework}-%{version}
@@ -73,44 +82,59 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kio_timeline --with-qt
 %find_lang baloo_queryparser --with-qt
 %find_lang baloo_file_extractor --with-qt
+%find_lang balooctl --with-qt
+
+cat kio_tags.lang kio_baloosearch.lang kio_timeline.lang baloo_queryparser.lang \
+    akonadi_baloo_indexer.lang \
+    > %{name}.lang
+
+cat baloo_file.lang baloo_file_extractor.lang kcm_baloofile.lang \
+    > %{name}-file.lang
+
+cat baloosearch.lang balooshow.lang balooctl.lang \
+    > %{name}-tools.lang
+
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files -f kio_tags.lang -f kio_baloosearch.lang -f kcm_baloofile.lang -f akonadi_baloo_indexer.lang -f kio_timeline.lang -f baloo_queryparser.lang
+%files -f %{name}.lang
 %{_kf5_libdir}/libKF5BalooCore.so.*
 %{_kf5_libdir}/libKF5BalooXapian.so.*
 %{_kf5_libdir}/libKF5BalooFiles.so.*
-%{_kf5_plugindir}/baloo/filesearchstore.so
-%{_kf5_plugindir}/baloo/emailsearchstore.so
-%{_kf5_plugindir}/baloo/contactsearchstore.so
-%{_kf5_plugindir}/baloo/notesearchstore.so
-%{_kf5_plugindir}/baloo/calendarsearchstore.so
-%{_kf5_plugindir}/kio/baloosearch.so
-%{_kf5_plugindir}/kio/tags.so
-%{_kf5_plugindir}/kio/timeline.so
-%{_kf5_qtplugindir}/kcm_baloofile.so
-%{_kf5_sysconfdir}/xdg/autostart/baloo_file.desktop
-%{_kf5_sysconfdir}/dbus-1/system.d/org.kde.baloo.filewatch.conf
-%{_kf5_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
-%{_kf5_datadir}/dbus-1/system-services/org.kde.baloo.filewatch.service
+%{_kf5_qtplugindir}/baloo_filesearchstore.so
+%{_kf5_qtplugindir}/baloo_emailsearchstore.so
+%{_kf5_qtplugindir}/baloo_contactsearchstore.so
+%{_kf5_qtplugindir}/baloo_notesearchstore.so
+%{_kf5_qtplugindir}/baloo_calendarsearchstore.so
+%{_kf5_qtplugindir}/kio_baloosearch.so
+%{_kf5_qtplugindir}/kio_tags.so
+%{_kf5_qtplugindir}/kio_timeline.so
 %{_kf5_datadir}/kservicetypes5/baloosearchstore.desktop
 %{_kf5_datadir}/kservices5/baloo_filesearchstore.desktop
 %{_kf5_datadir}/kservices5/baloo_emailsearchstore.desktop
 %{_kf5_datadir}/kservices5/baloo_contactsearchstore.desktop
 %{_kf5_datadir}/kservices5/baloo_notesearchstore.desktop
 %{_kf5_datadir}/kservices5/baloo_calendarsearchstore.desktop
-%{_kf5_datadir}/kservices5/kcm_baloofile.desktop
 %{_kf5_datadir}/kservices5/baloosearch.protocol
 %{_kf5_datadir}/kservices5/tags.protocol
 %{_kf5_datadir}/kservices5/timeline.protocol
-%{_kf5_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
 %{_kf5_datadir}/icons/hicolor/*/apps/baloo.png
 
-%files tools -f baloo_file.lang -f baloo_file_extractor.lang -f baloosearch.lang -f balooshow.lang
+%files file -f %{name}-file.lang
 %{_kf5_bindir}/baloo_file
 %{_kf5_bindir}/baloo_file_extractor
 %{_kf5_bindir}/baloo_file_cleaner
+%{_kf5_sysconfdir}/xdg/autostart/baloo_file.desktop
+%{_kf5_sysconfdir}/dbus-1/system.d/org.kde.baloo.filewatch.conf
+%{_kf5_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
+%{_kf5_datadir}/dbus-1/system-services/org.kde.baloo.filewatch.service
+%{_kf5_qtplugindir}/kcm_baloofile.so
+%{_kf5_datadir}/kservices5/kcm_baloofile.desktop
+%{_kf5_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
+
+
+%files tools -f %{name}-tools.lang
 %{_kf5_bindir}/baloosearch
 %{_kf5_bindir}/balooshow
 %{_kf5_bindir}/balooctl
@@ -126,6 +150,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon Aug 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
+- Fix coinstallability with updated baloo package
+
 * Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
 - Plasma 5.0.1
 

@@ -193,7 +193,7 @@ fi
 %{_bindir}/kde5-nm-connection-editor
 %{_libdir}/libplasmanm_internal.so
 %{_libdir}/libplasmanm_editor.so
-%{_datadir}/kde5-nm-connection-editor/kde5-nm-connection-editorui.rc
+%{_kf5_datadir}/kxmlgui5/kde5-nm-connection-editor/kde5-nm-connection-editorui.rc
 %{_datadir}/applications/kde5-nm-connection-editor.desktop
 # plasma-nm applet
 %{_qt5_prefix}/qml/org/kde/plasma/networkmanagement/libplasmanm_qmlplugins.so

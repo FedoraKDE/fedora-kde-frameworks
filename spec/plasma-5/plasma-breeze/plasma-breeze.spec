@@ -13,6 +13,11 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
+
+BuildRequires:  gettext
+
 Requires:       kf5-filesystem
 
 %description
