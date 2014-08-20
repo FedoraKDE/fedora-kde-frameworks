@@ -1,6 +1,6 @@
 Name:           plasma5
 Version:        5.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -9,6 +9,7 @@ URL:            http://www.kde.org
 Requires:       plasma-breeze
 Requires:       plasma-desktop
 Requires:       plasma-workspace
+Requires:       plasma-workspace-wallpapers
 Requires:       plasma-oxygen
 Requires:       plasma-milou
 Requires:       plasma-nm
@@ -20,6 +21,8 @@ Requires:       kio-extras
 Requires:       kinfocenter
 Requires:       kmenuedit
 Requires:       kde-cli-tools
+Requires:       khelpcenter
+Requires:       kf5-baloo
 
 %description
 %{summary}.
@@ -34,6 +37,9 @@ Requires:       kde-cli-tools
 
 
 %changelog
+* Wed Aug 20 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
+- Missed some requires
+
 * Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
 - Plasma 5.0.1
 
