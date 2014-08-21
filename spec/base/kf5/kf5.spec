@@ -1,6 +1,6 @@
 Name:           kf5
 Version:        5.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,9 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Thu Aug 21 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-2
+- Add new KF5-specific variables to our CMake command
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 

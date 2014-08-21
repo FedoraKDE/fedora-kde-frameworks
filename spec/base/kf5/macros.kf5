@@ -25,6 +25,9 @@
     -DBUILD_TESTING:BOOL=FALSE \\\
     -DCMAKE_BUILD_TYPE=%{_kf5_buildtype} \\\
     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
+    -DCMAKE_INSTALL_FULL_BINDIR=%{_kf5_bindir} \\\
+    -DCMAKE_INSTALL_FULL_LIBEXECDIR=%{_libexecdir} \\\
+    -DCMAKE_INSTALL_FULL_LIBEXECDIR_KF5=%{_kf5_libexecdir} \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \\\
