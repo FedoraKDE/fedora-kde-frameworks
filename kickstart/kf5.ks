@@ -11,43 +11,30 @@ services --enabled=NetworkManager --disabled=sshd
 
 #repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
 #repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --exclude=sddm
-repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/ --exclude=sddm
-repo --name=kde-frameworks5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
-repo --name=kde-frameworks5-unstable --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks-unstable/fedora-$releasever-$basearch/
-repo --name=plasma-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-next/fedora-$releasever-$basearch/
-repo --name=sddm --baseurl=http://copr-be.cloud.fedoraproject.org/results/mbriza/sddm/fedora-$releasever-$basearch/
+repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
+repo --name=kde-frameworks --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
+repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
+repo --name=updates-testing --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/testing/$releasever/$basearch/
+
 
 %packages
 @core
 @fonts
 kernel
 @base-x
-kde5-baseapps
-kde5-breeze
-kde5-kate
-kde5-khelpcenter
-kde5-khotkeys
-kde5-kinfocenter
-kde5-kio-extras
-kde5-kmenuedit
-kde5-konsole
-kde5-ksysguard
-kde5-kwin
-kde5-kwrited
-kde5-milou
-kde5-oxygen
-kde5-plasma-desktop
-kde5-plasma-nm
-kde5-plasma-workspace
-kde5-plasma-workspace-artwork
-kde5-powerdevil
-kde5-systemsettings
-kde5-cli-tools
-kde5-kwalletmanager
-kde5-sddm-theme
-kde5-rekonq
 
+# Plasma 5
+plasma5
+
+# KDE 4 - make the ISO actually usable
+kde-runtime
+konsole
+kwrite
+rekonq
+konqueror
+
+# Menu
 redhat-menus
 
 # Fancy looks
@@ -67,6 +54,8 @@ xorg-x11-drv-vmware
 
 # We need this to log us in!
 sddm
+sddm-themes
+sddm-kcm
 
 # Needed by start_kde - remove once pkg is rebuilt with deps
 xmessage
@@ -81,7 +70,7 @@ rm /etc/systemd/system/default.target
 ln -s /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
 # Disable drkonqi until I figure out why everything is crashing so much
-echo "export KDE_DEBUG=1" >> /etc/profile.d/kde5.sh
+#echo "export KDE_DEBUG=1" >> /etc/profile.d/kde5.sh
 
 
 # FIXME: it'd be better to get this installed from a package
@@ -213,70 +202,72 @@ passwd -d root > /dev/null
 
 # autologin and fancy login screen
 sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
-sed -i 's/CurrentTheme=fedora/CurrentTheme=plasma-next/' /etc/sddm.conf
-sed -i 's/LastSession=kde-plasma.desktop/LastSession=kde5-plasma.desktop/' /etc/sddm.conf
+sed -i 's/CurrentTheme=fedora/CurrentTheme=breeze/' /etc/sddm.conf
+sed -i 's/LastSession=kde-plasma.desktop/LastSession=plasma.desktop/' /etc/sddm.conf
 
 # default wallpaper
-sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/plasma/desktoptheme/default/metadata.desktop
-sed -i 's/defaultWidth=[0-9]*/defaultWidth=1920/' /usr/share/plasma/desktoptheme/default/metadata.desktop
-sed -i 's/defaultHeight=[0-9]*/defaultHeight=1080/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+# (should not be needed anymore)
+#sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+#sed -i 's/defaultWidth=[0-9]*/defaultWidth=1920/' /usr/share/plasma/desktoptheme/default/metadata.desktop
+#sed -i 's/defaultHeight=[0-9]*/defaultHeight=1080/' /usr/share/plasma/desktoptheme/default/metadata.desktop
 
 
 # default configuration of liveuser profile
 # FIXME: This should be read from /usr/share or some other default, like with kde-settings
 
-mkdir -p /home/liveuser/.config
-echo "[General]
-XftHintAlias=true
-XftHintStyle=hintmedium
-XftSubPixel=none
-desktopFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-fixed=Oxygen Mono,9,-1,5,50,0,0,0,0,0
-font=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-menuFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-smallestReadableFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
-taskbarFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-toolBarFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
-" > /home/liveuser/.config/kdeglobals
+#mkdir -p /home/liveuser/.config
+#echo "[General]
+#XftHintAlias=true
+#XftHintStyle=hintmedium
+#XftSubPixel=none
+#desktopFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+#fixed=Oxygen Mono,9,-1,5,50,0,0,0,0,0
+#font=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+#menuFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+#smallestReadableFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
+#taskbarFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
+#toolBarFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
+#" > /home/liveuser/.config/kdeglobals
 
-echo "#! /bin/sh
-kcminputrc_mouse_cursortheme=breeze
-kcminputrc_mouse_cursorsize=''
-ksplashrc_ksplash_theme=Breeze
-ksplashrc_ksplash_engine=KSplashQML
-kcmfonts_general_forcefontdpi=0
-kdeglobals_locale_language=''
-klocale_languages=en_US
-" > /home/liveuser/.config/startupconfig
+#echo "#! /bin/sh
+#kcminputrc_mouse_cursortheme=breeze
+#kcminputrc_mouse_cursorsize=''
+#ksplashrc_ksplash_theme=Breeze
+#ksplashrc_ksplash_engine=KSplashQML
+#kcmfonts_general_forcefontdpi=0
+#kdeglobals_locale_language=''
+#klocale_languages=en_US
+#" > /home/liveuser/.config/startupconfig
 
-echo "#kcminputrc Mouse cursorTheme 'breeze'
-kcminputrc Mouse cursorSize ''
-ksplashrc KSplash Theme Breeze
-ksplashrc KSplash Engine KSplashQML
-kcmfonts General forceFontDPI 0
-kdeglobal Locale Language ''
-" > /home/liveuser/.config/startupconfigkeys
+#echo "#kcminputrc Mouse cursorTheme 'breeze'
+#kcminputrc Mouse cursorSize ''
+#ksplashrc KSplash Theme Breeze
+#ksplashrc KSplash Engine KSplashQML
+#kcmfonts General forceFontDPI 0
+#kdeglobal Locale Language ''
+#" > /home/liveuser/.config/startupconfigkeys
 
-echo "kcminputrc Mouse cursorTheme 'breeze'
-!/usr/share/config/kcminputrc
-*
-kcminputrc Mouse cursorSize ''
-!/usr/share/config/kmcinputrc
-*
-ksplashrc KSplash Theme Breeze
-!/usr/share/config/ksplashrc
-*
-ksplashrc KSplash Engine KSplashQML
-!/usr/share/config/ksplashrc
-*
-kcmfonts General forceFontDPI 0
-!/usr/share/config/kcmfonts
-*
-kdeglobals Locale Language ''
-!/usr/share/config/kdeglobals
-*
-" > /home/liveuser/.config/startupconfigfiles
+#echo "kcminputrc Mouse cursorTheme 'breeze'
+#!/usr/share/config/kcminputrc
+#*
+#kcminputrc Mouse cursorSize ''
+#!/usr/share/config/kmcinputrc
+#*
+#ksplashrc KSplash Theme Breeze
+#!/usr/share/config/ksplashrc
+#*
+#ksplashrc KSplash Engine KSplashQML
+#!/usr/share/config/ksplashrc
+#*
+#kcmfonts General forceFontDPI 0
+#!/usr/share/config/kcmfonts
+#*
+#kdeglobals Locale Language ''
+#!/usr/share/config/kdeglobals
+#*
+#" > /home/liveuser/.config/startupconfigfiles
 
+# Make the home look super-fancy
 mkdir /home/liveuser/{Desktop,Documents,Downloads,Music,Video}
 echo -e "[Desktop Entry]\nIcon=user-home" > /home/liveuser/.directory
 echo -e "[Desktop Entry]\nIcon=user-desktop" > /home/liveuser/Desktop/.directory
