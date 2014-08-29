@@ -1,0 +1,23 @@
+commit 8667be9c83629cbaafd2f6fdcc34f20c8d8185d3
+Author: Dan Vrátil <dvratil@redhat.com>
+Date:   Thu Aug 21 21:10:54 2014 +0200
+
+    Use CMAKE_INSTALL_FULL_BINDIR in plasma.desktop
+    
+    REVIEW: 119885
+
+diff --git a/plasma.desktop.cmake b/plasma.desktop.cmake
+index 324a4af..ec5e0e4 100644
+--- a/plasma.desktop.cmake
++++ b/plasma.desktop.cmake
+@@ -1,8 +1,8 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+ Type=XSession
+-Exec=${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/startkde
+-TryExec=${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/startkde
++Exec=${CMAKE_INSTALL_FULL_BINDIR}/startkde
++TryExec=${CMAKE_INSTALL_FULL_BINDIR}/startkde
+ DesktopNames=KDE
+ Name=Plasma
+ Name[ar]=بلازما

@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -9,6 +9,12 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 
 # This goes to PAM
 Source10:       kde
+
+
+# Patches
+
+Patch0:		plasma-desktop-use-cmake-install-full-bindir.patch
+
 
 # udev
 BuildRequires:  zlib-devel
@@ -144,9 +150,11 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q
 
+%patch0 -p1 -b .plasmadesktop
+
 %build
 
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
+#sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -236,6 +244,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Fri Aug 29 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
+- Add upstream patch to fix generated path in plasma.desktop
+
 * Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-1
 - Plasma 5.0.1
 
