@@ -1,12 +1,18 @@
 Name:           kde-cli-tools
 Version:        5.0.1
 Release:        1%{?dist}
-Summary:        Tools based on KDE Frameworks 5 to better interact with the system.
+Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/kde-cli-tools-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
@@ -46,12 +52,7 @@ Conflicts:      kde-runtime < 5.0.0-1
 %prep
 %setup -q
 
-
 %build
-
-# Fix "no rule to make target '../po/XX/PO_FILES', neede by 'po/XX/PO_FILES.gmo'"
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
