@@ -5,7 +5,14 @@ Summary:        KDE Window manager
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -51,13 +58,22 @@ BuildRequires:  kf5-kdoctools-devel
 Requires:       kf5-filesystem
 Requires:       qt5-qtmultimedia
 
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+
+# TODO: Remove once kwin is split from kde-workspace
+Obsoletes:      kde-workspace < 5.0.0-1
+
 %description
 %{summary}.
 
 
+%package        libs
+Summary:        KWin runtime libraries
+%description    libs
+
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kwidgetsaddons-devel
 %description    devel
@@ -76,8 +92,6 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %build
 
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
@@ -88,22 +102,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
-
 %files
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
 %{_bindir}/kwin_x11
 %{_datadir}/kwin
-%{_kf5_libdir}/libkdeinit5_kwin.so
-%{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
-%{_libdir}/libkdecorations.so.*
-%{_libdir}/libkwinxrenderutils.so.*
-%{_libdir}/libkwineffects.so.*
-%{_libdir}/libkwinglutils.so.*
-%{_libdir}/libkwin4_effect_builtins.so.*
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/kwin
 %{_qt5_prefix}/qml/org/kde/kwin
@@ -122,6 +124,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files doc
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
 %{_datadir}/doc/HTML/en/kcontrol/*
+
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
+%files libs
+%{_kf5_libdir}/libkdeinit5_kwin.so
+%{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
+%{_libdir}/libkdecorations.so.*
+%{_libdir}/libkwinxrenderutils.so.*
+%{_libdir}/libkwineffects.so.*
+%{_libdir}/libkwinglutils.so.*
+%{_libdir}/libkwin4_effect_builtins.so.*
 
 %files devel
 %{_libdir}/cmake/KWinDBusInterface

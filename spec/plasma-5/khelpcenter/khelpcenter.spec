@@ -6,7 +6,13 @@ Summary:        Application to show KDE Application's documentation
 License:        GPLv2+
 URL:            http://www.kde.org
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -24,15 +30,12 @@ BuildRequires:  kf5-kdoctools-devel
 Requires:       kf5-filesystem
 
 %description
-An advanced editor component which is used in numerous KDE applications
-requiring a text editing component.
+%{summary}.
 
 %prep
 %setup -q
 
 %build
-
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}

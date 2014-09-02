@@ -1,4 +1,5 @@
-%define         framework libnm-qt
+%global         framework libnm-qt
+%global         plasma_version 5.0.1
 
 Name:           kf5-%{framework}
 Version:        5.0.92
@@ -8,7 +9,14 @@ Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/libs/libnm-qt
-Source0:        http://download.kde.org/stable/plasma/5.0.0/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{plasma_version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
@@ -20,7 +28,7 @@ Requires:  NetworkManager >= 0.9.9.0
 Requires:  kf5-filesystem
 
 %description
-A Tier 1 KDE Frameworks 5 Qt library for NetworkManager
+A Tier 1 KDE Frameworks 5 Qt library for NetworkManager.
 
 %package devel
 Summary: Development files for %{name}
@@ -28,7 +36,7 @@ Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
 Qt libraries and header files for developing applications
-that use NetworkManager
+that use NetworkManager.
 
 %prep
 %setup -qn %{framework}-%{version}

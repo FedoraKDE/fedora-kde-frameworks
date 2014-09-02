@@ -1,37 +1,49 @@
 %define framework kfilemetadata
 
-Name:       kf5-%{framework}
-Summary:    A Tier 3 KDE Framework for extracting file metadata
-Version:    5.0.1
-Release:    1%{?dist}
+# Enable to build ffmpeg extractor
+%global ffmpeg  0
+
+Name:           kf5-%{framework}
+Summary:        A Tier 3 KDE Framework for extracting file metadata
+Version:        5.0.1
+Release:        1%{?dist}
 
 # # KDE e.V. may determine that future LGPL versions are accepted
-License: LGPLv2 or LGPLv3
-URL:     https://www.kde.org
+License:        LGPLv2 or LGPLv3
+URL:            https://www.kde.org
 
-Source0: http://download.kde.org/stable/plasma/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
 
-BuildRequires: extra-cmake-modules
-BuildRequires: kf5-rpm-macros
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-karchive-devel
-BuildRequires: qt5-qtbase-devel
+BuildRequires:  extra-cmake-modules
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-karchive-devel
+BuildRequires:  qt5-qtbase-devel
 
-BuildRequires: ebook-tools-devel
-BuildRequires: pkgconfig(exiv2) >= 0.20
-BuildRequires: pkgconfig(poppler-qt5)
-BuildRequires: pkgconfig(taglib)
+BuildRequires:  ebook-tools-devel
+BuildRequires:  pkgconfig(exiv2) >= 0.20
+BuildRequires:  pkgconfig(poppler-qt5)
+BuildRequires:  pkgconfig(taglib)
+%if 0%{?ffmpeg}
+BuildRequires:  ffmpeg-devel
+%endif
 
 %description
 %{summary}.
 
 %package devel
-Summary:  Developer files for %{name}
-Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: kf5-ki18n-devel
-Requires: kf5-kservice-devel
-Requires: kf5-karchive-devel
+Summary:        Developer files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       kf5-ki18n-devel
+Requires:       kf5-kservice-devel
+Requires:       kf5-karchive-devel
 
 %description devel
 %{summary}.
@@ -67,7 +79,6 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_qtplugindir}/kfilemetadata_plaintextextractor.so
 %{_kf5_qtplugindir}/kfilemetadata_popplerextractor.so
 %{_kf5_qtplugindir}/kfilemetadata_taglibextractor.so
-#%{_kf5_qtplugindir}/kfilemetadata_ffmpegextractor.so
 %{_kf5_datadir}/kservices5/kfilemetadata_epubextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_exiv2extractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_odfextractor.desktop
@@ -76,8 +87,12 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/kfilemetadata_plaintextextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_popplerextractor.desktop
 %{_kf5_datadir}/kservices5/kfilemetadata_taglibextractor.desktop
-#%{_kf5_datadir}/kservices5/kfilemetadata_ffmpegextractor.desktop
 %{_kf5_datadir}/kservicetypes5/kfilemetadataextractor.desktop
+
+%if 0%{?ffmpeg}
+%{_kf5_qtplugindir}/kfilemetadata_ffmpegextractor.so
+%{_kf5_datadir}/kservices5/kfilemetadata_ffmpegextractor.desktop
+%endif
 
 %files devel
 %{_kf5_libdir}/libKF5FileMetaData.so
@@ -98,5 +113,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 - Updated to latest git snapshot
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1
-- Fox kfilemetadata into kf5-kfilemetadata
+- Fork kfilemetadata into kf5-kfilemetadata
 

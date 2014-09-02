@@ -1,4 +1,5 @@
-%define         framework libmm-qt
+%global         framework libmm-qt
+%global         plasma_version 5.0.1
 
 Name:           kf5-%{framework}
 Version:        5.0.92
@@ -9,7 +10,13 @@ Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{plasma_version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros

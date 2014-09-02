@@ -1,4 +1,5 @@
-%define framework kscreen
+%global framework kscreen
+%global plasma_version 5.0.1
 
 Name:           kf5-%{framework}
 Version:        5.0.92
@@ -8,7 +9,14 @@ Summary:        A Tier 3 KDE Frameworks 5 Library with API to control screen set
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/5.0.0/libkscreen-%{version}.tar.xz
+
+%global revision %(echo %{plasma_version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/libkscreen-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel

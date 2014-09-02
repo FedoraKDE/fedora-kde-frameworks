@@ -8,9 +8,15 @@ Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/libksysguard-%{version}.tar.xz
 
-Patch0:         ksysguard-framework-libs-names.patch
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libksysguard-%{version}.tar.xz
 
 BuildRequires:  zlib-devel
 BuildRequires:  libXres-devel
@@ -39,9 +45,6 @@ running on the system.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-# FIXME: Until ksysguard is correctly frameworkized, it conflicts with kde-workspace-devel
-Conflicts:      kde-workspace-devel
-
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -53,8 +56,6 @@ developing applications that use %{name}.
 %patch0 -p1 -b .libsnames
 
 %build
-
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}

@@ -1,4 +1,4 @@
-%define base_name   breeze
+%global base_name   breeze
 
 Name:           plasma-breeze
 Version:        5.0.1
@@ -7,7 +7,14 @@ Summary:        Artwork, styles and assets for the Breeze visual style for the P
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{base_name}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules

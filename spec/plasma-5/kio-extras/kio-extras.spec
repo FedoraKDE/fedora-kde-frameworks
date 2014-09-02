@@ -5,8 +5,17 @@ Summary:        Additional components to increase the functionality of KIO Frame
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
 
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+
+# https://git.reviewboard.kde.org/r/119081
 Patch0:         kio-extras-install-dirs.patch
 
 BuildRequires:  kf5-rpm-macros
@@ -56,8 +65,6 @@ Requires:       %{name} = %{version}-%{release}
 
 %build
 
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
@@ -77,8 +84,6 @@ rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 %{_bindir}/ktrash5
 %{_libdir}/libmolletnetwork.so.*
 %{_kf5_plugindir}/kio/*.so
-%{_kf5_plugindir}/kded/*.so
-%{_kf5_plugindir}/parts/*.so
 %{_kf5_qtplugindir}/*.so
 %{_datadir}/kio_desktop
 %{_datadir}/kio_docfilter

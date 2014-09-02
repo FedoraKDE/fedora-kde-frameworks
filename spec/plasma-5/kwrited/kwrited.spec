@@ -1,11 +1,18 @@
 Name:           kwrited
 Version:        5.0.1
 Release:        1%{?dist}
-Summary:        KDE's kwrited daemon
+Summary:        KDE Write Daemon
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -17,6 +24,9 @@ BuildRequires:  kf5-kpty-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 Requires:       kf5-filesystem
+
+# TODO: Remove once kwrited is split from kde-workspace
+Obsoletes:      kde-workspace < 5.0.0-1
 
 %description
 %{summary}.

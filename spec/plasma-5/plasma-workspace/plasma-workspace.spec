@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -22,6 +22,7 @@ BuildRequires:  dbusmenu-qt5-devel
 BuildRequires:  libGL-devel
 BuildRequires:  mesa-libGLES-devel
 #BuildRequires:  wayland-devel
+BuildRequires:  libSM-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXau-devel
 BuildRequires:  libXdmcp-devel
@@ -118,6 +119,10 @@ Requires:       systemd
 
 # SysTray support for Qt 4 apps
 Requires:       sni-qt
+
+# Oxygen
+Requires:       oxygen-icon-theme
+Requires:       oxygen-fonts
 
 Obsoletes:      kde-workspace < 5.0.0-1
 # There was circular dependency between kde-workspace and -libs, so remove explictly
@@ -244,6 +249,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Tue Sep 02 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-3
+- Make sure we get oxygen-icon-theme and oxyge-icons installed
+
 * Fri Aug 29 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
 - Add upstream patch to fix generated path in plasma.desktop
 

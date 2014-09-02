@@ -5,7 +5,14 @@ Summary:        KDE Info Center
 
 License:        GPLv2+
 URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 
 BuildRequires:  qt5-qtbase-devel
@@ -40,6 +47,7 @@ BuildRequires:  libraw1394-devel
 
 Requires:       kf5-filesystem
 
+# TODO: Remove once kinfocenter is split from kde-workspace
 Obsoletes:      kde-workspace < 5.0.0-1
 
 %description
@@ -49,8 +57,6 @@ Obsoletes:      kde-workspace < 5.0.0-1
 %setup -q
 
 %build
-
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
