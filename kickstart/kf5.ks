@@ -15,7 +15,7 @@ repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/li
 repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 repo --name=kde-frameworks --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
 repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
-repo --name=updates-testing --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/testing/$releasever/$basearch/
+#repo --name=updates-testing --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/testing/$releasever/$basearch/
 
 
 %packages
@@ -26,6 +26,7 @@ kernel
 
 # Plasma 5
 plasma5
+kf5-baloo
 
 # KDE 4 - make the ISO actually usable
 kde-runtime
