@@ -51,13 +51,23 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kcoreaddons5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+touch --no-create %{_datadir}/mime/packages &> /dev/null || :
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+fi
 
+%posttrans
+update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 %files -f kcoreaddons5_qt.lang
 %doc COPYING.LIB README.md
+%{_kf5_bindir}/desktoptojson
 %{_kf5_libdir}/libKF5CoreAddons.so.*
 %{_kf5_datadir}/mime/packages/kde5.xml
 
@@ -69,8 +79,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCoreAddons.pri
 
 %changelog
-* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+* Thu Sep 11 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
+* Sat Aug 09 2014 Rex Dieter <rdieter@fedoraproject.org> 5.1.0-2
+- mime scriptlets
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
