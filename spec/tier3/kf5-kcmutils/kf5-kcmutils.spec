@@ -1,7 +1,7 @@
 %define framework kcmutils
 
 Name:           kf5-%{framework}
-Version:        5.1.0
+Version:        5.2.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with extra API to write KConfigModules
 
@@ -81,6 +81,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCMUtils.pri
 
 %changelog
+* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- KDE Frameworks 5.2.0
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 

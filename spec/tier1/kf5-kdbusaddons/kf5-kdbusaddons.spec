@@ -2,7 +2,7 @@
 %define framework kdbusaddons
 
 Name:           kf5-%{framework}
-Version:        5.1.0
+Version:        5.2.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtDBus
 
@@ -67,6 +67,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDBusAddons.pri
 
 %changelog
+* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- KDE Frameworks 5.2.0
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 

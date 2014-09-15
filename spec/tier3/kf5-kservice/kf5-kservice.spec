@@ -2,7 +2,7 @@
 %define framework kservice
 
 Name:           kf5-%{framework}
-Version:        5.1.0
+Version:        5.2.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for advanced plugin and service introspection
 
@@ -86,6 +86,9 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 
 %changelog
+* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- KDE Frameworks 5.2.0
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 

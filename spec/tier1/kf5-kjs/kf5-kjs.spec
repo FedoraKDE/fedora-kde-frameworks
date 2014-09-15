@@ -2,7 +2,7 @@
 %define framework kjs
 
 Name:           kf5-%{framework}
-Version:        5.1.0
+Version:        5.2.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 functional module with JavaScript interpret
 
@@ -75,6 +75,9 @@ chmod +x %{buildroot}/%{_kf5_datadir}/kf5/kjs/create_hash_table
 %{_kf5_archdatadir}/mkspecs/modules/qt_KJSApi.pri
 
 %changelog
+* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- KDE Frameworks 5.2.0
+
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 

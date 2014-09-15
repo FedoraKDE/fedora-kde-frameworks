@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="5.0.0"
+VERSION="5.2.0"
 RELEASE="1"
-CHANGELOG="KDE Frameworks 5.0.0"
+CHANGELOG="KDE Frameworks 5.2.0"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 
 #REMOVE_DGROC_CHANGELOG="TRUE"
