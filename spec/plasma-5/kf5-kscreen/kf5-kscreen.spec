@@ -1,8 +1,8 @@
 %global framework kscreen
-%global plasma_version 5.0.1
+%global plasma_version 5.0.2
 
 Name:           kf5-%{framework}
-Version:        5.0.92
+Version:        5.0.93
 Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library with API to control screen settings
 
@@ -72,6 +72,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/kscreen2.pc
 
 %changelog
+* Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.93-1
+- Plasma 5.0.2
+
 * Sun Aug 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.92-1
 - Plasma 5.0.1
 

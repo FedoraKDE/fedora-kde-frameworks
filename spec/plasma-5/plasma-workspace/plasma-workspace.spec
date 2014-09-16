@@ -1,6 +1,6 @@
 Name:           plasma-workspace
-Version:        5.0.1
-Release:        3%{?dist}
+Version:        5.0.2
+Release:        1%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -10,11 +10,7 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 # This goes to PAM
 Source10:       kde
 
-
 # Patches
-
-Patch0:		plasma-desktop-use-cmake-install-full-bindir.patch
-
 
 # udev
 BuildRequires:  zlib-devel
@@ -131,7 +127,7 @@ Obsoletes:      kde-workspace < 5.0.0-1
 Obsoletes:      kde-workspace-libs < 5.0.0-1
 Obsoletes:      kdeplasma-addons < 5.0.0-1
 # Hmm, really? This is needed for smooth upgrade, but something else should do this,
-# maybe plasma-dsektop? 
+# maybe plasma-dsektop?
 Obsoletes:      plasma-scriptengine-python < 5.0.0-1
 
 %description
@@ -155,8 +151,6 @@ Documentation and user manuals for %{name}.
 
 %prep
 %setup -q
-
-%patch0 -p1 -b .plasmadesktop
 
 %build
 
@@ -250,6 +244,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
+- Plasma 5.0.2
+
 * Tue Sep 02 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-3
 - Make sure we get oxygen-icon-theme and oxyge-icons installed
 

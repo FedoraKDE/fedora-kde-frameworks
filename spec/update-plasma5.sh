@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="5.0.1"
+VERSION="5.0.2"
 RELEASE="1"
-CHANGELOG="Plasma 5.0.1"
+CHANGELOG="Plasma 5.0.2"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 
 #REMOVE_DGROC_CHANGELOG="TRUE"

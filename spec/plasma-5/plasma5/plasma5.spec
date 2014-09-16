@@ -1,6 +1,6 @@
 Name:           plasma5
-Version:        5.0.1
-Release:        2%{?dist}
+Version:        5.0.2
+Release:        1%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -37,6 +37,9 @@ Requires:       kf5-baloo
 
 
 %changelog
+* Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
+- Plasma 5.0.2
+
 * Wed Aug 20 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
 - Missed some requires
 

@@ -1,8 +1,8 @@
 %define         framework baloo
 
 Name:           kf5-%{framework}
-Version:        5.0.1
-Release:        2%{?dist}
+Version:        5.0.2
+Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
@@ -150,6 +150,9 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 
 
 %changelog
+* Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
+- Plasma 5.0.2
+
 * Mon Aug 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.1-2
 - Fix coinstallability with updated baloo package
 
