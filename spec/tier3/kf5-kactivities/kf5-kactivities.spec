@@ -1,5 +1,9 @@
 %define framework kactivities
 
+%if 0%{?fedora} > 21
+%global build_main_package 1
+%endif
+
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 to organize user work into separate activities
 Version:        5.2.0
@@ -69,18 +73,34 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kactivities5_qt --with-qt --all-name
 
+%if !0%{?build_main_package}
+rm -f %{buildroot}%{_kf5_bindir}/kactivitymanagerd
+rm -f %{buildroot}%{_kf5_datadir}/kservices5/*.desktop
+rm -f %{buildroot}%{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
+rm -rf %{buildroot}%{_kf5_qtplugindir}/kactivitymanagerd/
+rm -r %{buildroot}%{_kf5_qtplugindir}/*.so
+rm -rf %{buildroot}/%{_kf5_datadir}/kf5/kactivitymanagerd
+%endif
+
+
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
-
+%if 0%{?build_main_package}
 %files
 %doc README README.md README.packagers README.developers MAINTAINER
 %{_kf5_bindir}/kactivitymanagerd
-%{_kf5_datadir}/kservices5/kactivitymanagerd.desktop
+%{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
 %{_kf5_qtplugindir}/kactivitymanagerd/
+%{_kf5_qtplugindir}/*.so
+%{_kf5_datadir}/kf5/kactivitymanagerd/
+%endif
 
 %files libs -f kactivities5_qt.lang
+%if !0%{?build_main_package}
+%doc README README.md README.packagers README.developers MAINTAINER
+%endif
 %{_kf5_libdir}/libKF5Activities.so.*
 %{_kf5_qmldir}/org/kde/activities/
 
