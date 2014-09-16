@@ -60,6 +60,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5I18n.so.*
 %{_kf5_qtplugindir}/kf5/ktranscript.so
+%{_datadir}/locale/*/LC_SCRIPTS/ki18n5/ki18n5.js
+%{_datadir}/locale/*/LC_SCRIPTS/ki18n5/trapnakron.pmap
+%{_datadir}/locale/*/LC_SCRIPTS/ki18n5/trapnakron.pmapc
 
 
 %files devel
@@ -70,8 +73,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KI18n.pri
 
 %changelog
-* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+* Thu Sep 11 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

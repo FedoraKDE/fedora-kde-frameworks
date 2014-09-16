@@ -79,7 +79,6 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 %files devel
 %{_kf5_includedir}/kservice_version.h
 %{_kf5_includedir}/KService
-%{_kf5_bindir}/desktoptojson
 %{_kf5_libdir}/libKF5Service.so
 %{_kf5_libdir}/cmake/KF5Service
 %{_kf5_archdatadir}/mkspecs/modules/qt_KService.pri

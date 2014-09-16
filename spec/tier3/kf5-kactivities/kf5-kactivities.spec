@@ -32,6 +32,8 @@ BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kcmutils-devel
+BuildRequires:  kf5-kdeclarative-devel
 
 Requires:       kf5-kactivities-libs%{?_isa} = %{version}-%{release}
 
@@ -76,6 +78,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %if !0%{?build_main_package}
 rm -f %{buildroot}%{_kf5_bindir}/kactivitymanagerd
 rm -f %{buildroot}%{_kf5_datadir}/kservices5/*.desktop
+rm -f %{buildroot}%{_kf5_datadir}/kservices5/*.protocol
 rm -f %{buildroot}%{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
 rm -rf %{buildroot}%{_kf5_qtplugindir}/kactivitymanagerd/
 rm -r %{buildroot}%{_kf5_qtplugindir}/*.so
@@ -91,6 +94,7 @@ rm -rf %{buildroot}/%{_kf5_datadir}/kf5/kactivitymanagerd
 %doc README README.md README.packagers README.developers MAINTAINER
 %{_kf5_bindir}/kactivitymanagerd
 %{_kf5_datadir}/kservices5/*.desktop
+%{_kf5_datadir}/kservices5/activities.protocol
 %{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
 %{_kf5_qtplugindir}/kactivitymanagerd/
 %{_kf5_qtplugindir}/*.so

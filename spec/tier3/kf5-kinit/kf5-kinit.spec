@@ -14,10 +14,6 @@ URL:            http://www.kde.org
 #Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
 Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-# kdeinit_start and kdeinit_start_wrapper have some libexec paths hardocded
-# at build-time, but they are wrong
-Patch0:         kinit-kdeinit-pathfix.patch
-
 BuildRequires:  libX11-devel
 
 BuildRequires:  kf5-rpm-macros
@@ -60,8 +56,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{framework}-%{version}
-
-%patch0 -p1 -b .kdeinit
 
 %build
 mkdir -p %{_target_platform}

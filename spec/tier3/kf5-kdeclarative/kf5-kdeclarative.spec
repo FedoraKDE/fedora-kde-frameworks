@@ -81,6 +81,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qmldir}/org/kde/kquickcontrols
 %{_kf5_qmldir}/org/kde/kquickcontrolsaddons
 %{_kf5_qmldir}/org/kde/private/kquickcontrols
+%{_kf5_qmldir}/org/kde/kio
 
 %files devel
 %doc
