@@ -98,6 +98,7 @@ Requires:       kf5-kded
 Requires:       kf5-kdoctools
 #Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
+Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
 Requires:       kf5-baloo
 
