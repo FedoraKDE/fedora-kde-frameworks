@@ -144,9 +144,6 @@ Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
 #%patch1 -p1 -b .item-text
 
 %build
-
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..

@@ -52,8 +52,6 @@ Obsoletes:      kde-workspace < 5.0.0-1
 
 %build
 
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
@@ -64,13 +62,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 %find_lang powerdevil5 --with-qt --all-name
-
-# FIXME: This is result of broken Cmake Config files from kde5-plasma-workspace-devel
-#chrpath --delete %{buildroot}/%{_kde5_plugindir}/kded_powerdevil.so
-#chrpath --delete %{buildroot}/%{_kde5_plugindir}/kcm_powerdevilglobalconfig.so
-#chrpath --delete %{buildroot}/%{_kde5_plugindir}/kcm_powerdevilprofilesconfig.so
-#chrpath --delete %{buildroot}/%{_kde5_libdir}/libpowerdevilcore.so.1.1.0
-#chrpath --delete %{buildroot}/%{_kde5_libdir}/libpowerdevilconfigcommonprivate.so.%{version}
 
 # Don't bother with -devel
 rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so

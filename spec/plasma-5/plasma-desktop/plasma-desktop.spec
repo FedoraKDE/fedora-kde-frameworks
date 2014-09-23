@@ -70,8 +70,6 @@ Documentation and user manuals for %{name}.
 
 %build
 
-sed -e "s/PO_FILES //" -i po/*/CMakeLists.txt
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
