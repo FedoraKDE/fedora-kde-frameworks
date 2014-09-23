@@ -49,7 +49,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc LICENSE
 %{python2_sitelib}/kapidox
-%{python2_sitelib}/kapidox-5.0.0-py2.7.egg-info
+%{python2_sitelib}/kapidox-%{version}-py2.7.egg-info
 %{_kf5_bindir}/kgenapidox
 %{_kf5_bindir}/depdiagram-prepare
 %{_kf5_bindir}/depdiagram-generate
