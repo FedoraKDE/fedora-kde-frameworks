@@ -18,6 +18,8 @@ URL:            http://www.kde.org
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libksysguard-%{version}.tar.xz
 
+Patch0:		ksysguard-framework-libs-names.patch
+
 BuildRequires:  zlib-devel
 BuildRequires:  libXres-devel
 
