@@ -101,8 +101,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kwin5 --with-qt --all-name
 
-%files
+%files -f kwin5.lang
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
 %{_bindir}/kwin_x11
 %{_datadir}/kwin
