@@ -1,7 +1,7 @@
 %define base_name milou
 
 Name:           plasma-%{base_name}
-Version:        5.0.2
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        A dedicated KDE search application built on top of Baloo
 
@@ -58,6 +58,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Plasma 5.1.0
+
 * Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
 - Plasma 5.0.2
 

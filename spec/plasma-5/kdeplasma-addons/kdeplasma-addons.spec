@@ -73,3 +73,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %changelog
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
+
+* Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Plasma 5.1.0

@@ -1,5 +1,5 @@
 Name:           plasma-nm
-Version:        5.0.2
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
@@ -242,6 +242,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Plasma 5.1.0
+
 * Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
 - Plasma 5.0.2
 

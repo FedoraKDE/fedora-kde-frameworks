@@ -1,7 +1,7 @@
 %global base_name   breeze
 
 Name:           plasma-breeze
-Version:        5.0.2
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
@@ -58,6 +58,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/wallpapers/Next
 
 %changelog
+* Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Plasma 5.1.0
+
 * Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
 - Plasma 5.0.2
 

@@ -19,13 +19,11 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 
-%if 0
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-knewstuff-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kcmutils-devel
-%endif
 
 Requires:       kf5-filesystem
 

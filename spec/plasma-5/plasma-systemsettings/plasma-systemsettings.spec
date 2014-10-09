@@ -1,7 +1,7 @@
 %define base_name systemsettings
 
 Name:           plasma-%{base_name}
-Version:        5.0.2
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        KDE's System Settings application
 
@@ -77,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/libsystemsettingsview.so
 
 %changelog
+* Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
+- Plasma 5.1.0
+
 * Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.2-1
 - Plasma 5.0.2
 
