@@ -6,11 +6,16 @@ Summary:        The next generation Plasma workspace from the KDE Community
 License:        GPLv2+
 URL:            http://www.kde.org
 
+# Nicer name
+Provides:       plasma-5 = %{version}-%{release}
+
 Requires:       plasma-breeze
+Requires:       plasma-breeze-kde4
 Requires:       plasma-desktop
 Requires:       plasma-workspace
 Requires:       plasma-workspace-wallpapers
 Requires:       plasma-oxygen
+Requires:       plasma-oxygen-kde4
 Requires:       plasma-milou
 Requires:       plasma-nm
 Requires:       plasma-systemsettings
@@ -23,6 +28,8 @@ Requires:       kmenuedit
 Requires:       kde-cli-tools
 Requires:       khelpcenter
 Requires:       kf5-baloo
+Requires:       kde-gtk-config
+Requires:       khotkeys
 
 %description
 %{summary}.
