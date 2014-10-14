@@ -31,7 +31,8 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kdnssd-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kio-devel
+# ktrash5 was moved to kf5-kio in 5.3.0 - prevent missing file
+BuildRequires:  kf5-kio-devel >= 5.3.0-1
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-solid-devel
@@ -81,7 +82,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 
 %files -f kioextras5.lang
-%{_bindir}/ktrash5
 %{_libdir}/libmolletnetwork.so.*
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_qtplugindir}/*.so
