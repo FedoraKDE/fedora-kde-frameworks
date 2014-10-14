@@ -38,7 +38,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %package        kde4
 Summary:        KDE 4 version of Oxygen style for Plasma 5
 BuildRequires:  kdelibs4-devel
-#BuildRequires:  kdeworkspace-devel
+BuildRequires:  kdeworkspace-devel
 BuildRequires:  libxcb-devel
 Requires:       %{name}-common = %{version}-%{release}
 %description    kde4
@@ -80,7 +80,7 @@ make %{?_smp_mflags} -C %{_target_platform}_kde4
 
 %install
 %make_install -C %{_target_platform}
-%find_lang oxygen5 --with-qt --all-name
+%find_lang oxygen --with-qt --all-name
 
 %if 0%{?build_kde4:1}
 %make_install -C %{_target_platform}_kde4
@@ -90,7 +90,7 @@ make %{?_smp_mflags} -C %{_target_platform}_kde4
 
 %postun -p /sbin/ldconfig
 
-%files -f oxygen5.lang
+%files
 %doc COPYING
 %{_bindir}/oxygen-demo5
 %{_bindir}/oxygen-settings5
@@ -103,7 +103,7 @@ make %{?_smp_mflags} -C %{_target_platform}_kde4
 %{_datadir}/kstyle/themes/oxygen.themerc
 %{_kf5_datadir}/plasma/look-and-feel/org.kde.oxygen
 
-%files common
+%files common -f oxygen.lang
 %{_datadir}/icons/*
 %{_datadir}/sounds/*
 
