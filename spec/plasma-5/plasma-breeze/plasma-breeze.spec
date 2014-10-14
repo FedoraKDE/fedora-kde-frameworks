@@ -80,7 +80,7 @@ make %{?_smp_mflags} -C %{_target_platform}_kde4
 %endif
 
 %files
-#%doc cursors/src/README COPYING
+%doc cursors/src/README COPYING
 %{_datadir}/kwin/decorations/kwin4_decoration_qml_breeze
 %{_kf5_datadir}/kservices5/kwin/kwin4_decoration_qml_breeze.desktop
 %{_qt5_prefix}/qml/QtQuick/Controls/Styles/Breeze
