@@ -1,5 +1,5 @@
 Name:           powerdevil
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
@@ -88,6 +88,9 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 

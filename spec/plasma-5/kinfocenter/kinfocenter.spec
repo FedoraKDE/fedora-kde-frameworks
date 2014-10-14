@@ -1,5 +1,5 @@
 Name:           kinfocenter
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        KDE Info Center
 
@@ -89,6 +89,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="5.1.0"
+VERSION="5.1.0.1"
 RELEASE="1"
-CHANGELOG="Plasma 5.1.0"
+CHANGELOG="Plasma ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 
 #REMOVE_DGROC_CHANGELOG="TRUE"
@@ -24,7 +24,5 @@ for pkg in `/usr/bin/ls -1 plasma-5`; do
   fi
 
   rpmbuild -bs plasma-5/$pkg/$pkg.spec
-  #scp $HOME/rpmbuild/SRPMS/$pkg-$VERSION-$RELEASE.fc20.src.rpm dvratil@progdan.cz:~/pub/plasma/srpm/5.0.1
+  scp $HOME/rpmbuild/SRPMS/$pkg-$VERSION-$RELEASE.fc20.src.rpm dvratil@progdan.cz:~/pub/plasma/srpm/${VERSION}
 done
-
-

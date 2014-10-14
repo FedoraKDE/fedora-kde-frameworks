@@ -1,5 +1,5 @@
 Name:           plasma5
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
@@ -28,7 +28,6 @@ Requires:       kmenuedit
 Requires:       kde-cli-tools
 Requires:       khelpcenter
 Requires:       kf5-baloo
-Requires:       kde-gtk-config
 Requires:       khotkeys
 
 %description
@@ -44,6 +43,9 @@ Requires:       khotkeys
 
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 

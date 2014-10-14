@@ -1,5 +1,5 @@
 Name:           plasma-workspace-wallpapers
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        Wallpapers for Plasma 5
 License:        GPLv2+
@@ -38,6 +38,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/wallpapers/*
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 

@@ -1,5 +1,5 @@
 Name:           plasma-workspace
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
@@ -242,6 +242,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 

@@ -1,5 +1,5 @@
 Name:           kde-cli-tools
-Version:        5.1.0
+Version:        5.1.0.1
 Release:        1%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
@@ -86,6 +86,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_mandir}/man1/kdesu.1.gz
 
 %changelog
+* Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
+- Plasma 5.1.0.1
+
 * Thu Oct 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - Plasma 5.1.0
 
