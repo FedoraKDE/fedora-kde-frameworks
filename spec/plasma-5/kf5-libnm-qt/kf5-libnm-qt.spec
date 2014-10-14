@@ -1,5 +1,5 @@
+%global         plasma_version 5.1.0
 %global         framework libnm-qt
-%global         plasma_version 5.0.2
 
 Name:           kf5-%{framework}
 Version:        5.1.0.1
@@ -16,7 +16,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libnm-qt
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
@@ -39,7 +39,7 @@ Qt libraries and header files for developing applications
 that use NetworkManager.
 
 %prep
-%setup -qn %{framework}-%{version}
+%setup -qn %{framework}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

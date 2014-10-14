@@ -1,6 +1,7 @@
-%global base_name   breeze
+%global         plasma_version 5.1.0
+%global         base_name   breeze
 
-%global build_kde4  1
+%global         build_kde4  1
 
 Name:           plasma-breeze
 Version:        5.1.0.1
@@ -52,7 +53,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %endif
 
 %prep
-%setup -q -n %{base_name}-%{version}
+%setup -q -n %{base_name}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

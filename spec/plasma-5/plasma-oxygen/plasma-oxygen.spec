@@ -1,5 +1,7 @@
-%global base_name oxygen
-%global build_kde4 1
+%global         plasma_version 5.1.0
+%global         base_name oxygen
+
+%global         build_kde4 1
 
 Name:           plasma-%{base_name}
 Version:        5.1.0.1
@@ -59,7 +61,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{base_name}-%{version}
+%setup -q -n %{base_name}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

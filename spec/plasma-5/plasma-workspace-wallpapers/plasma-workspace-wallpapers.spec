@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           plasma-workspace-wallpapers
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -17,7 +19,7 @@ Requires:       kf5-filesystem
 Plasma 5 libraries and runtime components
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

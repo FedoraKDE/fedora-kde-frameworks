@@ -1,4 +1,5 @@
-%define framework kwayland
+%global         plasma_version 5.1.0
+%global         framework kwayland
 
 Name:           kf5-%{framework}
 Version:        5.1.0.1
@@ -42,7 +43,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-%{plasma_version}
 
 %build
 

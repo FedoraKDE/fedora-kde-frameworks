@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           kio-extras
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -60,7 +62,7 @@ Requires:       %{name} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %patch0 -p1 -b .installdirs
 

@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           kde-cli-tools
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -50,7 +52,7 @@ Conflicts:      kde-runtime < 5.0.0-1
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

@@ -1,5 +1,6 @@
+%global         plasma_version 5.1.0
 # libksysguard
-%define framework ksysguard
+%global         framework ksysguard
 
 Name:           kf5-%{framework}
 Version:        5.1.0.1
@@ -53,7 +54,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n libksysguard-%{version}
+%setup -q -n libksysguard-%{plasma_version}
 
 %patch0 -p1 -b .libsnames
 

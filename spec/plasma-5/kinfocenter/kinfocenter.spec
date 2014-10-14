@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           kinfocenter
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -54,7 +56,7 @@ Obsoletes:      kde-workspace < 5.0.0-1
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 

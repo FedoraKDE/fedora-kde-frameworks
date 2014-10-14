@@ -1,4 +1,6 @@
-%define base_name milou
+%global         plasma_version 5.1.0
+
+%define         base_name milou
 
 Name:           plasma-%{base_name}
 Version:        5.1.0.1
@@ -31,7 +33,7 @@ Obsoletes:      kde-plasma-milou < 5.0.0
 %{summary}.
 
 %prep
-%setup -q -n %{base_name}-%{version}
+%setup -q -n %{base_name}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

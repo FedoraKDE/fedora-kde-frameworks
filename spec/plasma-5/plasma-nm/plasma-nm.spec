@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           plasma-nm
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -138,7 +140,7 @@ Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
 %endif
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 #%patch0 -p1 -b .openconnect
 #%patch1 -p1 -b .item-text

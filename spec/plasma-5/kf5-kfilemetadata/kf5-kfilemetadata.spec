@@ -1,7 +1,8 @@
-%define framework kfilemetadata
+%global         plasma_version 5.1.0
+%global         framework kfilemetadata
 
 # Enable to build ffmpeg extractor
-%global ffmpeg  0
+%global         ffmpeg  0
 
 Name:           kf5-%{framework}
 Summary:        A Tier 3 KDE Framework for extracting file metadata
@@ -50,7 +51,7 @@ Requires:       kf5-karchive-devel
 
 
 %prep
-%setup -q -n %{framework}-%{version}
+%setup -q -n %{framework}-%{plasma_version}
 
 
 %build
@@ -123,4 +124,3 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 * Fri Apr 18 2014 Daniel Vrátil <dvratil@redhat.com> - 4.97.0-1
 - Fork kfilemetadata into kf5-kfilemetadata
-

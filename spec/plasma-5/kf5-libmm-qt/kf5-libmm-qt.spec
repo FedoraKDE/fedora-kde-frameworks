@@ -1,5 +1,5 @@
+%global         plasma_version 5.1.0
 %global         framework libmm-qt
-%global         plasma_version 5.0.2
 
 Name:           kf5-%{framework}
 Version:        5.1.0.1
@@ -16,7 +16,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -36,7 +36,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Qt 5 libraries and header files for developing applications that use ModemManager
 
 %prep
-%setup -qn %{framework}-%{version}
+%setup -qn %{framework}-%{plasma_version}
 
 %build
 mkdir -p %{_target_platform}

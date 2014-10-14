@@ -1,4 +1,5 @@
-%define base_name systemsettings
+%global         plasma_version 5.1.0
+%define         base_name systemsettings
 
 Name:           plasma-%{base_name}
 Version:        5.1.0.1
@@ -42,7 +43,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{base_name}-%{version}
+%setup -q -n %{base_name}-%{plasma_version}
 
 %build
 

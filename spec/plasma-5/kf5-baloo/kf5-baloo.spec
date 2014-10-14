@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 %define         framework baloo
 
 Name:           kf5-%{framework}
@@ -53,7 +55,7 @@ Requires:       %{name} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -qn %{framework}-%{version}
+%setup -qn %{framework}-%{plasma_version}
 
 %build
 

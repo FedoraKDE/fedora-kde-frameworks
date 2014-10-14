@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           kdeplasma-addons
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -39,7 +41,7 @@ Requires:       kf5-filesystem
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 

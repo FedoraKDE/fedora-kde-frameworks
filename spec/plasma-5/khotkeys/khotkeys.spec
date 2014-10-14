@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           khotkeys
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -48,7 +50,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %patch0 -p1 -b .kded-install
 

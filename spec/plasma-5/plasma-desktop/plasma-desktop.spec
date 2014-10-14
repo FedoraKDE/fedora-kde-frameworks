@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           plasma-desktop
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -66,7 +68,7 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 

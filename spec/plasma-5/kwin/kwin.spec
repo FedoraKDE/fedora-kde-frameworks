@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           kwin
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -88,7 +90,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 

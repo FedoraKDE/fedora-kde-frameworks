@@ -1,3 +1,5 @@
+%global         plasma_version 5.1.0
+
 Name:           plasma-workspace
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -150,7 +152,7 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 
@@ -288,4 +290,3 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 * Fri Apr 25 2014 Daniel Vrátil <dvratil@redhat.com> - 4.95.0-1.20140425git7c97c92
 - Initial version of kde5-plasma-workspace
-
