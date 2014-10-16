@@ -47,6 +47,12 @@ BuildRequires:  libX11-devel
 BuildRequires:  pciutils-devel
 BuildRequires:  libraw1394-devel
 
+# KWayland not available on F20 due to old Wayland
+%if 0%{?fedora} >= 21
+# Optional
+BuildRequires:  kf5-kwayland-devel
+%endif
+
 Requires:       kf5-filesystem
 
 # TODO: Remove once kinfocenter is split from kde-workspace
@@ -79,7 +85,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING COPYING.DOC
 %{_bindir}/kinfocenter
 %{_kf5_qtplugindir}/*.so
-%{_datadir}/kinfocenter
 %{_datadir}/kcmview1394
 %{_datadir}/kcmusb
 %{_sysconfdir}/xdg/menus/kinfocenter.menu
@@ -88,6 +93,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_datadir}/desktop-directories/kinfocenter.directory
+%{_kf5_datadir}/kxmlgui5/kinfocenter
 
 
 %changelog

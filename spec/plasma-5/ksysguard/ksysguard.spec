@@ -66,6 +66,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/doc/HTML/en/ksysguard
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
+%{_kf5_datadir}/kxmlgui5/ksysguard
 
 %changelog
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1

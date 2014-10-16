@@ -84,6 +84,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libKF5SignalPlotter.so.*
 %{_kf5_libdir}/libKF5SGrd.so.*
 %{_kf5_datadir}/ksysguard
+%{_sysconfdir}/dbus-1/system.d/org.kde.ksysguard.processlisthelper.conf
+%{_kf5_libexecdir}/kauth/ksysguardprocesslist_helper
+%{_datadir}/dbus-1/system-services/org.kde.ksysguard.processlisthelper.service
+%{_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 
 %files devel
 %{_kf5_includedir}/ksysguard

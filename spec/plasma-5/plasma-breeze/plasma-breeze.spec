@@ -1,4 +1,3 @@
-%global         plasma_version 5.1.0
 %global         base_name   breeze
 
 %global         build_kde4  1
@@ -22,9 +21,19 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
 
-#BuildRequires:  kf5-kcoreaddons-devel
-#BuildRequires:  kf5-kconfig-devel
+# kde4breeze
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kconfig-devel
+
+# kstyle
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kcompletion-devel
+BuildRequires:  kf5-frameworkintegration-devel
+BuildRequires:  kf5-kwindowsystem-devel
+
+BuildRequires:  libxcb-devel
 
 BuildRequires:  gettext
 
@@ -53,7 +62,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %endif
 
 %prep
-%setup -q -n %{base_name}-%{plasma_version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 mkdir -p %{_target_platform}

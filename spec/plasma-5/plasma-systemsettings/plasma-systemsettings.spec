@@ -72,6 +72,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/doc/HTML/en/systemsettings
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
+%{_kf5_datadir}/kxmlgui5/systemsettings
 
 %files devel
 %{_includedir}/systemsettingsview

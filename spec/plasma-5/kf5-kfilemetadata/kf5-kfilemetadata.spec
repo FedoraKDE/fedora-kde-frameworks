@@ -72,27 +72,17 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING.LGPL*
 %{_kf5_libdir}/libKF5FileMetaData.so.*
-%{_kf5_qtplugindir}/kfilemetadata_epubextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_exiv2extractor.so
-%{_kf5_qtplugindir}/kfilemetadata_odfextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_office2007extractor.so
-%{_kf5_qtplugindir}/kfilemetadata_officeextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_plaintextextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_popplerextractor.so
-%{_kf5_qtplugindir}/kfilemetadata_taglibextractor.so
-%{_kf5_datadir}/kservices5/kfilemetadata_epubextractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_exiv2extractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_odfextractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_office2007extractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_officeextractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_plaintextextractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_popplerextractor.desktop
-%{_kf5_datadir}/kservices5/kfilemetadata_taglibextractor.desktop
-%{_kf5_datadir}/kservicetypes5/kfilemetadataextractor.desktop
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_epubextractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_exiv2extractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_odfextractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_office2007extractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_officeextractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_plaintextextractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_popplerextractor.so
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_taglibextractor.so
 
 %if 0%{?ffmpeg}
-%{_kf5_qtplugindir}/kfilemetadata_ffmpegextractor.so
-%{_kf5_datadir}/kservices5/kfilemetadata_ffmpegextractor.desktop
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_ffmpegextractor.so
 %endif
 
 %files devel

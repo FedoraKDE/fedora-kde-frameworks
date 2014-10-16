@@ -1,21 +1,18 @@
 diff --git a/archive/CMakeLists.txt b/archive/CMakeLists.txt
-index ec2cf7ad6c9c645e62a47c94ec617f8a37c5f708..83e02b36ed27a6fbdc82ffb3eba1d21cbee737d9 100644
+index 0524aec..6170b75 100644
 --- a/archive/CMakeLists.txt
 +++ b/archive/CMakeLists.txt
-@@ -2,8 +2,9 @@ add_subdirectory(tests)
+@@ -4,6 +4,7 @@ add_subdirectory(tests)
  
  add_library(kio_archive MODULE kio_archive.cpp)
  target_link_libraries(kio_archive KF5::KIOCore KF5::Archive KF5::KDE4Support)
 +set_target_properties(kio_archive PROPERTIES OUTPUT_NAME "archive")
  
 -install(TARGETS kio_archive DESTINATION ${PLUGIN_INSTALL_DIR} )
--install( FILES tar.protocol ar.protocol zip.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
 +install(TARGETS kio_archive DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
-+install(FILES tar.protocol ar.protocol zip.protocol DESTINATION ${SERVICES_INSTALL_DIR})
- 
- 
+ install( FILES tar.protocol ar.protocol zip.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
 diff --git a/archive/ar.protocol b/archive/ar.protocol
-index 7a848e505e5f00121e8ec5493564dfacdd405c31..70db371d79d13d3f73c72afbd49f84ab88782d0c 100644
+index 7a848e5..70db371 100644
 --- a/archive/ar.protocol
 +++ b/archive/ar.protocol
 @@ -1,5 +1,5 @@
@@ -26,7 +23,7 @@ index 7a848e505e5f00121e8ec5493564dfacdd405c31..70db371d79d13d3f73c72afbd49f84ab
  archiveMimetype=application/x-archive
  input=filesystem
 diff --git a/archive/tar.protocol b/archive/tar.protocol
-index 19447a5e75b106e7a8c8e8396375bb1fc600a6da..c713eac548c3c38ef82a929ad3710f8746dea94d 100644
+index 19447a5..c713eac 100644
 --- a/archive/tar.protocol
 +++ b/archive/tar.protocol
 @@ -1,5 +1,5 @@
@@ -37,7 +34,7 @@ index 19447a5e75b106e7a8c8e8396375bb1fc600a6da..c713eac548c3c38ef82a929ad3710f87
  archiveMimetype=application/x-tar,application/x-compressed-tar,application/x-bzip-compressed-tar,application/x-webarchive,application/x-lzma-compressed-tar,application/x-xz-compressed-tar
  input=filesystem
 diff --git a/archive/zip.protocol b/archive/zip.protocol
-index ce7c54b4e92dfab29150246bf6588d1f8bb49057..78310e6c95f13ea1e25d89e31852decb13dfe33b 100644
+index ce7c54b..78310e6 100644
 --- a/archive/zip.protocol
 +++ b/archive/zip.protocol
 @@ -1,5 +1,5 @@
@@ -48,10 +45,10 @@ index ce7c54b4e92dfab29150246bf6588d1f8bb49057..78310e6c95f13ea1e25d89e31852decb
  archiveMimetype=application/zip
  input=filesystem
 diff --git a/bookmarks/CMakeLists.txt b/bookmarks/CMakeLists.txt
-index 703b109c2e049edecce1742482bd82e5c92caecd..9eca94b59b0998373ba134af7fa86a383c4d639e 100644
+index c44355c..d09da32 100644
 --- a/bookmarks/CMakeLists.txt
 +++ b/bookmarks/CMakeLists.txt
-@@ -6,7 +6,9 @@ add_library(kio_bookmarks MODULE ${kio_bookmarks_PART_SRCS})
+@@ -7,7 +7,9 @@ add_library(kio_bookmarks MODULE ${kio_bookmarks_PART_SRCS})
  
  target_link_libraries(kio_bookmarks KF5::KIOCore KF5::KDE4Support KF5::Solid)
  
@@ -63,7 +60,7 @@ index 703b109c2e049edecce1742482bd82e5c92caecd..9eca94b59b0998373ba134af7fa86a38
  
  ########### install files ###############
 diff --git a/bookmarks/bookmarks.protocol b/bookmarks/bookmarks.protocol
-index 0642bd2f7277be8707351582f219281d45834fa6..0898a6b38340b1b76a6785dcf786fb7e4b45b0ab 100644
+index 0642bd2..0898a6b 100644
 --- a/bookmarks/bookmarks.protocol
 +++ b/bookmarks/bookmarks.protocol
 @@ -1,5 +1,5 @@
@@ -74,7 +71,7 @@ index 0642bd2f7277be8707351582f219281d45834fa6..0898a6b38340b1b76a6785dcf786fb7e
  input=none
  output=stream
 diff --git a/desktop/CMakeLists.txt b/desktop/CMakeLists.txt
-index f7bd6709340a5f4e7e5f6fbd076400a76b526cd8..ac9968731e87ff337c7798090ffc3d06bc3ada0d 100644
+index f7bd670..ac99687 100644
 --- a/desktop/CMakeLists.txt
 +++ b/desktop/CMakeLists.txt
 @@ -4,7 +4,9 @@ add_library(kio_desktop MODULE kio_desktop.cpp)
@@ -89,7 +86,7 @@ index f7bd6709340a5f4e7e5f6fbd076400a76b526cd8..ac9968731e87ff337c7798090ffc3d06
  ########### next target ###############
  
 diff --git a/desktop/desktop.protocol b/desktop/desktop.protocol
-index 0e388386f1794dd90d445ec146ef54a04f595c8b..c6abe5eb91d7bb6a1b5b65fca03a56f774c5fabd 100644
+index 0e38838..c6abe5e 100644
 --- a/desktop/desktop.protocol
 +++ b/desktop/desktop.protocol
 @@ -1,5 +1,5 @@
@@ -100,23 +97,21 @@ index 0e388386f1794dd90d445ec146ef54a04f595c8b..c6abe5eb91d7bb6a1b5b65fca03a56f7
  Icon=user-desktop
  input=none
 diff --git a/filter/CMakeLists.txt b/filter/CMakeLists.txt
-index 240cc7b57bd38e86fd50084e53c17f1672b2b946..0d5d2e2223cbeb889773d2f393c3b2cafa3646bd 100644
+index f532d0f..3e8a200 100644
 --- a/filter/CMakeLists.txt
 +++ b/filter/CMakeLists.txt
-@@ -16,8 +16,10 @@ set_package_properties(LibLZMA PROPERTIES DESCRIPTION "A very high compression r
- 
+@@ -1,7 +1,8 @@
  add_library(kio_filter MODULE filter.cc)
  target_link_libraries(kio_filter KF5::KDE4Support KF5::Archive KF5::KIOCore)
 +set_target_properties(kio_filter PROPERTIES OUTPUT_NAME "filter")
  
 -install(TARGETS kio_filter DESTINATION ${PLUGIN_INSTALL_DIR})
-+
 +install(TARGETS kio_filter DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
  install( FILES gzip.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
  
- if(BZIP2_FOUND)
+ if(KArchive_HAVE_BZIP2)
 diff --git a/filter/bzip.protocol b/filter/bzip.protocol
-index 7d3cb570fbc534fbba22dd8e10472b47053c7195..97c8669a895e273f71e46363c1d4b57f2f25be5c 100644
+index 7d3cb57..97c8669 100644
 --- a/filter/bzip.protocol
 +++ b/filter/bzip.protocol
 @@ -1,5 +1,5 @@
@@ -127,7 +122,7 @@ index 7d3cb570fbc534fbba22dd8e10472b47053c7195..97c8669a895e273f71e46363c1d4b57f
  archiveMimetype=application/x-bzip
  determineMimetypeFromExtension=false
 diff --git a/filter/bzip2.protocol b/filter/bzip2.protocol
-index 1baaf7dd610f39325b2aa21bdee5bf1e63e5835f..ab274024e959060e61e7e375d1d285ff12dd6040 100644
+index 1baaf7d..ab27402 100644
 --- a/filter/bzip2.protocol
 +++ b/filter/bzip2.protocol
 @@ -1,5 +1,5 @@
@@ -138,7 +133,7 @@ index 1baaf7dd610f39325b2aa21bdee5bf1e63e5835f..ab274024e959060e61e7e375d1d285ff
  archiveMimetype=application/x-bzip2
  determineMimetypeFromExtension=false
 diff --git a/filter/gzip.protocol b/filter/gzip.protocol
-index 8ed55ec16f49f42fe6d419327484b33d59ec537b..9a0d2894ced4e8919ac43e67202422929544f56a 100644
+index 8ed55ec..9a0d289 100644
 --- a/filter/gzip.protocol
 +++ b/filter/gzip.protocol
 @@ -1,5 +1,5 @@
@@ -149,7 +144,7 @@ index 8ed55ec16f49f42fe6d419327484b33d59ec537b..9a0d2894ced4e8919ac43e6720242292
  archiveMimetype=application/gzip
  determineMimetypeFromExtension=false
 diff --git a/filter/lzma.protocol b/filter/lzma.protocol
-index 13bb28e3d870f8130d052efd97a5a688d9133c31..b6c59aeb75ccad5342c3fcb8a6475a19cf65ea03 100644
+index 13bb28e..b6c59ae 100644
 --- a/filter/lzma.protocol
 +++ b/filter/lzma.protocol
 @@ -1,5 +1,5 @@
@@ -160,7 +155,7 @@ index 13bb28e3d870f8130d052efd97a5a688d9133c31..b6c59aeb75ccad5342c3fcb8a6475a19
  archiveMimetype=application/x-lzma
  determineMimetypeFromExtension=true
 diff --git a/filter/xz.protocol b/filter/xz.protocol
-index f4fb7f01146cbf4d5afce528462e0c5dafa9591e..9a631c248d5c129f4172cfa945c176cf6344ee4b 100644
+index f4fb7f0..9a631c2 100644
 --- a/filter/xz.protocol
 +++ b/filter/xz.protocol
 @@ -1,5 +1,5 @@
@@ -171,10 +166,10 @@ index f4fb7f01146cbf4d5afce528462e0c5dafa9591e..9a631c248d5c129f4172cfa945c176cf
  archiveMimetype=application/x-xz
  determineMimetypeFromExtension=false
 diff --git a/fish/CMakeLists.txt b/fish/CMakeLists.txt
-index 24136d4dac01a8a08db8d17380661a9051fa0b04..1a73b9d9ec39e697f925fd823efa456c476af7db 100644
+index 6b0c168..ca75771 100644
 --- a/fish/CMakeLists.txt
 +++ b/fish/CMakeLists.txt
-@@ -45,11 +45,13 @@ if (MD5SUM_EXECUTABLE)
+@@ -47,11 +47,13 @@ if (MD5SUM_EXECUTABLE)
  
     target_link_libraries(kio_fish KF5::KIOCore KF5::KDE4Support)
  
@@ -190,7 +185,7 @@ index 24136d4dac01a8a08db8d17380661a9051fa0b04..1a73b9d9ec39e697f925fd823efa456c
  
     ########### install files ###############
 diff --git a/fish/fish.protocol b/fish/fish.protocol
-index ff5784eea877d0fd9a3c6ac4724056ddfd8fe5f2..7a053ddd6c79d7b7a37cc662663bc1561c8e0540 100644
+index ff5784e..7a053dd 100644
 --- a/fish/fish.protocol
 +++ b/fish/fish.protocol
 @@ -1,5 +1,5 @@
@@ -201,10 +196,10 @@ index ff5784eea877d0fd9a3c6ac4724056ddfd8fe5f2..7a053ddd6c79d7b7a37cc662663bc156
  input=none
  output=filesystem
 diff --git a/info/CMakeLists.txt b/info/CMakeLists.txt
-index 0163e82c4f865e3fb3b09bf5ddd44e272ce9c609..7d71b06a8bc0b77a857ab429c37cb757542580be 100644
+index d9541b5..40e10ce 100644
 --- a/info/CMakeLists.txt
 +++ b/info/CMakeLists.txt
-@@ -4,8 +4,9 @@ target_link_libraries(kio_info
+@@ -6,8 +6,9 @@ target_link_libraries(kio_info
      KF5::IconThemes
      KF5::KIOCore
  )
@@ -216,7 +211,7 @@ index 0163e82c4f865e3fb3b09bf5ddd44e272ce9c609..7d71b06a8bc0b77a857ab429c37cb757
  install( FILES info.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
  install( PROGRAMS kde-info2html DESTINATION  ${DATA_INSTALL_DIR}/kio_info )
 diff --git a/info/info.protocol b/info/info.protocol
-index fa8cbb4f6eaaeeaf8bfdead0fad598df8fe588eb..a8d563a64e39ff42f781d3ff3aa7dd63c9df2eab 100644
+index fa8cbb4..a8d563a 100644
 --- a/info/info.protocol
 +++ b/info/info.protocol
 @@ -1,5 +1,5 @@
@@ -227,10 +222,10 @@ index fa8cbb4f6eaaeeaf8bfdead0fad598df8fe588eb..a8d563a64e39ff42f781d3ff3aa7dd63
  input=none
  output=filesystem
 diff --git a/man/CMakeLists.txt b/man/CMakeLists.txt
-index 3343ed85978dbbfa72a5f2cc8530d0f0c043df48..cf6bda60668c4a5398a0920c4f0c6de5302932f0 100644
+index 1aa7b24..77d2028 100644
 --- a/man/CMakeLists.txt
 +++ b/man/CMakeLists.txt
-@@ -6,7 +6,9 @@ set(kio_man_PART_SRCS man2html.cpp kio_man.cpp request_hash.cpp )
+@@ -8,7 +8,9 @@ set(kio_man_PART_SRCS man2html.cpp kio_man.cpp request_hash.cpp )
  add_library(kio_man MODULE ${kio_man_PART_SRCS})
  
  target_link_libraries(kio_man KF5::KIOCore Qt5::Widgets KF5::Archive KF5::KDE4Support)
@@ -242,7 +237,7 @@ index 3343ed85978dbbfa72a5f2cc8530d0f0c043df48..cf6bda60668c4a5398a0920c4f0c6de5
  ########### next target ###############
  
 diff --git a/man/man.protocol b/man/man.protocol
-index cc100ce5ec48b40c890abe5d7afdf02ef589810b..42799e471035f19265faa397e0a7027de035bb84 100644
+index cc100ce..42799e4 100644
 --- a/man/man.protocol
 +++ b/man/man.protocol
 @@ -1,5 +1,5 @@
@@ -253,7 +248,7 @@ index cc100ce5ec48b40c890abe5d7afdf02ef589810b..42799e471035f19265faa397e0a7027d
  input=none
  output=filesystem
 diff --git a/network/ioslave/CMakeLists.txt b/network/ioslave/CMakeLists.txt
-index 67fc482cd390f35fb2d5c1740994d2fe9db254f1..06a964dda284cf84c8a581b3b60663d6b569b192 100644
+index 67fc482..06a964d 100644
 --- a/network/ioslave/CMakeLists.txt
 +++ b/network/ioslave/CMakeLists.txt
 @@ -17,10 +17,10 @@ set( kio_network_SRCS
@@ -270,7 +265,7 @@ index 67fc482cd390f35fb2d5c1740994d2fe9db254f1..06a964dda284cf84c8a581b3b60663d6
  install( FILES network.protocol  DESTINATION ${SERVICES_INSTALL_DIR})
  install( FILES network.desktop  DESTINATION ${DATA_INSTALL_DIR}/remoteview)
 diff --git a/network/ioslave/network.protocol b/network/ioslave/network.protocol
-index 1e10cc6c3a6aadf2ee6794ab36200ef6793e324e..b648e2e40f3fbc27ceded07acbc5469d5264bf5e 100644
+index 1e10cc6..b648e2e 100644
 --- a/network/ioslave/network.protocol
 +++ b/network/ioslave/network.protocol
 @@ -78,7 +78,7 @@ Description[wa]=On vårlet d' I/R po betchter el rantoele
@@ -283,21 +278,22 @@ index 1e10cc6c3a6aadf2ee6794ab36200ef6793e324e..b648e2e40f3fbc27ceded07acbc5469d
  reading=true
  listing=Name
 diff --git a/nfs/CMakeLists.txt b/nfs/CMakeLists.txt
-index dfc6eae3fad51eee0e736970da9520959eeed1f5..93f59b8d01b58c46420e56d9f80b2d7af0291cd4 100644
+index 7987427..2844d74 100644
 --- a/nfs/CMakeLists.txt
 +++ b/nfs/CMakeLists.txt
-@@ -1,7 +1,8 @@
+@@ -2,8 +2,9 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kio_nfs\")
+ 
  add_library(kio_nfs MODULE kio_nfs.cpp mount_xdr.c nfs_prot_xdr.c)
- target_link_libraries(kio_nfs KF5::KIOCore KF5::I18n)
+ target_link_libraries(kio_nfs KF5::KIOCore KF5::I18n Qt5::Network)
 +set_target_properties(kio_nfs PROPERTIES OUTPUT_NAME "nfs")
  
 -install(TARGETS kio_nfs  DESTINATION ${PLUGIN_INSTALL_DIR} )
-+install(TARGETS kio_nfs DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio)
++install(TARGETS kio_nfs  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
  
  ########### install files ###############
  
 diff --git a/nfs/nfs.protocol b/nfs/nfs.protocol
-index 85cf2035e44bf7bfe65d4e2b62d1f44fa05d6001..3c59facdf0934be6242d87faba5137d523449c84 100644
+index 85cf203..3c59fac 100644
 --- a/nfs/nfs.protocol
 +++ b/nfs/nfs.protocol
 @@ -1,5 +1,5 @@
@@ -308,10 +304,11 @@ index 85cf2035e44bf7bfe65d4e2b62d1f44fa05d6001..3c59facdf0934be6242d87faba5137d5
  input=none
  output=filesystem
 diff --git a/recentdocuments/CMakeLists.txt b/recentdocuments/CMakeLists.txt
-index bc2b9dbf35428cf0dd1e6ad5c6e569806c92d47f..719e7650a36a8ea38ab0e1031bf6a82be8da478a 100644
+index 85d0c5c..539ee0f 100644
 --- a/recentdocuments/CMakeLists.txt
 +++ b/recentdocuments/CMakeLists.txt
-@@ -1,7 +1,8 @@
+@@ -2,8 +2,9 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kio_recentdocuments\")
+ 
  add_library(kio_recentdocuments MODULE recentdocuments.cpp)
  target_link_libraries(kio_recentdocuments KF5::KIOCore Qt5::DBus KF5::KDE4Support)
 +set_target_properties(kio_recentdocuments PROPERTIES OUTPUT_NAME "recentdocuments")
@@ -322,7 +319,7 @@ index bc2b9dbf35428cf0dd1e6ad5c6e569806c92d47f..719e7650a36a8ea38ab0e1031bf6a82b
  ########### next target ###############
  
 diff --git a/recentdocuments/recentdocuments.protocol b/recentdocuments/recentdocuments.protocol
-index c0bf1ebd80a2c696cad3062ef047ac4847270fc5..dc6e86f9939b2887be3eb5a91e8aafa22a481a3e 100644
+index c0bf1eb..dc6e86f 100644
 --- a/recentdocuments/recentdocuments.protocol
 +++ b/recentdocuments/recentdocuments.protocol
 @@ -1,6 +1,6 @@
@@ -334,10 +331,12 @@ index c0bf1ebd80a2c696cad3062ef047ac4847270fc5..dc6e86f9939b2887be3eb5a91e8aafa2
  Icon=document-open-recent
  input=none
 diff --git a/settings/CMakeLists.txt b/settings/CMakeLists.txt
-index 5a57a1840fb33b32701a6ecfff24c42739b05c45..8dc0c64181657a75cc11a61eb5a43064ed71e895 100644
+index a318e9b..fe56fa6 100644
 --- a/settings/CMakeLists.txt
 +++ b/settings/CMakeLists.txt
-@@ -1,6 +1,7 @@
+@@ -1,8 +1,9 @@
+ add_definitions(-DTRANSLATION_DOMAIN=\"kio_settings\")
+ 
  add_library(kio_settings MODULE kio_settings.cpp)
 -
  target_link_libraries(kio_settings KF5::KDE4Support KF5::KIOCore)
@@ -348,7 +347,7 @@ index 5a57a1840fb33b32701a6ecfff24c42739b05c45..8dc0c64181657a75cc11a61eb5a43064
 +install(TARGETS kio_settings  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
  install( FILES settings.protocol DESTINATION  ${SERVICES_INSTALL_DIR} )
 diff --git a/settings/settings.protocol b/settings/settings.protocol
-index efb03e865594f30be5ed0d1013d31a0200eed816..002512ac32865a4e2a8c5e6e331f378f4a8c4ac5 100644
+index efb03e8..002512a 100644
 --- a/settings/settings.protocol
 +++ b/settings/settings.protocol
 @@ -1,5 +1,5 @@
@@ -359,10 +358,10 @@ index efb03e865594f30be5ed0d1013d31a0200eed816..002512ac32865a4e2a8c5e6e331f378f
  input=none
  output=filesystem
 diff --git a/sftp/CMakeLists.txt b/sftp/CMakeLists.txt
-index defb7dd041ebfd5af0ac19a252cc9f2f454f67f9..44b20930ead880beaca3c1ff895d8cf84afc20bb 100644
+index 7eedda0..ccf4ba3 100644
 --- a/sftp/CMakeLists.txt
 +++ b/sftp/CMakeLists.txt
-@@ -2,8 +2,9 @@ include_directories(${LIBSSH_INCLUDE_DIR})
+@@ -4,7 +4,8 @@ include_directories(${LIBSSH_INCLUDE_DIR})
  
  add_library(kio_sftp MODULE kio_sftp.cpp)
  target_link_libraries(kio_sftp KF5::KIOCore ${LIBSSH_LIBRARIES} KF5::KDE4Support)
@@ -372,9 +371,8 @@ index defb7dd041ebfd5af0ac19a252cc9f2f454f67f9..44b20930ead880beaca3c1ff895d8cf8
 +install(TARGETS kio_sftp  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
  
  install( FILES sftp.protocol  DESTINATION  ${SERVICES_INSTALL_DIR} )
- 
 diff --git a/sftp/sftp.protocol b/sftp/sftp.protocol
-index ec15eeb26b3ce2efded173f4c7a4cd737e0a05f8..6a45c08f9ea6359f525ee5661e2d92746c6d4be6 100644
+index ec15eeb..6a45c08 100644
 --- a/sftp/sftp.protocol
 +++ b/sftp/sftp.protocol
 @@ -1,5 +1,5 @@
@@ -385,10 +383,10 @@ index ec15eeb26b3ce2efded173f4c7a4cd737e0a05f8..6a45c08f9ea6359f525ee5661e2d9274
  input=none
  listing=Name,Type,Size,Date,AccessDate,Access,Owner,Group,Link,MimeType
 diff --git a/smb/CMakeLists.txt b/smb/CMakeLists.txt
-index a3a772f3028995b811b01fcebe11d8715d3e1620..406a22786cfbb6826895fa1281256fb33ff3876d 100644
+index a575f9b..fea6edc 100644
 --- a/smb/CMakeLists.txt
 +++ b/smb/CMakeLists.txt
-@@ -31,7 +31,9 @@ add_library(kio_smb MODULE ${kio_smb_PART_SRCS})
+@@ -33,7 +33,9 @@ add_library(kio_smb MODULE ${kio_smb_PART_SRCS})
  target_link_libraries(kio_smb KF5::KIOCore KF5::I18n mpr)    
  endif()
  
@@ -400,7 +398,7 @@ index a3a772f3028995b811b01fcebe11d8715d3e1620..406a22786cfbb6826895fa1281256fb3
  
  ########### install files ###############
 diff --git a/smb/smb.protocol b/smb/smb.protocol
-index e58597844ff8554e837f6ee8807d17820e377945..8a019649bc69ef784b1e30012cf1bc615250ec48 100644
+index e585978..8a01964 100644
 --- a/smb/smb.protocol
 +++ b/smb/smb.protocol
 @@ -1,5 +1,5 @@
@@ -411,10 +409,10 @@ index e58597844ff8554e837f6ee8807d17820e377945..8a019649bc69ef784b1e30012cf1bc61
  input=none
  output=filesystem
 diff --git a/thumbnail/CMakeLists.txt b/thumbnail/CMakeLists.txt
-index f3733d452eb133d2b5a1445740db0312cd5d8251..9363fab559b0968c3eeb0f308a8f6017c5e259bf 100644
+index cd1263a..c2bce99 100644
 --- a/thumbnail/CMakeLists.txt
 +++ b/thumbnail/CMakeLists.txt
-@@ -43,7 +43,9 @@ target_link_libraries(kio_thumbnail
+@@ -45,7 +45,9 @@ target_link_libraries(kio_thumbnail
  	KF5::KDE4Support
  )
  
@@ -426,7 +424,7 @@ index f3733d452eb133d2b5a1445740db0312cd5d8251..9363fab559b0968c3eeb0f308a8f6017
  ########### next target ###############
  
 diff --git a/thumbnail/thumbnail.protocol b/thumbnail/thumbnail.protocol
-index eef743ab5310007093e6a1c1ff6d8c258f1be5d9..360e68fecd8e61d44e5d393b554924907f0076e8 100644
+index eef743a..360e68f 100644
 --- a/thumbnail/thumbnail.protocol
 +++ b/thumbnail/thumbnail.protocol
 @@ -1,5 +1,5 @@
@@ -436,52 +434,3 @@ index eef743ab5310007093e6a1c1ff6d8c258f1be5d9..360e68fecd8e61d44e5d393b55492490
  protocol=thumbnail
  input=stream
  output=stream
-diff --git a/trash/CMakeLists.txt b/trash/CMakeLists.txt
-index 4ee03581f5d632282efb9b8902b3abb0e95d169c..e9e2964759e3ad6bfa04576d710d9aba3148f0d0 100644
---- a/trash/CMakeLists.txt
-+++ b/trash/CMakeLists.txt
-@@ -29,13 +29,16 @@ endif()
- add_library(kio_trash MODULE ${kio_trash_PART_SRCS})
- 
- target_link_libraries(kio_trash
--	KF5::Solid
-+        KF5::Solid
-         KF5::KDE4Support
--	KF5::KIOCore
-+        KF5::KIOCore
-         Qt5::DBus
--        KF5::I18n KF5::ConfigCore KF5::ConfigGui 
--        )
--install(TARGETS kio_trash  DESTINATION ${PLUGIN_INSTALL_DIR} )
-+        KF5::I18n KF5::ConfigCore KF5::ConfigGui
-+)
-+
-+set_target_properties(kio_trash PROPERTIES OUTPUT_NAME "trash")
-+
-+install(TARGETS kio_trash  DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/kio )
- 
- set(ktrash_SRCS ktrash.cpp )
- 
-@@ -44,9 +47,9 @@ ecm_mark_nongui_executable(ktrash5)
- 
- target_link_libraries(ktrash5
-         KF5::KDE4Support
--	KF5::KIOCore
-+        KF5::KIOCore
-         KF5::I18n KF5::ConfigCore KF5::ConfigGui
--        )
-+)
- 
- install(TARGETS ktrash5 ${INSTALL_TARGETS_DEFAULT_ARGS})
- 
-diff --git a/trash/trash.protocol b/trash/trash.protocol
-index 277698579c8a70bac5cadff5cc1f379053e4c61e..b8b87b983c72f62dd4c54ec40737e2e4b8f3276f 100644
---- a/trash/trash.protocol
-+++ b/trash/trash.protocol
-@@ -1,5 +1,5 @@
- [Protocol]
--exec=kio_trash
-+exec=kf5/kio/trash
- protocol=trash
- input=none
- output=filesystem

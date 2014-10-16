@@ -1,5 +1,3 @@
-%global         plasma_version 5.1.0
-
 Name:           plasma-nm
 Version:        5.1.0.1
 Release:        1%{?dist}
@@ -7,7 +5,7 @@ Summary:        Plasma Next applet written in QML for managing network connectio
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/playground/network/plasma-nm
 
-Source0:        http://download.kde.org/stable/plasma/5.0.0/%{name}-%{version}.tar.xz
+Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
 
 # Add plasma-nm to default systray if needed, for upgraders...
 Source10: 01-fedora-plasma-nm.js
@@ -140,7 +138,7 @@ Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
 %endif
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 #%patch0 -p1 -b .openconnect
 #%patch1 -p1 -b .item-text

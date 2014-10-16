@@ -27,7 +27,7 @@ BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kdoctools-devel
 
-#BuildRequires:  kde5-plasma-workspace-devel
+BuildRequires:  plasma-workspace-devel
 
 BuildRequires:  libX11-devel
 

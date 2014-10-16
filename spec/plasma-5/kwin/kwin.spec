@@ -36,6 +36,7 @@ BuildRequires:  libXcursor-devel
 BuildRequires:  xcb-util-wm-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  libepoxy-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -53,7 +54,13 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-knewstuff-devel
 
+
 # Optional
+# KWayland not available on F20 because of old Wayland
+%if 0%{?fedora} >= 21
+BuildRequires:  kf5-kwayland-devel
+%endif
+
 BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kdoctools-devel
 
@@ -106,7 +113,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %find_lang kwin5 --with-qt --all-name
 
 %files -f kwin5.lang
-%doc COMPLIANCE COPYING COPYING.DOC HACKING README
 %{_bindir}/kwin_x11
 %{_datadir}/kwin
 %{_kf5_qtplugindir}/*.so
@@ -133,8 +139,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kf5_libdir}/libkdeinit5_kwin.so
+%{_kf5_libdir}/libkdeinit5_kwin_x11.so
 %{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
+%{_libdir}/libkwin.so.*
 %{_libdir}/libkdecorations.so.*
 %{_libdir}/libkwinxrenderutils.so.*
 %{_libdir}/libkwineffects.so.*

@@ -23,6 +23,8 @@ Patch0:         kio-extras-install-dirs.patch
 BuildRequires:  kf5-rpm-macros
 
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtsvg-devel
+
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel

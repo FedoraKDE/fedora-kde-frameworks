@@ -13,15 +13,21 @@ URL:            https://www.kde.org
 Source0:        http://download.kde.org/stable/plasma/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kfilemetadata-devel
 BuildRequires:  xapian-core-devel
 
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-kcmutils-devel
-BuildRequires:  kf5-krunner-devel
+BuildRequires:  kf5-kauth-devel
+BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kfilemetadata-devel
 
 Requires:       kf5-filesystem
 
@@ -61,10 +67,7 @@ Requires:       %{name} = %{version}-%{release}
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ../ 
-#\
-#         -DINCLUDE_INSTALL_DIR:PATH=/usr/include \
-#         -DKF5_INCLUDE_INSTALL_DIR=/usr/include/KF5
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -80,11 +83,11 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kcm_baloofile --with-qt
 %find_lang akonadi_baloo_indexer --with-qt
 %find_lang kio_timeline --with-qt
-%find_lang baloo_queryparser --with-qt
+%find_lang baloo_naturalqueryparser --with-qt
 %find_lang baloo_file_extractor --with-qt
 %find_lang balooctl --with-qt
 
-cat kio_tags.lang kio_baloosearch.lang kio_timeline.lang baloo_queryparser.lang \
+cat kio_tags.lang kio_baloosearch.lang kio_timeline.lang baloo_naturalqueryparser.lang \
     akonadi_baloo_indexer.lang \
     > %{name}.lang
 
@@ -102,23 +105,21 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 %{_kf5_libdir}/libKF5BalooCore.so.*
 %{_kf5_libdir}/libKF5BalooXapian.so.*
 %{_kf5_libdir}/libKF5BalooFiles.so.*
-%{_kf5_qtplugindir}/baloo_filesearchstore.so
-%{_kf5_qtplugindir}/baloo_emailsearchstore.so
-%{_kf5_qtplugindir}/baloo_contactsearchstore.so
-%{_kf5_qtplugindir}/baloo_notesearchstore.so
-%{_kf5_qtplugindir}/baloo_calendarsearchstore.so
-%{_kf5_qtplugindir}/kio_baloosearch.so
-%{_kf5_qtplugindir}/kio_tags.so
-%{_kf5_qtplugindir}/kio_timeline.so
-%{_kf5_datadir}/kservicetypes5/baloosearchstore.desktop
-%{_kf5_datadir}/kservices5/baloo_filesearchstore.desktop
-%{_kf5_datadir}/kservices5/baloo_emailsearchstore.desktop
-%{_kf5_datadir}/kservices5/baloo_contactsearchstore.desktop
-%{_kf5_datadir}/kservices5/baloo_notesearchstore.desktop
-%{_kf5_datadir}/kservices5/baloo_calendarsearchstore.desktop
+%{_kf5_libdir}/libKF5BalooNaturalQueryParser.so.*
+%{_kf5_plugindir}/baloo/filesearchstore.so
+%{_kf5_plugindir}/baloo/emailsearchstore.so
+%{_kf5_plugindir}/baloo/contactsearchstore.so
+%{_kf5_plugindir}/baloo/notesearchstore.so
+%{_kf5_plugindir}/baloo/calendarsearchstore.so
+%{_kf5_plugindir}/kio/baloosearch.so
+%{_kf5_plugindir}/kio/tags.so
+%{_kf5_plugindir}/kio/timeline.so
+%{_kf5_qtplugindir}/kded_baloosearch_kio.so
+%{_kf5_qmldir}/org/kde/baloo
 %{_kf5_datadir}/kservices5/baloosearch.protocol
 %{_kf5_datadir}/kservices5/tags.protocol
 %{_kf5_datadir}/kservices5/timeline.protocol
+%{_kf5_datadir}/kservices5/kded/baloosearchfolderupdater.desktop
 %{_kf5_datadir}/icons/hicolor/*/apps/baloo.png
 
 %files file -f %{name}-file.lang
@@ -143,6 +144,7 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 %{_kf5_libdir}/libKF5BalooCore.so
 %{_kf5_libdir}/libKF5BalooXapian.so
 %{_kf5_libdir}/libKF5BalooFiles.so
+%{_kf5_libdir}/libKF5BalooNaturalQueryParser.so
 %{_kf5_libdir}/cmake/KF5Baloo
 %{_kf5_includedir}/Baloo
 %{_kf5_includedir}/baloo_version.h

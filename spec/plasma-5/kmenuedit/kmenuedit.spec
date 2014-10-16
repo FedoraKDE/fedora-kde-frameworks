@@ -67,6 +67,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/applications/kmenuedit.desktop
 %{_datadir}/doc/HTML/en/kmenuedit
 %{_datadir}/icons/hicolor/*/apps/kmenuedit.png
+%{_kf5_datadir}/kxmlgui5/kmenuedit
 
 
 %changelog

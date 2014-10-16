@@ -64,6 +64,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libexecdir}/khc_docbookdig.pl
 %{_kf5_libdir}/libkdeinit5_khelpcenter.so
 %{_kf5_datadir}/khelpcenter
+%{_kf5_datadir}/kxmlgui5/khelpcenter/khelpcenterui.rc
 %{_datadir}/applications/Help.desktop
 %{_datadir}/config.kcfg/khelpcenter.kcfg
 %{_datadir}/kservices5/khelpcenter.desktop

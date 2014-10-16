@@ -62,7 +62,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING COPYING.LIB README
+%doc COPYING.LIB
 %{_kf5_libdir}/libKF5WaylandClient.so.*
 #%{_kf5_libdir}/libKF5WaylandServer.so.*
 
