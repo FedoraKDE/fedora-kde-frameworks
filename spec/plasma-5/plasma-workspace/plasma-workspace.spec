@@ -2,7 +2,7 @@
 
 Name:           plasma-workspace
 Version:        5.1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -74,7 +74,9 @@ BuildRequires:  kf5-threadweaver-devel
 BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kdewebkit-devel
+BuildRequires:  kf5-ktexteditor-devel
 BuildRequires:  kf5-kdelibs4support-devel
+
 BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kf5-kscreen-devel
 BuildRequires:  kf5-baloo-devel
@@ -124,10 +126,8 @@ Requires:       oxygen-icon-theme
 Requires:       oxygen-fonts
 
 Obsoletes:      kde-workspace < 5.0.0-1
-# There was circular dependency between kde-workspace and -libs, so remove explictly
-# both. This is fixed in latest kde-workspace
 Obsoletes:      kde-workspace-libs < 5.0.0-1
-Obsoletes:      kdeplasma-addons < 5.0.0-1
+
 # Hmm, really? This is needed for smooth upgrade, but something else should do this,
 # maybe plasma-dsektop?
 Obsoletes:      plasma-scriptengine-python < 5.0.0-1
@@ -182,7 +182,6 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %{_bindir}/*
 %{_libdir}/*.so.*
 %{_kf5_libdir}/libkdeinit5_*.so
-%{_libdir}/libKF5XmlRpcClientPrivate.so
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
 %{_kf5_qtplugindir}/plasma/packagestructure/*.so
 %{_kf5_qtplugindir}/*.so
@@ -196,6 +195,7 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %{_datadir}/plasma/shareprovider
 %{_datadir}/plasma/wallpapers
 %{_datadir}/plasma/look-and-feel
+%{_datadir}/plasma/kcms
 %{_datadir}/solid
 %{_datadir}/kstyle
 %{_datadir}/drkonqi/debuggers/external/*
@@ -226,7 +226,7 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %files devel
 %{_libdir}/libweather_ion.so
 %{_libdir}/libtaskmanager.so
-%{_libdir}/libkworkspace.so
+%{_libdir}/libkworkspace5.so
 %{_libdir}/libplasma-geolocation-interface.so
 %{_includedir}/*
 %{_libdir}/cmake/KRunnerAppDBusInterface
@@ -244,6 +244,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-2
+- Obsoletes: kde-workspace-libs
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

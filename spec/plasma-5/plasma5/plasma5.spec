@@ -1,6 +1,6 @@
 Name:           plasma5
 Version:        5.1.0.1
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -29,6 +29,7 @@ Requires:       kde-cli-tools
 Requires:       khelpcenter
 Requires:       kf5-baloo
 Requires:       khotkeys
+Requires:       ksysguard
 
 %description
 %{summary}.
@@ -43,6 +44,9 @@ Requires:       khotkeys
 
 
 %changelog
+* Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-3
+- Requires: ksysguard
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

@@ -2,7 +2,7 @@
 
 Name:           kdeplasma-addons
 Version:        5.1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Additional Plasmoids for Plasma 5.
 
 License:        GPLv2+
@@ -15,6 +15,10 @@ URL:            http://www.kde.org
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+
+Obsoletes:      kdeplasma-addons-libs < 5.0.0
+Provides:       kdeplasma-addons-libs = %{version}-%{release}
+Provides:       kdeplasma-addons-libs%{?dist} = %{version}-%{release}
 
 
 BuildRequires:  qt5-qtbase-devel
@@ -73,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-2
+- Obsoletes & Provides kdeplasma-addons-libs
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 
