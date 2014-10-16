@@ -9,13 +9,11 @@ firewall --enabled --service=mdns
 part / --size 3072 --fstype ext4
 services --enabled=NetworkManager --disabled=sshd
 
-#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=kde-frameworks --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kde-frameworks/fedora-$releasever-$basearch/
+repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+#repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
-#repo --name=updates-testing --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/testing/$releasever/$basearch/
 
 
 %packages
@@ -25,7 +23,8 @@ kernel
 @base-x
 
 # Plasma 5
-plasma5
+plasma-5
+ksysguard
 kf5-baloo
 
 # KDE 4 - make the ISO actually usable
@@ -34,6 +33,25 @@ konsole
 kwrite
 rekonq
 konqueror
+kdepim
+kate
+dolphin
+dragon
+konversation
+okular
+
+# Calligra suite - not necessary, but fancy thing to show
+calligra-words
+calligra-krita
+calligra-stage
+calligra-karbon
+calligra-sheets
+calligra-kexi
+
+
+# Some more stuff
+firefox
+
 
 # Menu
 redhat-menus
