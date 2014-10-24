@@ -52,8 +52,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files -f milou.lang
+%{_kf5_qtplugindir}/miloutextplugin.so
 %{_kf5_datadir}/kservicetypes5/miloupreviewplugin.desktop
 %{_kf5_datadir}/kservices5/plasma-applet-org.kde.milou.desktop
+%{_kf5_datadir}/kservices5/miloutextpreview.desktop
 %{_libdir}/libmilou.so.*
 %{_qt5_prefix}/qml/org/kde/milou
 %{_datadir}/plasma/plasmoids/org.kde.milou

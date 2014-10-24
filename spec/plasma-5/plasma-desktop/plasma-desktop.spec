@@ -100,6 +100,7 @@ rm -r %{buildroot}/%{_datadir}/kdm
 %{_bindir}/kfontview
 %{_bindir}/krdb
 %{_bindir}/knetattach
+%{_bindir}/solid-action-desktop-gen
 %{_kf5_libexecdir}/kauth/kcmdatetimehelper
 %{_kf5_libexecdir}/kauth/fontinst
 %{_kf5_libexecdir}/kauth/fontinst_helper
@@ -124,16 +125,20 @@ rm -r %{buildroot}/%{_datadir}/kdm
 #%{_datadir}/kcmlocale
 %{_datadir}/kcm_phonon
 %{_datadir}/kfontinst
-%{_datadir}/kfontview
 %{_datadir}/kcmkeyboard
 %{_datadir}/ksmserver
 %{_datadir}/konqsidebartng/virtual_folders/services/fonts.desktop
+%{_datadir}/kcmsolidactions
+%{_datadir}/solid/devices/*.desktop
 %config %{_sysconfdir}/dbus-1/system.d/*.conf
 %config %{_sysconfdir}/xdg/*.knsrc
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/ServiceMenus/installfont.desktop
 %{_kf5_datadir}/kservices5/fonts.protocol
 %{_kf5_datadir}/kservices5/kded/*.desktop
+%{_kf5_datadir}/kservicetypes5/*.desktop
+%{_kf5_datadir}/kxmlgui5/kfontview
+%{_kf5_datadir}/kxmlgui5/kfontinst
 %{_kf5_datadir}/knotifications5/*.notifyrc
 %{_kf5_datadir}/config.kcfg/*
 %{_datadir}/icons/*/*/*/*

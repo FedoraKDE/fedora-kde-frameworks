@@ -2,22 +2,16 @@
 
 Name:           plasma-%{base_name}-kde4
 Version:        5.1.0.1
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        KDE 4 version of Plasma 5 Oxgen
 License:        GPLv2+
 URL:            http://www.kde.org
 Source0:        http://download.kde.org/stable/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 BuildRequires:  kdelibs4-devel
-# Dsabled for now due to dependency hell (kde-workspace-devel requires kde-workspace-libs
-# which requires kde-style-oxygen = 4.11.x which we are obsoleting here -> mess
-#BuildRequires:  kde-workspace-devel
+BuildRequires:  kde-workspace-devel
 BuildRequires:  libxcb-devel
-Requires:       plasma-%{base_name}-common
-
-Obsoletes:      kde-style-oxygen < 5.0.0
-Provides:       kde-style-oxygen = %{version}-%{release}
-Provides:       kde-style-oxygen%{?dist} = %{version}-%{release}
+Requires:       plasma-%{base_name}-common = %{version}-%{release}
 
 %description
 %{summary}.
@@ -56,7 +50,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde4_libdir}/kde4/kstyle_oxygen_config.so
 %{_kde4_libdir}/kde4/plugins/styles/oxygen.so
 %{_kde4_appsdir}/kstyle/themes/oxygen.themerc
-#%{_kde4_appsdir}/kwin/oxygenclient.desktop
+%{_kde4_appsdir}/kwin/oxygenclient.desktop
 %{_kde4_bindir}/oxygen-demo
 
 %files devel
@@ -64,9 +58,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde4_libdir}/kde4/*.so
 
 %changelog
-* Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-3
-- Obsoletes/Provides kde-style-oxygen
-
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

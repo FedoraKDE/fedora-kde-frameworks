@@ -2,7 +2,7 @@
 
 Name:           plasma-workspace
 Version:        5.1.0.1
-Release:        5%{?dist}
+Release:        1%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -71,10 +71,10 @@ BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-threadweaver-devel
+BuildRequires:	kf5-ktexteditor-devel
 BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kdewebkit-devel
-BuildRequires:  kf5-ktexteditor-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  kf5-ksysguard-devel
@@ -96,15 +96,11 @@ Requires:       kactivities
 Requires:       kf5-kinit
 Requires:       kf5-kded
 Requires:       kf5-kdoctools
-Requires:       kf5-sonnet-ui
-Requires:       kf5-kidletime
 #Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
 Requires:       kf5-baloo
-
-Requires:       polkit-kde
 
 # startkde
 Requires:       coreutils
@@ -130,8 +126,10 @@ Requires:       oxygen-icon-theme
 Requires:       oxygen-fonts
 
 Obsoletes:      kde-workspace < 5.0.0-1
+# There was circular dependency between kde-workspace and -libs, so remove explictly
+# both. This is fixed in latest kde-workspace
 Obsoletes:      kde-workspace-libs < 5.0.0-1
-
+Obsoletes:      kdeplasma-addons < 5.0.0-1
 # Hmm, really? This is needed for smooth upgrade, but something else should do this,
 # maybe plasma-dsektop?
 Obsoletes:      plasma-scriptengine-python < 5.0.0-1
@@ -230,8 +228,8 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %files devel
 %{_libdir}/libweather_ion.so
 %{_libdir}/libtaskmanager.so
-%{_libdir}/libkworkspace5.so
 %{_libdir}/libplasma-geolocation-interface.so
+%{_libdir}/libkworkspace5.so
 %{_includedir}/*
 %{_libdir}/cmake/KRunnerAppDBusInterface
 %{_libdir}/cmake/KSMServerDBusInterface
@@ -248,18 +246,6 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
-* Wed Oct 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-5
-- Requires: polkit-kde
-
-* Wed Oct 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-4
-- ksmserver Requires kf5-kidletime
-
-* Tue Oct 21 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-3
-- ksplashqml Requires kf5-sonnet-ui
-
-* Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-2
-- Obsoletes: kde-workspace-libs
-
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

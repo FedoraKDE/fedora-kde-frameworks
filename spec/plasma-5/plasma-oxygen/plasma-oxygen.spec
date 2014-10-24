@@ -1,7 +1,4 @@
-%global         plasma_version 5.1.0
 %global         base_name oxygen
-
-%global         build_kde4 1
 
 Name:           plasma-%{base_name}
 Version:        5.1.0.1
@@ -36,17 +33,6 @@ Requires:       %{name}-common = %{version}-%{release}
 %description
 %{summary}.
 
-%if 0%{?build_kde4:1}
-%package        kde4
-Summary:        KDE 4 version of Oxygen style for Plasma 5
-BuildRequires:  kdelibs4-devel
-BuildRequires:  kdeworkspace-devel
-BuildRequires:  libxcb-devel
-Requires:       %{name}-common = %{version}-%{release}
-%description    kde4
-%{summary}.
-%endif
-
 %package        common
 Summary:        Common date shared between Plasma 5 and KDE 4 versions of the Oxygen style
 BuildArch:      noarch
@@ -61,7 +47,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n %{base_name}-%{plasma_version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -71,22 +57,9 @@ popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
-%if 0%{?build_kde4:1}
-mkdir -p %{_target_platform}_kde4
-pushd %{_target_platform}_kde4
-%{cmake_kde4} -DUSE_KDE4=TRUE ..
-popd
-
-make %{?_smp_mflags} -C %{_target_platform}_kde4
-%endif
-
 %install
 %make_install -C %{_target_platform}
 %find_lang oxygen --with-qt --all-name
-
-%if 0%{?build_kde4:1}
-%make_install -C %{_target_platform}_kde4
-%endif
 
 %post -p /sbin/ldconfig
 
@@ -109,21 +82,8 @@ make %{?_smp_mflags} -C %{_target_platform}_kde4
 %{_datadir}/icons/*
 %{_datadir}/sounds/*
 
-%if 0%{?build_kde4:1}
-%files kde4
-%{_kde4_libdir}/liboxygenstyle.so.*
-%{_kde4_libdir}/liboxygenstyleconfig.so.*
-%{_kde4_libdir}/kde4/kstyle_oxygen_config.so
-%{_kde4_libdir}/kde4/plugins/styles/oxygen.so
-%{_kde4_appsdir}/kstyle/themes/oxygen.themerc
-%{_kde4_bindir}/oxygen-demo
-%endif
-
 %files devel
 %{_libdir}/*.so
-%if 0%{?build_kde4:1}
-%{_kde4_libdir}/kde4/*.so
-%endif
 
 %changelog
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
