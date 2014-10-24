@@ -6,14 +6,17 @@ auth --useshadow --enablemd5
 selinux --permissive
 firewall --enabled --service=mdns
 #xconfig --startxonboot
-part / --size 3072 --fstype ext4
+part / --size 4096 --fstype ext4
 services --enabled=NetworkManager --disabled=sshd
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --excludepkgs=sddm --cost=1
+repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/ --excludepkgs=sddm --cost=1
 #repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
 #repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
+
+
+repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
 
 
 %packages
@@ -73,7 +76,7 @@ xorg-x11-drv-vmware
 
 # We need this to log us in!
 sddm
-sddm-themes
+#sddm-themes
 sddm-kcm
 
 # Needed by start_kde - remove once pkg is rebuilt with deps
@@ -220,9 +223,14 @@ usermod -aG wheel liveuser > /dev/null
 passwd -d root > /dev/null
 
 # autologin and fancy login screen
-sed -i 's/AutoUser=/AutoUser=liveuser/' /etc/sddm.conf
-sed -i 's/CurrentTheme=fedora/CurrentTheme=breeze/' /etc/sddm.conf
-sed -i 's/LastSession=kde-plasma.desktop/LastSession=plasma.desktop/' /etc/sddm.conf
+cat > /etc/sddm.conf << SDDM_EOF
+[Autologin]
+User=liveuser
+Session=plasma.desktop
+
+[Theme]
+Current=breeze
+SDDM_EOF
 
 # default wallpaper
 # (should not be needed anymore)
