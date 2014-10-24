@@ -2,7 +2,7 @@
 
 Name:           plasma-workspace
 Version:        5.1.0.1
-Release:        2%{?dist}
+Release:        5%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -96,11 +96,15 @@ Requires:       kactivities
 Requires:       kf5-kinit
 Requires:       kf5-kded
 Requires:       kf5-kdoctools
+Requires:       kf5-sonnet-ui
+Requires:       kf5-kidletime
 #Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
 Requires:       kf5-baloo
+
+Requires:       polkit-kde
 
 # startkde
 Requires:       coreutils
@@ -244,6 +248,15 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Wed Oct 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-5
+- Requires: polkit-kde
+
+* Wed Oct 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-4
+- ksmserver Requires kf5-kidletime
+
+* Tue Oct 21 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-3
+- ksplashqml Requires kf5-sonnet-ui
+
 * Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-2
 - Obsoletes: kde-workspace-libs
 

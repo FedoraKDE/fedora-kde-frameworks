@@ -1,6 +1,6 @@
 Name:           plasma5
 Version:        5.1.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -31,6 +31,10 @@ Requires:       kf5-baloo
 Requires:       khotkeys
 Requires:       ksysguard
 
+Requires:       kmix
+Requires:       kwalletmanager
+Requires:       kscreen
+
 %description
 %{summary}.
 
@@ -44,6 +48,9 @@ Requires:       ksysguard
 
 
 %changelog
+* Thu Oct 23 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-4
+- Requires: kmix, kwalletmanager, kscreen
+
 * Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-3
 - Requires: ksysguard
 
