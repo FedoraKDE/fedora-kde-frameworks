@@ -1,0 +1,28 @@
+diff --git a/dolphin/src/search/dolphinsearchbox.cpp b/dolphin/src/search/dolphinsearchbox.cpp
+index efb17fa..2581a1d 100644
+--- a/dolphin/src/search/dolphinsearchbox.cpp
++++ b/dolphin/src/search/dolphinsearchbox.cpp
+@@ -46,9 +46,10 @@
+     #include <Baloo/Query>
+     #include <Baloo/Term>
+     #include <Baloo/IndexerConfig>
+-#include <QFontDatabase>
+ #endif
+ 
++#include <QFontDatabase>
++
+ DolphinSearchBox::DolphinSearchBox(QWidget* parent) :
+     QWidget(parent),
+     m_startedSearching(false),
+diff --git a/dolphin/src/views/dolphinview.cpp b/dolphin/src/views/dolphinview.cpp
+index 171b3cb..9514207 100644
+--- a/dolphin/src/views/dolphinview.cpp
++++ b/dolphin/src/views/dolphinview.cpp
+@@ -65,6 +65,7 @@
+ #include <konq_operations.h>
+ #include <KToggleAction>
+ #include <KUrl>
++#include <KFormat>
+ 
+ #include "dolphinnewfilemenuobserver.h"
+ #include "dolphin_detailsmodesettings.h"

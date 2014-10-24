@@ -1,0 +1,99 @@
+diff --git a/konqueror/CMakeLists.txt b/konqueror/CMakeLists.txt
+index 37962ca..35e579e 100644
+--- a/konqueror/CMakeLists.txt
++++ b/konqueror/CMakeLists.txt
+@@ -1,13 +1,54 @@
++cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+ 
+-add_definitions(-D_LARGEFILE64_SOURCE )
++project(Konqueror)
+ 
+-find_package(KF5 REQUIRED COMPONENTS Parts KCMUtils KHtml)
+-find_package(KDED REQUIRED)
++set(QT_MIN_VERSION "5.2.0")
++
++find_package(ECM 0.0.14 CONFIG REQUIRED)
++
++include(FeatureSummary)
++
++set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
++
++include(KDEInstallDirs)
++include(KDECMakeSettings)
++include(KDECompilerSettings)
++include(ECMInstallIcons)
++include(ECMSetupVersion)
++
++set(KONQUEROR_VERSION "5.97.0")
++
++find_package(Qt5 REQUIRED COMPONENTS Core)
++find_package(KF5 REQUIRED COMPONENTS Parts KCMUtils KHtml KDELibs4Support Archive)
++
++find_package(KF5 COMPONENTS Activities)
++
++if ("${CMAKE_SOURCE_DIR}" STREQUAL "${Konqueror_SOURCE_DIR}")
++    find_package(KF5Konq CONFIG REQUIRED)
++else()
++    message(${LibKonq_SOURCE_DIR})
++endif()
++
++find_package(KDED)
++
++find_package(ZLIB)
++set_package_properties(ZLIB PROPERTIES DESCRIPTION "Support for gzip compressed files and data streams"
++                       URL "http://www.zlib.net"
++                       TYPE REQUIRED
++                       PURPOSE "Required for building Konqueror"
++                      )
+ 
+ if(Q_WS_X11)
+   find_package(X11 REQUIRED) # both subdirs require the X11 libs
+ endif(Q_WS_X11)
+ 
++add_definitions(-D_LARGEFILE64_SOURCE)
++add_definitions (-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
++
++configure_file (config-konqueror.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konqueror.h )
++
++
++
+ add_subdirectory( src )
+ # TODO add_subdirectory( client )
+ 
+@@ -36,3 +77,10 @@ install(FILES profile_kde_devel.desktop      DESTINATION ${DATA_INSTALL_DIR}/kon
+ if(NOT WIN32)
+    install(FILES profile_midnightcommander.desktop DESTINATION ${DATA_INSTALL_DIR}/konqueror/profiles/ RENAME midnightcommander)
+ endif(NOT WIN32)
++
++###
++
++# TODO Remove the if/endif lines if Konqueror is split.
++if ("${CMAKE_SOURCE_DIR}" STREQUAL "${Konqueror_SOURCE_DIR}")
++  feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
++endif()
+diff --git a/konqueror/src/CMakeLists.txt b/konqueror/src/CMakeLists.txt
+index 0f6767f..32f7bec 100644
+--- a/konqueror/src/CMakeLists.txt
++++ b/konqueror/src/CMakeLists.txt
+@@ -46,7 +46,7 @@ target_link_libraries(konquerorprivate
+    ${ZLIB_LIBRARY}
+    KF5::KDELibs4Support
+ )
+-set_target_properties(konquerorprivate PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
++set_target_properties(konquerorprivate PROPERTIES VERSION ${KONQUEROR_VERSION} SOVERSION "5" )
+ install(TARGETS konquerorprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+ 
+ ########### konqueror ###############
+diff --git a/konqueror/src/konqview.h b/konqueror/src/konqview.h
+index e98ecba..83b677a 100644
+--- a/konqueror/src/konqview.h
++++ b/konqueror/src/konqview.h
+@@ -34,7 +34,7 @@
+ #include <QtCore/QPointer>
+ #include <QtCore/QEvent>
+ 
+-#include <config-apps.h>
++#include <config-konqueror.h>
+ 
+ class KonqRun;
+ class KonqFrame;
