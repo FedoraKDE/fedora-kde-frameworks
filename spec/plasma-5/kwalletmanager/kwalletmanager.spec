@@ -3,7 +3,7 @@
 Name:           kwalletmanager
 Summary:        Manage KDE passwords
 Version:        5.0.92
-Release:        20141023git%{git_version}%{?dist}
+Release:        2.20141023git%{git_version}%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/kdeutils/kwalletmanager
@@ -46,6 +46,8 @@ BuildRequires:  polkit-qt-devel
 
 Requires:       polkit-qt
 Requires:       polkit-kde
+
+Requires:       kf5-kwallet-runtime
 
 %description
 KDE Wallet Manager is a tool to manage the passwords on your KDE system.
@@ -99,5 +101,8 @@ fi
 
 
 %changelog
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.92-2.20141023gitcb0f4c7
+- Requires: kf5-kwallet-runtime
+
 * Thu Oct 23 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.92-20141023gitcb0f4c7
 - KF5 version
