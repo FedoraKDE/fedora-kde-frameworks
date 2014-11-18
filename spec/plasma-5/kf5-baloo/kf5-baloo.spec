@@ -1,9 +1,7 @@
-%global         plasma_version 5.1.0
-
 %define         framework baloo
 
 Name:           kf5-%{framework}
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
@@ -61,7 +59,7 @@ Requires:       %{name} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -qn %{framework}-%{plasma_version}
+%setup -qn %{framework}-%{version}
 
 %build
 
@@ -152,6 +150,9 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

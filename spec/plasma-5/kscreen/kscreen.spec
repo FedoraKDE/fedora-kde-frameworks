@@ -1,9 +1,10 @@
-%global git_version d6380ef
+%global git_version 88b2a3f
+%global git_date 20141107
 
 Name:           kscreen
 Epoch:          1
-Version:        5.0.92
-Release:        20141023git%{git_version}%{?dist}
+Version:        5.1.1
+Release:        1.%{git_date}git%{git_version}%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -36,7 +37,7 @@ Requires:       kf5-filesystem
 KCM and KDED modules for managing displays in KDE.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -59,6 +60,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/icons/hicolor/*/actions/*
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1.20141107git88b2a3f
+- Plasma 5.1.1
+
 * Thu Oct 23 2014 Daniel Vrátil <dvratil@redhat.com> 1:5.0.92-20141023git
  - kscreen 5.0.92 (git)
 

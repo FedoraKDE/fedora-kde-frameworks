@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION="5.1.0.1"
+VERSION="5.1.1"
 RELEASE="1"
 CHANGELOG="Plasma ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"

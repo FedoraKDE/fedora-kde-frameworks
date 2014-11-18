@@ -1,20 +1,35 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.1.0.1
-Release:        1%{?dist}
-Summary:        Plasma 5 and KDE default style and look
+Version:        5.1.1
+Release:        7%{?dist}
+Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{base_name}-%{version}.tar.xz
+URL:            https://projects.kde.org/projects/kde/workspace/oxygen
 
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
+
+# Qt 4 dependencies
+BuildRequires:  kdelibs-devel
+BuildRequires:  libxcb-devel
+# Don't build the KWin style, we don't need that
+#BuildRequires: kde-workspace-devel
+
+# Qt 5
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 
+# KF5
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kguiaddons-devel
@@ -24,68 +39,149 @@ BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-frameworkintegration-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
-BuildRequires:  kwin-devel
+# KWin (for window decoration - KWin 5 only)
+BuildRequires:  kwin-devel >= 5.1.0
 
 Requires:       kf5-filesystem
 
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       qt4-style-oxygen = %{version}-%{release}
+Requires:       qt5-style-oxygen = %{version}-%{release}
+Requires:       kwin-oxygen = %{version}-%{release}
+Requires:       oxygen-cursor-themes = %{version}-%{release}
+Requires:       oxygen-sound-theme = %{version}-%{release}
 
 %description
 %{summary}.
 
-%package        common
-Summary:        Common date shared between Plasma 5 and KDE 4 versions of the Oxygen style
-BuildArch:      noarch
-%description    common
+%package -n     qt4-style-oxygen
+Summary:        Oxygen widget style for Qt 4
+Provides:       kde-style-oxygen%{?_isa} = %{version}-%{release}
+# When this was created
+Obsoletes:      kde-style-oxygen < 5.1.1-2
+Obsoletes:      plasma-oxygen-kde4 < 5.1.1-2
+Requires:       oxygen-cursor-themes = %{version}-%{release}
+Requires:       oxygen-sound-theme = %{version}-%{release}
+%description -n qt4-style-oxygen
 %{summary}.
 
-%package        devel
-Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+%package -n     qt5-style-oxygen
+Summary:        Oxygen widget style for Qt 5
+Obsoletes:      plasma-oxygen < 5.1.1-2
+Requires:       oxygen-cursor-themes = %{version}-%{release}
+Requires:       oxygen-sound-theme = %{version}-%{release}
+%description -n qt5-style-oxygen
+%{summary}.
+
+%package -n     kwin-oxygen
+Summary:        Oxygen window decoration plugin for KWin 5
+Obsoletes:      plasma-oxygen < 5.1.1-2
+# Requires KWin 5
+Requires:       kwin%{?_isa} >= 5.0.0
+# Conflicts with kde-style-oxygen from kde-workspace
+Conflicts:      kde-style-oxygen < 5.1.0-1
+%description -n kwin-oxygen
+%{summary}.
+
+%package -n     oxygen-cursor-themes
+Summary:        Oxygen cursor themes
+BuildArch:      noarch
+Obsoletes:      plasma-oxygen-common < 5.1.1-2
+%description -n oxygen-cursor-themes
+%{summary}.
+
+%package -n     oxygen-sound-theme
+Summary:        Sounds for Oxygen theme
+BuildArch:      noarch
+Obsoletes:      plasma-oxygen-common < 5.1.1-2
+%description -n oxygen-sound-theme
+%{summary}.
 
 %prep
 %setup -q -n %{base_name}-%{version}
 
 %build
-mkdir -p %{_target_platform}
-pushd %{_target_platform}
+%define qt5_target_platform %{_target_platform}-qt5
+%define qt4_target_platform %{_target_platform}-qt4
+
+# Build for Qt 4
+mkdir -p %{qt4_target_platform}
+pushd %{qt4_target_platform}
+%{cmake_kde4} .. -DOXYGEN_USE_KDE4:BOOL=ON
+popd
+
+make %{?_smp_mflags} -C %{qt4_target_platform}
+
+# Build for Qt 5
+mkdir -p %{qt5_target_platform}
+pushd %{qt5_target_platform}
 %{cmake_kf5} ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make %{?_smp_mflags} -C %{qt5_target_platform}
+
 
 %install
-%make_install -C %{_target_platform}
+%make_install -C %{qt4_target_platform}
+%make_install -C %{qt5_target_platform}
+
 %find_lang oxygen --with-qt --all-name
 
-%post -p /sbin/ldconfig
+# Don't both with -devel subpackages, there are no headers anyway
+rm %{buildroot}/%{_libdir}/liboxygenstyle5.so
+rm %{buildroot}/%{_libdir}/liboxygenstyleconfig5.so
+rm %{buildroot}/%{_kde4_libdir}/liboxygenstyle.so
+rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 
-%postun -p /sbin/ldconfig
+
+
+%post -n    qt4-style-oxygen -p /sbin/ldconfig
+%postun -n  qt4-style-oxygen -p /sbin/ldconfig
 
 %files
-%doc COPYING
+# Empty
+
+%files -n   qt4-style-oxygen
+%{_kde4_libdir}/liboxygenstyle.so.*
+%{_kde4_libdir}/liboxygenstyleconfig.so.*
+%{_kde4_libdir}/kde4/kstyle_oxygen_config.so
+%{_kde4_libdir}/kde4/plugins/styles/oxygen.so
+%{_kde4_appsdir}/kstyle/themes/oxygen.themerc
+%{_kde4_bindir}/oxygen-demo
+
+%post -n    qt5-style-oxygen -p /sbin/ldconfig
+%postun -n  qt5-style-oxygen -p /sbin/ldconfig
+
+%files -n   qt5-style-oxygen -f oxygen.lang
 %{_bindir}/oxygen-demo5
 %{_bindir}/oxygen-settings5
 %{_libdir}/liboxygenstyle5.so.*
 %{_libdir}/liboxygenstyleconfig5.so.*
+%{_kf5_qtplugindir}/styles/oxygen.so
+%{_kf5_datadir}/kstyle/themes/oxygen.themerc
+%{_kf5_datadir}/plasma/look-and-feel/org.kde.oxygen/
+
+%files -n   kwin-oxygen
 %{_kf5_qtplugindir}/kstyle_oxygen_config.so
 %{_kf5_qtplugindir}/kwin/kdecorations/config/kwin_oxygen_config.so
 %{_kf5_qtplugindir}/kwin/kdecorations/kwin3_oxygen.so
-%{_kf5_qtplugindir}/styles/oxygen.so
-%{_datadir}/kstyle/themes/oxygen.themerc
-%{_kf5_datadir}/plasma/look-and-feel/org.kde.oxygen
 
-%files common -f oxygen.lang
+%files -n   oxygen-cursor-themes
 %{_datadir}/icons/*
+
+%files -n   oxygen-sound-theme
 %{_datadir}/sounds/*
 
-%files devel
-%{_libdir}/*.so
 
 %changelog
+* Thu Nov 13 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-7
+- Fix Obsoletes issue when updating
+
+* Wed Nov 12 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
+- change subpackages, merge with plasma-oxygen-kde4
+
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

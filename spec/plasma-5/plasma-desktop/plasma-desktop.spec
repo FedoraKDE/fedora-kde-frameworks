@@ -1,7 +1,5 @@
-%global         plasma_version 5.1.0
-
 Name:           plasma-desktop
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        Plasma 5 Desktop
 
@@ -68,7 +66,7 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %build
 
@@ -153,6 +151,9 @@ rm -r %{buildroot}/%{_datadir}/kdm
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

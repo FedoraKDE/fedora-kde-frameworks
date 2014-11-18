@@ -1,9 +1,8 @@
-%global         plasma_version 5.1.0
 # libksysguard
 %global         framework ksysguard
 
 Name:           kf5-%{framework}
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
@@ -54,7 +53,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n libksysguard-%{plasma_version}
+%setup -q -n libksysguard-%{version}
 
 %patch0 -p1 -b .libsnames
 
@@ -99,6 +98,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

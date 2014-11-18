@@ -1,9 +1,7 @@
-%global         plasma_version 5.1.0
-
 %define         base_name milou
 
 Name:           plasma-%{base_name}
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        A dedicated KDE search application built on top of Baloo
 
@@ -33,7 +31,7 @@ Obsoletes:      kde-plasma-milou < 5.0.0
 %{summary}.
 
 %prep
-%setup -q -n %{base_name}-%{plasma_version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -62,6 +60,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

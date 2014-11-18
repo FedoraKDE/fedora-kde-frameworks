@@ -1,7 +1,5 @@
-%global         plasma_version 5.1.0
-
 Name:           khotkeys
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        Application to show KDE Application's documentation
 
@@ -50,7 +48,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %patch0 -p1 -b .kded-install
 
@@ -90,6 +88,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/cmake/KHotKeysDBusInterface
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

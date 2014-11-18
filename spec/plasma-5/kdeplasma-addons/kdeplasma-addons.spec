@@ -1,8 +1,6 @@
-%global         plasma_version 5.1.0
-
 Name:           kdeplasma-addons
-Version:        5.1.0.1
-Release:        2%{?dist}
+Version:        5.1.1
+Release:        1%{?dist}
 Summary:        Additional Plasmoids for Plasma 5.
 
 License:        GPLv2+
@@ -45,7 +43,7 @@ Requires:       kf5-filesystem
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %build
 
@@ -77,6 +75,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Thu Oct 16 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-2
 - Obsoletes & Provides kdeplasma-addons-libs
 

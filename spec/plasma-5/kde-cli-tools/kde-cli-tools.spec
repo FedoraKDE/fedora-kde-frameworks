@@ -1,7 +1,5 @@
-%global         plasma_version 5.1.0
-
 Name:           kde-cli-tools
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
@@ -52,7 +50,7 @@ Conflicts:      kde-runtime < 5.0.0-1
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -88,6 +86,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_mandir}/man1/kdesu.1.gz
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

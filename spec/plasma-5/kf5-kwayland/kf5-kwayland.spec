@@ -1,8 +1,7 @@
-%global         plasma_version 5.1.0
 %global         framework kwayland
 
 Name:           kf5-%{framework}
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 library that wraps Client and Server Wayland libraries
 
@@ -43,7 +42,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-%{plasma_version}
+%setup -q -n %{framework}-%{version}
 
 %build
 
@@ -75,6 +74,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

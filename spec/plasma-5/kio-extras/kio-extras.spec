@@ -1,7 +1,5 @@
-%global         plasma_version 5.1.0
-
 Name:           kio-extras
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
@@ -64,7 +62,7 @@ Requires:       %{name} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %patch0 -p1 -b .installdirs
 
@@ -111,6 +109,9 @@ rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

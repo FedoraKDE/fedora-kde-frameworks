@@ -1,8 +1,7 @@
-%global         plasma_version 5.1.0
 %global         framework libmm-qt
 
 Name:           kf5-%{framework}
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
@@ -10,7 +9,7 @@ Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 
-%global revision %(echo %{plasma_version} | cut -d. -f3)
+%global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
@@ -36,7 +35,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Qt 5 libraries and header files for developing applications that use ModemManager
 
 %prep
-%setup -qn %{framework}-%{plasma_version}
+%setup -qn %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -65,6 +64,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

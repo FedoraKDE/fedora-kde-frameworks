@@ -1,7 +1,5 @@
-%global         plasma_version 5.1.0
-
 Name:           kinfocenter
-Version:        5.1.0.1
+Version:        5.1.1
 Release:        1%{?dist}
 Summary:        KDE Info Center
 
@@ -62,7 +60,7 @@ Obsoletes:      kde-workspace < 5.0.0-1
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{plasma_version}
+%setup -q -n %{name}-%{version}
 
 %build
 
@@ -97,6 +95,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1
 

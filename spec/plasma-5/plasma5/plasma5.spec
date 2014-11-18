@@ -1,6 +1,6 @@
 Name:           plasma5
-Version:        5.1.0.1
-Release:        4%{?dist}
+Version:        5.1.1
+Release:        2%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -15,7 +15,6 @@ Requires:       plasma-desktop
 Requires:       plasma-workspace
 Requires:       plasma-workspace-wallpapers
 Requires:       plasma-oxygen
-Requires:       plasma-oxygen-kde4
 Requires:       plasma-milou
 Requires:       plasma-nm
 Requires:       plasma-systemsettings
@@ -48,6 +47,12 @@ Requires:       kscreen
 
 
 %changelog
+* Thu Nov 13 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
+- Adapt to changes in plasma-oxygen packaging
+
+* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
+- Plasma 5.1.1
+
 * Thu Oct 23 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-4
 - Requires: kmix, kwalletmanager, kscreen
 
