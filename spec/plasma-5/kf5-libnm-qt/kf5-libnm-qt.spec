@@ -56,6 +56,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
+%doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5NetworkManagerQt.so.*
 
 %files devel

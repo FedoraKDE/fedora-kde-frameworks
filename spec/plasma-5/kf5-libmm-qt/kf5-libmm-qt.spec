@@ -32,7 +32,8 @@ Summary: Development files for %{name}
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
-Qt 5 libraries and header files for developing applications that use ModemManager
+Qt 5 libraries and header files for developing applications
+that use ModemManager.
 
 %prep
 %setup -qn %{framework}-%{version}
@@ -53,7 +54,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%doc README
+%doc README README.md COPYING.LIB
 %{_kf5_libdir}/libKF5ModemManagerQt.so.*
 
 %files devel
