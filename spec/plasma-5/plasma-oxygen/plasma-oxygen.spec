@@ -2,7 +2,7 @@
 
 Name:           plasma-%{base_name}
 Version:        5.1.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+
@@ -59,16 +59,12 @@ Provides:       kde-style-oxygen%{?_isa} = %{version}-%{release}
 # When this was created
 Obsoletes:      kde-style-oxygen < 5.1.1-2
 Obsoletes:      plasma-oxygen-kde4 < 5.1.1-2
-Requires:       oxygen-cursor-themes = %{version}-%{release}
-Requires:       oxygen-sound-theme = %{version}-%{release}
 %description -n qt4-style-oxygen
 %{summary}.
 
 %package -n     qt5-style-oxygen
 Summary:        Oxygen widget style for Qt 5
 Obsoletes:      plasma-oxygen < 5.1.1-2
-Requires:       oxygen-cursor-themes = %{version}-%{release}
-Requires:       oxygen-sound-theme = %{version}-%{release}
 %description -n qt5-style-oxygen
 %{summary}.
 
@@ -77,8 +73,6 @@ Summary:        Oxygen window decoration plugin for KWin 5
 Obsoletes:      plasma-oxygen < 5.1.1-2
 # Requires KWin 5
 Requires:       kwin%{?_isa} >= 5.0.0
-# Conflicts with kde-style-oxygen from kde-workspace
-Conflicts:      kde-style-oxygen < 5.1.0-1
 %description -n kwin-oxygen
 %{summary}.
 
@@ -121,8 +115,8 @@ make %{?_smp_mflags} -C %{qt5_target_platform}
 
 
 %install
-%make_install -C %{qt4_target_platform}
-%make_install -C %{qt5_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{qt4_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{qt5_target_platform}
 
 %find_lang oxygen --with-qt --all-name
 
@@ -131,8 +125,6 @@ rm %{buildroot}/%{_libdir}/liboxygenstyle5.so
 rm %{buildroot}/%{_libdir}/liboxygenstyleconfig5.so
 rm %{buildroot}/%{_kde4_libdir}/liboxygenstyle.so
 rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
-
-
 
 %post -n    qt4-style-oxygen -p /sbin/ldconfig
 %postun -n  qt4-style-oxygen -p /sbin/ldconfig
@@ -165,6 +157,18 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 %{_kf5_qtplugindir}/kwin/kdecorations/config/kwin_oxygen_config.so
 %{_kf5_qtplugindir}/kwin/kdecorations/kwin3_oxygen.so
 
+%post -n    oxygen-cursor-themes
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun -n  oxygen-cursor-themes
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans -n oxygen-cursor-themes
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %files -n   oxygen-cursor-themes
 %{_datadir}/icons/*
 
@@ -173,6 +177,11 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 
 
 %changelog
+* Wed Nov 19 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-8
+- Remove Conflicts kde-style-oxygen from kwin-oxygen
+- Remove Requires themes from qt{4,5}-style-oxygen
+- Fixed scriptlets
+
 * Thu Nov 13 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-7
 - Fix Obsoletes issue when updating
 
