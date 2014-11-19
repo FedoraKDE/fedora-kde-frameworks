@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/kde-cli-tools
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -32,7 +32,8 @@ BuildRequires:  kf5-kwindowsystem-devel
 Requires:       kf5-filesystem
 
 %description
-%{summary}.
+Provides several KDE and Plasma specific command line tools to allow
+better interaction with the system.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -42,10 +43,11 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%package	doc
+%package        doc
 Summary:        Documentation and user manuals for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Conflicts:      kde-runtime < 5.0.0-1
+BuildArch:      noarch
 %description    doc
 %{summary}.
 
@@ -63,6 +65,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 %find_lang kdeclitools_qt --with-qt --all-name
+
 
 %files -f kdeclitools_qt.lang
 %{_bindir}/kcmshell5
