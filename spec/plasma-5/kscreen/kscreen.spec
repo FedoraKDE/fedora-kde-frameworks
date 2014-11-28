@@ -1,5 +1,5 @@
-%global git_version 88b2a3f
-%global git_date 20141107
+%global git_version ccf52c4
+%global git_date 20141128
 
 Name:           kscreen
 Epoch:          1
@@ -60,6 +60,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/icons/hicolor/*/actions/*
 
 %changelog
+* Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1.20141128gitccf52c4
+- Update to latest git snapshot
+
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1.20141107git88b2a3f
 - Plasma 5.1.1
 
