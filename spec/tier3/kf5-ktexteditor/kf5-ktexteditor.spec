@@ -1,7 +1,7 @@
 %define framework ktexteditor
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.3.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
@@ -18,7 +18,7 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
-BuildRequires:	qt5-qtxmlpatterns-devel
+BuildRequires:  qt5-qtxmlpatterns-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel
@@ -93,8 +93,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

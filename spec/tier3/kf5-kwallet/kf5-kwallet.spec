@@ -2,7 +2,7 @@
 %define framework kwallet
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.3.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
@@ -82,6 +82,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
+%find_lang kwalletd5_qt --with-qt --all-name
 
 %post libs -p /sbin/ldconfig
 
@@ -95,7 +96,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libKF5Wallet.so.*
 %{_kf5_libdir}/libkwalletbackend5.so.*
 
-%files runtime
+%files runtime -f kwalletd5_qt.lang
 %{_kf5_datadir}/dbus-1/services/org.kde.kwalletd5.service
 %{_kf5_datadir}/dbus-1/services/org.kde.kwalletd.service
 %{_kf5_bindir}/kwalletd5
@@ -112,8 +113,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KWallet.pri
 
 %changelog
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

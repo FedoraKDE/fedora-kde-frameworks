@@ -2,7 +2,7 @@
 %define framework kio
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.3.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
@@ -118,12 +118,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/ktelnetservice5
 %{_kf5_bindir}/kcookiejar5
 %{_kf5_bindir}/kmailservice5
+%{_kf5_bindir}/ktrash5
 %config %{_kf5_sysconfdir}/xdg/kshorturifilterrc
 %config %{_kf5_sysconfdir}/xdg/accept-languages.codes
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_plugindir}/urifilters/*.so
 %{_kf5_plugindir}/kded/*.so
 %{_kf5_qtplugindir}/kcm_webshortcuts.so
+%{_kf5_qtplugindir}/kcm_trash.so
 %{_kf5_libexecdir}/kio_http_cache_cleaner
 %{_kf5_libexecdir}/kioexec
 %{_kf5_libexecdir}/kpac_dhcp_helper
@@ -149,8 +151,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/doc/HTML/en/kioslave5/
 
 %changelog
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
