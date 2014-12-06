@@ -1,10 +1,10 @@
-%global frameworksversion 5.2.0
+%global frameworksversion 5.5.0
 
 Name:           extra-cmake-modules
 Summary:        Additional modules for CMake build system
 # ECM does not follow the frameworks versioning, but is currently being
-# release together with it
-Version:        1.2.0
+# released together with it
+Version:        1.5.0
 Release:        1%{?dist}
 
 License:        BSD
@@ -23,7 +23,6 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %prep
 %setup -q
 
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -32,16 +31,27 @@ popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
-
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+
 
 %files
 %doc README.rst COPYING-CMAKE-SCRIPTS
 %{_datadir}/ECM
 
-
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 1.5.0-1
+- extra-cmake-modules 1.5.0 (KDE Frameworks 5.5.0)
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 1.4.0-1
+- extra-cmake-modules 1.4.0 (KDE Frameworks 5.4.0)
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 1.3.0-1
+- extra-cmake-modules 1.3.0 (KDE Frameworks 5.3.0)
+
+* Tue Sep 16 2014 Daniel Vrátil <dvratil@redhat.com> - 1.2.1-1
+- extra-cmake-modules 1.2.1 (KDE Frameworks 5.2.0)
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 1.2.0-1
 - extra-cmake-modules 1.2.0 (KDE Frameworks 5.2.0)
 

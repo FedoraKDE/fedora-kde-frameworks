@@ -1,13 +1,13 @@
 #!/bin/sh
 
-VERSION="5.2.0"
+VERSION="5.5.0"
 RELEASE="1"
-CHANGELOG="KDE Frameworks 5.2.0"
+CHANGELOG="KDE Frameworks 5.5.0"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 
 #REMOVE_DGROC_CHANGELOG="TRUE"
 
-URL="http://pub.progdan.cz/pub/kf5/srpm/$VERSION"
+URL="http://pub.dvratil.cz/pub/kf5/srpm/$VERSION"
 
 
 dt=`date +'%a %b %d %Y'`
@@ -34,4 +34,6 @@ for tier in tier{1,2,3,4}; do
     echo "$URL/$fw-$VERSION-$RELEASE.fc20.src.rpm";
   done
 done
+
+echo "Remember to update kf5 and extra-cmake-modules first!"
 

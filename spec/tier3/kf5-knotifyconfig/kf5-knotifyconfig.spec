@@ -2,7 +2,7 @@
 %define framework knotifyconfig
 
 Name:           kf5-%{framework}
-Version:        5.3.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KNotify configuration
 
@@ -79,6 +79,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0
 
