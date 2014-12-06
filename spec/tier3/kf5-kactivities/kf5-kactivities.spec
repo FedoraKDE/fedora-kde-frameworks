@@ -1,4 +1,4 @@
-%define framework kactivities
+%global framework kactivities
 
 %if 0%{?fedora} > 21
 %global build_main_package 1
@@ -12,10 +12,13 @@ Release:        1%{?dist}
 License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 
-# git archive --format=tar --prefix=%{name}-%{version}-%{snapshot}/ \
-#             --remote=git://anongit.kde.org/kactivities.git | \
-# bzip2 -c > ${name}-%{version}-%{snapshot}.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  boost-devel
 
@@ -45,13 +48,11 @@ Provides:       kactivities = %{version}-%{release}
 A KDE Frameworks 5 Tier 3 API for using and interacting with Activities as a
 consumer, application adding information to them or as an activity manager.
 
-
 %package libs
 Summary:        Libraries for KActivities framework
 Requires:       kf5-filesystem
 %description    libs
 %{summary}.
-
 
 %package devel
 Summary:        Developer files for %{name}-libs
@@ -85,9 +86,6 @@ rm -r %{buildroot}%{_kf5_qtplugindir}/*.so
 rm -rf %{buildroot}/%{_kf5_datadir}/kf5/kactivitymanagerd
 %endif
 
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
-
 
 %if 0%{?build_main_package}
 %files
@@ -100,6 +98,9 @@ rm -rf %{buildroot}/%{_kf5_datadir}/kf5/kactivitymanagerd
 %{_kf5_qtplugindir}/*.so
 %{_kf5_datadir}/kf5/kactivitymanagerd/
 %endif
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files libs -f kactivities5_qt.lang
 %if !0%{?build_main_package}
@@ -120,6 +121,9 @@ rm -rf %{buildroot}/%{_kf5_datadir}/kf5/kactivitymanagerd
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

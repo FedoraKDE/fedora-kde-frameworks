@@ -1,5 +1,4 @@
-#%define snapshot 20140205
-%define framework kconfig
+%global framework kconfig
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -8,11 +7,14 @@ Summary:        KDE Frameworks 5 Tier 1 addon with advanced configuration system
 
 License:        GPLv2+ and LGPLv2+ and MIT
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -20,8 +22,8 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
-Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
-Requires:       kf5-kconfig-gui%{?_isa} = %{version}-%{release}
+Requires:       %{name}-core%{?_isa} = %{version}-%{release}
+Requires:       %{name}-gui%{?_isa} = %{version}-%{release}
 
 %description
 KDE Frameworks 5 Tier 1 addon with advanced configuration system made of two
@@ -44,7 +46,7 @@ centralized definition and lock-down (kiosk) support.
 
 %package        gui
 Summary:        GUI part of KConfig framework
-Requires:       kf5-kconfig-core%{?_isa} = %{version}-%{release}
+Requires:       %{name}-core%{?_isa} = %{version}-%{release}
 
 %description    gui
 KConfigGui provides a way to hook widgets to the configuration so that they are
@@ -66,16 +68,12 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kconfig5_qt --with-qt --all-name
 
-%post core -p /sbin/ldconfig
-
-%postun core -p /sbin/ldconfig
-
-%post gui -p /sbin/ldconfig
-
-%postun gui -p /sbin/ldconfig
 
 %files
 %doc COPYING.LIB DESIGN README.md TODO
+
+%post core -p /sbin/ldconfig
+%postun core -p /sbin/ldconfig
 
 %files core -f kconfig5_qt.lang
 %{_kf5_bindir}/kreadconfig5
@@ -83,6 +81,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kconfig_compiler_kf5
 %{_kf5_libdir}/libKF5ConfigCore.so.*
 %{_kf5_libexecdir}/kconf_update
+
+%post gui -p /sbin/ldconfig
+%postun gui -p /sbin/ldconfig
 
 %files gui
 %{_kf5_libdir}/libKF5ConfigGui.so.*
@@ -97,9 +98,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KConfigCore.pri
 %{_kf5_archdatadir}/mkspecs/modules/qt_KConfigGui.pri
 
+
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

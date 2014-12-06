@@ -1,4 +1,4 @@
-%define framework karchive
+%global framework karchive
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -8,7 +8,13 @@ Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 License:        LGPLv2+ and BSD
 URL:            http://www.kde.org
 
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  zlib-devel
 BuildRequires:  bzip2-devel
@@ -47,10 +53,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files
 %doc AUTHORS COPYING COPYING.LIB README.md
@@ -63,9 +68,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5Archive
 %{_kf5_archdatadir}/mkspecs/modules/qt_KArchive.pri
 
+
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

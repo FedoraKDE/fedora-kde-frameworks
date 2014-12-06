@@ -1,5 +1,4 @@
-#%define snapshot 20140205
-%define framework kcoreaddons
+%global framework kcoreaddons
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -8,11 +7,14 @@ Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtC
 
 License:        GPLv2+ and GPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -51,6 +53,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kcoreaddons5_qt --with-qt --all-name
 
+
 %post
 /sbin/ldconfig
 touch --no-create %{_datadir}/mime/packages &> /dev/null || :
@@ -78,9 +81,13 @@ update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 %{_kf5_libdir}/cmake/KF5CoreAddons
 %{_kf5_archdatadir}/mkspecs/modules/qt_KCoreAddons.pri
 
+
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

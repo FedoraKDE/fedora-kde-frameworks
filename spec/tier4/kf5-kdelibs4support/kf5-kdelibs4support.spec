@@ -1,5 +1,4 @@
-%define framework kdelibs4support
-#%define snapshot 20140206
+%global framework kdelibs4support
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -7,11 +6,14 @@ Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        GPLv2+ and LGPLv2+ and BSD
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 BuildRequires:  libSM-devel
@@ -46,14 +48,29 @@ BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
 
-
 Requires:       kf5-filesystem
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 This framework provides code and utilities to ease the transition from kdelibs 4
 to KDE Frameworks 5. This includes CMake macros and C++ classes whose
 functionality has been replaced by code in CMake, Qt and other frameworks.
 
+%package        libs
+Summary:        Runtime libraries for %{name}
+Requires:       %{name} = %{version}-%{release}
+# When the split occured
+Conflicts:      %{name} < 5.4.0-1
+%description    libs
+%{summary}.
+
+%package        doc
+Summary:        Documentation and user manuals for %{name}
+Requires:       %{name} = %{version}-%{release}
+Conflicts:      %{name} < 5.4.0-1
+BuildArch:      noarch
+%description    doc
+%{summary}.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -75,10 +92,10 @@ Requires:       kf5-ktextwidgets-devel
 Requires:       kf5-kunitconversion-devel
 Requires:       kf5-kwindowsystem-devel
 
-
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -98,23 +115,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 %make_install -C %{_target_platform}
-
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%find_lang kdelibs4support5_qt --with-qt --all-name
 
 
-%files
+
+%files -f kdelibs4support5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/kf5-config
 %{_kf5_bindir}/kdebugdialog5
-%{_kf5_libdir}/libKF5KDELibs4Support.so.*
 %{_kf5_libexecdir}/fileshareset
-%{_kf5_qtplugindir}/*.so
-%{_kf5_qtplugindir}/designer/*.so
-%{_kf5_plugindir}/kio/metainfo.so
-%{_kf5_plugindir}/kded/networkstatus.so
-%{_kf5_mandir}/man1/*
 %{_kf5_datadir}/kservices5/*.protocol
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/qimageioplugins/*.desktop
@@ -122,7 +131,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/kded/networkstatus.desktop
 %{_kf5_datadir}/kf5/kdoctools/customization
 %{_kf5_datadir}/kf5/locale/*
-%{_kf5_datadir}/locale/en_US/kf5_entry.desktop
 %{_kf5_datadir}/locale/kf5_all_languages
 %{_kf5_datadir}/kf5/widgets/
 %{_kf5_datadir}/kf5/kssl/ca-bundle.crt
@@ -130,7 +138,22 @@ make %{?_smp_mflags} -C %{_target_platform}
 %config %{_kf5_sysconfdir}/xdg/kdebug.areas
 %config %{_kf5_sysconfdir}/xdg/kdebugrc
 %config %{_kf5_sysconfdir}/xdg/ksslcalist
-%{_kf5_docdir}/HTML/en/kdebugdialog5
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
+%files libs
+%{_kf5_libdir}/libKF5KDELibs4Support.so.*
+%{_kf5_qtplugindir}/*.so
+%{_kf5_qtplugindir}/designer/*.so
+%{_kf5_plugindir}/kio/metainfo.so
+%{_kf5_plugindir}/kded/networkstatus.so
+
+%files doc
+%{_kf5_docdir}/HTML/*/kdebugdialog5
+%{_kf5_mandir}/man1/*
+%{_kf5_mandir}/*/man1/*
+%exclude %{_kf5_mandir}/man1
 
 %files devel
 %{_kf5_libdir}/libKF5KDELibs4Support.so
@@ -142,10 +165,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 
 
-
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+- Create -libs subpackage
+
+* Wed Oct 22 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-3
+- Rebuild against Qt 5.4 (see https://git.reviewboard.kde.org/r/119604 why)
+
+* Fri Oct 10 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-2
+- Rebuild
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

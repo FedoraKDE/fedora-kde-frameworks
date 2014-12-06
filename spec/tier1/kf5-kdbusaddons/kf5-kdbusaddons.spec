@@ -1,5 +1,4 @@
-#%define snapshot 20140205
-%define framework kdbusaddons
+%global framework kdbusaddons
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -8,11 +7,14 @@ Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtD
 
 License:        LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -49,10 +51,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kdbusaddons5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kdbusaddons5_qt.lang
 %doc COPYING.LIB README.md
@@ -66,9 +67,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5DBusAddons
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDBusAddons.pri
 
+
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

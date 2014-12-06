@@ -1,6 +1,4 @@
-#%define snapshot 20140206
-%define framework attica
-
+%global framework attica
 
 Name:           kf5-attica
 Version:        5.5.0
@@ -11,7 +9,13 @@ Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.kde.org
 
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -34,7 +38,6 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %prep
 %setup -q -n %{framework}-%{version}
 
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -42,7 +45,6 @@ pushd %{_target_platform}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
-
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
@@ -68,6 +70,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

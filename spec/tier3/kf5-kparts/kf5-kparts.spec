@@ -1,5 +1,4 @@
-#%define snapshot 20140205
-%define framework kparts
+%global framework kparts
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -8,12 +7,14 @@ Summary:        KDE Frameworks 5 Tier 3 solution for KParts
 
 License:        GPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -36,7 +37,6 @@ Requires:       kf5-filesystem
 %description
 KDE Frameworks 5 Tier 3 solution for KParts
 
-
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
@@ -56,6 +56,7 @@ Requires:       kf5-kxmlgui-devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %prep
 %setup -q -n %{framework}-%{version}
 
@@ -71,10 +72,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kparts5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kparts5_qt.lang
 %doc COPYING.LIB README.md AUTHORS
@@ -92,6 +92,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

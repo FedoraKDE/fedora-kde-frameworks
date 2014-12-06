@@ -1,5 +1,4 @@
-%define framework kapidox
-#%define snapshot 20140206
+%global framework kapidox
 
 Name:           kf5-%{framework}
 Version:        5.5.0
@@ -9,12 +8,14 @@ BuildArch:      noarch
 
 License:        BSD
 URL:            http://download.kde.org/
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -27,6 +28,7 @@ Requires:       kf5-filesystem
 %description
 Scripts and data for building API documentation (dox) in a standard format and
 style.
+
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -42,8 +44,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-%post -p /sbin/ldconfig
 
+%post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
@@ -56,9 +58,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/kgenframeworksapidox
 %{_kf5_bindir}/depdiagram-generate-all
 
+
 %changelog
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0
