@@ -115,6 +115,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
+%{_kf5_datadir}/knotifications5/plasmashell.notifyrc
 %{_kf5_mandir}/man1/plasmapkg2.1.gz
 %{_kf5_plugindir}/kded/platformstatus.so
 

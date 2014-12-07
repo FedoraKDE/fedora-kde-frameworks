@@ -64,6 +64,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Emoticons.so.*
 %{_kf5_plugindir}/emoticonsthemes/*.so
+%{_kf5_plugindir}/KEmoticonsIntegrationPlugin.so
 %{_kf5_datadir}/kservices5/*
 %{_kf5_datadir}/kservicetypes5/*
 %{_kf5_datadir}/emoticons/Glass
