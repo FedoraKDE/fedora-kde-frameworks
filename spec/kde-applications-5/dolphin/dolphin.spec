@@ -34,7 +34,7 @@ BuildRequires:  kf5-baloo-widgets-devel
 
 # plasma-5
 BuildRequires:  kf5-baloo-devel
-BuildRequires:  kf5-kmetadata-devel
+BuildRequires:  kf5-kfilemetadata-devel
 
 Requires:       kf5-filesystem
 Requires:       kio-extras
@@ -48,7 +48,7 @@ Summary:        Dolphin runtime libraries
 %{summary}.
 
 %prep
-%setup -q -n kde-baseapps-%{git_commit}
+%setup -q -n kde-baseapps-%{version}
 
 %build
 
@@ -68,15 +68,16 @@ rm %{buildroot}/%{_libdir}/libdolphinprivate.so
 %files
 %doc COPYING COPYING.DOC COPYING.LIB
 %{_bindir}/dolphin
+%{_libdir}/libkdeinit5_dolphin.so
 %{_bindir}/servicemenuinstallation
 %{_bindir}/servicemenudeinstallation
 %{_kf5_qtplugindir}/dolphinpart.so
 %{_kf5_qtplugindir}/kcm_*.so
-%{_datadir}/dolphinpart/dolphinpart.rc
-%{_datadir}/dolphin
 %{_datadir}/applications/org.kde.dolphin.desktop
 %{_datadir}/appdata/dolphin.appdata.xml
 %{_datadir}/config.kcfg/*.kcfg
+%{_kf5_datadir}/kxmlgui5/dolphinpart
+%{_kf5_datadir}/kxmlgui5/dolphin
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_sysconfdir}/xdg/servicemenu.knsrc
@@ -87,7 +88,6 @@ rm %{buildroot}/%{_libdir}/libdolphinprivate.so
 
 %files libs
 %{_libdir}/libdolphinprivate.so.*
-%{_libdir}/libkdeinit5_dolphin.so
 
 
 %changelog

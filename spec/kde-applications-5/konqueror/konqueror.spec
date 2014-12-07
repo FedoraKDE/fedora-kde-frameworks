@@ -26,6 +26,9 @@ BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:	kf5-kactivities-devel
+
+BuildRequires:	kf5-kded-devel
 
 # Unstable
 BuildRequires:  kf5-konq-devel
@@ -46,7 +49,7 @@ Summary:        Konqueror runtime libraries
 
 
 %prep
-%setup -q -n kde-baseapps-%{git_commit}
+%setup -q -n kde-baseapps-%{version}
 
 %patch0 -p1 -b .stadaloneBuild
 
@@ -62,7 +65,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 %make_install -C %{_target_platform}
 
-rm %{buildroot}/%{_libdir}/libkonquerorprivate.so
 
 %post 
 touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null ||:
@@ -89,13 +91,14 @@ fi
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/useragentstrings
 %{_kf5_datadir}/kservicetypes5/*.desktop
-%{_kf5_datadir}/kcontrol/pic/*.png
+%{_kf5_datadir}/kcontrol/pics/*.png
 %{_datadir}/konqueror
 %{_datadir}/dbus-1/interfaces/*.xml
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_qtplugindir}/kcm_konq.so
 %{_kf5_qtplugindir}/kcm_performance.so
 %{_kf5_qtplugindir}/kcm_kio.so
+%{_kf5_qtplugindir}/konq_aboutpage.so
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
