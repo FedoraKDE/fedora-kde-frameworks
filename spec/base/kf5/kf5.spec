@@ -1,5 +1,5 @@
 Name:           kf5
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
@@ -43,6 +43,21 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 24 2014 Rex Dieter <rdieter@fedoraproject.org> 5.4.0-2
+- macros.kf5: PATH, prepend %%_qt5_bindir instead of %%_kf5_bindir (ie, /usr/bin)
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 14 2014 Rex Dieter <rdieter@fedoraproject.org> 5.3.0-2
+- macros.kf5: -DCMAKE_USE_RELATIVE_PATHS:BOOL=ON
+
+* Wed Oct 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
 

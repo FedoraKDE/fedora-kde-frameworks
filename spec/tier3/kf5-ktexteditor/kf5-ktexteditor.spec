@@ -1,24 +1,26 @@
-%define framework ktexteditor
+%global framework ktexteditor
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 with advanced embeddable text editor
 
 License:        LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-# Source0:        http://download.kde.org/unstable/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
-BuildRequires:	qt5-qtxmlpatterns-devel
+BuildRequires:  qt5-qtxmlpatterns-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel
@@ -49,6 +51,7 @@ Requires:       kf5-kparts-devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %prep
 %setup -q -n %{framework}-%{version}
 
@@ -64,6 +67,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang ktexteditor5_qt --with-qt --all-name
 
+
 %post
 /sbin/ldconfig
 /usr/bin/update-desktop-database &> /dev/null || :
@@ -71,7 +75,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %postun
 /sbin/ldconfig
 /usr/bin/update-desktop-database &> /dev/null || :
-
 
 %files -f ktexteditor5_qt.lang
 %doc COPYING.LIB README.md
@@ -93,8 +96,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

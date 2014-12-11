@@ -15,7 +15,7 @@
 
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
-  PATH="%{_kf5_bindir}:$PATH" ; export PATH ; \
+  PATH="%{_qt5_bindir}:$PATH" ; export PATH ; \
   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
@@ -28,6 +28,7 @@
     -DCMAKE_INSTALL_FULL_BINDIR=%{_kf5_bindir} \\\
     -DCMAKE_INSTALL_FULL_LIBEXECDIR=%{_libexecdir} \\\
     -DCMAKE_INSTALL_FULL_LIBEXECDIR_KF5=%{_kf5_libexecdir} \\\
+    -DCMAKE_USE_RELATIVE_PATHS:BOOL=ON \\\
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
     -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
     -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \\\

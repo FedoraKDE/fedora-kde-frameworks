@@ -1,19 +1,20 @@
-%define framework khtml
-#%define snapshot 20140206
+%global framework khtml
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 solution with KHTML, a HTML rendering engine
 
 License:        LGPLv2+ and GPLv3 and MIT and BSD
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
 
 BuildRequires:  fdupes
 BuildRequires:  giflib-devel
@@ -74,6 +75,7 @@ Requires:       kf5-sonnet-devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %prep
 %setup -q -n %{framework}-%{version}
 
@@ -89,8 +91,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang khtml5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
 
+%post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files -f khtml5_qt.lang
@@ -113,8 +115,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

@@ -1,24 +1,26 @@
-#%define snapshot 20140205
-%define framework kwidgetsaddons
+%global framework kwidgetsaddons
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with various classes on top of QtWidgets
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-devel
-BuildRequires:	qt5-qttools-static
+BuildRequires:  qt5-qttools-static
 
 Requires:       kf5-filesystem
 
@@ -50,16 +52,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kwidgetsaddons5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kwidgetsaddons5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5WidgetsAddons.so.*
 %{_kf5_datadir}/kf5/kcharselect
-
 
 %files devel
 %{_kf5_includedir}/kwidgetsaddons_version.h
@@ -70,8 +70,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
+* Thu Sep 11 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

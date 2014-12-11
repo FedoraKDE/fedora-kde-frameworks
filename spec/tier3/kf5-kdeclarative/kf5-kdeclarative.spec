@@ -1,18 +1,20 @@
-#%define snapshot 20140205
-%define framework kdeclarative
+%global framework kdeclarative
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 License:        GPLv2+ and MIT
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -35,7 +37,6 @@ Requires:       kf5-filesystem
 %description
 KDE Frameworks 5 Tier 3 addon for Qt declarative
 
-
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
@@ -53,6 +54,7 @@ Requires:       kf5-kio-devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %prep
 %setup -q -n %{framework}-%{version}
 
@@ -68,14 +70,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kdeclarative5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kdeclarative5_qt.lang
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Declarative.so.*
+%{_kf5_libdir}/libKF5QuickAddons.so.*
 %{_kf5_qmldir}/org/kde/draganddrop
 %{_kf5_qmldir}/org/kde/kcoreaddons
 %{_kf5_qmldir}/org/kde/kquickcontrols
@@ -84,16 +86,30 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qmldir}/org/kde/kio
 
 %files devel
-%doc
 %{_kf5_includedir}/kdeclarative_version.h
 %{_kf5_includedir}/KDeclarative
 %{_kf5_libdir}/libKF5Declarative.so
+%{_kf5_libdir}/libKF5QuickAddons.so
 %{_kf5_libdir}/cmake/KF5Declarative
 %{_kf5_archdatadir}/mkspecs/modules/qt_KDeclarative.pri
+%{_kf5_archdatadir}/mkspecs/modules/qt_QuickAddons.pri
+
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

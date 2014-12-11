@@ -1,6 +1,8 @@
+%global         plasma_version 5.1.0
+
 Name:           plasma-workspace
-Version:        5.1.1
-Release:        2%{?dist}
+Version:        5.1.0.1
+Release:        10%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -11,7 +13,6 @@ Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{versi
 Source10:       kde
 
 # Patches
-Patch0:         plasma-workspace-kscreen-new-api-port.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -153,9 +154,7 @@ Documentation and user manuals for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
-
-%patch0 -p1 -b .kscreen
+%setup -q -n %{name}-%{plasma_version}
 
 %build
 
@@ -247,11 +246,8 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
-* Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
-- Apply upstream patch to build against new version of KScreen
-
-* Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
-- Plasma 5.1.1
+* Sat Oct 25 2014 Daniel Vr�til <dvratil@redhat.com> - 5.1.0.1-10
+- Rebuild for kde-applications-5 COPR
 
 * Tue Oct 14 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0.1-1
 - Plasma 5.1.0.1

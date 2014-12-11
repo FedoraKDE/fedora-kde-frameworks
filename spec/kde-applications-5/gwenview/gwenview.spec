@@ -48,7 +48,7 @@ Summary:        Gwenview runtime libraries
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{git_commit}
+%setup -q -n %{name}-%{version}
 
 %build
 
@@ -65,15 +65,33 @@ make %{?_smp_mflags} -C %{_target_platform}
 # Avoid -devel package
 rm %{buildroot}/%{_libdir}/libgwenviewlib.so
 
+%post
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null ||:
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null ||:
+update-desktop-database -q &> /dev/null ||:
+
+%postun
+if [ $1 -eq 0 ] ; then
+  touch --no-create %{_datadir}/icons/hicolor &> /dev/null ||:
+  gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null ||:
+  update-desktop-database -q &> /dev/null ||:
+fi
+
 %files
-%doc COPYING COPYING.DOC README AUTHORS
+%doc COPYING COPYING.DOC
 %{_bindir}/gwenview
+%{_kf5_qtplugindir}/gvpart.so
 %{_kf5_datadir}/kxmlgui5/gwenview
 %{_kf5_datadir}/kservices5/ServiceMenus/slideshow.desktop
+%{_kf5_datadir}/kservices5/gvpart.desktop
 %{_datadir}/applications/gwenview.desktop
 %{_datadir}/appdata/gwenview.appdata.xml
 %{_datadir}/gwenview
+%{_datadir}/gvpart
 %{_datadir}/doc/HTML/*/gwenview
+%{_datadir}/icons/hicolor/*/*/*
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig

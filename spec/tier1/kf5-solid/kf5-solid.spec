@@ -1,18 +1,20 @@
-#%define snapshot 20140205
-%define framework solid
+%global framework solid
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 integration module that provides hardware information
 
 License:        LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libupnp-devel
 BuildRequires:  systemd-devel
@@ -25,9 +27,11 @@ BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 
-Provides:       kf5-solid-runtime = %{version}-%{release}
-Provides:       kf5-solid-runtime%{?_isa} = %{version}-%{release}
-Obsoletes:      kf5-solid-runtime < 4.99.0.1
+Provides:       %{name}-runtime = %{version}-%{release}
+Provides:       %{name}-runtime%{?_isa} = %{version}-%{release}
+Obsoletes:      %{name}-runtime < 4.99.0.1
+
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 Solid provides the following features for application developers:
@@ -35,6 +39,13 @@ Solid provides the following features for application developers:
  - Power Management
  - Network Management
 
+%package        libs
+Summary:        Runtime libraries for Solid Framework
+# When the split occured
+Conflicts:      %{name} < 5.4.0-1
+Requires:       %{name} = %{version}-%{release}
+%description    libs
+%{summary}.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -60,16 +71,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang solid5_qt --with-qt --all-name
 
-%post -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
-
-
-%files -f solid5_qt.lang
+%files
 %doc COPYING.LIB README.md TODO
+%{_kf5_bindir}/solid-hardware5
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
+%files libs -f solid5_qt.lang
 %{_kf5_qmldir}/org/kde/solid
 %{_kf5_libdir}/libKF5Solid.so.*
-%{_kf5_bindir}/solid-hardware5
 
 %files devel
 %{_kf5_includedir}/solid_version.h
@@ -78,9 +90,23 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5Solid
 %{_kf5_archdatadir}/mkspecs/modules/qt_Solid.pri
 
+
 %changelog
-* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+- Create -libs subpkg
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
+* Thu Sep 11 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0

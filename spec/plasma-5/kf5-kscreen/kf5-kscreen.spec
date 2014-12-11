@@ -1,8 +1,11 @@
 %global         framework kscreen
 
+%global git_version 1e0ea14
+%global git_date 20141128
+
 Name:           kf5-%{framework}
 Version:        5.1.1
-Release:        1%{?dist}
+Release:        1.%{git_date}git%{git_version}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library with API to control screen settings
 
 Group:          System Environment/Libraries
@@ -15,7 +18,8 @@ URL:            https://www.kde.org
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libkscreen-%{version}.tar.xz
+#Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libkscreen-%{version}.tar.xz
+Source0:        libkscreen-%{git_version}.tar.gz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -62,6 +66,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_plugindir}/kscreen/
 
 
+
 %files devel
 %{_kf5_libdir}/libKF5Screen.so
 %{_kf5_libdir}/cmake/KF5Screen
@@ -71,6 +76,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/kscreen2.pc
 
 %changelog
+* Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-10.20141128git1e0ea14
+- Update to latest git snapshot
+
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
 - Plasma 5.1.1
 

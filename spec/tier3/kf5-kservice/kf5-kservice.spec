@@ -1,18 +1,20 @@
-#%define snapshot 20140205
-%define framework kservice
+%global framework kservice
 
 Name:           kf5-%{framework}
-Version:        5.2.0
+Version:        5.5.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for advanced plugin and service introspection
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -31,7 +33,6 @@ Requires:       kf5-filesystem
 KDE Frameworks 5 Tier 3 solution for advanced plugin and service
 introspection.
 
-
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
@@ -45,6 +46,7 @@ Requires:       kf5-kdoctools-devel
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -63,10 +65,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kservice5_qt.lang
 %doc COPYING COPYING.LIB README.md
@@ -75,6 +76,8 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 %{_kf5_libdir}/libKF5Service.so.*
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_mandir}/man8/*
+%{_kf5_mandir}/*/man8/*
+%exclude %{_kf5_mandir}/man8
 
 %files devel
 %{_kf5_includedir}/kservice_version.h
@@ -85,8 +88,20 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 
 %changelog
+* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+- KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
+
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- KDE Frameworks 5.3.0
+
 * Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
+
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
 * Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
