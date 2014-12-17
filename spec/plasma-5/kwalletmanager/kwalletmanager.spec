@@ -3,8 +3,8 @@
 
 Name:           kwalletmanager
 Summary:        Manage KDE passwords
-Version:        5.0.92
-Release:        3.%{git_date}git%{git_version}%{?dist}
+Version:        5.1.2
+Release:        2%{git_date}git%{git_version}%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/kdeutils/kwalletmanager
@@ -101,6 +101,9 @@ fi
 
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.92-3.20141107git9ef0d8c
 - Plasma 5.1.1
 

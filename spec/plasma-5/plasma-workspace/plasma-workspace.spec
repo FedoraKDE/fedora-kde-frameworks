@@ -1,5 +1,5 @@
 Name:           plasma-workspace
-Version:        5.1.1
+Version:        5.1.2
 Release:        2%{?dist}
 Summary:        Plasma 5 workspace applications and applets
 License:        GPLv2+
@@ -247,6 +247,9 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
 - Apply upstream patch to build against new version of KScreen
 

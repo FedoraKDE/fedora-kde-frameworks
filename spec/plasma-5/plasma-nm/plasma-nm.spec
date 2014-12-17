@@ -1,6 +1,6 @@
 Name:           plasma-nm
-Version:        5.1.1
-Release:        1%{?dist}
+Version:        5.1.2
+Release:        2%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/playground/network/plasma-nm
@@ -13,6 +13,8 @@ Source10: 01-fedora-plasma-nm.js
 ## upstream patches
 #Patch0:   openconnect.patch
 #Patch1:   item-text.patch
+
+Patch0:         plasma-nm-openconnect5-build.patch
 
 BuildRequires:  gettext
 
@@ -143,6 +145,8 @@ Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
 #%patch0 -p1 -b .openconnect
 #%patch1 -p1 -b .item-text
 
+%patch0 -p1 -b .openconnec5
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -185,7 +189,7 @@ gtk-update-icon-cache %{_kde5_iconsdir}/oxygen &> /dev/null || :
 fi
 
 %files -f plasma_applet_org.kde.plasma.networkmanagement.lang -f plasmanetworkmanagement-kded.lang -f kde5-nm-connection-editor.lang -f plasmanetworkmanagement-libs.lang
-%files
+#%files
 # kde-nm-connection-editor
 %{_bindir}/kde5-nm-connection-editor
 %{_libdir}/libplasmanm_internal.so
@@ -242,6 +246,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
 - Plasma 5.1.1
 

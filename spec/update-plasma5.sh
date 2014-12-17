@@ -1,7 +1,7 @@
 #!/bin/sh
 
-VERSION="5.1.1"
-RELEASE="1"
+VERSION="5.1.2"
+RELEASE="2"
 CHANGELOG="Plasma ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 
@@ -24,5 +24,5 @@ for pkg in `/usr/bin/ls -1 plasma-5`; do
   fi
 
   rpmbuild -bs plasma-5/$pkg/$pkg.spec
-  scp $HOME/rpmbuild/SRPMS/$pkg-$VERSION-$RELEASE.fc20.src.rpm dvratil@progdan.cz:~/pub/plasma/srpm/${VERSION}
+  scp $HOME/rpmbuild/SRPMS/$pkg-$VERSION-$RELEASE.fc21.src.rpm dvratil@progdan.cz:~/pub/plasma/srpm/${VERSION}
 done

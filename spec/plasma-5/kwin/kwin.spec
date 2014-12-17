@@ -4,8 +4,8 @@
 %global         wayland 0
 
 Name:           kwin
-Version:        5.1.1
-Release:        3%{?dist}
+Version:        5.1.2
+Release:        2%{?dist}
 Summary:        KDE Window manager
 
 # all sources are effectively GPLv2+, except for:
@@ -206,6 +206,9 @@ fi
 
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Tue Nov 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-3
 - Fixed license
 - Fixed scriptlets

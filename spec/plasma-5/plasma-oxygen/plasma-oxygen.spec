@@ -1,8 +1,8 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.1.1
-Release:        8%{?dist}
+Version:        5.1.2
+Release:        2%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+
@@ -177,6 +177,9 @@ fi
 
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Wed Nov 19 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-8
 - Remove Conflicts kde-style-oxygen from kwin-oxygen
 - Remove Requires themes from qt{4,5}-style-oxygen

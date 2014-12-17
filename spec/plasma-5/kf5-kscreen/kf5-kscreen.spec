@@ -4,8 +4,8 @@
 %global git_date 20141128
 
 Name:           kf5-%{framework}
-Version:        5.1.1
-Release:        1.%{git_date}git%{git_version}%{?dist}
+Version:        5.1.2
+Release:        2%{git_date}git%{git_version}%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 Library with API to control screen settings
 
 Group:          System Environment/Libraries
@@ -76,6 +76,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/pkgconfig/kscreen2.pc
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-10.20141128git1e0ea14
 - Update to latest git snapshot
 

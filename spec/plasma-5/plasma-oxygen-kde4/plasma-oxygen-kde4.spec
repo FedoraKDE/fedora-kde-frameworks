@@ -1,8 +1,8 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}-kde4
-Version:        5.1.1
-Release:        1%{?dist}
+Version:        5.1.2
+Release:        2%{?dist}
 Summary:        KDE 4 version of Plasma 5 Oxgen
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -58,6 +58,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kde4_libdir}/kde4/*.so
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
 - Plasma 5.1.1
 

@@ -1,5 +1,5 @@
 Name:           plasma5
-Version:        5.1.1
+Version:        5.1.2
 Release:        2%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
@@ -47,6 +47,9 @@ Requires:       kscreen
 
 
 %changelog
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- Plasma 5.1.2
+
 * Thu Nov 13 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
 - Adapt to changes in plasma-oxygen packaging
 
