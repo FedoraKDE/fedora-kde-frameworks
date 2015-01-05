@@ -12,6 +12,7 @@ Source10:       kde
 
 # Patches
 Patch0:         plasma-workspace-kscreen-new-api-port.patch
+Patch1:         plasma-workspace-fix-black-screen-on-start.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -156,6 +157,7 @@ Documentation and user manuals for %{name}.
 %setup -q -n %{name}-%{version}
 
 %patch0 -p1 -b .kscreen
+%patch1 -p1 -b .blackscreen
 
 %build
 
@@ -247,7 +249,10 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
-* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+* Mon Jan 05 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+- add upstream patch to fix black screen on start
+
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-1
 - Plasma 5.1.2
 
 * Fri Nov 28 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-2
