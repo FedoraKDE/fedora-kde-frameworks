@@ -1,7 +1,7 @@
 %global framework kio
 
 Name:           kf5-%{framework}
-Version:        5.5.0
+Version:        5.6.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
@@ -180,11 +180,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/ktrash5
 %{_kf5_plugindir}/kio/*.so
 %{_kf5_plugindir}/kded/*.so
+%{_kf5_qtplugindir}/kcm_kio.so
 %{_kf5_qtplugindir}/kcm_trash.so
+%{_kf5_datadir}/kservices5/cache.desktop
+%{_kf5_datadir}/kservices5/cookies.desktop
+%{_kf5_datadir}/kservices5/netpref.desktop
+%{_kf5_datadir}/kservices5/proxy.desktop
+%{_kf5_datadir}/kservices5/smb.desktop
+%{_kf5_datadir}/kservices5/useragent.desktop
 %{_kf5_datadir}/kservices5/*.protocol
 %{_kf5_datadir}/kservices5/http_cache_cleaner.desktop
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservices5/kcmtrash.desktop
+%{_kf5_datadir}/kservices5/useragentstrings
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/knotifications5/proxyscout.*
 %{_kf5_datadir}/kf5/kcookiejar/domain_info
@@ -249,6 +257,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+- KDE Frameworks 5.6.0
+
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 

@@ -1,7 +1,7 @@
 %global framework plasma
 
 Name:           kf5-%{framework}
-Version:        5.5.0
+Version:        5.6.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework is foundation to build a primary user interface
 
@@ -51,6 +51,7 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
 BuildRequires:  kf5-kdnssd-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kpackage-devel
 
 Requires:       kf5-filesystem
 
@@ -76,6 +77,7 @@ Requires:       kf5-kservice-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-kxmlgui-devel
 Requires:       kf5-kdoctools-devel
+Requires:       kf5-kpackage-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -107,8 +109,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_bindir}/plasmapkg2
 %{_kf5_libdir}/libKF5Plasma.so.*
 %{_kf5_libdir}/libKF5PlasmaQuick.so.*
-%{_qt5_prefix}/platformqml/touch/org/kde/plasma
 %{_kf5_qmldir}/org/kde/*
+%{_kf5_qmldir}/QtQuick/Controls/Styles/Plasma
 %{_kf5_qtplugindir}/*.so
 %{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/plasma/
@@ -118,6 +120,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/knotifications5/plasmashell.notifyrc
 %{_kf5_mandir}/man1/plasmapkg2.1.gz
 %{_kf5_plugindir}/kded/platformstatus.so
+
+%lang(lt) %{_datadir}/locale/lt/LC_SCRIPTS/libplasma5/*.js
 
 %files devel
 %{_kf5_libdir}/cmake/KF5Plasma
@@ -130,6 +134,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+- KDE Frameworks 5.6.0
+
 * Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
