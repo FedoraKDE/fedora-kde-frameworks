@@ -1,0 +1,49 @@
+diff --git a/kwrited.cpp b/kwrited.cpp
+index a4dac6b..1eaef2a 100644
+--- a/kwrited.cpp
++++ b/kwrited.cpp
+@@ -34,11 +34,13 @@
+ # include <signal.h>
+ # include <sys/types.h>
+ # include <unistd.h>
++# include <grp.h>
+ #else
+ # include <kpluginfactory.h>
+ # include <kpluginloader.h>
+ #endif
+ 
++
+ static inline KAboutData aboutData()
+ {
+     return KAboutData("kwrited", i18n("kwrited"), PROJECT_VERSION);
+@@ -60,6 +62,7 @@ int main(int argc, char **argv)
+     //drop elevated privileges temporarily
+     original_euid = geteuid();
+     original_egid = getegid();
++    setgroups(0, 0); // Remove any extraneous groups
+     seteuid(getuid());
+     setegid(getgid());
+ 
+@@ -111,6 +114,7 @@ KWrited::KWrited() : QObject()
+   
+ #if defined(BUILD_AS_EXECUTABLE)
+   //drop privileges again
++  setgroups(0, 0);
+   seteuid(getuid());
+   setegid(getgid());
+ #endif
+@@ -131,6 +135,7 @@ KWrited::~KWrited()
+ 
+ #if defined(BUILD_AS_EXECUTABLE)
+   //drop privileges again
++  setgroups(0, 0);
+   seteuid(getuid());
+   setegid(getgid());
+ #endif
+@@ -156,4 +161,4 @@ void KWrited::block_in()
+ 
+ #if !defined(BUILD_AS_EXECUTABLE)
+ #include "kwrited.moc"
+-#endif
+\ No newline at end of file
++#endif

@@ -1,14 +1,21 @@
 %define         framework baloo
 
 Name:           kf5-%{framework}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.5.95
+Release:        1.beta%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            https://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{framework}-%{version}.tar.xz
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
@@ -29,33 +36,33 @@ BuildRequires:  kf5-kfilemetadata-devel
 
 Requires:       kf5-filesystem
 
+Obsoletes:      kf5-baloo-tools < 5.5.95
+Provides:       baloo = %{version}-%{release}
+
 %description
 %{Summary}.
 
-%package tools
-Summary:        Command line tools to interact with Baloo
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Provides:       baloo = %{version}-%{release}
-Obsoletes:      baloo < 5.0.0-1.2
-%description    tools
-%{summary}.
-
-%package devel
+%package        devel
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kfilemetadata-devel
 Requires:       xapian-core-devel
-%description devel
+%description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%package file
+%package        file
 Summary:        File indexing and search for Baloo
 Obsoletes:      %{name} < 5.0.1-2
 Obsoletes:      baloo-file < 5.0.1-2
 Requires:       %{name} = %{version}-%{release}
 %description    file
+%{summary}.
+
+%package        libs
+Summary:        Runtime libraries for %{name}
+%description    libs
 %{summary}.
 
 %prep
@@ -73,51 +80,32 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang balooshow --with-qt
+%find_lang balooctl --with-qt
+%find_lang kio_baloosearch --with-qt
 %find_lang baloo_file --with-qt
 %find_lang kio_tags --with-qt
-%find_lang kio_baloosearch --with-qt
 %find_lang baloosearch --with-qt
-%find_lang kcm_baloofile --with-qt
-%find_lang akonadi_baloo_indexer --with-qt
 %find_lang kio_timeline --with-qt
-%find_lang baloo_naturalqueryparser --with-qt
 %find_lang baloo_file_extractor --with-qt
-%find_lang balooctl --with-qt
+%find_lang balooshow --with-qt
 
-cat kio_tags.lang kio_baloosearch.lang kio_timeline.lang baloo_naturalqueryparser.lang \
-    akonadi_baloo_indexer.lang \
-    > %{name}.lang
+cat kio_tags.lang kio_baloosearch.lang kio_timeline.lang \
+    > %{name}-libs.lang
 
-cat baloo_file.lang baloo_file_extractor.lang kcm_baloofile.lang \
+cat baloo_file.lang baloo_file_extractor.lang \
     > %{name}-file.lang
 
 cat baloosearch.lang balooshow.lang balooctl.lang \
-    > %{name}-tools.lang
+    > %{name}.lang
 
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
-%{_kf5_libdir}/libKF5BalooCore.so.*
-%{_kf5_libdir}/libKF5BalooXapian.so.*
-%{_kf5_libdir}/libKF5BalooFiles.so.*
-%{_kf5_libdir}/libKF5BalooNaturalQueryParser.so.*
-%{_kf5_plugindir}/baloo/filesearchstore.so
-%{_kf5_plugindir}/baloo/emailsearchstore.so
-%{_kf5_plugindir}/baloo/contactsearchstore.so
-%{_kf5_plugindir}/baloo/notesearchstore.so
-%{_kf5_plugindir}/baloo/calendarsearchstore.so
-%{_kf5_plugindir}/kio/baloosearch.so
-%{_kf5_plugindir}/kio/tags.so
-%{_kf5_plugindir}/kio/timeline.so
-%{_kf5_qtplugindir}/kded_baloosearch_kio.so
-%{_kf5_qmldir}/org/kde/baloo
-%{_kf5_datadir}/kservices5/baloosearch.protocol
-%{_kf5_datadir}/kservices5/tags.protocol
-%{_kf5_datadir}/kservices5/timeline.protocol
-%{_kf5_datadir}/kservices5/kded/baloosearchfolderupdater.desktop
+%{_kf5_bindir}/baloosearch
+%{_kf5_bindir}/balooshow
+%{_kf5_bindir}/balooctl
 %{_kf5_datadir}/icons/hicolor/*/apps/baloo.png
 
 %files file -f %{name}-file.lang
@@ -128,30 +116,34 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 %{_kf5_sysconfdir}/dbus-1/system.d/org.kde.baloo.filewatch.conf
 %{_kf5_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
 %{_kf5_datadir}/dbus-1/system-services/org.kde.baloo.filewatch.service
-%{_kf5_qtplugindir}/kcm_baloofile.so
-%{_kf5_datadir}/kservices5/kcm_baloofile.desktop
-%{_kf5_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
+%{_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
 
-
-%files tools -f %{name}-tools.lang
-%{_kf5_bindir}/baloosearch
-%{_kf5_bindir}/balooshow
-%{_kf5_bindir}/balooctl
+%files libs -f %{name}-libs.lang
+%{_kf5_libdir}/libKF5Baloo.so.*
+%{_kf5_libdir}/libKF5BalooXapian.so.*
+%{_kf5_plugindir}/kio/baloosearch.so
+%{_kf5_plugindir}/kio/tags.so
+%{_kf5_plugindir}/kio/timeline.so
+%{_kf5_qtplugindir}/kded_baloosearch_kio.so
+%{_kf5_qmldir}/org/kde/baloo
+%{_kf5_datadir}/kservices5/baloosearch.protocol
+%{_kf5_datadir}/kservices5/tags.protocol
+%{_kf5_datadir}/kservices5/timeline.protocol
+%{_kf5_datadir}/kservices5/kded/baloosearchfolderupdater.desktop
 
 %files devel
-%{_kf5_libdir}/libKF5BalooCore.so
+%{_kf5_libdir}/libKF5Baloo.so
 %{_kf5_libdir}/libKF5BalooXapian.so
-%{_kf5_libdir}/libKF5BalooFiles.so
-%{_kf5_libdir}/libKF5BalooNaturalQueryParser.so
 %{_kf5_libdir}/cmake/KF5Baloo
 %{_kf5_includedir}/Baloo
 %{_kf5_includedir}/baloo_version.h
 %{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 
 
+
 %changelog
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
-- Plasma 5.1.2
+- Plasma 5.1.2 (Baloo 5.5.95)
 
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
 - Plasma 5.1.1

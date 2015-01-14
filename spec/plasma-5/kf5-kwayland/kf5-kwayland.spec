@@ -1,8 +1,8 @@
 %global         framework kwayland
 
 Name:           kf5-%{framework}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Frameworks 5 library that wraps Client and Server Wayland libraries
 
 License:        GPLv2+
@@ -54,7 +54,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %post -p /sbin/ldconfig
 
@@ -63,17 +63,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING.LIB
 %{_kf5_libdir}/libKF5WaylandClient.so.*
-#%{_kf5_libdir}/libKF5WaylandServer.so.*
+%{_kf5_libdir}/libKF5WaylandServer.so.*
 
 %files devel
 %{_kf5_includedir}/KWayland
 %{_kf5_includedir}/kwayland_version.h
 %{_kf5_libdir}/cmake/KF5Wayland
 %{_kf5_libdir}/libKF5WaylandClient.so
-#%{_kf5_libdir}/libKF5WaylandServer.so
+%{_kf5_libdir}/libKF5WaylandServer.so
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

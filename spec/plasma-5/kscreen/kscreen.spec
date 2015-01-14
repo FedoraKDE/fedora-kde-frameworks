@@ -1,10 +1,10 @@
-%global git_version ccf52c4
-%global git_date 20141128
+%global git_version 7a8460a
+%global git_date 20150112
 
 Name:           kscreen
 Epoch:          1
-Version:        5.1.2
-Release:        2%{git_date}git%{git_version}%{?dist}
+Version:        5.1.95
+Release:        2.beta.%{git_date}git%{git_version}%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -24,6 +24,7 @@ BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kf5-kscreen-devel
+
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -60,6 +61,15 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/icons/hicolor/*/actions/*
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta.20150112git7a8460a
+- BR kf5-kscreen-devel (renamed from libkscreen)
+
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta.20150112git7a8460a
+- Update to latest git snapshot
+
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2.20150108git0d70c77
+- Update to latest git snapshot
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

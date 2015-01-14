@@ -1,6 +1,6 @@
 Name:           plasma-workspace-wallpapers
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Wallpapers for Plasma 5
 License:        GPLv2+
 URL:            http://www.kde.org
@@ -28,7 +28,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %post -p /sbin/ldconfig
 
@@ -38,6 +38,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/wallpapers/*
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

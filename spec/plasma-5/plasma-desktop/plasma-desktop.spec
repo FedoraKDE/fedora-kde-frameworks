@@ -1,12 +1,18 @@
 Name:           plasma-desktop
-Version:        5.1.2
-Release:        2%{?dist}
-Summary:        Plasma 5 Desktop
+Version:        5.1.95
+Release:        2.beta%{?dist}
+Summary:        Plasma Desktop shell
 
-License:        GPLv2+
-URL:            http://www.kde.org
+License:        GPLv2+ and (GPLv2 or GPLv3)
+URL:            https://projects.kde.org/projects/kde/workspace/plasma-desktop
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  libusb-devel
 BuildRequires:  fontconfig-devel
@@ -25,6 +31,12 @@ BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  phonon-qt5-devel
 
+# PackageKit-Qt 5 is not avaialble on F20, because PackageKit is
+# too old there and rebuilding it is not viable (too many deps)
+%if 0%{?fedora} >= 21
+BuildRequires:  PackageKit-Qt5-devel
+%endif
+
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-plasma-devel
@@ -39,30 +51,36 @@ BuildRequires:  kf5-attica-devel
 BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-krunner-devel
 BuildRequires:  kf5-ksysguard-devel
+BuildRequires:  kf5-baloo-devel
 
 BuildRequires:  plasma-workspace-devel
 BuildRequires:  kwin-devel
 
+
 # Optional
 BuildRequires:  kf5-kactivities-devel
 BuildRequires:  libcanberra-devel
+BuildRequires:  boost-devel
+BuildRequires:  pulseaudio-libs-devel
 
 BuildRequires:  chrpath
+BuildRequires:  desktop-file-utils
 
 Requires:       plasma-workspace
 Requires:       kf5-filesystem
 
 
 Obsoletes:      kde-workspace < 5.0.0-1
+Obsoletes:      kcm_colors < 5.0.0-1
+Provides:       kcm_colors%{?_isa} = %{version}-%{release}
 
 %description
 %{summary}.
 
 %package        doc
 Summary:        Documentation and user manuals for %{name}
-
 %description    doc
-Documentation and user manuals for %{name}.
+%{summary}.
 
 
 %prep
@@ -78,8 +96,8 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang plasmadesktop5 --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang plasmadesktop5 --with-qt --with-kde --all-name
 
 # No -devel
 rm %{buildroot}/%{_libdir}/libkfontinst{,ui}.so
@@ -87,9 +105,21 @@ rm %{buildroot}/%{_libdir}/libkfontinst{,ui}.so
 # KDM is dead
 rm -r %{buildroot}/%{_datadir}/kdm
 
+%check
+desktop-file-validate %{buildroot}/%{_datadir}/applications/{kfontview,org.kde.knetattach}.desktop
+
 %post -p /sbin/ldconfig
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun -p /sbin/ldconfig
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+fi
+
 
 %files -f plasmadesktop5.lang
 %{_bindir}/kapplymousetheme
@@ -115,7 +145,6 @@ rm -r %{buildroot}/%{_datadir}/kdm
 %{_datadir}/kcminput
 %{_datadir}/color-schemes
 %{_datadir}/kconf_update/*
-%{_datadir}/kthememanager
 %{_datadir}/kdisplay
 %{_datadir}/kcontrol
 %{_datadir}/kcmkeys
@@ -143,14 +172,20 @@ rm -r %{buildroot}/%{_datadir}/kdm
 %{_datadir}/applications/*.desktop
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/dbus-1/system-services/*.service
-%{_datadir}/polkit-1/actions/*.policy
+%{_datadir}/polkit-1/actions/org.kde.fontinst.policy
+%{_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
 
 %files doc
-# %doc COPYING COPYING.DOC COPYING.LIB README README.pam
 %{_datadir}/doc/HTML/en/*
 
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- Obsoletes/Provides kcm_colors
+
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

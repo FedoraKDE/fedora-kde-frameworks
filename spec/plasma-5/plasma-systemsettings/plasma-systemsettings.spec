@@ -1,13 +1,20 @@
 %define         base_name systemsettings
 
 Name:           plasma-%{base_name}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE's System Settings application
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{base_name}-%{version}.tar.xz
+URL:            https://projects.kde.org/projects/kde/workspace/systemsettings
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 
@@ -27,6 +34,8 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
+
+BuildRequires:  desktop-file-utils
 
 Requires:       kf5-filesystem
 
@@ -54,8 +63,13 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang systemsettings5 --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang systemsettings5 --with-qt --with-kde --all-name
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/kdesystemsettings.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/systemsettings.desktop
+
 
 %post -p /sbin/ldconfig
 
@@ -78,6 +92,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/libsystemsettingsview.so
 
 %changelog
+* Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

@@ -1,13 +1,18 @@
 Name:           khotkeys
-Version:        5.1.2
-Release:        2%{?dist}
-Summary:        Application to show KDE Application's documentation
+Version:        5.1.95
+Release:        1.beta%{?dist}
+Summary:        Application to configure hotkeys in KDE
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+URL:            https://projects.kde.org/projects/kde/workspace/khotkeys
 
-Patch0:         khotkeys-kded-install-path.patch
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -29,11 +34,10 @@ BuildRequires:  plasma-workspace-devel
 
 BuildRequires:  libX11-devel
 
-BuildRequires:  chrpath
-
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-workspace < 5.0.0-1
+# TODO: Remove When khotkeys has been split from kde-workspace
+Conflicts:      kde-workspace < 5.0.0-1
 
 %description
 An advanced editor component which is used in numerous KDE applications
@@ -50,8 +54,6 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .kded-install
-
 %build
 
 mkdir -p %{_target_platform}
@@ -62,12 +64,8 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang khotkeys5 --with-qt --all-name
-
-#chrpath --delete %{buildroot}/%{_kde5_plugindir}/kded_khotkeys.so
-#chrpath --delete %{buildroot}/%{_kde5_plugindir}/kcm_hotkeys.so
-#chrpath --delete %{buildroot}/%{_kde5_libdir}/libkhotkeysprivate.so.4.96.0
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang khotkeys5 --with-qt --with-kde --all-name
 
 %post -p /sbin/ldconfig
 
@@ -76,8 +74,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files -f khotkeys5.lang
 %doc COPYING
 %{_kf5_libdir}/libkhotkeysprivate.so.*
-%{_kf5_plugindir}/kded/*.so
-%{_kf5_qtplugindir}/*.so
+%{_kf5_qtplugindir}/kcm_hotkeys.so
+%{_kf5_qtplugindir}/kded_khotkeys.so
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservices5/khotkeys.desktop
 %{_datadir}/khotkeys
@@ -88,6 +86,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libdir}/cmake/KHotKeysDBusInterface
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvraitl@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

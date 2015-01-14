@@ -1,10 +1,10 @@
 Name:           kmenuedit
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE menu editor
 
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/kmenuedit
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -29,10 +29,12 @@ BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
 
+BuildRequires:  desktop-file-utils
+
 Requires:       kf5-filesystem
 
 # TODO: Remove once kmenuedit is split from kde-workspace
-Obsoletes:      kde-workspace < 5.0.0-1
+Conflicts:      kde-workspace < 5.0.0-1
 
 %description
 %{summary}.
@@ -50,25 +52,27 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang kmenuedit5 --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kmenuedit5 --with-qt --with-kde --all-name
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.kmenuedit.desktop
 
 %files -f kmenuedit5.lang
 %doc COPYING COPYING.DOC
 %{_bindir}/kmenuedit
 %{_kf5_libdir}/libkdeinit5_kmenuedit.so
 %{_datadir}/kmenuedit
-%{_datadir}/applications/kmenuedit.desktop
-%{_datadir}/doc/HTML/en/kmenuedit
+%{_datadir}/applications/org.kde.kmenuedit.desktop
 %{_datadir}/icons/hicolor/*/apps/kmenuedit.png
 %{_kf5_datadir}/kxmlgui5/kmenuedit
+%{_datadir}/doc/HTML/en/kmenuedit
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

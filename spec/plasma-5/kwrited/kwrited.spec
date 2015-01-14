@@ -1,10 +1,10 @@
 Name:           kwrited
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Write Daemon
 
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/kwrited
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -13,6 +13,8 @@ URL:            http://www.kde.org
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+
+Patch0:         kwrited-call-setgroups.patch
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -25,14 +27,19 @@ BuildRequires:  kf5-kdelibs4support-devel
 
 Requires:       kf5-filesystem
 
+# Owns /usr/share/knotifications5
+Requires:       kf5-knotifications
+
 # TODO: Remove once kwrited is split from kde-workspace
-Obsoletes:      kde-workspace < 5.0.0-1
+Conflicts:      kde-workspace < 5.0.0-1
 
 %description
 %{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
+
+%patch0 -p1 -b .setgroups
 
 %build
 mkdir -p %{_target_platform}
@@ -43,7 +50,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
 %doc COPYING
@@ -53,6 +60,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
+* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-3
+- missing %%config
+- add patch to call setgroups(0, 0)
+- deps fix
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

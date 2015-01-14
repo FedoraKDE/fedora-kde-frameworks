@@ -1,11 +1,18 @@
 Name:           ksysguard
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Process Management application
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+URL:            https://projects.kde.org/projects/kde/workspace/ksysguard
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -27,7 +34,7 @@ BuildRequires:  lm_sensors-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:     ksysguardd < 5.0.0-1
+Obsoletes:      ksysguardd < 5.0.0-1
 
 %description
 %{summary}.
@@ -45,7 +52,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang ksysguard5 --with-qt --all-name
 
 %post -p /sbin/ldconfig
@@ -60,13 +67,16 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_datadir}/ksysguard
 %config %{_sysconfdir}/xdg/ksysguard.knsrc
 %config %{_sysconfdir}/ksysguarddrc
-%{_datadir}/applications/ksysguard.desktop
+%{_datadir}/applications/org.kde.ksysguard.desktop
 %{_datadir}/doc/HTML/en/ksysguard
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
 %{_kf5_datadir}/kxmlgui5/ksysguard
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

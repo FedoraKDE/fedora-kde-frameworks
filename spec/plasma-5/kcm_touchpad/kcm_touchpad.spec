@@ -1,18 +1,20 @@
-%global         git_date 20141026
-%global         git_commit 2319d35
+%global         modulename kcm-touchpad
 
 Name:           kcm_touchpad
 Summary:        KDE Systemsettings module for touchpads
-Version:        5.1.2
-Release:        2%{git_date}git%{git_commit}%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 
 License:        GPLv2+
-Url:            https://projects.kde.org/kcm-touchpad
+Url:            https://projects.kde.org/projects/kde/workspace/kcm-touchpad
 
-# git archive --format=tar.gz --remote=git://anongit.kde.org/kcm-touchpad.git \
-#             --prefix=kcm-touchpad-%{version} --output=kcm-touchpad-%{git_commit}.tar.gz \
-#             frameworks
-Source0:        kcm-touchpad-%{git_commit}.tar.gz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{modulename}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -101,7 +103,10 @@ fi
 
 
 %changelog
-* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
+- Plasma 5.1.95 Beta
+
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-1
 - Plasma 5.1.2
 
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1

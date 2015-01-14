@@ -1,8 +1,8 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+
@@ -139,6 +139,7 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 %{_kde4_libdir}/kde4/plugins/styles/oxygen.so
 %{_kde4_appsdir}/kstyle/themes/oxygen.themerc
 %{_kde4_bindir}/oxygen-demo
+%{_kde4_bindir}/oxygen-settings
 
 %post -n    qt5-style-oxygen -p /sbin/ldconfig
 %postun -n  qt5-style-oxygen -p /sbin/ldconfig
@@ -154,8 +155,6 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 
 %files -n   kwin-oxygen
 %{_kf5_qtplugindir}/kstyle_oxygen_config.so
-%{_kf5_qtplugindir}/kwin/kdecorations/config/kwin_oxygen_config.so
-%{_kf5_qtplugindir}/kwin/kdecorations/kwin3_oxygen.so
 
 %post -n    oxygen-cursor-themes
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -177,6 +176,9 @@ fi
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

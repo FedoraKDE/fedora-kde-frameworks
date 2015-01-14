@@ -9,14 +9,16 @@ firewall --enabled --service=mdns
 part / --size 4096 --fstype ext4
 services --enabled=NetworkManager --disabled=sshd
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --excludepkgs=sddm --cost=1
-repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/ --excludepkgs=sddm --cost=1
-#repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-#repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
-repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
+#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --excludepkgs=sddm --cost=1
+#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/ --excludepkgs=sddm --cost=1
+repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
+repo --name=kf5-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kf5-next/fedora-$releasever-$basearch/
+repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
 
 
-repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
+#repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
 
 
 %packages
@@ -66,9 +68,6 @@ kde-wallpapers
 
 # When everything else fails, you can always rely on xterm
 xterm
-
-# Until polkit-kde-agent is ready
-lxpolkit
 
 # Drivers for VMs
 xorg-x11-drv-qxl
@@ -231,68 +230,6 @@ Session=plasma.desktop
 [Theme]
 Current=breeze
 SDDM_EOF
-
-# default wallpaper
-# (should not be needed anymore)
-#sed -i 's/defaultWallpaperTheme=Elarun/defaultWallpaperTheme=Next/' /usr/share/plasma/desktoptheme/default/metadata.desktop
-#sed -i 's/defaultWidth=[0-9]*/defaultWidth=1920/' /usr/share/plasma/desktoptheme/default/metadata.desktop
-#sed -i 's/defaultHeight=[0-9]*/defaultHeight=1080/' /usr/share/plasma/desktoptheme/default/metadata.desktop
-
-
-# default configuration of liveuser profile
-# FIXME: This should be read from /usr/share or some other default, like with kde-settings
-
-#mkdir -p /home/liveuser/.config
-#echo "[General]
-#XftHintAlias=true
-#XftHintStyle=hintmedium
-#XftSubPixel=none
-#desktopFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-#fixed=Oxygen Mono,9,-1,5,50,0,0,0,0,0
-#font=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-#menuFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-#smallestReadableFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
-#taskbarFont=Oxygen-Sans,10,-1,5,50,0,0,0,0,0
-#toolBarFont=Oxygen-Sans,8,-1,5,50,0,0,0,0,0
-#" > /home/liveuser/.config/kdeglobals
-
-#echo "#! /bin/sh
-#kcminputrc_mouse_cursortheme=breeze
-#kcminputrc_mouse_cursorsize=''
-#ksplashrc_ksplash_theme=Breeze
-#ksplashrc_ksplash_engine=KSplashQML
-#kcmfonts_general_forcefontdpi=0
-#kdeglobals_locale_language=''
-#klocale_languages=en_US
-#" > /home/liveuser/.config/startupconfig
-
-#echo "#kcminputrc Mouse cursorTheme 'breeze'
-#kcminputrc Mouse cursorSize ''
-#ksplashrc KSplash Theme Breeze
-#ksplashrc KSplash Engine KSplashQML
-#kcmfonts General forceFontDPI 0
-#kdeglobal Locale Language ''
-#" > /home/liveuser/.config/startupconfigkeys
-
-#echo "kcminputrc Mouse cursorTheme 'breeze'
-#!/usr/share/config/kcminputrc
-#*
-#kcminputrc Mouse cursorSize ''
-#!/usr/share/config/kmcinputrc
-#*
-#ksplashrc KSplash Theme Breeze
-#!/usr/share/config/ksplashrc
-#*
-#ksplashrc KSplash Engine KSplashQML
-#!/usr/share/config/ksplashrc
-#*
-#kcmfonts General forceFontDPI 0
-#!/usr/share/config/kcmfonts
-#*
-#kdeglobals Locale Language ''
-#!/usr/share/config/kdeglobals
-#*
-#" > /home/liveuser/.config/startupconfigfiles
 
 # Make the home look super-fancy
 mkdir /home/liveuser/{Desktop,Documents,Downloads,Music,Video}

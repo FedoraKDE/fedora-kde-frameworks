@@ -1,10 +1,10 @@
-%global git_version 9ef0d8c
-%global git_date 20141107
+%global git_version 6b7ca63
+%global git_date 20150114
 
 Name:           kwalletmanager
 Summary:        Manage KDE passwords
-Version:        5.1.2
-Release:        2%{git_date}git%{git_version}%{?dist}
+Version:        5.1.95
+Release:        1.beta.%{git_date}git%{git_version}%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/kdeutils/kwalletmanager
@@ -16,14 +16,14 @@ URL:            https://projects.kde.org/projects/kde/kdeutils/kwalletmanager
 Source0:        kwalletmanager-%{git_version}.tar.gz
 
 # when split occured
-Conflicts: kdeutils-common < 6:4.7.80
+Conflicts:      kdeutils-common < 6:4.7.80
 
-Obsoletes: kdeutils-kwalletmanager < 6:4.7.80
-Provides:  kdeutils-kwalletmanager = 6:%{version}-%{release}
+Obsoletes:      kdeutils-kwalletmanager < 6:4.7.80
+Provides:       kdeutils-kwalletmanager = 6:%{version}-%{release}
 
 # renamed 
-Obsoletes: kwallet < 4.12.3-10
-Provides:  kwallet = %{version}-%{release}
+Obsoletes:      kwallet < 4.12.3-10
+Provides:       kwallet = %{version}-%{release}
 
 
 BuildRequires:  extra-cmake-modules
@@ -43,7 +43,7 @@ BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kdbusaddons-devel
 
-BuildRequires:  polkit-qt-devel
+BuildRequires:  polkit-qt5-devel
 
 Requires:       polkit-qt
 Requires:       polkit-kde
@@ -101,6 +101,9 @@ fi
 
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta.20140114git6b7ca63
+- updated to latest git snapshot
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

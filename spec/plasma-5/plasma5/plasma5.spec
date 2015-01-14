@@ -1,38 +1,60 @@
 Name:           plasma5
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        2.beta%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
 URL:            http://www.kde.org
 
+BuildArch:      noarch
+
 # Nicer name
 Provides:       plasma-5 = %{version}-%{release}
 
-Requires:       plasma-breeze
-Requires:       plasma-breeze-kde4
+
+# Shell
 Requires:       plasma-desktop
 Requires:       plasma-workspace
 Requires:       plasma-workspace-wallpapers
 Requires:       plasma-oxygen
+Requires:       plasma-breeze
+Requires:       breeze-icon-theme
 Requires:       plasma-milou
 Requires:       plasma-nm
+Requires:       kdeplasma-addons
+
+# Configuration
 Requires:       plasma-systemsettings
-Requires:       kwin
-Requires:       kwrited
+Requires:       kcm-gtk
+Requires:       sddm-kcm
+Requires:       kcm-user-manager
+
+# Daemons
 Requires:       powerdevil
+Requires:       kwrited
+Requires:       kf5-baloo
 Requires:       kio-extras
+Requires:       khotkeys
+Requires:       kscreen
+Requires:       ksshaskpass
+Requires:       polkit-kde
+
+# Apps & utils
+Requires:       kwin
+Requires:       khelpcenter
 Requires:       kinfocenter
 Requires:       kmenuedit
 Requires:       kde-cli-tools
-Requires:       khelpcenter
-Requires:       kf5-baloo
-Requires:       khotkeys
 Requires:       ksysguard
 
+# KDE4 compat
+Requires:       kde-style-breeze
+
+
+# Unstable/unreleased apps
 Requires:       kmix
 Requires:       kwalletmanager
-Requires:       kscreen
+
 
 %description
 %{summary}.
@@ -43,10 +65,19 @@ Requires:       kscreen
 
 %install
 
+%check
+
 %files
 
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- kcm-sddm renamed to sddm-kcm
+- Requires: breeze-icon-theme (should be required by plasma-breeze probably)
+
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

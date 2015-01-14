@@ -1,18 +1,23 @@
 Name:           plasma-workspace
-Version:        5.1.2
-Release:        2%{?dist}
-Summary:        Plasma 5 workspace applications and applets
+Version:        5.1.95
+Release:        1.beta%{?dist}
+Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/plasma-workspace
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 # This goes to PAM
 Source10:       kde
 
 # Patches
-Patch0:         plasma-workspace-kscreen-new-api-port.patch
-Patch1:         plasma-workspace-fix-black-screen-on-start.patch
+Patch0:         plasma-workspace-startkde-use-qdbus-qt5.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -71,24 +76,29 @@ BuildRequires:  kf5-kwallet-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-threadweaver-devel
-BuildRequires:	kf5-ktexteditor-devel
+BuildRequires:  kf5-ktexteditor-devel
 BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  kf5-ksysguard-devel
-BuildRequires:  kf5-kscreen-devel
 BuildRequires:  kf5-baloo-devel
+
+BuildRequires:  kf5-kwayland-devel
+BuildRequires:  libwayland-client-devel
+BuildRequires:  libwayland-server-devel
+
+BuildRequires:  libkscreen-devel
 
 BuildRequires:  kwin-devel
 
-# FIXME: Missing kf5-kdepimlibs-umbrella
-
 BuildRequires:  chrpath
+BuildRequires:  desktop-file-utils
 
 # Optional
 BuildRequires:  kf5-kactivities-devel
+
 
 # HACK: Should be kf5-kactivities-runtime, but that conflicts with kactivities,
 # so we requre KDE4 KActivities (it's dbus runtime dep, so no problem)
@@ -107,6 +117,7 @@ Requires:       coreutils
 Requires:       dbus-x11
 Requires:       socat
 Requires:       xmessage
+Requires:       qt5-qttools
 
 Requires:       xorg-x11-utils
 Requires:       xorg-x11-server-utils
@@ -129,10 +140,6 @@ Obsoletes:      kde-workspace < 5.0.0-1
 # There was circular dependency between kde-workspace and -libs, so remove explictly
 # both. This is fixed in latest kde-workspace
 Obsoletes:      kde-workspace-libs < 5.0.0-1
-Obsoletes:      kdeplasma-addons < 5.0.0-1
-# Hmm, really? This is needed for smooth upgrade, but something else should do this,
-# maybe plasma-dsektop?
-Obsoletes:      plasma-scriptengine-python < 5.0.0-1
 
 %description
 Plasma 5 libraries and runtime components
@@ -156,16 +163,15 @@ Documentation and user manuals for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .kscreen
-%patch1 -p1 -b .blackscreen
+%patch0 -p1 -b .startkde
 
 %build
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} .. \
-	-DCMAKE_INSTALL_FULL_LIBEXECDIR=${_libexecdir} \
-	-DCMAKE_INSTALL_FULL_LIBEXECDIR_KF=${_kf5_libexecdir}
+        -DCMAKE_INSTALL_FULL_LIBEXECDIR=${_libexecdir} \
+        -DCMAKE_INSTALL_FULL_LIBEXECDIR_KF=${_kf5_libexecdir}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -175,12 +181,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/phonon_platform/kde.so
 
-# Makes kcheckpass work
+# Make kcheckpass work
 install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %find_lang plasmaworkspace5 --with-qt --all-name
 
-%post -p /sbin/ldconfig
+%check
+desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org.kde.klipper}.desktop
 
+
+%post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files -f plasmaworkspace5.lang
@@ -207,10 +216,12 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %{_datadir}/drkonqi/debuggers/internal/*
 %{_datadir}/drkonqi/mappings
 %{_datadir}/drkonqi/pics/*.png
-%config %{_sysconfdir}/xdg/*.knsrc
-%config %{_sysconfdir}/xdg/autostart/*.desktop
+%{_sysconfdir}/xdg/*.knsrc
+%{_sysconfdir}/xdg/taskmanagerrulesrc
+%{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/desktop-directories/*.directory
 %{_datadir}/dbus-1/services/*.service
+%{_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/*.protocol
 %{_kf5_datadir}/kservices5/kded/*.desktop
@@ -225,7 +236,6 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %config %{_sysconfdir}/pam.d/kde
 
 %files doc
-# %doc COPYING COPYING.DOC COPYING.LIB README README.pam
 %{_datadir}/doc/HTML/en/*
 
 %files devel
@@ -239,7 +249,6 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %{_libdir}/cmake/LibKWorkspace
 %{_libdir}/cmake/LibTaskManager
 %{_libdir}/cmake/ScreenSaverDBusInterface
-%{_datadir}/dbus-1/interfaces/*.xml
 
 # TODO split to subpackages
 # - KCM (?)
@@ -249,6 +258,18 @@ install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 
 
 %changelog
+* Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-5
+- Add upstream patch to make ksyncdbusenv work with dbus-1.8.14
+
+* Fri Jan 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-4
+- Requires: qt5-qttools (for dbus-qt5)
+
+* Wed Jan 07 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-3
+- look for qdbus-qt5 in startkde instead of qdbus
+
 * Mon Jan 05 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - add upstream patch to fix black screen on start
 

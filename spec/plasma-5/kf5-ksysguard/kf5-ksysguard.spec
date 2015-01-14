@@ -2,12 +2,12 @@
 %global         framework ksysguard
 
 Name:           kf5-%{framework}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://www.kde.org/projects/kde/workspace/libksysguard
 
 
 %global revision %(echo %{version} | cut -d. -f3)
@@ -17,8 +17,6 @@ URL:            http://www.kde.org
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libksysguard-%{version}.tar.xz
-
-Patch0:		ksysguard-framework-libs-names.patch
 
 BuildRequires:  zlib-devel
 BuildRequires:  libXres-devel
@@ -39,6 +37,9 @@ BuildRequires:  kf5-knewstuff-devel
 
 Requires:       kf5-filesystem
 
+Obsoletes:      ksysguard-libs%{?_isa} < 5.0.0
+
+
 %description
 KSysGuard library provides API to read and manage processes
 running on the system.
@@ -55,8 +56,6 @@ developing applications that use %{name}.
 %prep
 %setup -q -n libksysguard-%{version}
 
-%patch0 -p1 -b .libsnames
-
 %build
 
 mkdir -p %{_target_platform}
@@ -67,21 +66,19 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang ksysguard_qt5 --with-qt --all-name
 
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f ksysguard_qt5.lang
 %doc COPYING.LIB
-%{_kf5_libdir}/libKF5LsofUi.so.*
-%{_kf5_libdir}/libKF5ProcessUi.so.*
-%{_kf5_libdir}/libKF5ProcessCore.so.*
-%{_kf5_libdir}/libKF5SignalPlotter.so.*
-%{_kf5_libdir}/libKF5SGrd.so.*
+%{_kf5_libdir}/libksgrd.so.*
+%{_kf5_libdir}/liblsofui.so.*
+%{_kf5_libdir}/libprocessui.so.*
+%{_kf5_libdir}/libprocesscore.so.*
+%{_kf5_libdir}/libksignalplotter.so.*
 %{_kf5_datadir}/ksysguard
 %{_sysconfdir}/dbus-1/system.d/org.kde.ksysguard.processlisthelper.conf
 %{_kf5_libexecdir}/kauth/ksysguardprocesslist_helper
@@ -90,14 +87,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files devel
 %{_kf5_includedir}/ksysguard
-%{_kf5_libdir}/libKF5LsofUi.so
-%{_kf5_libdir}/libKF5ProcessUi.so
-%{_kf5_libdir}/libKF5ProcessCore.so
-%{_kf5_libdir}/libKF5SignalPlotter.so
-%{_kf5_libdir}/libKF5SGrd.so
+%{_kf5_libdir}/libksgrd.so
+%{_kf5_libdir}/liblsofui.so
+%{_kf5_libdir}/libprocessui.so
+%{_kf5_libdir}/libprocesscore.so
+%{_kf5_libdir}/libksignalplotter.so
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

@@ -1,8 +1,8 @@
-%global         framework libmm-qt
+%global         framework modemmanager-qt
 
 Name:           kf5-%{framework}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
 Group:          System Environment/Libraries
@@ -15,7 +15,7 @@ URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/libmm-qt-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -24,19 +24,25 @@ BuildRequires:  ModemManager-devel >= 1.0.0
 
 Requires:       kf5-filesystem
 
+Obsoletes:      kf5-libmm-qt%{?_isa} < 5.1.95
+Provides:       kf5-libmm-qt%{?_isa} = %{version}-%{release}
+
+
 %description
 A Qt 5 library for ModemManager
 
-%package devel
-Summary: Development files for %{name}
-Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
-%description devel
+%package        devel
+Summary:        Development files for %{name}
+Group:          Development/Libraries
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Obsoletes:      kf5-libmm-qt-devel < 5.1.95
+Provides:       kf5-libmm-qt-devel = %{version}-%{release}
+%description    devel
 Qt 5 libraries and header files for developing applications
 that use ModemManager.
 
 %prep
-%setup -qn %{framework}-%{version}
+%setup -qn libmm-qt-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -65,6 +71,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

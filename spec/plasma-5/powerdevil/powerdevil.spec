@@ -1,11 +1,18 @@
 Name:           powerdevil
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+URL:            https://projects.kde.org/projects/kde/workspace/powerdevil
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 Patch0:         powerdevil-enable-upower.patch
 
@@ -36,14 +43,11 @@ BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  plasma-workspace-devel
 
-BuildRequires:  chrpath
-
 Requires:       kf5-filesystem
 
-Obsoletes:      kde-workspace < 5.0.0-1
-
 %description
-%{summary}.
+Powerdevil is an utility for powermanagement. It consists
+of a daemon (a KDED module) and a KCModule for its configuration.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -60,8 +64,11 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang powerdevil5 --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang powerdevil5 --with-qt --with-kde --all-name
+
+# Workaround KAuth bug (see https://git.reviewboard.kde.org/r/122029/)
+sed -i "s/\/usr\/\/usr\//\/usr\//" %{buildroot}/%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 
 # Don't bother with -devel
 rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
@@ -88,6 +95,9 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

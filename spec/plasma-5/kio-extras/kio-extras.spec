@@ -1,10 +1,10 @@
 Name:           kio-extras
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
 License:        GPLv2+
-URL:            http://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/kio-extras
 
 
 %global revision %(echo %{version} | cut -d. -f3)
@@ -14,9 +14,6 @@ URL:            http://www.kde.org
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
-
-# https://git.reviewboard.kde.org/r/119081
-Patch0:         kio-extras-install-dirs.patch
 
 BuildRequires:  kf5-rpm-macros
 
@@ -38,6 +35,7 @@ BuildRequires:  kf5-kio-devel >= 5.3.0-1
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-solid-devel
+BuildRequires:  kf5-kpty-devel
 
 BuildRequires:  phonon-qt5-devel
 BuildRequires:  openslp-devel
@@ -64,8 +62,6 @@ Requires:       %{name} = %{version}-%{release}
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .installdirs
-
 %build
 
 mkdir -p %{_target_platform}
@@ -76,12 +72,11 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kioextras5 --with-qt --all-name
 
-# Remove libmolletnetwork.so - we don't have headers for it anyway and having
-# a -devel package just because of this does not make sense
-rm %{buildroot}/%{_libdir}/libmolletnetwork.so
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f kioextras5.lang
 %{_libdir}/libmolletnetwork.so.*
@@ -109,6 +104,9 @@ rm %{buildroot}/%{_libdir}/libmolletnetwork.so
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

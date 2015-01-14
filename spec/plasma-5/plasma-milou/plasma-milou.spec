@@ -1,13 +1,20 @@
 %define         base_name milou
 
 Name:           plasma-%{base_name}
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        A dedicated KDE search application built on top of Baloo
 
 License:        GPLv2+
-URL:            http://www.kde.org
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{base_name}-%{version}.tar.xz
+URL:            https://projects.kde.org/kde/workspace/milou
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
@@ -42,7 +49,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang milou --with-qt --all-name
 
 %post -p /sbin/ldconfig
@@ -55,11 +62,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/plasma-applet-org.kde.milou.desktop
 %{_kf5_datadir}/kservices5/miloutextpreview.desktop
 %{_libdir}/libmilou.so.*
-%{_qt5_prefix}/qml/org/kde/milou
+%{_kf5_qmldir}/org/kde/milou
 %{_datadir}/plasma/plasmoids/org.kde.milou
 
 
 %changelog
+* Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

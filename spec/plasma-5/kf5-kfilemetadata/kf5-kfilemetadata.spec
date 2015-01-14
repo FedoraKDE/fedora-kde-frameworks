@@ -1,12 +1,12 @@
-%global         framework kfilemetadata
+%global framework kfilemetadata
 
 # Enable to build ffmpeg extractor
 %global         ffmpeg  0
 
 Name:           kf5-%{framework}
 Summary:        A Tier 3 KDE Framework for extracting file metadata
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.5.95
+Release:        1.beta%{?dist}
 
 # # KDE e.V. may determine that future LGPL versions are accepted
 License:        LGPLv2 or LGPLv3
@@ -64,25 +64,15 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kfilemetadata5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files
+%files -f kfilemetadata5_qt.lang
 %doc COPYING.LGPL*
 %{_kf5_libdir}/libKF5FileMetaData.so.*
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_epubextractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_exiv2extractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_odfextractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_office2007extractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_officeextractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_plaintextextractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_popplerextractor.so
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_taglibextractor.so
-
-%if 0%{?ffmpeg}
-%{_kf5_plugindir}/kfilemetadata/kfilemetadata_ffmpegextractor.so
-%endif
+%{_kf5_plugindir}/kfilemetadata/kfilemetadata_*.so
 
 %files devel
 %{_kf5_libdir}/libKF5FileMetaData.so
@@ -90,7 +80,10 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KFileMetaData
 
 %changelog
-* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.95-1
+- Plasma 5.1.95 Beta (KFileMetaData 5.5.95)
+ 
+* Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-1
 - Plasma 5.1.2
 
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1

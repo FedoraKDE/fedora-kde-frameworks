@@ -1,10 +1,10 @@
 Name:           khelpcenter
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        2.beta%{?dist}
 Summary:        Application to show KDE Application's documentation
 
-License:        GPLv2+
-URL:            http://www.kde.org
+License:        GPLv2 or GPLv3
+URL:            https://projects.kde.org/projects/kde/workspace/khelpcenter
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -17,8 +17,8 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
 
-BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
+BuildRequires:  kf5-rpm-macros
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kinit-devel
@@ -26,6 +26,11 @@ BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-khtml-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
+
+BuildRequires:  desktop-file-utils
+
+# _kde4_* macros
+BuildRequires:  kde-filesystem
 
 Requires:       kf5-filesystem
 
@@ -35,7 +40,9 @@ Requires:       kf5-filesystem
 %prep
 %setup -q -n %{name}-%{version}
 
+
 %build
+sed -i "s/add_subdirectory( doc )/#add_subdirectory( doc )/" CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -45,12 +52,20 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang khelpcenter5 --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang khelpcenter5 --with-qt --with-kde --all-name
 
-%post -p /sbin/ldconfig
+# Provide khelpcenter service for KDE 3 and KDE 4 applications
+mkdir -p %{buildroot}/%{_kde4_datadir}/services
+cp %{buildroot}/%{_datadir}/kservices5/khelpcenter.desktop \
+   %{buildroot}/%{_kde4_datadir}/services
+mkdir -p %{buildroot}/%{_kde4_datadir}/kde4/services
+cp %{buildroot}/%{_datadir}/kservices5/khelpcenter.desktop \
+   %{buildroot}/%{_kde4_datadir}/kde4/services
 
-%postun -p /sbin/ldconfig
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.Help.desktop
 
 %files -f khelpcenter5.lang
 %doc README.htdig README.metadata COPYING
@@ -63,15 +78,27 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libdir}/libkdeinit5_khelpcenter.so
 %{_kf5_datadir}/khelpcenter
 %{_kf5_datadir}/kxmlgui5/khelpcenter/khelpcenterui.rc
-%{_datadir}/applications/Help.desktop
+%{_datadir}/applications/org.kde.Help.desktop
 %{_datadir}/config.kcfg/khelpcenter.kcfg
 %{_datadir}/kservices5/khelpcenter.desktop
 %{_datadir}/dbus-1/interfaces/org.kde.khelpcenter.kcmhelpcenter.xml
-%{_datadir}/doc/HTML/en/khelpcenter
-%{_datadir}/doc/HTML/en/fundamentals
-%{_datadir}/doc/HTML/en/onlinehelp
+%{_kde4_datadir}/services/khelpcenter.desktop
+%{_kde4_datadir}/kde4/services/khelpcenter.desktop
 
 %changelog
+* Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- Updated tarball
+
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
+* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-3
+- better URL
+- remove unnecessary scriptlets
+- validate desktop files
+- ship service files for KDE 3 and KDE 4
+- fix license
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

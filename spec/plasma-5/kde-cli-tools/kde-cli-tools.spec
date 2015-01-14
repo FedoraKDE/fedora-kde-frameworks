@@ -1,6 +1,6 @@
 Name:           kde-cli-tools
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
 License:        GPLv2+
@@ -31,25 +31,11 @@ BuildRequires:  kf5-kwindowsystem-devel
 
 Requires:       kf5-filesystem
 
+Provides:       kdesu = %{version}-%{release}
+
 %description
 Provides several KDE and Plasma specific command line tools to allow
 better interaction with the system.
-
-%package        devel
-Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
-%package        doc
-Summary:        Documentation and user manuals for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Conflicts:      kde-runtime < 5.0.0-1
-BuildArch:      noarch
-%description    doc
-%{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -63,8 +49,8 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang kdeclitools_qt --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kdeclitools_qt --with-qt --with-kde --all-name
 
 
 %files -f kdeclitools_qt.lang
@@ -83,12 +69,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_libexecdir}/kdeeject
 %{_libexecdir}/kdesu
 %{_kf5_datadir}/kservices5/filetypes.desktop
-
-%files doc
-%{_datadir}/doc/HTML/en/kdesu
 %{_mandir}/man1/kdesu.1.gz
+%{_datadir}/doc/HTML/en/kdesu
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

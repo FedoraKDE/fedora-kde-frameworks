@@ -1,6 +1,6 @@
 Name:           kdeplasma-addons
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        Additional Plasmoids for Plasma 5.
 
 License:        GPLv2+
@@ -21,6 +21,7 @@ Provides:       kdeplasma-addons-libs%{?dist} = %{version}-%{release}
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -36,6 +37,13 @@ BuildRequires:  kf5-krunner-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kunitconversion-devel
 BuildRequires:  kf5-kdelibs4support-devel
+
+
+BuildRequires:  libxcb-devel
+BuildRequires:  xcb-util-keysyms-devel
+
+BuildRequires:  ibus-devel
+BuildRequires:  scim-devel
 
 Requires:       kf5-filesystem
 
@@ -55,7 +63,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kdeplasmaaddons5_qt --with-qt --all-name
 
 %post -p /sbin/ldconfig
@@ -64,6 +72,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files -f kdeplasmaaddons5_qt.lang
 %doc COPYING COPYING.LIB
+%{_libexecdir}/kimpanel-scim-panel
+%{_libexecdir}/kimpanel-ibus-panel
 %{_kf5_datadir}/plasma/plasmoids/*
 %{_kf5_datadir}/plasma/desktoptheme/default/widgets/*.svgz
 %{_kf5_datadir}/plasma/wallpapers/*
@@ -71,10 +81,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
 %{_kf5_qtplugindir}/*.so
 %{_kf5_datadir}/kservices5/*.desktop
+%{_kf5_datadir}/kservices5/kwin/*.desktop
 %{_kf5_qmldir}/org/kde/plasma/*
+%{_datadir}/kwin/desktoptabbox
+%{_datadir}/kwin/tabbox
+%{_datadir}/icons/hicolor/scalable/apps/fifteenpuzzle.svgz
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

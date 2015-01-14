@@ -4,8 +4,8 @@
 %global         wayland 0
 
 Name:           kwin
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Window manager
 
 # all sources are effectively GPLv2+, except for:
@@ -76,6 +76,8 @@ BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-knewstuff-devel
 BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kdoctools-devel
+
+BuildRequires:  kdecoration-devel
 
 # Runtime deps
 Requires:       kf5-filesystem
@@ -154,6 +156,7 @@ fi
 %{_datadir}/kwin
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/kwin
+%{_kf5_qtplugindir}/org.kde.kdecoration2/*.so
 %{_qt5_prefix}/qml/org/kde/kwin
 %{_kf5_libdir}/kconf_update_bin/kwin5_update_default_rules
 %{_libexecdir}/kwin_killer_helper
@@ -183,7 +186,6 @@ fi
 %endif
 %{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
 %{_libdir}/libkwin.so.*
-%{_libdir}/libkdecorations.so.*
 %{_libdir}/libkwinxrenderutils.so.*
 %{_libdir}/libkwineffects.so.*
 %{_libdir}/libkwinglutils.so.*
@@ -191,9 +193,7 @@ fi
 
 %files devel
 %{_libdir}/cmake/KWinDBusInterface
-%{_libdir}/cmake/KDecorations
 %{_datadir}/dbus-1/interfaces/*.xml
-%{_libdir}/libkdecorations.so
 %{_libdir}/libkwinxrenderutils.so
 %{_libdir}/libkwineffects.so
 %{_libdir}/libkwinglutils.so
@@ -206,6 +206,9 @@ fi
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 

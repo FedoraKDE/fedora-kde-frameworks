@@ -1,10 +1,10 @@
 Name:           kinfocenter
-Version:        5.1.2
-Release:        2%{?dist}
+Version:        5.1.95
+Release:        1.beta%{?dist}
 Summary:        KDE Info Center
 
-License:        GPLv2+
-URL:            http://www.kde.org
+License:        GPLv2+ and LGPLv2+
+URL:            https://projects.kde.org/projects/kde/workspace/kinfocenter
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -72,12 +72,8 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang kinfocenter5 --with-qt --all-name
-
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kinfocenter5 --with-qt --with-kde --all-name
 
 %files -f kinfocenter5.lang
 %doc COPYING COPYING.DOC
@@ -85,16 +81,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_qtplugindir}/*.so
 %{_datadir}/kcmview1394
 %{_datadir}/kcmusb
-%{_sysconfdir}/xdg/menus/kinfocenter.menu
-%{_datadir}/applications/kinfocenter.desktop
-%{_datadir}/doc/HTML/en/kinfocenter
+%config %{_sysconfdir}/xdg/menus/kinfocenter.menu
+%{_datadir}/applications/org.kde.kinfocenter.desktop
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_datadir}/desktop-directories/kinfocenter.directory
 %{_kf5_datadir}/kxmlgui5/kinfocenter
+%{_datadir}/doc/HTML/en/kinfocenter
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
+- Plasma 5.1.95 Beta
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
 
