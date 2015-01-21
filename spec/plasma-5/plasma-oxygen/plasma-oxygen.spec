@@ -40,15 +40,17 @@ BuildRequires:  kf5-frameworkintegration-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 # KWin (for window decoration - KWin 5 only)
-BuildRequires:  kwin-devel >= 5.1.0
+BuildRequires:  kwin-devel = %{version}-%{release}
 
 Requires:       kf5-filesystem
 
 Requires:       qt4-style-oxygen = %{version}-%{release}
 Requires:       qt5-style-oxygen = %{version}-%{release}
-Requires:       kwin-oxygen = %{version}-%{release}
 Requires:       oxygen-cursor-themes = %{version}-%{release}
 Requires:       oxygen-sound-theme = %{version}-%{release}
+
+# kwin-oxygen was removed in 5.1.95
+Obsoletes:	kwin-oxygen < 5.1.95-1
 
 %description
 %{summary}.
@@ -66,14 +68,6 @@ Obsoletes:      plasma-oxygen-kde4 < 5.1.1-2
 Summary:        Oxygen widget style for Qt 5
 Obsoletes:      plasma-oxygen < 5.1.1-2
 %description -n qt5-style-oxygen
-%{summary}.
-
-%package -n     kwin-oxygen
-Summary:        Oxygen window decoration plugin for KWin 5
-Obsoletes:      plasma-oxygen < 5.1.1-2
-# Requires KWin 5
-Requires:       kwin%{?_isa} >= 5.0.0
-%description -n kwin-oxygen
 %{summary}.
 
 %package -n     oxygen-cursor-themes
@@ -150,11 +144,9 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 %{_libdir}/liboxygenstyle5.so.*
 %{_libdir}/liboxygenstyleconfig5.so.*
 %{_kf5_qtplugindir}/styles/oxygen.so
+%{_kf5_qtplugindir}/kstyle_oxygen_config.so
 %{_kf5_datadir}/kstyle/themes/oxygen.themerc
 %{_kf5_datadir}/plasma/look-and-feel/org.kde.oxygen/
-
-%files -n   kwin-oxygen
-%{_kf5_qtplugindir}/kstyle_oxygen_config.so
 
 %post -n    oxygen-cursor-themes
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -178,9 +170,13 @@ fi
 %changelog
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
 - Plasma 5.1.95 Beta
+- removed kwin-oxygen subpackage, as Oxygen does not provide KDecoration1-based windecos as of 5.1.95
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2
+
+* Wed Nov 19 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.1.1-9
+- Move kstyle_oxygen_config.so from kwin-oxygen to qt5-style-oxygen
 
 * Wed Nov 19 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-8
 - Remove Conflicts kde-style-oxygen from kwin-oxygen

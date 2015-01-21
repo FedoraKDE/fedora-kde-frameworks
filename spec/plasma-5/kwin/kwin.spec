@@ -110,7 +110,7 @@ Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kservice-devel
 Requires:       kf5-kwindowsystem-devel
-Conflicts:      kde-workspace-devel < 5
+Conflicts:      kde-workspace-devel < 5.0.0-1
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.

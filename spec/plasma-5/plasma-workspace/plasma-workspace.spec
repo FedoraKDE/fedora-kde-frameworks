@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.1.95
-Release:        1.beta%{?dist}
+Release:        3.beta%{?dist}
 Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-workspace
@@ -83,13 +83,12 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  kf5-ksysguard-devel
+BuildRequires:  kf5-kscreen-devel
 BuildRequires:  kf5-baloo-devel
 
 BuildRequires:  kf5-kwayland-devel
-BuildRequires:  libwayland-client-devel
-BuildRequires:  libwayland-server-devel
-
-BuildRequires:  libkscreen-devel
+BuildRequires:  libwayland-client-devel >= 1.3.0
+BuildRequires:  libwayland-server-devel >= 1.3.0
 
 BuildRequires:  kwin-devel
 
@@ -111,6 +110,9 @@ Requires:       qt5-qtquickcontrols
 Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
 Requires:       kf5-baloo
+
+# Without the platformtheme plugins we get broken fonts
+Requires:	kf5-frameworkintegration
 
 # startkde
 Requires:       coreutils
@@ -169,21 +171,19 @@ Documentation and user manuals for %{name}.
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} .. \
-        -DCMAKE_INSTALL_FULL_LIBEXECDIR=${_libexecdir} \
-        -DCMAKE_INSTALL_FULL_LIBEXECDIR_KF=${_kf5_libexecdir}
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/phonon_platform/kde.so
 
 # Make kcheckpass work
 install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
-%find_lang plasmaworkspace5 --with-qt --all-name
+%find_lang plasmaworkspace5 --with-qt --with-kde --all-name
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org.kde.klipper}.desktop
@@ -258,6 +258,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 
 
 %changelog
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-3.beta
+- Requires: kf5-frameworkintegration (provides platformtheme plugin)
+
+* Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- BR: kf5-kscreen-devel (renamed)
+
 * Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 
@@ -267,8 +273,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 * Fri Jan 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-4
 - Requires: qt5-qttools (for dbus-qt5)
 
-* Wed Jan 07 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-3
-- look for qdbus-qt5 in startkde instead of qdbus
+* Wed Jan 07 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.2-3
+- Omit "5" from pkg summary
+  Drop config macro for files installed to /etc/xdg
+  Move /usr/share/dbus-1/interfaces/*.xml stuff to main package
+  Validate .desktop files
+  look for qdbus-qt5 in startkde instead of qdbus
 
 * Mon Jan 05 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - add upstream patch to fix black screen on start

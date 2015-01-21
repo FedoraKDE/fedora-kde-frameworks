@@ -53,8 +53,8 @@ BuildRequires:  kf5-kwayland-devel
 
 Requires:       kf5-filesystem
 
-# TODO: Remove once kinfocenter is split from kde-workspace
-Obsoletes:      kde-workspace < 5.0.0-1
+# When kinfocenter was split out from kde-workspace
+Conflicts:      kde-workspace < 4.11.15-3
 
 %description
 %{summary}.

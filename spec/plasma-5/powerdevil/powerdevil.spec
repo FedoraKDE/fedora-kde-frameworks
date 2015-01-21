@@ -67,9 +67,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang powerdevil5 --with-qt --with-kde --all-name
 
-# Workaround KAuth bug (see https://git.reviewboard.kde.org/r/122029/)
-sed -i "s/\/usr\/\/usr\//\/usr\//" %{buildroot}/%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
-
 # Don't bother with -devel
 rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
@@ -97,6 +94,12 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 %changelog
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
+
+* Mon Jan 05 2014 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
+- Better URL
+  Used make install instead make_install macro
+  Fixed search for localization
+  Dropped unused BR: chrpath
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2

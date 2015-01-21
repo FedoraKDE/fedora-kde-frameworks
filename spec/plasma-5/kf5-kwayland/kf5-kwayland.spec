@@ -1,5 +1,7 @@
 %global         framework kwayland
 
+%global         wayland_min_version 1.3
+
 Name:           kf5-%{framework}
 Version:        5.1.95
 Release:        1.beta%{?dist}
@@ -21,11 +23,11 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 
-BuildRequires:  libwayland-client-devel
-BuildRequires:  libwayland-cursor-devel
-BuildRequires:  libwayland-server-devel
+BuildRequires:  libwayland-client-devel >= %{wayland_min_version}
+BuildRequires:  libwayland-cursor-devel >= %{wayland_min_version}
+BuildRequires:  libwayland-server-devel >= %{wayland_min_version}
 BuildRequires:  mesa-libwayland-egl-devel
-BuildRequires:  wayland-devel
+BuildRequires:  wayland-devel >= %{wayland_min_version}
 
 Requires:       kf5-filesystem
 

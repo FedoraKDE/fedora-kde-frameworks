@@ -33,6 +33,7 @@ BuildRequires:  kf5-baloo-devel
 Requires:       kf5-filesystem
 
 Obsoletes:      kde-plasma-milou < 5.0.0
+Provides:       kde-plasma-milou = %{version}=%{release}
 
 %description
 %{summary}.
@@ -69,6 +70,11 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %changelog
 * Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
+
+* Mon Jan 05 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
+- Better URL
+  Used make install instead of make_install macro
+  Fixed macros
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2

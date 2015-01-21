@@ -54,7 +54,6 @@ developing applications that use %{name}.
 %setup -q -n %{base_name}-%{version}
 
 %build
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
@@ -81,11 +80,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/systemsettings.deskto
 %{_libdir}/libsystemsettingsview.so.*
 %{_kf5_qtplugindir}/*.so
 %{_datadir}/systemsettings
-%{_datadir}/applications/*.desktop
-%{_datadir}/doc/HTML/en/systemsettings
+%{_datadir}/applications/kdesystemsettings.desktop
+%{_datadir}/applications/systemsettings.desktop
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/kxmlgui5/systemsettings
+%{_docdir}/HTML/en/systemsettings
 
 %files devel
 %{_includedir}/systemsettingsview
@@ -94,6 +94,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/systemsettings.deskto
 %changelog
 * Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
+
+* Mon Jan 05 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
+- Better URL
+  Used make install instead of make_install macro
+  Added desktop file validation
+  Fixed search for localization
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2

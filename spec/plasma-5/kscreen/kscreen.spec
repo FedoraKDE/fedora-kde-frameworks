@@ -50,6 +50,19 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
+
+%post
+touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+
+%posttrans
+gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+fi
+
 %files
 %doc COPYING
 %{_bindir}/kscreen-console

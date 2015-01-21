@@ -3,7 +3,7 @@ Version:        5.1.95
 Release:        1.beta%{?dist}
 Summary:        KDE Process Management application
 
-License:        GPLv2+
+License:        GPLv2
 URL:            https://projects.kde.org/projects/kde/workspace/ksysguard
 
 %global revision %(echo %{version} | cut -d. -f3)
@@ -32,6 +32,8 @@ BuildRequires:  kf5-kdoctools-devel
 
 BuildRequires:  lm_sensors-devel
 
+BuildRequires:  desktop-file-utils
+
 Requires:       kf5-filesystem
 
 Obsoletes:      ksysguardd < 5.0.0-1
@@ -53,11 +55,22 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang ksysguard5 --with-qt --all-name
+%find_lang ksysguard5 --with-qt --with-kde --all-name
 
-%post -p /sbin/ldconfig
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.ksysguard.desktop
 
-%postun -p /sbin/ldconfig
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files -f ksysguard5.lang
 %doc COPYING COPYING.DOC README
@@ -68,7 +81,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %config %{_sysconfdir}/xdg/ksysguard.knsrc
 %config %{_sysconfdir}/ksysguarddrc
 %{_datadir}/applications/org.kde.ksysguard.desktop
-%{_datadir}/doc/HTML/en/ksysguard
+%{_docdir}/HTML/en/ksysguard
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
 %{_kf5_datadir}/kxmlgui5/ksysguard
@@ -76,6 +89,12 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %changelog
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
+
+* Mon Jan 05 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
+- Fixed license
+  Used make install instead of make_install macro
+  Removed unnecessary scriptlets and added scriptlets for icon cache
+  Added desktop file validation
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2

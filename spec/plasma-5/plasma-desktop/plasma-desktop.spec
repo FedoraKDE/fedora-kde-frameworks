@@ -1,6 +1,6 @@
 Name:           plasma-desktop
 Version:        5.1.95
-Release:        2.beta%{?dist}
+Release:        3.beta%{?dist}
 Summary:        Plasma Desktop shell
 
 License:        GPLv2+ and (GPLv2 or GPLv3)
@@ -31,8 +31,7 @@ BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  phonon-qt5-devel
 
-# PackageKit-Qt 5 is not avaialble on F20, because PackageKit is
-# too old there and rebuilding it is not viable (too many deps)
+# PackageKit-Qt 5 is not avaialble on F20, because PackageKit is too old there
 %if 0%{?fedora} >= 21
 BuildRequires:  PackageKit-Qt5-devel
 %endif
@@ -69,10 +68,9 @@ BuildRequires:  desktop-file-utils
 Requires:       plasma-workspace
 Requires:       kf5-filesystem
 
-
 Obsoletes:      kde-workspace < 5.0.0-1
 Obsoletes:      kcm_colors < 5.0.0-1
-Provides:       kcm_colors%{?_isa} = %{version}-%{release}
+Provides:       kcm_colors = %{version}-%{release}
 
 %description
 %{summary}.
@@ -105,19 +103,23 @@ rm %{buildroot}/%{_libdir}/libkfontinst{,ui}.so
 # KDM is dead
 rm -r %{buildroot}/%{_datadir}/kdm
 
+
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/{kfontview,org.kde.knetattach}.desktop
 
-%post -p /sbin/ldconfig
+
+%post
+/sbin/ldconfig
 touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
 if [ $1 -eq 0 ] ; then
-touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+    touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+    gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
 
@@ -139,7 +141,6 @@ fi
 %{_kf5_libdir}/kconf_update_bin/*
 %{_libdir}/libkfontinst.so.*
 %{_libdir}/libkfontinstui.so.*
-#%{_libdir}/attica_kde.so
 %{_kf5_qtplugindir}/*.so
 %{_datadir}/plasma/*
 %{_datadir}/kcminput
@@ -149,7 +150,6 @@ fi
 %{_datadir}/kcontrol
 %{_datadir}/kcmkeys
 %{_datadir}/kcm_componentchooser
-#%{_datadir}/kcmlocale
 %{_datadir}/kcm_phonon
 %{_datadir}/kfontinst
 %{_datadir}/kcmkeyboard
@@ -176,7 +176,7 @@ fi
 %{_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
 
 %files doc
-%{_datadir}/doc/HTML/en/*
+%{_docdir}/HTML/en/*
 
 
 %changelog
@@ -185,6 +185,12 @@ fi
 
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
+
+* Wed Jan 07 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.2-3
+- Omit "5" from pkg summary
+  Add icon cache scriptlets
+  Validate application .desktop files
+  Fixed license
 
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
 - Plasma 5.1.2

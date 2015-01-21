@@ -1,11 +1,17 @@
 Name:           plasma-workspace-wallpapers
 Version:        5.1.95
 Release:        1.beta%{?dist}
-Summary:        Wallpapers for Plasma 5
+Summary:        Additional wallpapers for Plasma workspace
 License:        GPLv2+
 URL:            http://www.kde.org
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -14,7 +20,7 @@ BuildRequires:  qt5-qtbase-devel
 Requires:       kf5-filesystem
 
 %description
-Plasma 5 libraries and runtime components
+%{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -30,11 +36,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
 %files
+%doc COPYING
 %{_datadir}/wallpapers/*
 
 %changelog

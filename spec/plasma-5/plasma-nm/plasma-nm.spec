@@ -3,16 +3,18 @@ Version:        5.1.95
 Release:        1.beta%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
-URL:            https://projects.kde.org/projects/playground/network/plasma-nm
+URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm
 
-Source0:        http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 # Add plasma-nm to default systray if needed, for upgraders...
 Source10:        01-fedora-plasma-nm.js
-
-## upstream patches
-#Patch0:   openconnect.patch
-#Patch1:   item-text.patch
 
 BuildRequires:  gettext
 
@@ -58,6 +60,7 @@ Requires:       kf5-filesystem
 Obsoletes:      kde-plasma-networkmanagement < 1:0.9.1.0
 Obsoletes:      kde-plasma-networkmanagement-libs < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm < 5.0.0-1
+Provides:       kde-plasma-nm = %{version}-%{release}
 
 %description
 Plasma applet and editor for managing your network connections in KDE 4 using
@@ -71,68 +74,75 @@ Requires:       mobile-broadband-provider-info
 Requires:       kf5-libmm-qt >= 5.0.0-1
 Obsoletes:      kde-plasma-networkmanagement-mobile < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm-mobile < 5.0.0-1
+Provides:       kde-plasma-nm-mobile = %{version}-%{release}
 %description    mobile
 %{summary}.
 
 %if 0%{?fedora} || 0%{?epel}
 %package        openvpn
 Summary:        OpenVPN support for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-openvpn
 Obsoletes:      kde-plasma-networkmanagement-openvpn < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm-openvpn < 5.0.0-1
+Provides:       kde-plasma-nm-openvpn = %{version}-%{release}
 %description    openvpn
 %{summary}.
 
 %package        vpnc
 Summary:        Vpnc support for %{name} 
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-vpnc
 Obsoletes:      kde-plasma-networkmanagement-vpnc < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm-vpnc < 5.0.0-1
+Provides:       kde-plasma-nm-vpnc = %{version}-%{release}
 %description    vpnc
 %{summary}.
 
 %package        openconnect
 Summary:        OpenConnect support for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-openconnect
 Obsoletes:      kde-plasma-networkmanagement-openconnect < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm-openconnect < 5.0.0-1
-
+Provides:       kde-plasma-nm-openconnect = %{version}-%{release}
 %description    openconnect
 %{summary}.
 
 %package        openswan
-Summary:        Openswan support for %{name} 
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Summary:        Openswan support for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-openswan
 Obsoletes:      kde-plasma-nm-openswan < 5.0.0-1
+Provides:       kde-plasma-nm-openswan = %{version}-%{release}
 %description    openswan
 %{summary}.
 
 %package        strongswan
-Summary:        Strongswan support for %{name} 
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Summary:        Strongswan support for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       strongswan
 Obsoletes:      kde-plasma-nm-strongswan < 5.0.0-1
+Provides:       kde-plasma-nm-strongswan = %{version}-%{release}
 %description    strongswan
 %{summary}.
 
 %package        l2tp
 Summary:        L2TP support for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-l2tp
 Obsoletes:      kde-plasma-nm-l2tp < 5.0.0-1
+Provides:       kde-plasma-nm-l2tp = %{version}-%{release}
 %description    l2tp
 %{summary}.
 
 %package        pptp
-Summary:        PPTP support for %{name} 
-Requires:       %{name}%{?_isa} = %{version}-%{release} 
+Summary:        PPTP support for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-pptp
 Obsoletes:      kde-plasma-networkmanagement-pptp < 1:0.9.1.0
 Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
+Provides:       kde-plasma-nm-pptp = %{version}-%{release}
 %description    pptp
 %{summary}.
 %endif
@@ -167,17 +177,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 # migrate to nm plasmoid
 install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora-plasma-nm.js
 
-%post
-touch --no-create %{_kde5_iconsdir}/oxygen &> /dev/null || :
-
-%posttrans
-gtk-update-icon-cache %{_kde5_iconsdir}/oxygen &> /dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-touch --no-create %{_kde5_iconsdir}/oxygen &> /dev/null || :
-gtk-update-icon-cache %{_kde5_iconsdir}/oxygen &> /dev/null || :
-fi
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f plasma_applet_org.kde.plasma.networkmanagement.lang -f plasmanetworkmanagement-kded.lang -f kde5-nm-connection-editor.lang -f plasmanetworkmanagement-libs.lang
 %{_bindir}/kde5-nm-connection-editor

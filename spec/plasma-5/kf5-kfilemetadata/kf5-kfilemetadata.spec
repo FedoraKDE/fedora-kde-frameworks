@@ -1,10 +1,11 @@
 %global framework kfilemetadata
+%global plasma_version 5.1.95
 
 # Enable to build ffmpeg extractor
 %global         ffmpeg  0
 
 Name:           kf5-%{framework}
-Summary:        A Tier 3 KDE Framework for extracting file metadata
+Summary:        A Tier 2 KDE Framework for extracting file metadata
 Version:        5.5.95
 Release:        1.beta%{?dist}
 
@@ -18,12 +19,11 @@ URL:            https://www.kde.org
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  qt5-qtbase-devel
 

@@ -7,7 +7,7 @@ Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
-URL:            https://projects.kde.org/projects/extragear/libs/libmm-qt
+URL:            https://projects.kde.org/projects/kde/workspace/modemmanager-qt
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -29,7 +29,7 @@ Provides:       kf5-libmm-qt%{?_isa} = %{version}-%{release}
 
 
 %description
-A Qt 5 library for ModemManager
+A Qt 5 library for ModemManager.
 
 %package        devel
 Summary:        Development files for %{name}

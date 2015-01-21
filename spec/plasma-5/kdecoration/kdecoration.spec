@@ -1,7 +1,7 @@
 Name:           kdecoration
 Summary:        A plugin-based libraty to create window decorations
 Version:        5.1.95
-Release:        1.beta%{?dist}
+Release:        2.beta%{?dist}
 
 License:        LGPLv2
 URL:            https://www.kde.org
@@ -36,9 +36,9 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %build
-
-sed -i "s/set(KDECORATION2_INCLUDEDIR \"\${CMAKE_INSTALL_INCLUDEDIR}\/KDecoration2\")//" CMakeLists.txt
-sed -i "s/\${KDECORATION2_INCLUDEDIR}/\${KF5_INCLUDE_INSTALL_DIR}\/KDecoration2/g" src/CMakeLists.txt src/private/CMakeLists.txt
+# Cleanup includes mess, install everything into %%{_kf5_includedir}/KDecoration2
+sed -i "s/set(KDECORATION2_INCLUDEDIR \"\${CMAKE_INSTALL_INCLUDEDIR}\/KDecoration2\")/set(KDECORATION2_INCLUDEDIR \"\${KF5_INCLUDE_INSTALL_DIR}\/KDecoration2\")/" \
+    CMakeLists.txt src/CMakeLists.txt src/private/CMakeLists.txt
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -67,5 +67,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/kdecoration2_version.h
 
 %changelog
-* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
+* Tue Jan 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- improved sed macro
+
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta

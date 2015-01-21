@@ -4,10 +4,8 @@ Name:           kf5-%{framework}
 Version:        5.5.95
 Release:        1.beta%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
-
-Group:          System Environment/Libraries
 License:        LGPLv2+
-URL:            https://www.kde.org
+URL:            https://projects.kde.org/projects/kde/kdelibs/baloo
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -36,7 +34,7 @@ BuildRequires:  kf5-kfilemetadata-devel
 
 Requires:       kf5-filesystem
 
-Obsoletes:      kf5-baloo-tools < 5.5.95
+Obsoletes:      kf5-baloo-tools < 5.5.95-1
 Provides:       baloo = %{version}-%{release}
 
 %description
@@ -46,6 +44,7 @@ Provides:       baloo = %{version}-%{release}
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-file%{?_isa} = %{version}-%{release}
 Requires:       kf5-kfilemetadata-devel
 Requires:       xapian-core-devel
 %description    devel
@@ -99,13 +98,31 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
     > %{name}.lang
 
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post
+touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+
+%posttrans
+gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
+fi
 
 %files -f %{name}.lang
 %{_kf5_bindir}/baloosearch
 %{_kf5_bindir}/balooshow
 %{_kf5_bindir}/balooctl
+%{_kf5_plugindir}/kio/baloosearch.so
+%{_kf5_plugindir}/kio/tags.so
+%{_kf5_plugindir}/kio/timeline.so
+%{_kf5_qtplugindir}/kded_baloosearch_kio.so
+%{_kf5_qmldir}/org/kde/baloo
+%{_kf5_datadir}/kservices5/baloosearch.protocol
+%{_kf5_datadir}/kservices5/tags.protocol
+%{_kf5_datadir}/kservices5/timeline.protocol
+%{_kf5_datadir}/kservices5/kded/baloosearchfolderupdater.desktop
 %{_kf5_datadir}/icons/hicolor/*/apps/baloo.png
 
 %files file -f %{name}-file.lang
@@ -116,20 +133,15 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 %{_kf5_sysconfdir}/dbus-1/system.d/org.kde.baloo.filewatch.conf
 %{_kf5_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
 %{_kf5_datadir}/dbus-1/system-services/org.kde.baloo.filewatch.service
+%{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 %{_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files libs -f %{name}-libs.lang
 %{_kf5_libdir}/libKF5Baloo.so.*
 %{_kf5_libdir}/libKF5BalooXapian.so.*
-%{_kf5_plugindir}/kio/baloosearch.so
-%{_kf5_plugindir}/kio/tags.so
-%{_kf5_plugindir}/kio/timeline.so
-%{_kf5_qtplugindir}/kded_baloosearch_kio.so
-%{_kf5_qmldir}/org/kde/baloo
-%{_kf5_datadir}/kservices5/baloosearch.protocol
-%{_kf5_datadir}/kservices5/tags.protocol
-%{_kf5_datadir}/kservices5/timeline.protocol
-%{_kf5_datadir}/kservices5/kded/baloosearchfolderupdater.desktop
 
 %files devel
 %{_kf5_libdir}/libKF5Baloo.so
@@ -137,13 +149,22 @@ cat baloosearch.lang balooshow.lang balooctl.lang \
 %{_kf5_libdir}/cmake/KF5Baloo
 %{_kf5_includedir}/Baloo
 %{_kf5_includedir}/baloo_version.h
-%{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 
 
 
 %changelog
+* Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.95-1
+- Plasma 5.1.95 (Plasma 5.2 beta) (baloo 5.5.95 to follow KF5)
+- create -libs subpkg
+
+* Wed Jan 07 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.2-3
+- Drop -tools subpkg
+-  Add icon cache scriptlets
+-  Remove deprecated Group: tag
+-  Move org.kde.baloo.file.indexer.xml to -file subpkg
+
 * Wed Dec 17 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.2-2
-- Plasma 5.1.2 (Baloo 5.5.95)
+- Plasma 5.1.2
 
 * Fri Nov 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.1-1
 - Plasma 5.1.1

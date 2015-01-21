@@ -1,6 +1,6 @@
 Name:           kmenuedit
 Version:        5.1.95
-Release:        1.beta%{?dist}
+Release:        2.beta%{?dist}
 Summary:        KDE menu editor
 
 License:        GPLv2+
@@ -58,6 +58,18 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.kmenuedit.desktop
 
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %files -f kmenuedit5.lang
 %doc COPYING COPYING.DOC
 %{_bindir}/kmenuedit
@@ -66,10 +78,13 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.kmenuedit.des
 %{_datadir}/applications/org.kde.kmenuedit.desktop
 %{_datadir}/icons/hicolor/*/apps/kmenuedit.png
 %{_kf5_datadir}/kxmlgui5/kmenuedit
-%{_datadir}/doc/HTML/en/kmenuedit
+%{_docdir}/doc/HTML/en/kmenuedit
 
 
 %changelog
+* Tue Jan 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
+- add icon scriptlets
+
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 
