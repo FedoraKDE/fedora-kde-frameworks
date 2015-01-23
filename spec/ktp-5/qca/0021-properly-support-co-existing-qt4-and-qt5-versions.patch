@@ -1,0 +1,99 @@
+From c32bc6f1bc9befe5f89d3572eb28e0d591a2e3b2 Mon Sep 17 00:00:00 2001
+From: Harald Sitter <sitter@kde.org>
+Date: Sun, 28 Dec 2014 14:26:50 +0100
+Subject: [PATCH 21/22] properly support co-existing qt4 and qt5 versions
+
+- if QT4_BUILD is not defined *and* Qt5Core is found build with soname
+  qca-qt5
+- rename cmake package to reflect the suffix i.e. with a Qt5 build it is
+  find_package(Qca-qt5) rather than find_package(Qca)
+- the imported cmake target also reflects suffix so "Qca-qt5" is the
+  cmake link target for qt5 and "Qca" for qt4 builds
+
+this retains 100% compatibility with regular qca while also offering 100%
+coinstallability of the qt5 build.
+
+REVIEW: 121633
+---
+ CMakeLists.txt     | 15 ++++++++-------
+ QcaConfig.cmake.in |  4 ++--
+ src/CMakeLists.txt |  4 ++--
+ 3 files changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index efab26b..d047cde 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -59,6 +59,7 @@ if (Qt5Core_FOUND)
+   include(GNUInstallDirs)
+   setup_qt5_dirs()
+   set(QCA_QT_PC_VERSION "Qt5Core")
++  set(QCA_SUFFIX "qt5")
+ else()
+   set(QT_MIN_VERSION "4.7.0")
+   set(QT_USE_IMPORTED_TARGETS ON)
+@@ -392,10 +393,10 @@ endif(DOXYGEN_FOUND)
+ include(CMakePackageConfigHelpers)
+ configure_package_config_file(
+   "${CMAKE_CURRENT_SOURCE_DIR}/QcaConfig.cmake.in"
+-  "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/Qca/${QCA_CONFIG_NAME_BASE}Config.cmake"
+-  INSTALL_DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/Qca
++  "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/${QCA_CONFIG_NAME_BASE}/${QCA_CONFIG_NAME_BASE}Config.cmake"
++  INSTALL_DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/${QCA_CONFIG_NAME_BASE}
+ )
+-write_basic_config_version_file("${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/Qca/${QCA_CONFIG_NAME_BASE}ConfigVersion.cmake" VERSION ${QCA_LIB_VERSION_STRING} COMPATIBILITY AnyNewerVersion)
++write_basic_config_version_file("${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/${QCA_CONFIG_NAME_BASE}/${QCA_CONFIG_NAME_BASE}ConfigVersion.cmake" VERSION ${QCA_LIB_VERSION_STRING} COMPATIBILITY AnyNewerVersion)
+ 
+ if(NOT DEVELOPER_MODE)
+ 
+@@ -463,10 +464,10 @@ if(NOT DEVELOPER_MODE)
+     endif()
+   endif()
+ 
+-  install(EXPORT QCATargets DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/Qca FILE ${QCA_CONFIG_NAME_BASE}Targets.cmake)
++  install(EXPORT ${QCA_CONFIG_NAME_BASE}Targets DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/${QCA_CONFIG_NAME_BASE} FILE ${QCA_CONFIG_NAME_BASE}Targets.cmake)
+   install(FILES
+-    "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/Qca/${QCA_CONFIG_NAME_BASE}Config.cmake"
+-    "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/Qca/${QCA_CONFIG_NAME_BASE}ConfigVersion.cmake"
+-    DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/Qca
++    "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/${QCA_CONFIG_NAME_BASE}/${QCA_CONFIG_NAME_BASE}Config.cmake"
++    "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/${QCA_CONFIG_NAME_BASE}/${QCA_CONFIG_NAME_BASE}ConfigVersion.cmake"
++    DESTINATION ${QCA_LIBRARY_INSTALL_DIR}/cmake/${QCA_CONFIG_NAME_BASE}
+     )
+ endif()
+diff --git a/QcaConfig.cmake.in b/QcaConfig.cmake.in
+index 0eea618..24b1737 100644
+--- a/QcaConfig.cmake.in
++++ b/QcaConfig.cmake.in
+@@ -1,7 +1,7 @@
+ @PACKAGE_INIT@
+ 
+-if(NOT TARGET qca)
++if(NOT TARGET @QCA_CONFIG_NAME_BASE@)
+   include("${CMAKE_CURRENT_LIST_DIR}/@QCA_CONFIG_NAME_BASE@Targets.cmake")
+ endif()
+ 
+-set(Qca_LIBRARY qca)
++set(Qca_LIBRARY @QCA_CONFIG_NAME_BASE@)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 861164a..bea7156 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -163,12 +163,12 @@ set_target_properties(${QCA_LIB_NAME} PROPERTIES
+                       DEFINE_SYMBOL QCA_MAKEDLL
+                       PUBLIC_HEADER "${public_HEADERS}"
+                       FRAMEWORK ${OSX_FRAMEWORK}
+-                      EXPORT_NAME qca
++                      EXPORT_NAME ${QCA_LIB_NAME}
+                       )
+ 
+ if(NOT DEVELOPER_MODE)
+   install(TARGETS ${QCA_LIB_NAME}
+-          EXPORT QCATargets
++          EXPORT ${QCA_CONFIG_NAME_BASE}Targets
+           LIBRARY DESTINATION "${QCA_LIBRARY_INSTALL_DIR}"
+           RUNTIME DESTINATION "${QCA_BINARY_INSTALL_DIR}"
+           ARCHIVE DESTINATION "${QCA_LIBRARY_INSTALL_DIR}"
+-- 
+2.1.0
+

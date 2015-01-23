@@ -1,0 +1,32 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 873dd93..778ef69 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,6 +16,7 @@ find_package(TelepathyQt5Farstream REQUIRED)
+ find_package(KTp REQUIRED)
+ find_package(Qt5GStreamer REQUIRED)
+ find_package(PkgConfig REQUIRED)
++find_package(Phonon4Qt5 REQUIRED)
+ 
+ include_directories( ${QTGSTREAMER_INCLUDES} )
+ add_definitions( ${QTGSTREAMER_DEFINITIONS} )
+diff --git a/libktpcall/CMakeLists.txt b/libktpcall/CMakeLists.txt
+index 512c9f1..06c6410 100644
+--- a/libktpcall/CMakeLists.txt
++++ b/libktpcall/CMakeLists.txt
+@@ -4,6 +4,7 @@ pkg_check_modules(FARSTREAM REQUIRED farstream-0.2)
+ include_directories(${CMAKE_CURRENT_BINARY_DIR}
+         ${FARSTREAM_INCLUDE_DIRS}
+         ${TELEPATHY_QT5_INCLUDE_DIR}
++        ${PHONON_INCLUDE_DIR}
+ )
+ 
+ #####
+@@ -31,6 +32,7 @@ target_link_libraries(ktpcall
+     ${TELEPATHY_QT5_LIBRARIES}
+     KF5::KDELibs4Support
+     qtf
++    Phonon::phonon4qt5
+ )
+ 
+ #####

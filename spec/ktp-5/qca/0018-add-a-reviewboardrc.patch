@@ -1,0 +1,24 @@
+From 3b1bb19c7c355d0907c5434f9df7aeadfa749083 Mon Sep 17 00:00:00 2001
+From: Harald Sitter <sitter@kde.org>
+Date: Thu, 18 Dec 2014 12:27:04 +0100
+Subject: [PATCH 18/20] add a reviewboardrc
+
+REVIEW: 121325
+---
+ .reviewboardrc | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 .reviewboardrc
+
+diff --git a/.reviewboardrc b/.reviewboardrc
+new file mode 100644
+index 0000000..7a5cb76
+--- /dev/null
++++ b/.reviewboardrc
+@@ -0,0 +1,4 @@
++REPOSITORY = "git://anongit.kde.org/qca"
++REVIEWBOARD_URL = "https://git.reviewboard.kde.org"
++TARGET_PEOPLE = "iromanov"
++BRANCH = "master"
+-- 
+2.1.0
+

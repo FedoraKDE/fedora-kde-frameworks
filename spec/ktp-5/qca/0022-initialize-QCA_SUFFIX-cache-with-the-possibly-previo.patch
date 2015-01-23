@@ -1,0 +1,28 @@
+From 3e3533b2753c8e47f0d22b77b564a0a6332cd5b8 Mon Sep 17 00:00:00 2001
+From: Harald Sitter <sitter@kde.org>
+Date: Tue, 13 Jan 2015 17:22:06 +0100
+Subject: [PATCH 22/22] initialize QCA_SUFFIX cache with the possibly
+ previously set SUFFIX
+
+this prevents us from unsetting what was previously set, making sure
+the suffix is applied
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d047cde..9f47d3d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -87,7 +87,7 @@ else(NOT BUILD_SHARED_LIBS OR QT_IS_STATIC)
+   set(PLUGIN_TYPE "MODULE")
+ endif(NOT BUILD_SHARED_LIBS OR QT_IS_STATIC)
+ 
+-set(QCA_SUFFIX "" CACHE STRING "QCA common suffix")
++set(QCA_SUFFIX "${QCA_SUFFIX}" CACHE STRING "QCA common suffix")
+ if(QCA_SUFFIX)
+   set(QCA_LIB_NAME qca-${QCA_SUFFIX})
+   set(QCA_TOOL_NAME qcatool-${QCA_SUFFIX})
+-- 
+2.1.0
+

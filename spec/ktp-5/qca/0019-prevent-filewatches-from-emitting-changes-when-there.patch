@@ -1,0 +1,52 @@
+From 4aae2dee34d2f0f6324a9e7819e29310106dc5bb Mon Sep 17 00:00:00 2001
+From: Harald Sitter <sitter@kde.org>
+Date: Fri, 19 Dec 2014 16:47:40 +0100
+Subject: [PATCH 19/20] prevent filewatches from emitting changes when there is
+ no file
+
+(this also fixes the flaky filewatch test that would fail for example on
+ ubuntu launchpad builds)
+
+it can happen that (supposedly for filesystem reasons) there are two
+changes signals arriving in the watcher code, by the time the first arrives
+the file would however already be deleted, by the time the second arrives
+it would thus notify of changes to a file that does not exist which is
+silly and causes problems with the filewatchtest as it uses signal emission
+counting to verify the behavior.
+to prevent this problem from popping up there is an additional save guard
+in the file_changed slot that will ignore a change if the path in question
+doesn't exist AND there is no file being watched by the watcher.
+
+REVIEW: 121588
+---
+ src/support/dirwatch.cpp | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/support/dirwatch.cpp b/src/support/dirwatch.cpp
+index e8b2c38..ad47bfc 100644
+--- a/src/support/dirwatch.cpp
++++ b/src/support/dirwatch.cpp
+@@ -210,8 +210,19 @@ private slots:
+ 	{
+ 		Q_UNUSED(path);
+ 		QFileInfo fi(filePath);
+-		if(!fi.exists())
++		if (!fi.exists() && !fileExisted) {
++			// Got a file changed signal on a file that does not exist
++			// and is not actively watched. This happens when we
++			// previously watched a file but it was deleted and after
++			// the original deletion changed-signal we get another one
++			// (for example because of bad signal timing). In this scenario
++			// we must ignore the change as the change, whatever it may
++			// have been, is of no interest to us because we don't watch
++			// the file and furthermore the file does not even exist.
++			return;
++		} else if (!fi.exists()) {
+ 			fileExisted = false;
++		};
+ 		emit q->changed();
+ 	}
+ };
+-- 
+2.1.0
+

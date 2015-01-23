@@ -1,0 +1,67 @@
+From ffc53703adc7e327b3110da9b2cd04f7c5dc2c8a Mon Sep 17 00:00:00 2001
+From: Harald Sitter <sitter@kde.org>
+Date: Mon, 22 Dec 2014 12:50:18 +0100
+Subject: [PATCH 20/20] put headers of a suffixed build in a suffixed directory
+
+this makes the headers co-installable between a suffixed and regular
+version
+
+reviewed as part of r121323
+---
+ CMakeLists.txt     | 18 ++++++++++++++----
+ src/CMakeLists.txt |  3 ++-
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c79c63f..efab26b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -164,8 +164,13 @@ if( QCA_INSTALL_IN_QT_PREFIX )
+   set(QCA_BINARY_INSTALL_DIR "${QT_BINARY_DIR}" CACHE PATH "Directory where qca plugins will install")
+   set(QCA_LIBRARY_INSTALL_DIR "${QT_LIBRARY_DIR}" CACHE PATH "Directory where qca library will install")
+   set(QCA_FEATURE_INSTALL_DIR "${QT_MKSPECS_DIR}/features" CACHE PATH "Directory where qca feature file will install")
+-  set(QCA_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}" CACHE PATH "Directory where qca public headers will install")
+-  set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}" CACHE PATH "Directory where qca headers will install")
++  if(NOT QCA_SUFFIX)
++    set(QCA_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}" CACHE PATH "Directory where qca public headers will install")
++    set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}" CACHE PATH "Directory where qca headers will install")
++  else()
++    set(QCA_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}/${QCA_CONFIG_NAME_BASE}" CACHE PATH "Directory where qca public headers will install")
++    set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${QT_HEADERS_DIR}/${QCA_CONFIG_NAME_BASE}" CACHE PATH "Directory where qca headers will install")
++  endif()
+   set(QCA_DOC_INSTALL_DIR "${QT_DOC_DIR}/html/qca/" CACHE PATH "Directory where qca documentation will install")
+   set(QCA_MAN_INSTALL_DIR "${QT_DATA_DIR}/man" CACHE PATH "Directory where qca man pages will install")
+ else( QCA_INSTALL_IN_QT_PREFIX )
+@@ -179,8 +184,13 @@ else( QCA_INSTALL_IN_QT_PREFIX )
+   set(QCA_BINARY_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Directory where qca plugins will install")
+   set(QCA_LIBRARY_INSTALL_DIR "${LIB_INSTALL_DIR}" CACHE PATH "Directory where qca library will install")
+   set(QCA_FEATURE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/mkspecs/features" CACHE PATH "Directory where qca feature file will install")
+-  set(QCA_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Directory where qca public headers will install")
+-  set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Directory where qca headers will install")
++  if(NOT QCA_SUFFIX)
++    set(QCA_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Directory where qca public headers will install")
++    set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Directory where qca headers will install")
++  else()
++    set(QCA_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/${QCA_CONFIG_NAME_BASE}" CACHE PATH "Directory where qca public headers will install")
++    set(QCA_PRIVATE_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/${QCA_CONFIG_NAME_BASE}" CACHE PATH "Directory where qca headers will install")
++  endif()
+   set(QCA_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${QCA_LIB_NAME}/html" CACHE PATH "Directory where qca documentation will install")
+   set(QCA_MAN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Directory where qca man pages will install")
+ endif( QCA_INSTALL_IN_QT_PREFIX )
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index bb415a9..861164a 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -173,7 +173,8 @@ if(NOT DEVELOPER_MODE)
+           RUNTIME DESTINATION "${QCA_BINARY_INSTALL_DIR}"
+           ARCHIVE DESTINATION "${QCA_LIBRARY_INSTALL_DIR}"
+           FRAMEWORK DESTINATION "${QCA_LIBRARY_INSTALL_DIR}"
+-          PUBLIC_HEADER DESTINATION "${QCA_INCLUDE_INSTALL_DIR}/QtCrypto" INCLUDES DESTINATION "${QCA_INCLUDE_INSTALL_DIR}/QtCrypto"
++          PUBLIC_HEADER DESTINATION "${QCA_INCLUDE_INSTALL_DIR}/QtCrypto"
++          INCLUDES DESTINATION "${QCA_INCLUDE_INSTALL_DIR}/QtCrypto"
+           )
+ 
+   install_pdb(${QCA_LIB_NAME} ${QCA_BINARY_INSTALL_DIR})
+-- 
+2.1.0
+
