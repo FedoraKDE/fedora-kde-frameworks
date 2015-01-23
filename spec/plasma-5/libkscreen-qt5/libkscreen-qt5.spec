@@ -1,28 +1,28 @@
-%global git_version  4c5da6e
-%global git_date     20150112
+#%global git_version  4c5da6e
+#%global git_date     20150112
 
-Name:           kf5-kscreen
-Epoch:          1
+%global base_name    libkscreen
+
+Name:           libkscreen-qt5
 Version:        5.1.95
-Release:        2.beta.%{git_date}git%{git_version}%{?dist}
-Summary:        Display configuration library
+Release:        1.beta%{?dist}
+Summary:        KDE display configuration library
 
 License:        GPLv2+
-URL:            https://projects.kde.org/projects/extragear/libs/libkscreen
+URL:            https://projects.kde.org/projects/kde/workspace/libkscreen
 
 
-#Source0:        http://download.kde.org/stable/libkscreen/%{version}/src/libkscreen-%{version}.tar.xz
 # git archive --format=tar.gz --remote=git://anongit.kde.org/libkscreen.git \
-#             --prefix=libkscreen-%{version}/ --output=libkscreen-%{git_version}.tar.gz %{git_version}
-Source0:        libkscreen-%{git_version}.tar.gz
+#             --prefix=libkscreen-%%{version}/ --output=libkscreen-qt5-%%{git_version}.tar.gz %%{git_version}
+#Source0:        libkscreen-%{git_version}.tar.gz
 
-#%global revision %(echo %{version} | cut -d. -f3)
-#%if %{revision} >= 50
-#%global stable unstable
-#%else
-#%global stable stable
-#%endif
-#Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 ## upstreamable patches
 ## upstream patches
@@ -39,9 +39,10 @@ BuildRequires:  extra-cmake-modules
 
 Requires:       kf5-filesystem
 
-Provides:       libkscreen%{?_isa} = %{epoch}:%{version}-%{release}
-Provides:       libkscreen = %{epoch}:%{version}-%{release}
-Obsoletes:      libkscreen%{?_isa} = 1:5.1.95-1
+Provides:       kf5-kscreen%{?_isa} = %{version}-%{release}
+Provides:       kf5-kscreen = %{version}-%{release}
+Obsoletes:      kf5-kscreen%{?_isa} <= 1:5.1.95-2.beta
+
 
 %description
 LibKScreen is a library that provides access to current configuration
@@ -50,9 +51,9 @@ of connected displays and ways to change the configuration.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Provides:       libkscreen-devel = %{epoch}:%{version}-%{release}
-Provides:       libkscreen-devel%{?_isa} = %{epoch}:%{version}-%{release}
-Obsoletes:      libkscreen-devel%{?_isa} = 1:5.1.95-1
+Provides:       kf5-kscreen-devel = %{epoch}:%{version}-%{release}
+Provides:       kf5-kscreen-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Obsoletes:      kf5-kscreen-devel%{?_isa} = 1:5.1.95-1
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -60,7 +61,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n libkscreen-%{version}
+%setup -q -n %{base_name}-%{version}
 
 
 %build
