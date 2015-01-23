@@ -4,8 +4,8 @@
 %global base_name    libkscreen
 
 Name:           libkscreen-qt5
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        2%{?dist}
 Summary:        KDE display configuration library
 
 License:        GPLv2+
@@ -50,9 +50,9 @@ of connected displays and ways to change the configuration.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Provides:       kf5-kscreen-devel = %{epoch}:%{version}-%{release}
-Provides:       kf5-kscreen-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       kf5-kscreen-devel = %{version}-%{release}
+Provides:       kf5-kscreen-devel%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-kscreen-devel%{?_isa} = 1:5.1.95-1
 
 %description    devel
@@ -96,6 +96,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- rename to libkscreen-qt5, fix Requries
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> 1:5.1.95-2
 - rename back to kf5-kscreen to avoid conflict with libkscreen(4)
 

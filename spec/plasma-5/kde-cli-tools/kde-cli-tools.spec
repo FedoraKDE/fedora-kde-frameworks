@@ -1,6 +1,6 @@
 Name:           kde-cli-tools
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
 License:        GPLv2+ and LGPLv2+
@@ -70,7 +70,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_libexecdir}/kdesu
 %{_kf5_datadir}/kservices5/filetypes.desktop
 %{_mandir}/man1/kdesu.1.gz
-%{_docdir}c/HTML/en/kdesu
+%{_docdir}/HTML/en/kdesu
 
 %changelog
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta

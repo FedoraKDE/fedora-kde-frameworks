@@ -3,8 +3,8 @@
 
 Name:           kwalletmanager
 Summary:        Manage KDE passwords
-Version:        5.1.95
-Release:        1.beta.%{git_date}git%{git_version}%{?dist}
+Version:        5.2.0
+Release:        1%{git_date}git%{git_version}%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/kdeutils/kwalletmanager

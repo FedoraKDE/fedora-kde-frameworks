@@ -1,8 +1,8 @@
 %define         base_name milou
 
 Name:           plasma-%{base_name}
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        A dedicated KDE search application built on top of Baloo
 
 License:        GPLv2+
@@ -33,7 +33,7 @@ BuildRequires:  kf5-baloo-devel
 Requires:       kf5-filesystem
 
 Obsoletes:      kde-plasma-milou < 5.0.0
-Provides:       kde-plasma-milou = %{version}=%{release}
+Provides:       kde-plasma-milou = %{version}-%{release}
 
 %description
 %{summary}.

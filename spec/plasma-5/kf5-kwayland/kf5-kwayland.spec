@@ -3,8 +3,8 @@
 %global         wayland_min_version 1.3
 
 Name:           kf5-%{framework}
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 library that wraps Client and Server Wayland libraries
 
 License:        GPLv2+

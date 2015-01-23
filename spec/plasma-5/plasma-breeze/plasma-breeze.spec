@@ -3,8 +3,8 @@
 %global         build_kde4  1
 
 Name:           plasma-breeze
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
 License:        GPLv2+

@@ -1,6 +1,6 @@
 Name:           kinfocenter
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE Info Center
 
 License:        GPLv2+ and LGPLv2+

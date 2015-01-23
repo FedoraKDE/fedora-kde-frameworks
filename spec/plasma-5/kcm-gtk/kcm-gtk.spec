@@ -1,7 +1,7 @@
 Name:           kcm-gtk
 Summary:        Configure the appearance of GTK apps in KDE 
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/kde-gtk-config

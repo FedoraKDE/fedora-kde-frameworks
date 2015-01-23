@@ -1,6 +1,6 @@
 Name:           kmenuedit
-Version:        5.1.95
-Release:        2.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE menu editor
 
 License:        GPLv2+
@@ -78,7 +78,7 @@ fi
 %{_datadir}/applications/org.kde.kmenuedit.desktop
 %{_datadir}/icons/hicolor/*/apps/kmenuedit.png
 %{_kf5_datadir}/kxmlgui5/kmenuedit
-%{_docdir}/doc/HTML/en/kmenuedit
+%{_docdir}/HTML/en/kmenuedit
 
 
 %changelog

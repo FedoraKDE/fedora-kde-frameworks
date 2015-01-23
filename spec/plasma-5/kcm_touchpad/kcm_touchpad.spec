@@ -2,8 +2,8 @@
 
 Name:           kcm_touchpad
 Summary:        KDE Systemsettings module for touchpads
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 
 License:        GPLv2+
 Url:            https://projects.kde.org/projects/kde/workspace/kcm-touchpad

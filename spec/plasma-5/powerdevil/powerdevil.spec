@@ -1,6 +1,6 @@
 Name:           powerdevil
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
@@ -95,7 +95,7 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 
-* Mon Jan 05 2014 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
+* Mon Jan 05 2015 Jan Grulich <jgrulich@redhat.com> - 5.1.1-2
 - Better URL
   Used make install instead make_install macro
   Fixed search for localization

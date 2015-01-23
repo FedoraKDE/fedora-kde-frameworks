@@ -1,5 +1,5 @@
 Name:           ksshaskpass
-Version:        5.1.95
+Version:        5.2.0
 Release:        1%{?dist}
 Summary:        A KDE version of ssh-askpass with KWallet support
 
@@ -46,7 +46,7 @@ make %{?_smp_mflags}  -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot}  -C %{_target_platform}
-
+%find_lang %{name} --with-qt --with-kde
 
 # Setup environment variables
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/kde/env/
@@ -63,7 +63,7 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 desktop-file-validate %{buildroot}/%{_datadir}/applications/org.kde.ksshaskpass.desktop
 
 
-%files
+%files -f %{name}.lang
 %doc ChangeLog COPYING README
 %{_bindir}/ksshaskpass
 %config(noreplace) %{_sysconfdir}/kde/env/ksshaskpass.*

@@ -2,8 +2,8 @@
 %global         framework ksysguard
 
 Name:           kf5-%{framework}
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for process management
 
 License:        GPLv2+

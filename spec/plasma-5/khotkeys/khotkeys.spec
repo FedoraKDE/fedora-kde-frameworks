@@ -1,6 +1,6 @@
 Name:           khotkeys
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Application to configure hotkeys in KDE
 
 License:        GPLv2+

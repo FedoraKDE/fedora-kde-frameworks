@@ -1,6 +1,6 @@
 Name:           plasma-nm
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm

@@ -1,21 +1,20 @@
-%global git_version 7a8460a
-%global git_date 20150112
+#%global git_version 7a8460a
+#%global git_date 20150112
 
 Name:           kscreen
 Epoch:          1
-Version:        5.1.95
-Release:        2.beta.%{git_date}git%{git_version}%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
 License:        GPLv2 or GPLv3
 URL:            https://projects.kde.org/projects/playground/base/kscreen
 
-#Source0:        http://download.kde.org/stable/kscreen/%{version}/src/kscreen-%{version}.tar.xz
+Source0:        http://download.kde.org/stable/kscreen/%{version}/src/kscreen-%{version}.tar.xz
 # git archive --format=tar.gz --prefix=kscreen-%{version}/ --remote=git://anongit.kde.org/kscreen \
 #             --output=kscreen-%{git_version}.tar.gz %{git_version}
-
-Source0:        kscreen-%{git_version}.tar.gz
+#Source0:        kscreen-%{git_version}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros

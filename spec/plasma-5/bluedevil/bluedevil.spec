@@ -1,7 +1,7 @@
 Name:           bluedevil
 Summary:        Bluetooth stack for KDE
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/extragear/base/bluedevil
@@ -57,7 +57,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-
+%find_lang %{name} --with-qt --with-kde
 
 %check
 # FIXME: .desktop files need some mime/Categories love to validate properly -- Rex
@@ -79,7 +79,7 @@ fi
 update-desktop-database -q &> /dev/null
 update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
-%files
+%files -f %{name}.lang
 %doc README
 %{_kf5_bindir}/bluedevil-*
 %{_libexecdir}/bluedevil-*

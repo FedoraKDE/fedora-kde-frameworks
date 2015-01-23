@@ -1,6 +1,6 @@
 Name:           kdeplasma-addons
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Additional Plasmoids for Plasma 5.
 
 License:        GPLv2+
@@ -54,7 +54,6 @@ Requires:       kf5-filesystem
 %setup -q -n %{name}-%{version}
 
 %build
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..

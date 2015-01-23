@@ -1,8 +1,8 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+

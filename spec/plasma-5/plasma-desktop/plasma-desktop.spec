@@ -1,6 +1,6 @@
 Name:           plasma-desktop
-Version:        5.1.95
-Release:        3.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        Plasma Desktop shell
 
 License:        GPLv2+ and (GPLv2 or GPLv3)

@@ -1,8 +1,8 @@
 %define         framework baloo
 
 Name:           kf5-%{framework}
-Version:        5.5.95
-Release:        1.beta%{?dist}
+Version:        5.6.0
+Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/baloo
@@ -136,8 +136,8 @@ fi
 %{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 %{_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files libs -f %{name}-libs.lang
 %{_kf5_libdir}/libKF5Baloo.so.*

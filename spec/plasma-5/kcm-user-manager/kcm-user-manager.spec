@@ -2,8 +2,8 @@
 
 Name:           kcm-user-manager
 Epoch:          1
-Version:        5.1.95
-Release:        1.beta
+Version:        5.2.0
+Release:        1
 Summary:        KDE System Settings module to manage system users
 
 # KDE e.V. may determine that future GPL versions are accepted

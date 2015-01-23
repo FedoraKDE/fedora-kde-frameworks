@@ -4,8 +4,8 @@
 %global         wayland 0
 
 Name:           kwin
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 Summary:        KDE Window manager
 
 # all sources are effectively GPLv2+, except for:

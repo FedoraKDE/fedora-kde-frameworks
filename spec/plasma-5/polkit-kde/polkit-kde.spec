@@ -2,8 +2,8 @@
 
 Name:           polkit-kde
 Summary:        PolicyKit integration for KDE Desktop
-Version:        5.1.95
-Release:        1.beta%{?dist}
+Version:        5.2.0
+Release:        1%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/polkit-kde-agent-1
