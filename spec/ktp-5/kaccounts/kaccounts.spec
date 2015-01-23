@@ -3,7 +3,7 @@
 
 Name:           kaccounts
 Version:        1.0
-Release:        2.%{git_date}git%{git_commit}%{?dist}
+Release:        3.%{git_date}git%{git_commit}%{?dist}
 Summary:        Small system to administer web accounts for the sites and services across the KDE desktop,
 License:        LGPLv2
 URL:            https://projects.kde.org/projects/kdereview/kaccounts-integration
@@ -32,6 +32,9 @@ BuildRequires:  libaccounts-qt5-devel
 BuildRequires:  signon-qt5-devel
 
 #BuildRequires:  akonadi
+
+Requires:       signon-plugin-oauth2
+Requires:       signon-qt5
 
 %description
 Framework to provide Accounts integration in KDE
@@ -80,6 +83,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_includedir}/KAccounts
 
 %changelog
+* Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-3.20150122git0c2e1aa
+- Requirese: signon-qt5 and signon-plugin-oauth2
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-2.20150122git0c2e1aa
 - Fix -devel Requries
 
