@@ -1,10 +1,10 @@
 Name:           kdecoration
-Summary:        A plugin-based libraty to create window decorations
+Summary:        A plugin-based library to create window decorations
 Version:        5.1.95
 Release:        2.beta%{?dist}
 
 License:        LGPLv2
-URL:            https://www.kde.org
+URL:            https://projects.kde.org/projects/kde/workspace/kdecoration
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
