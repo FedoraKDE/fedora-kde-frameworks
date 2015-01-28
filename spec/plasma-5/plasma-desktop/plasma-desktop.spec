@@ -1,6 +1,6 @@
 Name:           plasma-desktop
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        4%{?dist}
 Summary:        Plasma Desktop shell
 
 License:        GPLv2+ and (GPLv2 or GPLv3)
@@ -68,6 +68,19 @@ BuildRequires:  desktop-file-utils
 Requires:       plasma-workspace
 Requires:       kf5-filesystem
 
+# Default style
+Requires:	plasma-breeze
+Requires:	breeze-icon-theme
+Requires:	kde-style-breeze
+
+# We can hardly do anything without those
+Requires:	plasma-systemsettings
+Requires:	kio-extras
+Requires:	kwrited
+
+Requires:	plasma-milou
+
+
 Obsoletes:      kde-workspace < 5.0.0-1
 Obsoletes:      kcm_colors < 5.0.0-1
 Provides:       kcm_colors = %{version}-%{release}
@@ -85,6 +98,7 @@ Summary:        Documentation and user manuals for %{name}
 %setup -q -n %{name}-%{version}
 
 %build
+sed -i "s/@CMAKE_INSTALL_PREFIX@\///" kcms/kfontinst/dbus/org.kde.fontinst.service.cmake
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -180,6 +194,15 @@ fi
 
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-4
+- Requires: plasma-breeze and rest of Plasma 5 pkgs that don't get installed any other way
+
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- fix generation of org.kde.fontinst.service
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
 - Obsoletes/Provides kcm_colors
 

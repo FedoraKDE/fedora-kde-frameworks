@@ -2,7 +2,7 @@
 
 Name:           plasma-%{base_name}
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE's System Settings application
 
 License:        GPLv2+
@@ -38,6 +38,9 @@ BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  desktop-file-utils
 
 Requires:       kf5-filesystem
+
+# This is not a strict dependency, but kde-cli-tools provides kcmshell5
+Requires:	kde-cli-tools
 
 %description
 %{summary}.
@@ -92,6 +95,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/systemsettings.deskto
 %{_libdir}/libsystemsettingsview.so
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- Requires: kde-cli-tools (for kcmshell5)
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 

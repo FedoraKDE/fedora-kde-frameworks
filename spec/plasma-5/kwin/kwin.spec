@@ -5,7 +5,7 @@
 
 Name:           kwin
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Window manager
 
 # all sources are effectively GPLv2+, except for:
@@ -21,6 +21,10 @@ URL:            https://projects.kde.org/projects/kde/workspace/kwin
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+
+# Upstream patches 
+# BKO#341971
+Patch0:		kwin-kcm-kwindecoration-fix-blackqml-view.patch
 
 # Base
 BuildRequires:  kf5-rpm-macros
@@ -126,6 +130,8 @@ BuildArch:      noarch
 %prep
 %setup -q -n %{name}-%{version}
 
+%patch0 -p1 -b .kcmkwindeco
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -206,6 +212,12 @@ fi
 
 
 %changelog
+* Wed Jan 28 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- Add upstream patch to fix black QML view in kwindecoration KCM
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 
