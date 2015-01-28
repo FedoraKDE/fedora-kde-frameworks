@@ -9,15 +9,15 @@ firewall --enabled --service=mdns
 part / --size 4096 --fstype ext4
 services --enabled=NetworkManager --disabled=sshd
 
-#repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/ --excludepkgs=sddm --cost=1
-#repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/ --excludepkgs=sddm --cost=1
-repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
-#repo --name=plasma-5 --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/
+repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+#repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+#repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
+
+repo --name=plasma-5-devel --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/devel
+
 repo --name=kf5-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kf5-next/fedora-$releasever-$basearch/
-repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
-
-
+#repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
 #repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
 
 
@@ -26,6 +26,9 @@ repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/resul
 @fonts
 kernel
 @base-x
+
+#installer
+anaconda
 
 # Plasma 5
 plasma-5
@@ -231,6 +234,29 @@ Session=plasma.desktop
 Current=breeze
 SDDM_EOF
 
+
+# add liveinst.desktop to favorites menu
+mkdir -p /home/liveuser/.config
+cat > /home/liveuser/.config/kickoffrc << MENU_EOF
+[Favorites]
+FavoriteURLs=/usr/share/applications/kde4/kfmclient_html.desktop,/usr/share/applications/kde4/dolphin.desktop,/usr/share/applications/systemsettings.desktop,/usr/share/applications/liveinst.desktop
+MENU_EOF
+
+# show liveinst.desktop on desktop and in menu
+sed -i 's/NoDisplay=true/NoDisplay=false/' /usr/share/applications/liveinst.desktop
+
+# chmod +x ~/Desktop/liveinst.desktop to disable KDE's security warning
+chmod +x /usr/share/applications/liveinst.desktop
+
+# copy over the icons for liveinst to hicolor
+cp /usr/share/icons/gnome/16x16/apps/system-software-install.png /usr/share/icons/hicolor/16x16/apps/
+cp /usr/share/icons/gnome/22x22/apps/system-software-install.png /usr/share/icons/hicolor/22x22/apps/
+cp /usr/share/icons/gnome/24x24/apps/system-software-install.png /usr/share/icons/hicolor/24x24/apps/
+cp /usr/share/icons/gnome/32x32/apps/system-software-install.png /usr/share/icons/hicolor/32x32/apps/
+cp /usr/share/icons/gnome/48x48/apps/system-software-install.png /usr/share/icons/hicolor/48x48/apps/
+cp /usr/share/icons/gnome/256x256/apps/system-software-install.png /usr/share/icons/hicolor/256x256/apps/
+touch /usr/share/icons/hicolor/
+
 # Make the home look super-fancy
 mkdir /home/liveuser/{Desktop,Documents,Downloads,Music,Video}
 echo -e "[Desktop Entry]\nIcon=user-home" > /home/liveuser/.directory
@@ -241,6 +267,7 @@ echo -e "[Desktop Entry]\nIcon=folder-sound" > /home/liveuser/Music/.directory
 echo -e "[Desktop Entry]\nIcon=folder-video" > /home/liveuser/Video/.directory
 
 chown -R liveuser:liveuser /home/liveuser/
+restorecon -R /home/liveuser/
 
 # turn off firstboot for livecd boots
 systemctl --no-reload disable firstboot-text.service 2> /dev/null || :
