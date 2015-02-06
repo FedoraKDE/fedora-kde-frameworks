@@ -1,6 +1,6 @@
 Name:           plasma5
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The next generation Plasma workspace from the KDE Community
 
 License:        GPLv2+
@@ -25,9 +25,9 @@ Requires:       kdeplasma-addons
 
 # Configuration
 Requires:       plasma-systemsettings
-Requires:       kcm-gtk
+#Requires:       kcm-gtk
 Requires:       sddm-kcm
-Requires:       kcm-user-manager
+#Requires:       kcm-user-manager
 
 # Daemons
 Requires:       powerdevil
@@ -71,6 +71,12 @@ Requires:       kwalletmanager
 
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- temporarily disable kcm-gtk and kcm-user-manager
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta
 - kcm-sddm renamed to sddm-kcm
 - Requires: breeze-icon-theme (should be required by plasma-breeze probably)

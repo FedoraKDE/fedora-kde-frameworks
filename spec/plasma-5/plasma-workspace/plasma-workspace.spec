@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-workspace
@@ -83,7 +83,7 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  kf5-ksysguard-devel
-BuildRequires:  kf5-kscreen-devel
+BuildRequires:  libkscreen-qt5-devel
 BuildRequires:  kf5-baloo-devel
 
 BuildRequires:  kf5-kwayland-devel
@@ -258,6 +258,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- BR libkscreen-qt5-devel
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-3.beta
 - Requires: kf5-frameworkintegration (provides platformtheme plugin)
 

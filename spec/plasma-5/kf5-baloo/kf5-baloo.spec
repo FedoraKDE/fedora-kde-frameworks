@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.6.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/baloo
@@ -35,7 +35,9 @@ BuildRequires:  kf5-kfilemetadata-devel
 Requires:       kf5-filesystem
 
 Obsoletes:      kf5-baloo-tools < 5.5.95-1
+Obsoletes:      baloo < 5
 Provides:       baloo = %{version}-%{release}
+
 
 %description
 %{Summary}.
@@ -153,6 +155,12 @@ fi
 
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-3
+- Conflicts baloo < 5.0
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+- Plasma 5.2.0
+
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.95-1
 - Plasma 5.1.95 (Plasma 5.2 beta) (baloo 5.5.95 to follow KF5)
 - create -libs subpkg

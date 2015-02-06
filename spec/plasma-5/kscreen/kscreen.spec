@@ -4,7 +4,7 @@
 Name:           kscreen
 Epoch:          1
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -22,7 +22,7 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtdeclarative-devel
 
-BuildRequires:  kf5-kscreen-devel
+BuildRequires:  libkscreen-qt5-devel
 
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -48,7 +48,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-
+%find_lang kscreen5_qt --with-qt --with-kde --all-name
 
 %post
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
@@ -62,7 +62,7 @@ touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 fi
 
-%files
+%files -f kscreen5_qt.lang
 %doc COPYING
 %{_bindir}/kscreen-console
 %{_kf5_qtplugindir}/kcm_kscreen.so
@@ -73,6 +73,9 @@ fi
 %{_datadir}/icons/hicolor/*/actions/*
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- BR libkscreen-qt5-devel (renamed again :)
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-2.beta.20150112git7a8460a
 - BR kf5-kscreen-devel (renamed from libkscreen)
 

@@ -2,7 +2,7 @@
 
 Name:           plasma-%{base_name}
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
 License:        GPLv2+
@@ -40,7 +40,7 @@ BuildRequires:  kf5-frameworkintegration-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 # KWin (for window decoration - KWin 5 only)
-BuildRequires:  kwin-devel = %{version}-%{release}
+BuildRequires:  kwin-devel
 
 Requires:       kf5-filesystem
 
@@ -50,7 +50,7 @@ Requires:       oxygen-cursor-themes = %{version}-%{release}
 Requires:       oxygen-sound-theme = %{version}-%{release}
 
 # kwin-oxygen was removed in 5.1.95
-Obsoletes:	kwin-oxygen < 5.1.95-1
+Obsoletes:	    kwin-oxygen < 5.2.0
 
 %description
 %{summary}.
@@ -67,6 +67,7 @@ Obsoletes:      plasma-oxygen-kde4 < 5.1.1-2
 %package -n     qt5-style-oxygen
 Summary:        Oxygen widget style for Qt 5
 Obsoletes:      plasma-oxygen < 5.1.1-2
+Obsoletes:      kwin-oxygen < 5.2.0
 %description -n qt5-style-oxygen
 %{summary}.
 
@@ -168,6 +169,9 @@ fi
 
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1
 - Plasma 5.1.95 Beta
 - removed kwin-oxygen subpackage, as Oxygen does not provide KDecoration1-based windecos as of 5.1.95

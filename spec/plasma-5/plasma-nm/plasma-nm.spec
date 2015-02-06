@@ -1,6 +1,6 @@
 Name:           plasma-nm
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm
@@ -48,7 +48,11 @@ BuildRequires:  kf5-modemmanager-qt-devel
 
 BuildRequires:  pkgconfig(NetworkManager) >= 0.9.8
 BuildRequires:  pkgconfig(ModemManager) >= 1.0.0
+%if 0%{?fedora} > 21
+BuildRequires:  pkgconfig(libnm)
+%else
 BuildRequires:  pkgconfig(libnm-glib) pkgconfig(libnm-util)
+%endif
 %if 0%{?fedora} || 0%{?epel}
 BuildRequires:  pkgconfig(openconnect) >= 4.00
 %endif
@@ -236,6 +240,12 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 %endif
 
 %changelog
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- fix dependencies on rawhide (with NM >= 1.0.0)
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Tue Jan 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 

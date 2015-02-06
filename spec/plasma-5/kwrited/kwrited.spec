@@ -55,7 +55,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %doc COPYING
 %{_bindir}/kwrited
-%config %{_sysconfdir}/xdg/autostart/kwrited-autostart.desktop
+%{_sysconfdir}/xdg/autostart/kwrited-autostart.desktop
 %{_kf5_datadir}/knotifications5/kwrited.notifyrc
 
 
