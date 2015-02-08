@@ -15,6 +15,8 @@ URL:            https://projects.kde.org/projects/kde/kdelibs/baloo
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{framework}-%{version}.tar.xz
 
+Source1: 97-kde-baloo-filewatch-inotify.conf
+
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  kf5-rpm-macros
@@ -38,7 +40,6 @@ Obsoletes:      kf5-baloo-tools < 5.5.95-1
 Obsoletes:      baloo < 5
 Provides:       baloo = %{version}-%{release}
 
-
 %description
 %{Summary}.
 
@@ -57,6 +58,7 @@ developing applications that use %{name}.
 Summary:        File indexing and search for Baloo
 Obsoletes:      %{name} < 5.0.1-2
 Obsoletes:      baloo-file < 5.0.1-2
+Provides:       baloo-file = %{version}-%{release}
 Requires:       %{name} = %{version}-%{release}
 %description    file
 %{summary}.
@@ -81,6 +83,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
+
+install -p -m644 -D %{SOURCE1} %{buildroot}%{_prefix}/lib/sysctl.d/97-kde-baloo-filewatch-inotify.conf
+
 %find_lang balooctl --with-qt
 %find_lang kio_baloosearch --with-qt
 %find_lang baloo_file --with-qt
@@ -128,6 +133,7 @@ fi
 %{_kf5_datadir}/icons/hicolor/*/apps/baloo.png
 
 %files file -f %{name}-file.lang
+%{_prefix}/lib/sysctl.d/97-kde-baloo-filewatch-inotify.conf
 %{_kf5_bindir}/baloo_file
 %{_kf5_bindir}/baloo_file_extractor
 %{_kf5_bindir}/baloo_file_cleaner
@@ -155,8 +161,11 @@ fi
 
 
 %changelog
-* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-3
-- Conflicts baloo < 5.0
+* Sun Feb 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-3
+- kf5-baloo-file provides baloo-file
+
+* Sat Feb 07 2015 Rex Dieter <rdieter@fedoraproject.org> 5.6.0-2
+- port 97-kde-baloo-filewatch-inotify.conf from Obsoletes'd baloo pkg
 
 * Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - Plasma 5.2.0

@@ -2,9 +2,10 @@
 # NOTE: Does not build on F20 due to too old Wayland and requires kf5-kwayland,
 # which is not available in Fedora yet
 %global         wayland 0
+%global         plasma_version  5.2.0
 
 Name:           kwin
-Version:        5.2.0
+Version:        5.2.0.1
 Release:        2%{?dist}
 Summary:        KDE Window manager
 
@@ -20,11 +21,7 @@ URL:            https://projects.kde.org/projects/kde/workspace/kwin
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
-
-# Upstream patches 
-# BKO#341971
-Patch0:		kwin-kcm-kwindecoration-fix-blackqml-view.patch
+Source0:        http://download.kde.org/%{stable}/plasma/%{plasma_version}/%{name}-%{version}.tar.xz
 
 # Base
 BuildRequires:  kf5-rpm-macros
@@ -90,6 +87,9 @@ Requires:       qt5-qtmultimedia
 # Before kwin was split out from kde-workspace into a subpackage
 Conflicts:      kde-workspace%{?_isa} < 4.11.14-2
 
+Obsoletes:      kwin-gles < 5
+Obsoletes:      kwin-gles-libs < 5
+
 %description
 %{summary}.
 
@@ -121,7 +121,7 @@ developing applications that use %{name}.
 
 %package        doc
 Summary:        User manual for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 %description    doc
 %{summary}.
@@ -130,7 +130,6 @@ BuildArch:      noarch
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .kcmkwindeco
 
 %build
 mkdir -p %{_target_platform}
@@ -142,7 +141,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang kwin5 --with-qt --all-name
+%find_lang kwin5 --with-qt --with-kde --all-name
 
 
 %post
@@ -208,12 +207,21 @@ fi
 
 %files doc
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
-%{_datadir}/doc/HTML/en/kcontrol/*
+%{_docdir}/HTML/en_US/*
 
 
 %changelog
-* Wed Jan 28 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
-- Add upstream patch to fix black QML view in kwindecoration KCM
+* Sun Feb 08 2015 Daniel Vrátil <dvratli@redhat.com> - 5.2.0.1-2
+- Obsoletes: kwin-gles, kwin-gles-libs
+
+* Wed Jan 28 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0.1-1
+- Update to upstream hotfix release 5.2.0.1 (kwindeco KCM bugfix)
+
+* Wed Jan 28 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-3
+- add upstream patch for bug #341971 - fixes Window decorations KCM
+
+* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- -doc: Don't require arch-specific kwin in noarch package
 
 * Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - Plasma 5.2.0

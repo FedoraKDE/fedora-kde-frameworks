@@ -1,6 +1,6 @@
 Name:           powerdevil
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
@@ -15,6 +15,10 @@ URL:            https://projects.kde.org/projects/kde/workspace/powerdevil
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 Patch0:         powerdevil-enable-upower.patch
+
+# Upstream patches
+# BKO#337674
+Patch10:        powerdevil-5.2.1-fix-kded5-cpu-usage.patch
 
 BuildRequires:  libxcb-devel
 BuildRequires:  xcb-util-keysyms-devel
@@ -54,6 +58,8 @@ of a daemon (a KDED module) and a KCModule for its configuration.
 
 %patch0 -p1 -b .enable-upower
 
+%patch10 -p1 -b .kded5
+
 %build
 
 mkdir -p %{_target_platform}
@@ -92,6 +98,12 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 
 %changelog
+* Fri Feb 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- add upstream patch for BKO#337674
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Wed Jan 14 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 

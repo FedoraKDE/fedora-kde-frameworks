@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.2.0
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-workspace
@@ -53,7 +53,9 @@ BuildRequires:  libbsd-devel
 BuildRequires:  pam-devel
 BuildRequires:  lm_sensors-devel
 BuildRequires:  pciutils-devel
+%ifnarch s390 s390x
 BuildRequires:  libraw1394-devel
+%endif
 BuildRequires:  gpsd-devel
 
 BuildRequires:  qt5-qtbase-devel
@@ -83,7 +85,7 @@ BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 
 BuildRequires:  kf5-ksysguard-devel
-BuildRequires:  libkscreen-qt5-devel
+BuildRequires:  kf5-kscreen-devel
 BuildRequires:  kf5-baloo-devel
 
 BuildRequires:  kf5-kwayland-devel
@@ -112,7 +114,13 @@ Requires:       kf5-filesystem
 Requires:       kf5-baloo
 
 # Without the platformtheme plugins we get broken fonts
-Requires:	kf5-frameworkintegration
+Requires:	    kf5-frameworkintegration
+
+# For krunner
+Requires:       plasma-milou
+
+# Power management
+Requires:       powerdevil
 
 # startkde
 Requires:       coreutils
@@ -136,6 +144,7 @@ Requires:       sni-qt
 
 # Oxygen
 Requires:       oxygen-icon-theme
+Requires:       oxygen-sound-theme
 Requires:       oxygen-fonts
 
 Obsoletes:      kde-workspace < 5.0.0-1
@@ -258,8 +267,14 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 
 
 %changelog
-* Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
-- BR libkscreen-qt5-devel
+* Sun Feb 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-4
+- Requires: powerdevil, oxygen-sound-theme
+
+* Thu Jan 29 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-3
+- Requires: plasma-milou (for krunner)
+
+* Thu Jan 29 2015 Dan Horák <dan[at]danny.cz> - 5.2.0-2
+- no FireWire on s390(x)
 
 * Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - Plasma 5.2.0
