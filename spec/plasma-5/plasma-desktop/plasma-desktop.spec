@@ -1,6 +1,6 @@
 Name:           plasma-desktop
 Version:        5.2.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Plasma Desktop shell
 
 License:        GPLv2+ and (GPLv2 or GPLv3)
@@ -55,7 +55,6 @@ BuildRequires:  kf5-baloo-devel
 BuildRequires:  plasma-workspace-devel
 BuildRequires:  kwin-devel
 
-
 # Optional
 BuildRequires:  kf5-kactivities-devel
 BuildRequires:  libcanberra-devel
@@ -65,6 +64,11 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 
+
+# for kcm_keyboard
+Requires:       iso-codes
+
+# Desktop
 Requires:       plasma-workspace
 Requires:       kf5-filesystem
 
@@ -85,6 +89,7 @@ Obsoletes:      kde-workspace < 5.0.0-1
 
 Obsoletes:      kcm_colors < 5.0.0-1
 Provides:       kcm_colors = %{version}-%{release}
+
 
 %description
 %{summary}.
@@ -202,6 +207,9 @@ fi
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-5
+- Requires: iso-codes (for kcm_keyboard)
+
 * Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-4
 - Copy konqsidebartng to /usr/share/kde4/apps so that KDE4 Konqueror can find it
 
