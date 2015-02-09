@@ -1,6 +1,6 @@
 Name:           ksysguard
 Version:        5.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Process Management application
 
 License:        GPLv2
@@ -27,18 +27,22 @@ BuildRequires:  kf5-knewstuff-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  libksysguard-devel
 
 BuildRequires:  lm_sensors-devel
-
 BuildRequires:  desktop-file-utils
 
 Requires:       kf5-filesystem
 
-Obsoletes:      ksysguardd < 5.0.0-1
+Requires:       ksysguardd = %{version}-%{release}
 
 %description
+%{summary}.
+
+%package -n    ksysguardd
+Summary: Performance monitor daemon
+%description -n ksysguardd
 %{summary}.
 
 %prep
@@ -75,18 +79,27 @@ fi
 %files -f ksysguard5.lang
 %doc COPYING COPYING.DOC README
 %{_bindir}/ksysguard
-%{_bindir}/ksysguardd
 %{_kf5_libdir}/libkdeinit5_ksysguard.so
 %{_datadir}/ksysguard
 %config %{_sysconfdir}/xdg/ksysguard.knsrc
-%config %{_sysconfdir}/ksysguarddrc
 %{_datadir}/applications/org.kde.ksysguard.desktop
 %{_docdir}/HTML/en/ksysguard
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
 %{_kf5_datadir}/kxmlgui5/ksysguard
 
+%files -n ksysguardd
+%{_bindir}/ksysguardd
+%config %{_sysconfdir}/ksysguarddrc
+
+
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
+- ksysguardd subpackage (originally requested in #426543)
+
+* Mon Jan 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
+- Plasma 5.2.0
+
 * Mon Jan 12 2015 Daniel Vrátil <dvratil@redhat.com> - 5.1.95-1.beta
 - Plasma 5.1.95 Beta
 
