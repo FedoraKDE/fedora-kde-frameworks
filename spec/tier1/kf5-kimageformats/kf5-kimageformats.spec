@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 1 addon with additional image plugins for 
 License:        LGPLv2+
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  jasper-devel
 BuildRequires:  OpenEXR-devel
@@ -57,10 +58,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> 5.4.0-2

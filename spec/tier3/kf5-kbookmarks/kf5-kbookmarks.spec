@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 3 addon for bookmarks manipulation
 License:        LGPLv2+
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -78,10 +79,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KBookmarks.pri
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

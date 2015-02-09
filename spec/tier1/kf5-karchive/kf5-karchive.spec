@@ -2,23 +2,24 @@
 
 Name:           kf5-%{framework}
 Version:        5.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        LGPLv2+ and BSD
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  zlib-devel
 BuildRequires:  bzip2-devel
-BuildRequires:  lzma-devel
+BuildRequires:  xz-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -70,10 +71,13 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Wed Jan 21 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-2
+- BR xz-devel instead of lzma-devel
+
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

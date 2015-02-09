@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 1 functional module with JavaScript interp
 License:        GPLv2+ and BSD
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/portingAids/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/portingAids/%{framework}-%{version}.tar.xz
 
 BuildRequires:  perl
 BuildRequires:  pcre-devel
@@ -77,10 +78,10 @@ chmod +x %{buildroot}/%{_kf5_datadir}/kf5/kjs/create_hash_table
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

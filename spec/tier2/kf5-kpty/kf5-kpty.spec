@@ -1,4 +1,4 @@
-%define framework kpty
+%global framework kpty
 
 Name:           kf5-%{framework}
 Version:        5.6.0
@@ -7,11 +7,15 @@ Summary:        KDE Frameworks 5 Tier 2 module providing Pty abstraction
 
 License:        LGPLv2+ and GPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global versiondir %(echo %{version} | cut -d. -f1-2)
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -25,17 +29,16 @@ Requires:       kf5-filesystem
 %description
 KDE Frameworks 5 tier 2 module providing Pty abstraction.
 
-
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-ki18n-devel
 
-
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
 
 %prep
 %setup -q -n %{framework}-%{version}
@@ -52,10 +55,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kpty5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kpty5_qt.lang
 %doc COPYING COPYING.LIB README.md
@@ -70,11 +72,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0

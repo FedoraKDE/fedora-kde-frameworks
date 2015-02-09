@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 3 integration module for QtWebKit
 License:        LGPLv2+
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -37,6 +38,7 @@ KDE Frameworks 5 Tier 3 integration module for the HTML rendering engine WebKit.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       qt5-qtwebkit-devel
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kio-devel
@@ -81,10 +83,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

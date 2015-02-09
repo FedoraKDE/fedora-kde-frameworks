@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 3 solution with abstraction for system not
 License:        LGPLv2+
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 
@@ -69,6 +70,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang knotifications5_qt --with-qt --all-name
 
+# We own the folder
+mkdir -p %{buildroot}/%{_kf5_datadir}/knotifications5
+
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -77,6 +81,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5Notifications.so.*
 %{_kf5_datadir}/kservicetypes5/knotificationplugin.desktop
+%{_kf5_datadir}/knotifications5
 
 %files devel
 %{_kf5_includedir}/knotifications_version.h
@@ -88,10 +93,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

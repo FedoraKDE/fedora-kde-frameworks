@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 Tier 3 solution for advanced plugin and service
 License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -65,6 +66,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 
+mkdir -p %{buildroot}/%{_kf5_datadir}/kservices5
+mkdir -p %{buildroot}/%{_kf5_datadir}/kservicetypes5
+
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -74,7 +78,8 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 %config %{_kf5_sysconfdir}/xdg/menus/kf5-applications.menu
 %{_kf5_bindir}/kbuildsycoca5
 %{_kf5_libdir}/libKF5Service.so.*
-%{_kf5_datadir}/kservicetypes5/*.desktop
+%{_kf5_datadir}/kservicetypes5
+%{_kf5_datadir}/kservices5
 %{_kf5_mandir}/man8/*
 %{_kf5_mandir}/*/man8/*
 %exclude %{_kf5_mandir}/man8
@@ -88,10 +93,10 @@ mv %{buildroot}/%{_kf5_sysconfdir}/xdg/menus/applications.menu %{buildroot}/%{_k
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
 * Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1

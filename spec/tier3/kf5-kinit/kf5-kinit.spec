@@ -8,13 +8,14 @@ Summary:        KDE Frameworks 5 tier 3 solution for process launching
 License:        LGPLv2+ and BSD
 URL:            http://www.kde.org
 
+%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/frameworks/%{version}/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 BuildRequires:  libX11-devel
 
@@ -91,65 +92,65 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
 
-* Mon Nov 03 2014 Daniel Vr�til <dvratil@redhat.com> - 5.4.0-1
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
 - KDE Frameworks 5.4.0
 
-* Tue Oct 07 2014 Daniel Vr�til <dvratil@redhat.com> - 5.3.0-1
+* Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0
 
-* Mon Sep 15 2014 Daniel Vr�til <dvratil@redhat.com> - 5.2.0-1
+* Mon Sep 15 2014 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-1
 - KDE Frameworks 5.2.0
 
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
-* Wed Aug 06 2014 Daniel Vr�til <dvratil@redhat.com> - 5.1.0-1
+* Wed Aug 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.1.0-1
 - KDE Frameworks 5.1.0
 
-* Fri Jul 18 2014 Daniel Vr�til <dvratil@redhat.com> - 5.0.0-2
+* Fri Jul 18 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-2
 - Downstream patch to fix hardcoded libexec paths in start_kdeinit_wrapper
 
-* Wed Jul 09 2014 Daniel Vr�til <dvratil@redhat.com> - 5.0.0-1
+* Wed Jul 09 2014 Daniel Vrátil <dvratil@redhat.com> - 5.0.0-1
 - KDE Frameworks 5.0.0
 
-* Sun Jun 29 2014 Daniel Vr�til <dvratil@redhat.com> - 4.100.0-2
+* Sun Jun 29 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-2
 - Fix license
 
-* Tue Jun 03 2014 Daniel Vr�til <dvratil@redhat.com> - 4.100.0-1
+* Tue Jun 03 2014 Daniel Vrátil <dvratil@redhat.com> - 4.100.0-1
 - KDE Frameworks 4.100.0
 
-* Mon May 19 2014 Daniel Vr�til <dvratil@redhat.com> - 4.99.0-3
+* Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-3
 - Rebuild with new BIN_INSTALL_DIR and KF5_LIBEXEC_INSTALL_DIR
 
-* Mon May 05 2014 Daniel Vr�til <dvratil@redhat.com> - 4.99.0-1
+* Mon May 05 2014 Daniel Vrátil <dvratil@redhat.com> - 4.99.0-1
 - KDE Frameworks 4.99.0
 
 * Mon Mar 31 2014 Jan Grulich <jgrulich@redhat.com> 4.98.0-1
 - Update to KDE Frameworks 5 Beta 1 (4.98.0)
 
-* Mon Mar 24 2014 Daniel Vr�til <dvratil@redhat.com> 4.97.0-2
+* Mon Mar 24 2014 Daniel Vrátil <dvratil@redhat.com> 4.97.0-2
 - Add patch for kinit to respect PATH and LD_LIBRARY_PATH
 
 * Wed Mar 05 2014 Jan Grulich <jgrulich@redhat.com> 4.97.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.97.0)
 
-* Wed Feb 12 2014 Daniel Vr�til <dvratil@redhat.com> 4.96.0-1
+* Wed Feb 12 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-1
 - Update to KDE Frameworks 5 Alpha 1 (4.96.0)
 
-* Wed Feb 05 2014 Daniel Vr�til <dvratil@redhat.com> 4.96.0-0.1.20140205git
+* Wed Feb 05 2014 Daniel Vrátil <dvratil@redhat.com> 4.96.0-0.1.20140205git
 - Update to pre-relase snapshot of 4.96.0
 
-* Thu Jan 16 2014 Daniel Vr�til <dvratil@redhat.com> 4.95.0-2
+* Thu Jan 16 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-2
 - rebuild against updated kf5-filesytem
 
-* Thu Jan 09 2014 Daniel Vr�til <dvratil@redhat.com> 4.95.0-1
+* Thu Jan 09 2014 Daniel Vrátil <dvratil@redhat.com> 4.95.0-1
 - Update to KDE Frameworks 5 TP1 (4.95.0)
 
-* Sat Jan  4 2014 Daniel Vr�til <dvratil@redhat.com>
+* Sat Jan  4 2014 Daniel Vrátil <dvratil@redhat.com>
 - initial version

@@ -1,18 +1,24 @@
-#%define snapshot 20140205
-%define framework kauth
+%global framework kauth
 
 Name:           kf5-%{framework}
 Version:        5.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        LGPLv2+
 URL:            http://www.kde.org
-# git archive --format=tar --prefix=%{framework}-%{version}/ \
-#             --remote=git://anongit.kde.org/%{framework}.git master | \
-# bzip2 -c > %{name}-%{version}-%{snapshot}git.tar.bz2
-#Source0:        %{name}-%{version}-%{snapshot}git.tar.bz2
-Source0:        http://download.kde.org/stable/frameworks/%{version}/%{framework}-%{version}.tar.xz
+
+%global versiondir %(echo %{version} | cut -d. -f1-2)
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
+
+# https://git.reviewboard.kde.org/r/122029/
+Patch0:		kauth-fix-dbus-helper-service-generator.patch
 
 BuildRequires:  polkit-qt5-1-devel
 
@@ -41,6 +47,8 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
+%patch0 -p1 -b .dbushelper
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -55,10 +63,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %make_install -C %{_target_platform}
 %find_lang kauth5_qt --with-qt --all-name
 
+
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
-
 
 %files -f kauth5_qt.lang
 %doc COPYING.LIB README.md
@@ -69,7 +76,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kf5/kauth/
 %{_kf5_libexecdir}/kauth/kauth-policy-gen
 
-
 %files devel
 %{_kf5_includedir}/kauth_version.h
 %{_kf5_includedir}/KAuth
@@ -79,11 +85,17 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
-* Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
+* Fri Jan 16 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-2
+- Add upstream patch to fix generating of DBus helper service files
+
+* Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 
-* Sat Dec 06 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
+* Mon Dec 08 2014 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-1
 - KDE Frameworks 5.5.0
+
+* Mon Nov 03 2014 Daniel Vrátil <dvratil@redhat.com> - 5.4.0-1
+- KDE Frameworks 5.4.0
 
 * Tue Oct 07 2014 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
 - KDE Frameworks 5.3.0
