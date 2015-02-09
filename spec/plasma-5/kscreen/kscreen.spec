@@ -1,20 +1,20 @@
-#%global git_version 7a8460a
-#%global git_date 20150112
+%global git_version 9cba221
+%global git_date 20150207
 
 Name:           kscreen
 Epoch:          1
-Version:        5.2.0
-Release:        2%{?dist}
+Version:        5.2.80
+Release:        1.%{git_date}git%{git_version}%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
 License:        GPLv2 or GPLv3
 URL:            https://projects.kde.org/projects/playground/base/kscreen
 
-Source0:        http://download.kde.org/stable/kscreen/%{version}/src/kscreen-%{version}.tar.xz
+#Source0:        http://download.kde.org/stable/kscreen/%{version}/src/kscreen-%{version}.tar.xz
 # git archive --format=tar.gz --prefix=kscreen-%{version}/ --remote=git://anongit.kde.org/kscreen \
 #             --output=kscreen-%{git_version}.tar.gz %{git_version}
-#Source0:        kscreen-%{git_version}.tar.gz
+Source0:        kscreen-%{git_version}.tar.gz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -48,7 +48,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang kscreen5_qt --with-qt --with-kde --all-name
+#%find_lang kscreen5_qt --with-qt --with-kde --all-name
 
 %post
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
@@ -62,7 +62,8 @@ touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 fi
 
-%files -f kscreen5_qt.lang
+#%files -f kscreen5_qt.lang
+%files
 %doc COPYING
 %{_bindir}/kscreen-console
 %{_kf5_qtplugindir}/kcm_kscreen.so
@@ -73,6 +74,9 @@ fi
 %{_datadir}/icons/hicolor/*/actions/*
 
 %changelog
+* Sat Feb 07 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.80-1.20150207git9cba221
+- Update the latest git snapshot
+
 * Tue Jan 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
 - BR libkscreen-qt5-devel (renamed again :)
 

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.6.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/kde/kdelibs/baloo
@@ -161,7 +161,7 @@ fi
 
 
 %changelog
-* Sun Feb 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-3
+* Sun Feb 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-4
 - kf5-baloo-file provides baloo-file
 
 * Sat Feb 07 2015 Rex Dieter <rdieter@fedoraproject.org> 5.6.0-2

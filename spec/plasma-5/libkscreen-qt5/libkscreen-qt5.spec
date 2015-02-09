@@ -1,11 +1,11 @@
-#%global git_version  4c5da6e
-#%global git_date     20150112
+%global git_version  79fef50
+%global git_date     20150207
 
 %global base_name    libkscreen
 
 Name:           libkscreen-qt5
-Version:        5.2.0
-Release:        2%{?dist}
+Version:        5.2.80
+Release:        1.%{git_date}git%{git_version}%{?dist}
 Summary:        KDE display configuration library
 
 License:        GPLv2+
@@ -14,15 +14,15 @@ URL:            https://projects.kde.org/projects/kde/workspace/libkscreen
 
 # git archive --format=tar.gz --remote=git://anongit.kde.org/libkscreen.git \
 #             --prefix=libkscreen-%%{version}/ --output=libkscreen-qt5-%%{git_version}.tar.gz %%{git_version}
-#Source0:        libkscreen-%{git_version}.tar.gz
+Source0:        libkscreen-%{git_version}.tar.gz
 
-%global revision %(echo %{version} | cut -d. -f3)
-%if %{revision} >= 50
-%global stable unstable
-%else
-%global stable stable
-%endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
+#%global revision %(echo %{version} | cut -d. -f3)
+#%if %{revision} >= 50
+#%global stable unstable
+#%else
+#%global stable stable
+#%endif
+#Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
 ## upstreamable patches
 ## upstream patches
@@ -96,6 +96,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Sat Feb 07 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.80-1.20150207git79fef50
+- update to upstream git snapshot
+
 * Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.0-2
 - rename to libkscreen-qt5, fix Requries
 
