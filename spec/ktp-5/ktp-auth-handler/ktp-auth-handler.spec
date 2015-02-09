@@ -1,10 +1,10 @@
-%global         git_date    20150122
-%global         git_commit  4f4ae27
+%global         git_date    20150206
+%global         git_commit  d5f7dad
 
 Name:           ktp-auth-handler
 Summary:        Provide UI/KWallet Integration
 Version:        0.9.60
-Release:        1.%{git_date}git%{git_commit}%{?dist}
+Release:        2.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
 URL:            https://projects.kde.org/projects/extragear/network/telepathy/%{name}
@@ -73,7 +73,10 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Thu Jan 22 2015 Daniel Vrátil <Dvraitl@redhat.com> - 0.9.60-1.20150122git4f4ae27
+* Fri Feb 06 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-2.20150206gitd5f7dad
+- Update to latest upstream with some fixes
+
+* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122git4f4ae27
 - Update to experimental KF5 version
 
 * Mon Oct 20 2014 Jan Grulich <jgrulich@redhat.com> - 0.9.0-1
