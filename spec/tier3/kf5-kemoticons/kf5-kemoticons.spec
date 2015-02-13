@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module with support for emoticons and emoticons themes
 
 License:        GPLv2+ and LGPLv2+
@@ -20,6 +20,7 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-kcoreaddons-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kconfig-devel
@@ -35,8 +36,8 @@ helper classes to automatically convert text emoticons to graphical emoticons.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-karchive-devel
-Requires:       kf5-kconfig-devel
 Requires:       kf5-kservice-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
 License:        LGPLv2+
@@ -25,7 +25,6 @@ BuildRequires:  zlib-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}
@@ -38,6 +37,7 @@ KDE Frameworks 5 Tier 1 solution for spell checking.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        LGPLv2+
@@ -22,7 +22,6 @@ BuildRequires:  polkit-qt5-1-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qttools-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
 

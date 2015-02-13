@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 framework is foundation to build a primary user interface
 
 License:        GPLv2+ and LGPLv2+ and BSD
@@ -27,9 +27,7 @@ BuildRequires:  openssl-devel
 BuildRequires:  libGL-devel
 
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtquick1-devel
 BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtscript-devel
@@ -50,9 +48,10 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kdnssd-devel
 BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kpackage-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-knotifications-devel
 
 Requires:       kf5-filesystem
 
@@ -63,21 +62,6 @@ Requires:       kf5-filesystem
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       extra-cmake-modules
-Requires:       kf5-kactivities-devel
-Requires:       kf5-karchive-devel
-Requires:       kf5-kconfigwidgets-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kdbusaddons-devel
-Requires:       kf5-kdeclarative-devel
-Requires:       kf5-kglobalaccel-devel
-Requires:       kf5-kguiaddons-devel
-Requires:       kf5-ki18n-devel
-Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kio-devel
-Requires:       kf5-kservice-devel
-Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-kxmlgui-devel
-Requires:       kf5-kdoctools-devel
 Requires:       kf5-kpackage-devel
 
 %description    devel

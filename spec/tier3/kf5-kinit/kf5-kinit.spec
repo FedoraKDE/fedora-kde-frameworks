@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 tier 3 solution for process launching
 
 License:        LGPLv2+ and BSD
@@ -44,13 +44,6 @@ contain a 'kdemain(...)' function.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kservice-devel
-Requires:       kf5-kio-devel
-Requires:       kf5-ki18n-devel
-Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-kcrash-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kdoctools-devel
 
 
 %description    devel

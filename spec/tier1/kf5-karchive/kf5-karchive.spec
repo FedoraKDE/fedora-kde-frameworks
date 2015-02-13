@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        LGPLv2+ and BSD
@@ -34,6 +34,7 @@ KDE Frameworks 5 Tier 1 addon with archive functions.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

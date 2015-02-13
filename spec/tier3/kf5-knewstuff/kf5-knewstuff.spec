@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for downloading application assets
 
 License:        LGPLv2+
@@ -20,7 +20,7 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtxmlpatterns-devel
+BuildRequires:  kf5-attica-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kcompletion-devel
@@ -44,16 +44,10 @@ application data like plugins, themes, motives, etc.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-karchive-devel
-Requires:       kf5-kcompletion-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-ki18n-devel
-Requires:       kf5-kiconthemes-devel
 Requires:       kf5-kio-devel
-Requires:       kf5-kitemviews-devel
-Requires:       kf5-ktextwidgets-devel
-Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kxmlgui-devel
+Requires:       kf5-attica-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

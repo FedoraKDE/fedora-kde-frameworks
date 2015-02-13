@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration with su
 
 License:        LGPLv2+
@@ -35,8 +35,6 @@ KDE Frameworks 5 Tier 3 integration with su for elevated privileges.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kservice-devel
 Requires:       kf5-kpty-devel
 
 %description    devel

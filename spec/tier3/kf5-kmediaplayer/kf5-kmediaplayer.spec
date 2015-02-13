@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module with interface for media player features
 
 License:        MIT
@@ -34,7 +34,6 @@ KDE Frameworks 5 Tier 3 module with plugin interfaces for media player features.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kparts-devel
-Requires:       kf5-kxmlgui-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

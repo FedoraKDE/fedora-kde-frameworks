@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries
@@ -35,6 +35,8 @@ A Tier 1 KDE Frameworks 5 Qt library for NetworkManager.
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       qt5-qtbase-devel
+
 %description    devel
 Qt libraries and header files for developing applications
 that use NetworkManager.

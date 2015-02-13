@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for creating configuration dialogs
 
 License:        GPLv2+ and LGPLv2+ and MIT
@@ -40,10 +40,8 @@ well as a set of widgets which uses KConfig to store their settings.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kauth-devel
-Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kcodecs-devel
 Requires:       kf5-kconfig-devel
-Requires:       kf5-kdoctools-devel
 Requires:       kf5-kguiaddons-devel
 Requires:       kf5-ki18n-devel
 Requires:       kf5-kwidgetsaddons-devel

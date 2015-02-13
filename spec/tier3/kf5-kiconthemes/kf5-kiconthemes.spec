@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module with icon themes
 
 License:        LGPLv2+ and GPLv2+
@@ -40,6 +40,7 @@ Requires:       kf5-ki18n-devel
 Requires:       kf5-kconfigwidgets-devel
 Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kitemviews-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

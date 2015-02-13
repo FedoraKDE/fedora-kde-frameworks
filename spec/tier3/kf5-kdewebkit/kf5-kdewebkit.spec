@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 integration module for QtWebKit
 
 License:        LGPLv2+
@@ -39,13 +39,6 @@ KDE Frameworks 5 Tier 3 integration module for the HTML rendering engine WebKit.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       qt5-qtwebkit-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kio-devel
-Requires:       kf5-kjobwidgets-devel
-Requires:       kf5-kparts-devel
-Requires:       kf5-kservice-devel
-Requires:       kf5-kwallet-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

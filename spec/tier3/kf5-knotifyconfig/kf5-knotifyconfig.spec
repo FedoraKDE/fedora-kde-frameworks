@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 module for KNotify configuration
 
 License:        LGPLv2+
@@ -21,7 +21,6 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtxmlpatterns-devel
 
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
@@ -37,11 +36,9 @@ Requires:       kf5-filesystem
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kcompletion-devel
-Requires:       kf5-kconfig-devel
 Requires:       kf5-ki18n-devel
 Requires:       kf5-kio-devel
-Requires:       kf5-kservice-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

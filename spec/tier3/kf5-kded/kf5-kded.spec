@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with extensible daemon for system-level services
 
 License:        LGPLv2+
@@ -42,13 +42,7 @@ applications.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kcrash-devel
-Requires:       kf5-kdbusaddons-devel
-Requires:       kf5-kdoctools-devel
-Requires:       kf5-kinit-devel
-Requires:       kf5-kservice-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

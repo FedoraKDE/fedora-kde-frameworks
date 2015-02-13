@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for multi-language application scripting
 
 License:        LGPLv2+
@@ -21,7 +21,6 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
-BuildRequires:  qt5-qtxmlpatterns-devel
 BuildRequires:  qt5-qttools-static
 
 BuildRequires:  kf5-kcompletion-devel
@@ -45,16 +44,13 @@ application. It supports QtScript as a scripting interpreter backend.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kcompletion-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kdoctools-devel
 Requires:       kf5-ki18n-devel
 Requires:       kf5-kiconthemes-devel
 Requires:       kf5-kio-devel
 Requires:       kf5-kparts-devel
-Requires:       kf5-kservice-devel
 Requires:       kf5-kwidgetsaddons-devel
-Requires:       kf5-kxmlgui-devel
+Requires:       qt5-qtbase-devel
+Requires:       qt5-qtscript-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

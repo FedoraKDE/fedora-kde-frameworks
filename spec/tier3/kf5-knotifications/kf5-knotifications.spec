@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution with abstraction for system notifications
 
 License:        LGPLv2+
@@ -24,7 +24,6 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qt5-qttools-devel
 BuildRequires:  dbusmenu-qt5-devel
 
 BuildRequires:  kf5-kwindowsystem-devel
@@ -44,11 +43,7 @@ notifications.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-kservice-devel
-Requires:       kf5-kconfig-devel
-Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kcodecs-devel
-Requires:       kf5-kcoreaddons-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

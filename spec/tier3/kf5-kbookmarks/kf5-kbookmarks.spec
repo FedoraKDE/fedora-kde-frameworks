@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for bookmarks manipulation
 
 License:        LGPLv2+
@@ -20,7 +20,6 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qttools-devel
 
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -38,10 +37,9 @@ XBEL format.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfigwidgets-devel
-Requires:       kf5-kcoreaddons-devel
 Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kxmlgui-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

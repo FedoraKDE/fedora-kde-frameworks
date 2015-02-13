@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 workspace and cross-framework integration plugins
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -19,7 +19,6 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -29,6 +28,8 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  oxygen-fonts-devel
+
+BuildRequires:  libXcursor-devel
 
 Requires:       kf5-filesystem
 Requires:       oxygen-fonts
@@ -52,13 +53,8 @@ Conflicts:      %{name} < 5.3.0-2
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-Requires:       kf5-kconfig-devel
 Requires:       kf5-kconfigwidgets-devel
-Requires:       kf5-ki18n-devel
 Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kio-devel
-Requires:       kf5-knotifications-devel
-Requires:       kf5-kwidgetsaddons-devel
 Requires:       oxygen-fonts-devel
 
 %description    devel

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 4 module with porting aid from KDELibs 4
 License:        GPLv2+ and LGPLv2+ and BSD
 URL:            http://www.kde.org
@@ -27,7 +27,7 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
-BuildRequires:  qt5-designer-plugin-webkit
+BuildRequires:  qt5-qtprintsupport-devel
 
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
@@ -92,6 +92,8 @@ Requires:       kf5-kparts-devel
 Requires:       kf5-ktextwidgets-devel
 Requires:       kf5-kunitconversion-devel
 Requires:       kf5-kwindowsystem-devel
+Requires:       qt5-qtbase-devel
+Requires:       qt5-qtprintsupport-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

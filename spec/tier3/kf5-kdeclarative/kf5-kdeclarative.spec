@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 License:        GPLv2+ and MIT
@@ -21,7 +21,6 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
-BuildRequires:  qt5-qtscript-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-ki18n-devel
@@ -43,15 +42,8 @@ KDE Frameworks 5 Tier 3 addon for Qt declarative
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kconfig-devel
-Requires:       kf5-ki18n-devel
-Requires:       kf5-kiconthemes-devel
-Requires:       kf5-kwidgetsaddons-devel
-Requires:       kf5-kwindowsystem-devel
-Requires:       kf5-kglobalaccel-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kguiaddons-devel
 Requires:       kf5-kio-devel
+Requires:       qt5-qtdeclarative-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

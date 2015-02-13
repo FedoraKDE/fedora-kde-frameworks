@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for advanced plugin and service introspection
 
 License:        GPLv2+ and LGPLv2+
@@ -39,10 +39,8 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-kcrash-devel
 Requires:       kf5-kdbusaddons-devel
 Requires:       kf5-ki18n-devel
-Requires:       kf5-kdoctools-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

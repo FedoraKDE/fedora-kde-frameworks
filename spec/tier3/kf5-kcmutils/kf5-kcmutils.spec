@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon with extra API to write KConfigModules
 
 License:        LGPLv2+
@@ -40,8 +40,6 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kf5-kitemviews-devel
 Requires:       kf5-kconfigwidgets-devel
-Requires:       kf5-kcoreaddons-devel
-Requires:       kf5-ki18n-devel
 Requires:       kf5-kiconthemes-devel
 Requires:       kf5-kservice-devel
 Requires:       kf5-kxmlgui-devel

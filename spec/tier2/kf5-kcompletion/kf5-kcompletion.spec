@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon with auto completion widgets and classes
 
 License:        LGPLv2+
@@ -20,7 +20,6 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qttools-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwidgetsaddons-devel

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for generating documentation
 
 License:        GPLv2+ and MIT
@@ -25,6 +25,7 @@ BuildRequires:  docbook-style-xsl
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-ki18n-devel
 
 BuildRequires:  kf5-karchive-devel
 
@@ -40,6 +41,7 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       kf5-kdoctools-static = %{version}-%{release}
 Requires:       kf5-karchive-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 library to load and install packages as plugins
 
 License:        LGPLv2+
@@ -37,7 +37,6 @@ if they were plugins.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       kf5-kcoreaddons-devel
 
 
 %description    devel

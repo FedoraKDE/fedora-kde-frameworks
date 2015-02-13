@@ -7,7 +7,7 @@
 Name:           kf5-%{framework}
 Summary:        A KDE Frameworks 5 Tier 3 to organize user work into separate activities
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://www.kde.org
@@ -25,9 +25,6 @@ BuildRequires:  boost-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtxmlpatterns-devel
-BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
@@ -58,6 +55,8 @@ Requires:       kf5-filesystem
 %package devel
 Summary:        Developer files for %{name}-libs
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       qt5-qtbase-devel
+
 %description    devel
 %{summary}.
 

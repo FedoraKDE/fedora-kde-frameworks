@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for user-configurable main windows
 
 License:        GPLv2+ and LGPLv2+
@@ -22,7 +22,7 @@ BuildRequires:  libX11-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  qt5-qtprintsupport-devel
 
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kconfig-devel
@@ -47,12 +47,11 @@ Requires:       kf5-kitemviews-devel
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kglobalaccel-devel
 Requires:       kf5-kconfigwidgets-devel
-Requires:       kf5-ki18n-devel
 Requires:       kf5-kiconthemes-devel
 Requires:       kf5-ktextwidgets-devel
-Requires:       kf5-kwidgetsaddons-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-attica-devel
+Requires:       qt5-qtbase-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
