@@ -47,3 +47,21 @@
     -DKF5_LIBEXEC_INSTALL_DIR=%{_kf5_libexecdir} \\\
     -DKF5_INCLUDE_INSTALL_DIR=%{_kf5_includedir} \\\
     -DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+
+# %%find_lang_kf5
+#
+# This macro is used in KDE Frameworks 5 packages instead of %%find_lang,
+# becasue find_lang is broken an it thinks that "_qt" in foobar_qt.qm is
+# the name of the language.
+# This macro should NOT be used with anything else but KDE Frameworks, since
+# it does some assumptions regarding the names and locations and it might not
+# work with other packages.
+# We should eventually get this to RPM, or fix %%find_lang
+#                                                       -- dvratil
+# Usage: find_lang_kf5 fooBar5
+#   - will look for fooBar5_qt.qm files in %%{buildroot}/usr/share/locale/
+#
+%find_lang_kf5() \
+    (find %{buildroot}/%{_datadir}/locale/ -name "%1.qm" -type f | sed ' \
+        s:%{buildroot}/:: \
+        s:%{_datadir}/locale/\\([a-zA-Z_\\@]*\\)/\\([a-zA-Z_]*\\)/%1.qm:%lang(\\1) %{_datadir}/locale/\\1/\\2/%1.qm:' > %1.lang)

@@ -1,8 +1,8 @@
 %global framework karchive
 
 Name:           kf5-%{framework}
-Version:        5.6.0
-Release:        2%{?dist}
+Version:        5.7.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with archive functions
 
 License:        LGPLv2+ and BSD
@@ -52,7 +52,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %post -p /sbin/ldconfig
@@ -71,6 +71,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Wed Jan 21 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-2
 - BR xz-devel instead of lzma-devel
 

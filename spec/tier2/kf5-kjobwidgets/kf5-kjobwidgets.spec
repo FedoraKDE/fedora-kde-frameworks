@@ -1,7 +1,7 @@
 %global framework kjobwidgets
 
 Name:           kf5-%{framework}
-Version:        5.6.0
+Version:        5.7.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for KJobs
 
@@ -56,7 +56,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kjobwidgets5_qt --with-qt --all-name
 
 
@@ -77,6 +77,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 

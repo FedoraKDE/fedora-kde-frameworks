@@ -1,8 +1,8 @@
 %global framework kauth
 
 Name:           kf5-%{framework}
-Version:        5.6.0
-Release:        2%{?dist}
+Version:        5.7.0
+Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 integration module to perform actions as privileged user
 
 License:        LGPLv2+
@@ -16,9 +16,6 @@ URL:            http://www.kde.org
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-
-# https://git.reviewboard.kde.org/r/122029/
-Patch0:		kauth-fix-dbus-helper-service-generator.patch
 
 BuildRequires:  polkit-qt5-1-devel
 
@@ -47,8 +44,6 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{framework}-%{version}
 
-%patch0 -p1 -b .dbushelper
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -60,7 +55,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kauth5_qt --with-qt --all-name
 
 
@@ -85,6 +80,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Fri Jan 16 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-2
 - Add upstream patch to fix generating of DBus helper service files
 

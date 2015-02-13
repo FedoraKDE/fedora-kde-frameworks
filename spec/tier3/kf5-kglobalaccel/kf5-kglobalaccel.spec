@@ -1,9 +1,9 @@
 %global framework kglobalaccel
 
 Name:           kf5-%{framework}
-Version:        5.6.0
+Version:        5.7.0
 Release:        1%{?dist}
-Summary:        KDE Frameworks 5 Tier 1 integration module for global shortcuts
+Summary:        KDE Frameworks 5 Tier 3 integration module for global shortcuts
 
 License:        LGPLv2+
 URL:            http://www.kde.org
@@ -19,22 +19,40 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 
 BuildRequires:  libX11-devel
 
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
 
-BuildRequires:  kf5-rpm-macros
-BuildRequires:  extra-cmake-modules
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kcrash-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kwindowsystem-devel
+
+BuildRequires:  libxcb-devel
+BuildRequires:  xcb-util-keysyms-devel
 
 Requires:       kf5-filesystem
+
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 KDE Framework 5 Tier 1 integration module for global shortcuts.
 
+%package        libs
+Summary:        Runtime libraries for %{name}
+# Before -libs were created
+Conflicts:      kf5-kglobalaccel < 5.7.0
+%description    libs
+%{summary}.
 
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -53,19 +71,25 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
-%find_lang kglobalaccel5_qt --with-qt --all-name
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%find_lang_kf5 kglobalaccel5
+%find_lang_kf5 kglobalaccel5_qt
 
-%files -f kglobalaccel5_qt.lang
+%files -f kglobalaccel5.lang
 %doc COPYING.LIB README.md
+%{_kf5_bindir}/kglobalaccel5
+%{_kf5_datadir}/kservices5/kglobalaccel5.desktop
+%{_datadir}/dbus-1/services/org.kde.kglobalaccel.service
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
+%files libs -f kglobalaccel5_qt.lang
 %{_kf5_libdir}/libKF5GlobalAccel.so.*
 
 %files devel
-%doc
 %{_kf5_includedir}/kglobalaccel_version.h
 %{_kf5_includedir}/KGlobalAccel/
 %{_kf5_libdir}/libKF5GlobalAccel.so
@@ -75,6 +99,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 

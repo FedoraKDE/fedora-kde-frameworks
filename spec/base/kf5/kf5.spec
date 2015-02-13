@@ -1,6 +1,6 @@
 Name:           kf5
-Version:        5.6.0
-Release:        1%{?dist}
+Version:        5.7.0
+Release:        4%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 BuildArch:      noarch
 License:        BSD
@@ -43,6 +43,12 @@ install -pm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d
 
 
 %changelog
+* Tue Feb 10 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-2
+- add %%find_lang_kf5 macro to macros.kf5 to workaround %%find_lang bugs
+
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 

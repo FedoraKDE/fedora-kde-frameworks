@@ -1,7 +1,7 @@
 %global framework kio
 
 Name:           kf5-%{framework}
-Version:        5.6.0
+Version:        5.7.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
@@ -158,7 +158,7 @@ popd
 make %{?_smp_mflags} -C %{_target_platform}
 
 %install
-%make_install -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang kio5 --with-qt --all-name
 
 %files
@@ -175,6 +175,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_libexecdir}/kpac_dhcp_helper
 %{_kf5_libexecdir}/kioexec
 %{_kf5_libexecdir}/kioslave
+%{_kf5_libexecdir}/kiod5
 %{_kf5_bindir}/ktelnetservice5
 %{_kf5_bindir}/kcookiejar5
 %{_kf5_bindir}/kmailservice5
@@ -183,6 +184,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_plugindir}/kded/*.so
 %{_kf5_qtplugindir}/kcm_kio.so
 %{_kf5_qtplugindir}/kcm_trash.so
+%dir %{_kf5_plugindir}/kiod
 %{_kf5_datadir}/kservices5/cache.desktop
 %{_kf5_datadir}/kservices5/cookies.desktop
 %{_kf5_datadir}/kservices5/netpref.desktop
@@ -194,10 +196,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservices5/kcmtrash.desktop
 %{_kf5_datadir}/kservices5/useragentstrings
-%{_kf5_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/knotifications5/proxyscout.*
 %{_kf5_datadir}/kf5/kcookiejar/domain_info
 %{_kf5_datadir}/applications/*.desktop
+%{_datadir}/dbus-1/services/org.kde.kiod5.service
 
 %post core-libs -p /sbin/ldconfig
 %postun core-libs -p /sbin/ldconfig
@@ -249,6 +251,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_KIOFileWidgets.pri
 %{_kf5_archdatadir}/mkspecs/modules/qt_KNTLM.pri
 %{_kf5_archdatadir}/mkspecs/modules/qt_KIOWidgets.pri
+%{_datadir}/dbus-1/interfaces/*.xml
 
 %files doc
 %{_kf5_mandir}/man8/*
@@ -258,6 +261,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Thu Jan 08 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
 

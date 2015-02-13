@@ -1,7 +1,7 @@
 %define framework kpackage
 
 Name:           kf5-%{framework}
-Version:        5.6.0
+Version:        5.7.0
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 library to load and install packages as plugins
 
@@ -67,16 +67,18 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5Package.so.*
 %{_kf5_bindir}/kpackagetool5
 %{_kf5_datadir}/kservicetypes5/kpackage-packagestructure.desktop
-%{_mandir}/man1/kpackagetool.1.gz
+%{_mandir}/man1/kpackagetool5.1.gz
 
 %files devel
 %{_kf5_includedir}/kpackage_version.h
 %{_kf5_includedir}/KPackage
-%{_kf5_includedir}/kpackage
 %{_kf5_libdir}/libKF5Package.so
 %{_kf5_libdir}/cmake/KF5Package
 
 
 %changelog
+* Mon Feb 09 2015 Daniel Vrátil <dvratil@redhat.com> - 5.7.0-1
+- KDE Frameworks 5.7.0
+
 * Tue Jan 06 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.0-1
 - KDE Frameworks 5.6.0
