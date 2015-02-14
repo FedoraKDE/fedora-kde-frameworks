@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 
 # Those are frameworks that don't have "K" prefix
-_KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver" ]
+_KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver", "plasma", "networkmanager-qt" ]
 
 _IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel", "qt5-qtmacextas-devel" ]
 
@@ -31,6 +31,7 @@ def cmakeName2PkgName(cmakeName, prefix = None):
         else:
             fwname = cmakeName
     else:
+        prefix = prefix.lower()
         fwname = cmakeName
 
     if prefix == "kf5":
@@ -128,6 +129,8 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
         elif line.startswith("%package") and not line.endswith("devel"):
             inMain = False
             inDevel = False
+        elif inMain and line.startswith("%description"):
+            inMain = False
 
         if inMain:
             if line.startswith("BuildRequires:"):
@@ -135,7 +138,6 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
                 if br:
                     if br.startswith("kf5-"):
                         inKF5Requires = True
-
                     if br in depsRemove:
                         continue
 
@@ -150,7 +152,6 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
                 else:
                     out.append(origLine)
 
-                inMain = False
                 inKF5Requires = False
             else:
                 out.append(origLine)
@@ -194,19 +195,18 @@ def parseBuildDeps(cmakeFile):
     deps = []
     for line in f:
         line = line.strip()
-        if line.startswith("find_package("):
-            macro = "find_package"
-        elif line.startswith("find_dependency("):
-            macro = "find_dependency"
+        macroMatches = re.match(r"^(find_package|find_dependency)[\ ]*\([\ ]*(Qt5|KF5)([\ ]*)", line)
+        if macroMatches:
+            macro = macroMatches.groups(1)[0]
+            prefix = macroMatches.groups(1)[1]
+            isComponent = (macroMatches.groups(1)[2] == ' ')
         else:
             macro = None
+            prefix = None
+            isComponent = False
 
-        if macro and line.startswith("%s(KF5 " % macro) or line.startswith("%s(Qt5 " % macro):
-            if line.startswith("%s(KF5 " % macro):
-                prefix = "kf5"
-            else:
-                prefix = "qt5"
-            matches = re.search(r"%s\((.*)\)" % macro, line)
+        if macro and prefix and isComponent:
+            matches = re.search(r"%s[\ ]*\((.*)\)" % macro, line)
             if matches:
                 match = matches.groups(1)[0]
                 matchList = match.split(' ')
@@ -220,8 +220,8 @@ def parseBuildDeps(cmakeFile):
                         if name not in _IgnoredDeps:
                             deps.append(name)
 
-        elif macro and line.startswith("%s(KF5" % macro) or line.startswith("%s(Qt5" % macro):
-            matches = re.search(r"%s\(([\w0-9]+)\ .*\)" % macro, line)
+        elif macro and prefix and not isComponent:
+            matches = re.search(r"%s[\ ]*\(([\w0-9]+)\ .*\)" % macro, line)
             if matches:
                 match = matches.groups(1)[0]
                 name = cmakeName2PkgName(match)
@@ -229,6 +229,10 @@ def parseBuildDeps(cmakeFile):
                     name = "%s-devel" % name
                 if name not in _IgnoredDeps:
                     deps.append(name)
+        elif not macro and line.startswith("ecm_install_po_files_as_qm"):
+                # Needed for localization
+                deps.append("qt5-qttools")
+
 
     return deps
 
