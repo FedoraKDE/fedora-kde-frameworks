@@ -195,6 +195,7 @@ def parseBuildDeps(cmakeFile):
     deps = []
     for line in f:
         line = line.strip()
+        # The last group ([\ ]*) is important as we use it to distinguish find_package(Qt5Foo ...) and find_package(Qt5 ... Foo Bar)
         macroMatches = re.match(r"^(find_package|find_dependency)[\ ]*\([\ ]*(Qt5|KF5)([\ ]*)", line)
         if macroMatches:
             macro = macroMatches.groups(1)[0]
@@ -205,14 +206,16 @@ def parseBuildDeps(cmakeFile):
             prefix = None
             isComponent = False
 
+        # Handle find_package(Qt5 ... Foo Bar ...)
         if macro and prefix and isComponent:
+            # Match the entire string within parenthesis, split it by space
             matches = re.search(r"%s[\ ]*\((.*)\)" % macro, line)
             if matches:
                 match = matches.groups(1)[0]
                 matchList = match.split(' ')
                 for m in matchList:
-                    # First regexp: match @FOO@ or ${FOO}, also with quotes when present
-                    # Second regexp: match version number
+                    # Skip CMake keywords, version numbers and variable names (that's the huge regexp
+                    # to match ${FOO} and @FOO@ both with and without quotes
                     if not (m == "KF5" or m == "Qt5" or m in _FindPackageKeywords or re.match(r"[\"]*(?:@|\${)[a-zA-Z0-9\-\_]*(?:@|})[\"]*", m) or re.match(r"[0-9\.]+", m)):
                         name = cmakeName2PkgName(m, prefix)
                         if not name in _NoDevelSuffix:
@@ -220,7 +223,9 @@ def parseBuildDeps(cmakeFile):
                         if name not in _IgnoredDeps:
                             deps.append(name)
 
+        # Handle find_package(Qt5Foo ...)
         elif macro and prefix and not isComponent:
+            # Match the first word in parenthesis, which is name of the module
             matches = re.search(r"%s[\ ]*\(([\w0-9]+)\ .*\)" % macro, line)
             if matches:
                 match = matches.groups(1)[0]
@@ -229,9 +234,10 @@ def parseBuildDeps(cmakeFile):
                     name = "%s-devel" % name
                 if name not in _IgnoredDeps:
                     deps.append(name)
-        elif not macro and line.startswith("ecm_install_po_files_as_qm"):
-                # Needed for localization
-                deps.append("qt5-qttools")
+
+        # Look for inclusion of ECMPoQmTools, which requires qt5-qttools-devel installed
+        elif not macro and re.match("^include[\ ]*\([\ ]*ECMPoQmTools[\ ]*\)", line):
+                deps.append("qt5-qttools-devel")
 
 
     return deps
@@ -251,38 +257,52 @@ def main():
     currentDeps = [];
     currentDevelDeps = []
 
+    # Parse the SPEC file
     for line in f:
         line = line.strip()
+        # Parse all BR that start with qt5- or kf5-
         if line.startswith("BuildRequires:"):
             dep = line.rsplit(' ', 1)[1]
             if dep.startswith("qt5-") or dep.startswith("kf5-") and dep not in _IgnoredDeps:
                 currentDeps.append(dep);
             continue
 
+        # Detect beginning of -devel subpackage
         if not inPkgDevel:
             if line.startswith("%package") and line.endswith("devel"):
                 inPkgDevel = True
                 continue
         else:
+            # Parse all qt5- or kf5- Requires within -devel subpackage
             if line.startswith("Requires:"):
                 dep = line.rsplit(' ', 1)[1]
                 if dep.startswith("qt5-") or dep.startswith("kf5-"):
                     currentDevelDeps.append(dep);
+            # Reaching %description macro within -devel subpackage means end of -devel
             elif line.startswith("%description"):
                 inPkgDevel = False
 
+        # Detect beginning of %files devel segment
         if not inFilesDevel:
-            if line.startswith("%files devel"):
+            if re.match(r"%files[\ ]+devel", line):
                 inFilesDevel = True
                 continue
         else:
-            if line.startswith("%{_kf5_libdir}/cmake/"):
-                if line.endswith('/'):
-                    line = line[0:-1]
-                cmakeName = line.rsplit('/', 1)[1]
+            # Don't attempt to parse %changelog, it can contain all kinds of tricky stuff
+            # We can simply stop parsing the spec file here, as there nothing interesting
+            # for us beyond %changelog.
+            if line.startswith("%changelog"):
                 break;
-            elif line.startswith("%files") or line.startswith("%changelog"):
-                inFilesDevel = False
+
+            # Match FooBar from %{_kf5_libdir}/cmake/FooBar
+            # This is the only "clever" way how to get the name of the actual
+            # CMake module.
+            m = re.search(r"%{_kf5_libdir}/cmake/([\w]+)[/]*", line)
+            if m:
+                cmakeName = m.groups(1)[0]
+                # This is the last thing we need from this loop
+                break
+
 
     if not cmakeName:
         print("Failed to detect CMake name for %s" % args.specfile)
