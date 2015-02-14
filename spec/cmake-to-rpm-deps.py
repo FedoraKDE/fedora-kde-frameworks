@@ -126,6 +126,12 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
     for line in f:
         origLine = line
         line = line.strip()
+
+        # Copy commented lines as they are, don't attempt to parse them
+        if line.statswith("#"):
+            out.append(origLine)
+            continue
+
         if line.startswith("%package") and line.endswith("devel"):
             inMain = False
             inDevel = True
@@ -198,6 +204,11 @@ def parseBuildDeps(cmakeFile):
     deps = []
     for line in f:
         line = line.strip()
+
+        # Skip comments
+        if (line.startswith("#"):
+            continue
+
         # The last group ([\ ]*) is important as we use it to distinguish find_package(Qt5Foo ...) and find_package(Qt5 ... Foo Bar)
         macroMatches = re.match(r"^(find_package|find_dependency)[\ ]*\([\ ]*(Qt5|KF5)([\ ]*)", line)
         if macroMatches:
@@ -263,6 +274,11 @@ def main():
     # Parse the SPEC file
     for line in f:
         line = line.strip()
+
+        # Skip comments
+        if line.startswith("#"):
+            continue;
+
         # Parse all BR that start with qt5- or kf5-
         if line.startswith("BuildRequires:"):
             dep = line.rsplit(' ', 1)[1]
