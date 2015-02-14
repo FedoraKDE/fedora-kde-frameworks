@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 addon with item views
 
 License:        GPLv2+ and LGPLv2+
@@ -20,6 +20,7 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools
 
 Requires:       kf5-filesystem
 

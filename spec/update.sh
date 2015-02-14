@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VERSION="5.7.0"
-RELEASE="2"
+RELEASE="3"
 CHANGELOG="KDE Frameworks ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
 

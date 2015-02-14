@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 addon for Qt declarative
 
 License:        GPLv2+ and MIT
@@ -28,7 +28,6 @@ BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kglobalaccel-devel
-BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kguiaddons-devel
 BuildRequires:  kf5-kio-devel
 

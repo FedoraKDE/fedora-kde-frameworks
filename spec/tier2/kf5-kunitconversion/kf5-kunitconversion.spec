@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 2 addon for unit conversions
 
 License:        LGPLv2+
@@ -22,7 +22,6 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kconfig-devel
 
 Requires:       kf5-filesystem
 

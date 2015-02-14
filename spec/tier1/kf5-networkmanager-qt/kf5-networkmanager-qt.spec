@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A Tier 1 KDE Frameworks 5 module that wraps NetworkManager DBus API
 
 Group:          System Environment/Libraries

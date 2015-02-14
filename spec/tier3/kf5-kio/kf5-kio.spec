@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for filesystem abstraction
 
 License:        GPLv2+ and MIT and BSD
@@ -28,7 +28,6 @@ BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kbookmarks-devel
-BuildRequires:  kf5-kcodecs-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -39,13 +38,10 @@ BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kjobwidgets-devel
-BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kwallet-devel
 
 Requires:       kf5-filesystem
 

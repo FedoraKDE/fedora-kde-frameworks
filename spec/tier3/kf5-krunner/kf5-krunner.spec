@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution with parallelized query system
 
 License:        LGPLv2+ and BSD
@@ -22,7 +22,6 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-kplasma-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kcoreaddons-devel
@@ -41,7 +40,7 @@ KRunner provides a parallelized query system extendable via plugins.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       qt5-qtbase-devel
-Requires:       kf5-kplasma-devel
+Requires:       kf5-plasma-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

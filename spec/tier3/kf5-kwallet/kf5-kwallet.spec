@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 3 solution for password management
 
 License:        LGPLv2+
@@ -24,13 +24,7 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-knotifications-devel
-BuildRequires:  kf5-kservice-devel
-BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}

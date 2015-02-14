@@ -2,7 +2,7 @@
 
 Name:           kf5-%{framework}
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks 5 Tier 1 solution for spell checking
 
 License:        LGPLv2+
@@ -25,6 +25,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qttools
 
 Requires:       kf5-filesystem
 Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}

@@ -2,7 +2,7 @@
 
 Name:           kf5-attica
 Version:        5.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        KDE Frameworks Tier 1 Addon with Open Collaboration Services API
 
 Group:          Development/Libraries
