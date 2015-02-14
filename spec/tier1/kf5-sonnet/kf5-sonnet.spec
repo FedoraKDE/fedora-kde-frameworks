@@ -25,7 +25,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qttools
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 Requires:       kf5-sonnet-core%{?_isa} = %{version}-%{release}

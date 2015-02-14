@@ -25,7 +25,7 @@ BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  dbusmenu-qt5-devel
-BuildRequires:  qt5-qttools
+BuildRequires:  qt5-qttools-devel
 
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kservice-devel

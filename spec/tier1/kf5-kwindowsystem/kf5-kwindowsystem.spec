@@ -24,7 +24,7 @@ BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  libX11-devel
 BuildRequires:  xcb-util-keysyms-devel
 BuildRequires:  libXrender-devel
-BuildRequires:  qt5-qttools
+BuildRequires:  qt5-qttools-devel
 
 Requires:       kf5-filesystem
 
