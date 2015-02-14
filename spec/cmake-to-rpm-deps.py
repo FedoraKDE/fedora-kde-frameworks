@@ -11,11 +11,13 @@ import tempfile
 # Those are frameworks that don't have "K" prefix
 _KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver", "plasma", "networkmanager-qt" ]
 
+# Stuff that matches our filters, but must be ommitted
 _IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel", "qt5-qtmacextas-devel" ]
 
+# Stuff that breaks our assumption that all BR must have -devel suffix
 _NoDevelSuffix = [ "qt5-qttools-static" ]
 
-# http://www.cmake.org/cmake/help/v3.0/command/find_package.html
+# http://www.cmake.org/cmake/help/v3.0/command/find_package.html + some more custom keywords
 _FindPackageKeywords = [ "EXACT", "QUIET", "MODULE", "REQUIRED",  "COMPONENTS",
                          "CONFIG", "NO_MODULE", "OPTIONAL_COMPONENTS", "NO_POLICY_SCOPE" ]
 
@@ -64,6 +66,7 @@ def cmakeName2PkgName(cmakeName, prefix = None):
 
 
 def getSource(specfile):
+    # TODO: Download the file when necessary
     p = subprocess.Popen([ "spectool", "-s", "0", specfile ], stdout=subprocess.PIPE)
     out = p.communicate()
     filename = out[0].decode('UTF-8').strip().rsplit('/', 1)[1]
@@ -81,22 +84,22 @@ def extractSource(source):
     return tmpdir
 
 def cleanupSource(sourceDir):
+    # TODO: Moar safety
     subprocess.call([ "rm", "-rf", sourceDir ])
 
+def _findCMakeFile(sources, filename):
+    matches = []
+    for dirpath, dirnames, filenames in os.walk(sources):
+        if filename in filenames:
+            matches.append(os.path.join(dirpath, filename))
+    return matches
 
 def findCMakeConfigFile(sources, moduleName):
-    name = "%sConfig.cmake.in" % moduleName
-    for dirpath, dirnames, filenames in os.walk(sources):
-        if name in filenames:
-            return os.path.join(dirpath, name)
-    return None
+    matches = _findCMakeFile(sources, "%sConfig.cmake.in" % moduleName)
+    return matches[0] if matches else None
 
-def findCMakeListsFile(sources):
-    name = "CMakeLists.txt"
-    for dirpath, dirnames, filenames in os.walk(sources):
-        if name in filenames:
-            return os.path.join(dirpath, name)
-    return None
+def findCMakeListsFiles(sources):
+    return _findCMakeFile(sources, "CMakeLists.txt")
 
 
 def parseRequires(requires, buildRequires = False):
@@ -320,14 +323,19 @@ def main():
     if not cmakeConfigFile:
         print("Failed to find CMake config file")
         return
+    develDeps = parseBuildDeps(cmakeConfigFile)
 
-    cmakeListsFile = findCMakeListsFile(srcDir)
-    if not cmakeListsFile:
+    cmakeListsFiles = findCMakeListsFiles(srcDir)
+    if not cmakeListsFiles:
         print("Failed to find CMakeLists.txt file")
         return
 
-    develDeps = parseBuildDeps(cmakeConfigFile)
-    deps = parseBuildDeps(cmakeListsFile)
+    deps = []
+    # We need to iterate through all CMakeLists.txt files, since some
+    # dependencies might be listed there too
+    for cmakeListsFile in cmakeListsFiles:
+        deps = deps + parseBuildDeps(cmakeListsFile)
+
 
     cleanupSource(srcDir)
 
