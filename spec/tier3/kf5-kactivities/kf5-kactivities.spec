@@ -26,6 +26,16 @@ BuildRequires:  boost-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kservice-devel
+BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kdeclarative-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-kcmutils-devel
 
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-ki18n-devel

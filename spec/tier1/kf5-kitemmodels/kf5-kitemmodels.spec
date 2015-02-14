@@ -20,6 +20,7 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtscript-devel
 
 Requires:       kf5-filesystem
 

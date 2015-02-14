@@ -21,6 +21,12 @@ BuildRequires:  libgcrypt-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-kcoreaddons-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kdbusaddons-devel
+BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kservice-devel
 
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kwindowsystem-devel
@@ -52,7 +58,6 @@ Provides a runtime deamon that stores passwords.
 Summary:        Development files for %{name}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
-Requires:       kf5-kwindowsystem-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       qt5-qtbase-devel
 

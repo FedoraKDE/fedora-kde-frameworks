@@ -26,6 +26,7 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kdoctools-devel
 
 BuildRequires:  kf5-karchive-devel
 

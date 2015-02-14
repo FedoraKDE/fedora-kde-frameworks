@@ -21,6 +21,10 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  phonon-qt5-devel
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-knotifications-devel
+BuildRequires:  kf5-kwidgetsaddons-devel
+BuildRequires:  kf5-kconfigwidgets-devel
+BuildRequires:  kf5-kxmlgui-devel
 
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel

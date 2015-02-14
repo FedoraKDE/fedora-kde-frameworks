@@ -24,6 +24,7 @@ BuildRequires:  xz-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-karchive-devel
 
 Requires:       kf5-filesystem
 

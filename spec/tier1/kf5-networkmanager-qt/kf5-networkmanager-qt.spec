@@ -21,6 +21,7 @@ Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{fra
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  kf5-knetworkmanagerqt-devel
 
 BuildRequires:  pkgconfig(NetworkManager) >= 0.9.8
 BuildRequires:  pkgconfig(libnm-glib) pkgconfig(libnm-util)
