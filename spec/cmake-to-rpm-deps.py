@@ -12,7 +12,9 @@ import tempfile
 _KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver", "plasma", "networkmanager-qt" ]
 
 # Stuff that matches our filters, but must be ommitted
-_IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel", "qt5-qtmacextas-devel" ]
+# - kf5-kdelibs4support-devel is listed because no frameworks are allowed to depend on KDELibs4Support,
+#   but from time to time there's a dep in a disabled (unported) subfolder, which we cannot distinguish easilly
+_IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel", "qt5-qtmacextas-devel", "kf5-kdelibs4support-devel" ]
 
 # Stuff that breaks our assumption that all BR must have -devel suffix
 _NoDevelSuffix = [ "qt5-qttools-static" ]
@@ -37,6 +39,13 @@ def cmakeName2PkgName(cmakeName, prefix = None):
         fwname = cmakeName
 
     if prefix == "kf5":
+        # Handle legacy KDE4Support -> KdeLibs4Support rename
+        if fwname == "kde4support":
+            fwname = "kdelibs4support"
+        # Handle "KF5Su" -> "KF5KDESu"
+        elif fwname == "su":
+            fwname ="kdesu"
+
         if (not fwname in _KExceptions) and (not fwname[0] == 'k'):
             fwname = "k%s" % fwname
 
@@ -44,7 +53,7 @@ def cmakeName2PkgName(cmakeName, prefix = None):
 
     elif prefix == "qt5":
         # Fedora-specific mapping of Qt5 modules to package names
-        if fwname in [ "concurrent", "core", "dbus", "gui", "network", "sql", "widgets", "xml", "test" ]:
+        if fwname in [ "concurrent", "core", "dbus", "gui", "network", "sql", "widgets", "xml", "test", "printsupport" ]:
             fwname = "qtbase"
         elif fwname in [ "qml", "quick", "quickwidgets" ]:
             fwname = "qtdeclarative"
@@ -108,7 +117,7 @@ def parseRequires(requires, buildRequires = False):
     else:
         keyword = "Requires"
 
-    matches = re.match(r"%s:[\ ]*([\w0-9\-_]+)[.]*" % keyword, requires)
+    matches = re.match(r"%s:[\ ]*([\w\-]+)[.]*" % keyword, requires)
     if matches:
         match = matches.groups(1)[0]
         return match
@@ -128,7 +137,7 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
         line = line.strip()
 
         # Copy commented lines as they are, don't attempt to parse them
-        if line.statswith("#"):
+        if line.startswith("#"):
             out.append(origLine)
             continue
 
@@ -199,15 +208,22 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
         f.write(line)
 
 
-def parseBuildDeps(cmakeFile):
+def parseBuildDeps(cmakeFile, variablesDict = None):
     f = open(cmakeFile, 'r')
     deps = []
+    if not variablesDict:
+        variablesDict = {}
     for line in f:
         line = line.strip()
 
         # Skip comments
-        if (line.startswith("#"):
+        if line.startswith("#"):
             continue
+
+        matchVariable = re.match(r"^set[\ ]*\(([\w\-]+)[\ ]+[\"]*([\w\.\-]+)[\"]*[\ ]*[.]*\)", line)
+        if matchVariable:
+            variablesDict[matchVariable.groups(1)[0]] = matchVariable.groups(1)[1]
+
 
         # The last group ([\ ]*) is important as we use it to distinguish find_package(Qt5Foo ...) and find_package(Qt5 ... Foo Bar)
         macroMatches = re.match(r"^(find_package|find_dependency)[\ ]*\([\ ]*(Qt5|KF5)([\ ]*)", line)
@@ -230,7 +246,18 @@ def parseBuildDeps(cmakeFile):
                 for m in matchList:
                     # Skip CMake keywords, version numbers and variable names (that's the huge regexp
                     # to match ${FOO} and @FOO@ both with and without quotes
-                    if not (m == "KF5" or m == "Qt5" or m in _FindPackageKeywords or re.match(r"[\"]*(?:@|\${)[a-zA-Z0-9\-\_]*(?:@|})[\"]*", m) or re.match(r"[0-9\.]+", m)):
+                    variableMatch = re.search(r"[\"]*((?:@|\${)([\w\-]+)(?:@|}))[\"]*", m)
+                    if variableMatch:
+                        varStr = variableMatch.group(1)[0]
+                        varName = variableMatch.group(1)[1]
+                        # TODO: Replace variables, parse versions from "m" and store
+                        # touple (name, version) in deps.
+                        # TODO: Also make sure that this method returns touple (deps, variablesDict),
+                        # so that we can pass the variables again to next call
+                        print("Group 1: %s" % variableMatch.groups(1)[0])
+                        print("Group 2: %s" % variableMatch.groups(1)[1])
+
+                    if not (m == "KF5" or m == "Qt5" or m in _FindPackageKeywords or re.match(r"[\"]*(?:@|\${)[\w\-]*(?:@|})[\"]*", m) or re.match(r"[0-9\.]+", m)):
                         name = cmakeName2PkgName(m, prefix)
                         if not name in _NoDevelSuffix:
                             name = "%s-devel" % name
@@ -240,7 +267,7 @@ def parseBuildDeps(cmakeFile):
         # Handle find_package(Qt5Foo ...)
         elif macro and prefix and not isComponent:
             # Match the first word in parenthesis, which is name of the module
-            matches = re.search(r"%s[\ ]*\(([\w0-9]+)\ .*\)" % macro, line)
+            matches = re.search(r"%s[\ ]*\(([\w]+)\ .*\)" % macro, line)
             if matches:
                 match = matches.groups(1)[0]
                 name = cmakeName2PkgName(match)
