@@ -175,6 +175,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_qtplugindir}/kcm_kio.so
 %{_kf5_qtplugindir}/kcm_trash.so
 %dir %{_kf5_plugindir}/kiod
+%{_kf5_plugindir}/kiod/*.so
 %{_kf5_datadir}/kservices5/cache.desktop
 %{_kf5_datadir}/kservices5/cookies.desktop
 %{_kf5_datadir}/kservices5/netpref.desktop

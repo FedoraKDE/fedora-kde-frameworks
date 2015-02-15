@@ -68,9 +68,10 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang kdoctools5_qt --with-qt --with-man --with-kde --all-name
 
 
-%files
+%files -f kdoctools5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_bindir}/checkXML5
 %{_kf5_bindir}/meinproc5

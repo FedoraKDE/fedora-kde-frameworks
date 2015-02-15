@@ -27,7 +27,6 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qttools-devel
-BuildRequires:  qt5-qtprintsupport-devel
 
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
@@ -93,7 +92,6 @@ Requires:       kf5-ktextwidgets-devel
 Requires:       kf5-kunitconversion-devel
 Requires:       kf5-kwindowsystem-devel
 Requires:       qt5-qtbase-devel
-Requires:       qt5-qtprintsupport-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for

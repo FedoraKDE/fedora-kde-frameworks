@@ -22,7 +22,6 @@ BuildRequires:  libX11-devel
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtprintsupport-devel
 
 BuildRequires:  kf5-kitemviews-devel
 BuildRequires:  kf5-kconfig-devel

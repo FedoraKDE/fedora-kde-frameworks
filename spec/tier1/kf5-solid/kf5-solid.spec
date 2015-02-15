@@ -26,7 +26,15 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-devel
 BuildRequires:  qt5-qtdeclarative-devel
 
+# Solid predicate parsers
+BuildRequires:  flex
+BuildRequires:  bison
+
+# Runtime dep to identify portable media players
+BuildRequires:  media-player-info
+
 Requires:       kf5-filesystem
+Requires:       media-player-info
 
 Provides:       %{name}-runtime = %{version}-%{release}
 Provides:       %{name}-runtime%{?_isa} = %{version}-%{release}

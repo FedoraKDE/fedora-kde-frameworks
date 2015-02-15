@@ -53,8 +53,7 @@ BuildRequires:  kf5-kpackage-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-kde4support-devel
-BuildRequires:  kf5-ksu-devel
+BuildRequires:  kf5-kdesu-devel
 BuildRequires:  kf5-kparts-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 

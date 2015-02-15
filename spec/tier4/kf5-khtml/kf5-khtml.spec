@@ -30,7 +30,6 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  phonon-qt5-devel
-BuildRequires:  qt5-qtprintsupport-devel
 
 BuildRequires:  kf5-karchive-devel
 BuildRequires:  kf5-kcodecs-devel
