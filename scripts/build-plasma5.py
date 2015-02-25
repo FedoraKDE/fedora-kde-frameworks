@@ -72,7 +72,7 @@ groups = [ group1,
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pkgroot', default=os.getcwd()
+    parser.add_argument('--pkgroot', default=os.getcwd(),
                         help='Root directory where all fedpkg clones are')
     parser.add_argument('--resume-from',
                         help='Resume build from specified package, skipping all previous packages')
@@ -80,12 +80,17 @@ def main():
                         help='Exclude certain package from build. Can be used multiple times. Can be combined with --resume-from')
     parser.add_argument('target',
                         help='Koji target to build into')
+    parser.add_argument('branch',
+                        help='Distgit branch to build from')
 
     args = parser.parse_args()
 
-    branch = None
-    if args.target.startswith('f23'):
-        branch = 'master'
+    branch = args.branch
+    if not branch:
+        if args.target.startswith('f23'):
+            branch = 'master'
+        else:
+            branch = args.target
 
     packages = []
     skipPackages = (args.resume_from != None)
@@ -111,7 +116,7 @@ def main():
     print('Packages to build: %s' % ' '.join(packages))
     print('Koji Target: %s' % args.target)
     print('Branch: %s' % branch)
-    print('Chainbuild package: %s' % lastPkg)
+    print('Chainbuild package: %s/%s' % (args.pkgroot, lastPkg))
 
     proceed = input('Proceed? [Y/n] ')
     if proceed.lower() == 'n':
