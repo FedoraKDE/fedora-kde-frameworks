@@ -80,7 +80,7 @@ def main():
                         help='Exclude certain package from build. Can be used multiple times. Can be combined with --resume-from')
     parser.add_argument('target',
                         help='Koji target to build into')
-    parser.add_argument('branch',
+    parser.add_argument('--branch',
                         help='Distgit branch to build from')
 
     args = parser.parse_args()
