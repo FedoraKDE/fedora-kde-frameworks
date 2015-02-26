@@ -1,0 +1,87 @@
+## init-kf5.py ##
+
+Clones all KDE Frameworks 5 packages from distgit and split them to
+tier{1,2,3,4} subfolders. Also clones kf5 and extra-cmake-modules packages
+to the top-level directory.
+
+The script will automatically retrieve list of all KDE Frameworks available
+in upstream git, and will clone their respective Fedora packages
+
+
+
+## iniy-plasma5.py ##
+
+Clones all Plasma 5 packages available in Fedora. The script will get list
+of all modules in kde/workspace upstream git tree and receive their respective
+Fedora packages. Some upstream modules are blacklisted in the script, as they
+are not packaged in Fedora right now.
+
+
+
+## update-kf5.sh ##
+
+Simple shell script that will update Version, Release and add a new changelog
+entry into all KF5 SPEC files. It will also download new source tarballs and
+upload them to Fedora look-aside cache (fedpkg new-sources), commit the new
+changes, merge to all release branches and push the changes to distgit.
+
+Note that variables in the script has to be modified before every run to required
+version numbers.
+
+
+
+## update-plasma5.py ##
+
+Smarter version of update-kf5.sh. All values are passed as command line arguments,
+so there is no need to modify the script.
+
+The script will update Version, Release and add a new changelog entry into the SPEC
+files. It will also download new source tarballs and upload them to Fedora look-aside
+cache (fedpkg new-sources), commit the new changes, merge to all release branches and
+push the changes to distgit. The script will preview the changes before every step and
+ask for confirmation to continue, so that it can be interrupted at any point when something
+goes wrong.
+
+The script allows certain packages to be exluded from the update, and is also able to
+preserve/skip packages which are git snapshots, not stable releases.
+
+See update-plasma5.py --help for details.
+
+
+
+## build-kf5.sh ##
+
+A simple shell script that will start chainbuild of all Frameworks in Koji. The script
+contains pre-defined groups in which the chainbuild should be executed to make sure all
+dependencies are satisfied.
+
+
+
+## build-plasma5.py ##
+
+Same as build-kf5.sh, just for Plasma 5. It's a bit smarter, so in case of failure it
+allows to continue from any package, or to explicitly exclude package(s) from the chainbuild.
+
+
+
+## tag-kf5.py ##
+
+A script to mass-tag KF5 packages. The script will list all packages in specified Koji tag and
+will extract latest builds of all KF5 packages from the list and tag these packages into specified
+tag.
+
+See tag-kf5.py --help for details.
+
+
+
+## cmake-to-rpm-deps.py ##
+
+This script will parse given SPEC file (currently works only with KF5 packages SPEC files) and
+get list of BuildRequires, and -devel Requires. Then it retrieves source tarball and analyzes
+all CMakeLists.txt files in order to extract real upstream dependencies. Then it will compare
+them with the dependencies extracted from SPEC file and will adjust the BuildRequires and Requires
+in the SPEC file.
+
+Note that the script will only detect Qt and other KF5 dependencies, it does not work with
+generic system libraries dependencies (their CMake names cannot be reliably mapped to Fedora
+package names).
