@@ -106,7 +106,9 @@ def main():
                 continue
 
             packages.append(pkg)
-        packages.append(':')
+        if len(packages) > 0:
+            if packages[-1] != ':':
+                packages.append(':')
 
     # Drop the trailing colon
     packages.pop()
