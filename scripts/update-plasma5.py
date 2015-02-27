@@ -220,7 +220,7 @@ def main():
     if not args.changelog:
         args.changelog = 'Plasma %s' % args.version
 
-    p = subprocess.Popen(['ssh-add', '~/.ssh/id_rsa.redhat'])
+    p = subprocess.Popen(['ssh-add', '/home/dvratil/.ssh/id_rsa.redhat'])
     p.communicate()
 
 
