@@ -1,10 +1,10 @@
-%global         git_date    20150122
-%global         git_commit  f548510
+%global         git_date    20150305
+%global         git_commit  9b7224d
 
 
 Name:           ktp-approver
 Summary:        KDE Channel Approver for Telepathy
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
@@ -61,6 +61,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git9b7224d
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122gitf548510
 - Update to experimental KF5 version
 

@@ -1,9 +1,9 @@
-%global         git_date   20150122
-%global         git_commit  c12d04f
+%global         git_date   20150305
+%global         git_commit  711e9da
 
 Name:           ktp-contact-list
-Summary:        Telepathy contact list application 
-Version:        0.9.60
+Summary:        Telepathy contact list application
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        GPLv2+
@@ -61,15 +61,18 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/ktp-contactlist.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.ktpcontactlist.desktop
 
 
 %files
 %doc COPYING
 %{_bindir}/ktp-contactlist
-%{_datadir}/applications/ktp-contactlist.desktop
+%{_datadir}/applications/org.kde.ktpcontactlist.desktop
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git711e9da
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122gitc12d04f
 - Update to experimental KF5 version
 

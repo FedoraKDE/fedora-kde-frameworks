@@ -1,10 +1,10 @@
-%global         git_date    20150122
-%global         git_commit   5ea666c
+%global         git_date    20150305
+%global         git_commit   492a6d4
 
 
 Name:           ktp-kded-integration-module
 Summary:        KDE integration for telepathy 
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
@@ -66,6 +66,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git492a6d4
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122git5ea666c
 - Update to experimental KF5 version
 

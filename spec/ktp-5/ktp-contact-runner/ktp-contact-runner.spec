@@ -1,9 +1,9 @@
-%global         git_date    20150122
-%global         git_commit  c56a38a
+%global         git_date    20150305
+%global         git_commit  18703e1
 
 Name:           ktp-contact-runner
 Summary:        Plasma runner for KDE Telepathy
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        GPLv3+
@@ -52,6 +52,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git18703e1
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122gitc56a38a
 - Update to experimental KF5 version
 

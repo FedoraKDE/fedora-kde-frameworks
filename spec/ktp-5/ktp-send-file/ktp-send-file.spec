@@ -1,10 +1,10 @@
-%global         git_date    20150123
-%global         git_commit  1b907b2
+%global         git_date    20150305
+%global         git_commit  966a95f
 
 
 Name:           ktp-send-file
 Summary:        A File manager plugin to launch file transfer jobs
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
@@ -57,6 +57,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git966a95f
+- Update to latest git snapshot
+
 * Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150123git1b907b2
 - Update to experimental KF5 version
 

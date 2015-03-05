@@ -1,9 +1,9 @@
-%global         git_date 20150122
-%global         git_commit 49d1abe
+%global         git_date 20150305
+%global         git_commit d85e200
 
 Name:           ktp-common-internals
 Summary:        Common internals for KDE Telepathy
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
@@ -120,6 +120,9 @@ fi
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305gitd85e200
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.50-1.20150122git49d1abe
 - Update to experimental KF5 version
 

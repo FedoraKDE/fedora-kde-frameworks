@@ -1,9 +1,9 @@
-%global         git_date    20150122
-%global         git_commit  a475a4b
+%global         git_date    20150305
+%global         git_commit  3dd697e
 
 Name:           ktp-filetransfer-handler
 Summary:        Telepathy file transfer handler
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        GPLv2+
@@ -58,6 +58,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git3dd697e
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122gita475a4b
 - Update to experimental KF5 version
 

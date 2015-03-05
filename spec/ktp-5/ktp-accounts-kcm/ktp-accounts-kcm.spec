@@ -1,9 +1,9 @@
-%global         git_date    20150122
-%global         git_commit  87c47de
+%global         git_date    20150305
+%global         git_commit  d85e200
 
 Name:           ktp-accounts-kcm
 Summary:        KDE Configuration Module for Telepathy Instant Messaging Accounts
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        LGPLv2+
@@ -117,6 +117,9 @@ rm -fv %{buildroot}%{_kf5_libdir}/libktpaccountskcminternal.so
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305gitd85e200
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122git87c47de
 - Update to experimental KF5 version
 

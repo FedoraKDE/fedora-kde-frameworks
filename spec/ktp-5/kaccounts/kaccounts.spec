@@ -1,9 +1,9 @@
-%global git_date 20150122
-%global git_commit 0c2e1aa
+%global git_date 20150305
+%global git_commit 51ad9bf
 
 Name:           kaccounts
 Version:        1.0
-Release:        3.%{git_date}git%{git_commit}%{?dist}
+Release:        4.%{git_date}git%{git_commit}%{?dist}
 Summary:        Small system to administer web accounts for the sites and services across the KDE desktop,
 License:        LGPLv2
 URL:            https://projects.kde.org/projects/kdereview/kaccounts-integration
@@ -83,6 +83,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_includedir}/KAccounts
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-4.20150305git51ad9bf
+- Update to latest git snapshot
+
 * Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-3.20150122git0c2e1aa
 - Requirese: signon-qt5 and signon-plugin-oauth2
 

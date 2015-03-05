@@ -1,10 +1,10 @@
-%global         git_date 20150123
-%global         git_commit 5246520
+%global         git_date 20150305
+%global         git_commit 74835c7
 
 
 Name:           ktp-text-ui
 Summary:        Telepathy text chat handler
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 # GPLv2+: most code
@@ -121,8 +121,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/ktp-log-viewer.deskto
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git74835c7
+- Update to latest git snapshot
+
 * Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150123git5246520
-- Update to experimental KF% version
+- Update to experimental KF5 version
 
 * Mon Oct 20 2014 Jan Grulich <jgrulich@redhat.com> - 0.9.0-1
 - Update to 0.9.0

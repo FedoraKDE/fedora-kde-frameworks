@@ -1,5 +1,5 @@
-%global git_date 20150122
-%global git_commit b57e062
+%global git_date 20150305
+%global git_commit 3c96a64
 
 %global framework kpeople
 
@@ -13,7 +13,7 @@ Summary:        Meta-contact aggregation library
 
 # git archive --format=tar.gz --remote=git://anongit.kde.org/libkpeople.git --prefix=libkpeople-%%{version} /
 #             --output=libkpeople-%%{git_commit}.tar.gz master
-Source0:        libkpeople-%{git_commit}.tar.gz
+Source0:        %{framework}-%{git_commit}.tar.gz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -45,7 +45,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n libkpeople-%{version}
+%setup -q -n %{framework}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -64,6 +64,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING
 %{_kf5_libdir}/libKPeople.so.*
+%{_kf5_libdir}/libKPeopleBackend.so.*
 %{_kf5_libdir}/libKPeopleWidgets.so.*
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_qmldir}/org/kde/people
@@ -71,12 +72,18 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %files devel
 %{_kf5_libdir}/libKPeople.so
+%{_kf5_libdir}/libKPeopleBackend.so
 %{_kf5_libdir}/libKPeopleWidgets.so
 %{_kf5_includedir}/KPeople
 %{_kf5_libdir}/cmake/KF5People
+%{_kf5_archdatadir}/mkspecs/modules/qt_KPeople.pri
+%{_kf5_archdatadir}/mkspecs/modules/qt_KPeopleWidgets.pri
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.5.60-1.20150305git3c96a64
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.5.60-1.20150122gitb57e062
 - Update to latest git
 

@@ -1,9 +1,9 @@
-%global         git_date    20150122
-%global         git_commit  14742ef
+%global         git_date    20150305
+%global         git_commit  5ea2c28
 
 Name:           ktp-desktop-applets
 Summary:        KDE Telepathy desktop applets
-Version:        0.9.60
+Version:        0.9.80
 Release:        1.%{git_date}git%{git_commit}%{?dist}
 
 License:        GPLv2+
@@ -17,6 +17,7 @@ Source0:        %{name}-%{git_commit}.tar.gz
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kf5-plasma-devel
 
@@ -66,6 +67,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git5ea2c28
+- Update to latest git snapshot
+
 * Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.60-1.20150122git14742ef
 - Update to experimental KF5 version
 
