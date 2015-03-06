@@ -20,6 +20,7 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-kwindowsystem-devel
 
 
 Obsoletes:      telepathy-kde-presence-applet < 0.3.0
@@ -64,6 +65,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/plasma/plasmoids/org.kde.ktp-chat
 %{_kf5_datadir}/plasma/plasmoids/org.kde.ktp-contactlist
 %{_kf5_datadir}/kservices5/*.desktop
+%{_kf5_qmldir}/org/kde/ktpchat
 
 
 %changelog

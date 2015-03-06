@@ -68,6 +68,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.ktpcontactlis
 %doc COPYING
 %{_bindir}/ktp-contactlist
 %{_datadir}/applications/org.kde.ktpcontactlist.desktop
+%{_datadir}/dbus-1/services/org.kde.ktpcontactlist.service
 
 %changelog
 * Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 0.9.80-1.20150305git711e9da
