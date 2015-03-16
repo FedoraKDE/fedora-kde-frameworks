@@ -22,7 +22,7 @@
 # TODO: Make this a Python script to run together with cmake-to-rpm-deps.py
 
 
-VERSION="5.7.0"
+VERSION="5.8.0"
 RELEASE="1"
 CHANGELOG="KDE Frameworks ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
@@ -56,9 +56,9 @@ for tier in tier1 tier2 tier3 tier4; do
     #    sed  -i ':a;N;$!ba;s/\* \(Mon\|Tue\|Wed\|Thu\|Fri\|Sat\|Sun\) \(Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Oct\|Nov\|Dec\) [0-9]* [0-9]* dvratil <dvratil@redhat.com> - \([0-9a-z\.-]*\)\n- [a-zA-Z0-9\:\ ]*\n\n//g' $fw.spec
     #fi
 
-    #spectool -g -R $fw.spec
-    #srcurl=`spectool -s 0 $fw.spec`
-    #srcname=${srcurl##*/}
+    spectool -g -R $fw.spec
+    srcurl=`spectool -s 0 $fw.spec`
+    srcname=${srcurl##*/}
     fedpkg new-sources $HOME/rpmbuild/SOURCES/$srcname
     git add $fw.spec .gitignore sources
     git commit -m "${CHANGELOG}"
@@ -69,9 +69,11 @@ for tier in tier1 tier2 tier3 tier4; do
     git merge master
     git checkout f20
     git merge master
-    if [ -n "$DRY_RUN" ]; then
-        git push --all origin
-    fi
+    #if [ -n "$DRY_RUN" ]; then
+    #    git push --all origin
+    #fi
+    git checkout master
+    git push --all origin
   done
 done
 

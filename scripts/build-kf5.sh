@@ -25,9 +25,6 @@ if [ "$#" -eq 1 ]; then
         target=$1;
         if [ "$target" == "f23" ]; then
             branch="master";
-        elif [ "$target" == "f22" ]; then
-            branch="$target"
-            target="f22"
         else
             branch="$target"
             target="$target-kde"
@@ -52,13 +49,14 @@ popd
 # WARNING: This is rather fragile and might break when deps change.
 # TODO: Write a script with automatic deps analysis (maybe joined with cmake-to-rpm-deps?
 #
-tier3="kf5-kconfigwidgets kf5-kservice kf5-kjsembed kf5-kpackage : \
+tier3="kf5-kjs : \
+kf5-kconfigwidgets kf5-kservice kf5-kjsembed kf5-kpackage : \
 kf5-kiconthemes kf5-kdesu kf5-kemoticons : \
 kf5-knotifications kf5-ktextwidgets kf5-kglobalaccel : \
 kf5-kxmlgui kf5-kwallet : \
 kf5-kbookmarks kf5-kcmutils : \
 kf5-kio : \
-kf5-kdeclarative kf5-kparts kf5-kinit kf5-knotifyconfig kf5-knewstuff : \
+kf5-kxmlrpcclient kf5-kpeople kf5-kdeclarative kf5-kparts kf5-kinit kf5-knotifyconfig kf5-knewstuff : \
 kf5-kactivities : \
 kf5-ktexteditor kf5-kdewebkit kf5-kded kf5-kross kf5-kmediaplayer kf5-plasma : \
 kf5-kdesignerplugin kf5-krunner"
@@ -70,5 +68,5 @@ tier4="kf5-frameworkintegration kf5-kapidox kf5-kdelibs4support"
 pushd tier4/kf5-khtml
 git checkout $branch
 #fedpkg chain-build --target $target kf5 extra-cmake-modules : $tier1 : $tier2 : $tier3 : $tier4
-fedpkg chain-build --target $target $tier2 : $tier3 : $tier4
+fedpkg chain-build --target $target $tier3 : $tier4
 popd
