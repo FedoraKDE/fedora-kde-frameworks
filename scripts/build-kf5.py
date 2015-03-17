@@ -189,12 +189,12 @@ def main():
     for group in groups:
         for pkg in group:
             if skipPackages:
-                if args.resume_from == pkg:
+                if args.resume_from == pkg.name():
                     skipPackages = False
                 else:
                     continue
 
-            if args.exclude and pkg in args.exclude:
+            if args.exclude and pkg.name() in args.exclude:
                 continue
 
             buildChain.append(pkg)
