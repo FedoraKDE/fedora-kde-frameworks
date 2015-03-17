@@ -49,18 +49,22 @@ See update-plasma5.py --help for details.
 
 
 
-## build-kf5.sh ##
+## build-kf5.py ##
 
-A simple shell script that will start chainbuild of all Frameworks in Koji. The script
-contains pre-defined groups in which the chainbuild should be executed to make sure all
-dependencies are satisfied.
+Smart script for building KDE Frameworks 5. It will analyze all KF5 packages (plus kf5 and
+extra-cmake-modules) and will parse their dependencies in order to produce the most optimal
+chainbuild groups. It allows to continue from any package, or to explicitly exclude package(s)
+from the chainbuild.
+
+See build-kf5.py --help for details.
 
 
 
 ## build-plasma5.py ##
 
-Same as build-kf5.sh, just for Plasma 5. It's a bit smarter, so in case of failure it
-allows to continue from any package, or to explicitly exclude package(s) from the chainbuild.
+Similar to build-kf5.py, but the build groups are currently hardcoded.
+
+See build-plasma5.py --help for details.
 
 
 
