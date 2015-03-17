@@ -98,7 +98,7 @@ def main():
     if proceed.lower() == 'n':
         return
 
-    proc = subprocess.Popen([ 'bodhi', '-n', '-t', 'bugfix', '-N', 'KDE Frameworks %s' % args.version ] + pkgs)
+    proc = subprocess.Popen([ 'bodhi', '-n', '-t', 'bugfix', '-N', 'KDE Frameworks %s' % args.version ] + nvbs)
     proc.communicate()
 
 
