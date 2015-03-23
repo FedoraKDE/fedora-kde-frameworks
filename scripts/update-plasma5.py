@@ -110,25 +110,27 @@ class Package(object):
     def updateSpec(self):
         isGit = ('git_date' in self._globalVars and 'git_version' in self._globalVars)
 
-        for i in range(len(self._lines)):
+        i = 0
+        inChangelog = False
+        while (i < len(self._lines)):
             line = self._lines[i]
-            if line.startswith('Version:'):
+            if line.startswith('Version:') and not inChangelog:
                 if self.name == 'kf5-baloo' or self.name == 'kf5-kfilemetadata':
                     self.newVersion = self._args.kf5version
                 else:
                     self.newVersion = self._args.version
 
-                line = line.replace(self.version, self.newVersion)
+                self._lines[i] = line.replace(self.version, self.newVersion)
 
-            elif line.startswith('Release:'):
+            elif line.startswith('Release:') and not inChangelog:
                 if isGit and self._args.keep_git_version:
                     self.newRelease = re.sub(r'^([0-9]+)(\.[0-9a-zA-Z]*)', r'%s' % self._args.release, self.rawRelease)
                 else:
                     self.newRelease = '%s%%{?dist}' % self._args.release
 
-                line = line.replace(self.rawRelease, self.newRelease)
+                self._lines[i] = line.replace(self.rawRelease, self.newRelease)
 
-            elif line.startswith('%changelog'):
+            elif line.startswith('%changelog') and not inChangelog:
                 date = datetime.now().strftime('%a %b %d %Y')
                 self._lines[i] = line
                 self._lines.insert(i + 1, '* %s %s - %s-%s\n' % (date,
@@ -137,9 +139,12 @@ class Package(object):
                                                                  self.newRelease[:-len('%{?dist}')]))
                 self._lines.insert(i + 2, '- %s\n' % self._args.changelog)
                 self._lines.insert(i + 3, '\n')
-                continue
+                inChangelog = True
 
-            self._lines[i] = line
+            else:
+                self._lines[i] = line
+
+            i = i + 1
 
 
     def writeSpec(self):
@@ -214,6 +219,8 @@ def main():
                         help='Skip updating this package. Can be used multiple times')
     parser.add_argument('-i', '--include', action='append',
                         help='Only update this package. Can be used multiple times')
+    parser.add_argument('-u', '--no-upload', action='store_true', default=False,
+                        help='Skip uploading tarballs to look-aside cache')
 
     args = parser.parse_args()
 
@@ -268,13 +275,14 @@ def main():
             print('Error: %s' % e.message)
             return
         print('Done')
-        print('Updating sources...', end = '', flush = True)
-        try:
-            pkg.updateSources()
-        except SillyException as e:
-            print('Error: %s' % e.message)
-            return
-        print('Done')
+        if not args.no_upload:
+            print('Updating sources...', end = '', flush = True)
+            try:
+                pkg.updateSources()
+            except SillyException as e:
+                print('Error: %s' % e.message)
+                return
+            print('Done')
         print('Commiting changes...', end = '', flush = True)
         try:
             pkg.commit()
