@@ -41,7 +41,8 @@ group1 = [ 'libbluedevil',
            'polkit-kde',
            'sddm-kcm',
            'kdeplasma-addons',
-           'plasma-systemsettings'
+           'plasma-systemsettings',
+           'ksshaskpass'
          ]
 
 group2 = [ 'kwin',
