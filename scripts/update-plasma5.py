@@ -55,6 +55,8 @@ class Package(object):
     release = None
     rawRelease = None
     newRelease = None
+    patches = []
+    hasAutoSetup = False
 
     _specFilePath = None
     _args = None
@@ -62,6 +64,8 @@ class Package(object):
     _globalVars = None
 
     _lines = []
+
+    _patchesToRemove = []
 
     def __init__(self, specFilePath, args):
         super(Package, self).__init__()
@@ -77,16 +81,28 @@ class Package(object):
 
         for line in specFile.readlines():
             self._lines.append(line)
+            line = line.strip()
 
             if line.startswith('%global') or line.startswith('%define'):
                 r = line.split()
-                if (len(r) != 3):
+                if len(r) != 3:
                     continue
                 globalVars[r[1]] = r[2]
                 continue
 
+            if line.startswith('Patch'):
+                r = line.split(':');
+                if len(r) != 2:
+                    continue
+                self.patches += [ r[1].strip() ]
+                continue
+
+            if line.startswith('%autosetup'):
+                self.hasAutoSetup = True
+                continue
+
             r = line.split(':', 2)
-            if (len(r) < 2):
+            if len(r) < 2:
                 continue
 
             if r[0] == 'Name':
@@ -105,6 +121,9 @@ class Package(object):
         repo = gitapi.Repo("%s/%s" % (os.getcwd(), self.name))
         repo.git_checkout('master')
         repo.git_pull('origin')
+
+    def removePatch(self, patch):
+        self._patchesToRemove += [ patch ]
 
 
     def updateSpec(self):
@@ -129,6 +148,13 @@ class Package(object):
                     self.newRelease = '%s%%{?dist}' % self._args.release
 
                 self._lines[i] = line.replace(self.rawRelease, self.newRelease)
+
+            elif line.startswith('Patch') and not inChangelog:
+                r = line.split(':')
+                if len(r) == 2:
+                    if r[1].strip() in self._patchesToRemove:
+                        del self._lines[i]
+                        continue
 
             elif line.startswith('%changelog') and not inChangelog:
                 date = datetime.now().strftime('%a %b %d %Y')
@@ -248,6 +274,14 @@ def main():
         pkg = Package("%s/%s/%s.spec" % (os.getcwd(), name, name), args)
         if not args.skip_git_update:
             pkg.gitUpdate()
+
+        if pkg.patches and not pkg.hasAutoSetup:
+            print('WARNING: package has patches, but does not use %%autosetup')
+        elif pkg.patches:
+            for patch in pkg.patches:
+                remove = input('Remove patch %s? [Y/n] ' % patch)
+                if remove.lower() == 'y':
+                    pkg.removePatch(patch)
 
         pkg.updateSpec()
         pkgs.append(pkg)
