@@ -1,7 +1,7 @@
 Name:           kaccounts-integration
 Version:        15.03.90
 Release:        2%{?dist}
-Summary:        Small system to administer web accounts across the KDE desktop,
+Summary:        Small system to administer web accounts across the KDE desktop
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/kdenetwork/kaccounts-integration
 

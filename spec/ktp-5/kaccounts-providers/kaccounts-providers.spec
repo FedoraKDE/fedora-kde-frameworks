@@ -2,7 +2,7 @@ Name:           kaccounts-providers
 Version:        15.03.90
 Release:        2%{?dist}
 Summary:        Additional service providers for KAccounts framework
-License:        LGPLv2
+License:        GPLv2
 URL:            https://projects.kde.org/projects/kde/kdenetwork/kaccounts-providers
 BuildArch:      noarch
 
