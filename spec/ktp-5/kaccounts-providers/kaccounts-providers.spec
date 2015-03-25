@@ -1,30 +1,32 @@
-%global git_date 20150305
-%global git_commit 2723f4c
-
 Name:           kaccounts-providers
-Version:        1.0
-Release:        3.%{git_date}git%{git_commit}%{?dist}
+Version:        15.03.90
+Release:        2%{?dist}
 Summary:        Additional service providers for KAccounts framework
 License:        LGPLv2
-URL:            https://projects.kde.org/projects/kdereview/kaccounts-providers
+URL:            https://projects.kde.org/projects/kde/kdenetwork/kaccounts-providers
 BuildArch:      noarch
 
-# git archive --format=tar.gz --remote=git://anongit.kde.org/kaccounts-providers.git \
-#             --prefix=kaccounts-providers-%%{version}/ --output=kaccounts-providers-%%{git_commit}.tar.gz \
-#             %%{git_commit}
-
-Source0:        kaccounts-providers-%{git_commit}.tar.gz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 
 BuildRequires:  intltool
 BuildRequires:  libaccounts-glib-devel
 
+Requires:       sigon-ui
+
 %description
 %{summary}.
 
 %prep
 %setup -q -n kaccounts-providers-%{version}
+
 
 %build
 mkdir -p %{_target_platform}
@@ -38,16 +40,14 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %files
-%doc COPYING
+%license COPYING
 %{_datadir}/accounts/providers/*.provider
-%{_sysconfdir}/signon-ui/webkit-options.d
+%config %{_sysconfdir}/signon-ui/webkit-options.d/*
 
 %changelog
-* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-3.20150305git2723f4c
-- update to latest git snapshot
+* Wed Mar 25 2015 Daniel Vrátil <dvratil@redhat.com> - 15.03.90-2
+- use %%config 
+- use %%license instead of %%doc
 
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-2.20150122git0c2e1aa
-- add icon scriptlets
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-1.20150122git0c2e1aa
+* Tue Mar 17 2015 Daniel Vrátil <dvratil@redhat.com> - 15.03.90-1
 - Initial version

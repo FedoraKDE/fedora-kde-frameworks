@@ -1,18 +1,17 @@
-%global git_date 20150305
-%global git_commit 51ad9bf
+Name:           kaccounts-integration
+Version:        15.03.90
+Release:        2%{?dist}
+Summary:        Small system to administer web accounts across the KDE desktop,
+License:        GPLv2+
+URL:            https://projects.kde.org/projects/kde/kdenetwork/kaccounts-integration
 
-Name:           kaccounts
-Version:        1.0
-Release:        4.%{git_date}git%{git_commit}%{?dist}
-Summary:        Small system to administer web accounts for the sites and services across the KDE desktop,
-License:        LGPLv2
-URL:            https://projects.kde.org/projects/kdereview/kaccounts-integration
-
-# git archive --format=tar.gz --remote=git://anongit.kde.org/kaccounts-integration.git \
-#             --prefix=kaccounts-integration-%%{version}/ --output=kaccounts-integration-%%{git_commit}.tar.gz \
-#             %%{git_commit}
-
-Source0:        kaccounts-integration-%{git_commit}.tar.gz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -31,13 +30,15 @@ BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  libaccounts-qt5-devel
 BuildRequires:  signon-qt5-devel
 
-#BuildRequires:  akonadi
-
-Requires:       signon-plugin-oauth2
 Requires:       signon-qt5
+Requires:       signon-plugin-oauth2
+
+Obsoletes:      kaccounts < 15.03
+Provides:       kaccounts = %{version}-%{release}
 
 %description
-Framework to provide Accounts integration in KDE
+Small system to administer web accounts for the sites and services
+across the KDE desktop.
 
 %package        devel
 Summary:        Development files for accounts-qt
@@ -70,27 +71,25 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING README
+%doc README
+%license COPYING
 %{_kf5_qtplugindir}/kcm_kaccounts.so
 %{_kf5_datadir}/kservices5/kcm_kaccounts.desktop
 %{_kf5_qtplugindir}/kded_accounts.so
 %{_kf5_datadir}/kservices5/kded/accounts.desktop
-%{_libdir}/libkaccounts.so.*
+%{_kf5_libdir}/libkaccounts.so.*
 
 %files devel
-%{_libdir}/libkaccounts.so
-%{_libdir}/cmake/KAccounts
+%{_kf5_libdir}/libkaccounts.so
+%{_kf5_libdir}/cmake/KAccounts
 %{_includedir}/KAccounts
 
 %changelog
-* Thu Mar 05 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-4.20150305git51ad9bf
-- Update to latest git snapshot
+* Wed Mar 25 2015 Daniel Vrátil <dvratil@redhat.com> - 15.03.90-2
+- fix license
+- fix summary
+- fix typos in changelog
+- use %%license
 
-* Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-3.20150122git0c2e1aa
-- Requirese: signon-qt5 and signon-plugin-oauth2
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-2.20150122git0c2e1aa
-- Fix -devel Requries
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 1.0.0-1.20150122git0c2e1aa
+* Tue Mar 17 2015 Daniel Vrátil <dvratil@redhat.com> - 15.03.90-1
 - Initial version
