@@ -1,15 +1,14 @@
-%global         git_date    20150123
-%global         git_commit  3860b3e
-
 Name:           signon-plugin-oauth2
-Version:        0.20
-Release:        1.%{git_date}git%{git_commit}%{?dist}
+Version:        0.21
+Release:        1%{?dist}
 Summary:        OAuth2 plugin for the Accounts framework
 
 License:        LGPLv2
 URL:            http://code.google.com/p/accounts-sso
-#Source0:        http://accounts-sso.googlecode.com/files/signon-plugins-oauth2-%{version}.tar.bz2
-Source0:        signon-plugin-oauth2-%{git_commit}.tar.gz
+
+# Source available from https://drive.google.com/drive/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
+# as per https://groups.google.com/forum/#!topic/accounts-sso-announce/YBfS0ACmFl0
+Source0:        signon-oauth2-%{version}.tar.bz2
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
@@ -28,7 +27,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n signon-oauth2-%{version}
 
 %build
 export PATH=%{_qt5_bindir}:$PATH
@@ -61,11 +60,5 @@ rm -rvf %{buildroot}/%{_sysconfdir}
 
 
 %changelog
-* Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 8.57-2.20150122git3ef0a6b
-- Install dbus service files
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 8.57-1.20150122git3ef0a6b
-- Update to latest git snapshot
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 8.56-1
+* Tue Mar 17 2015 Daniel Vrátil <dvratil@redhat.com> - 0.21-1
 - Initial version

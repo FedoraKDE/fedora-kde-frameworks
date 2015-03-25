@@ -1,20 +1,21 @@
-%global         git_date    20150122
-%global         git_commit  3ef0a6b
-
 Name:           signon-qt5
 Version:        8.57
-Release:        2.%{git_date}git%{git_commit}%{?dist}
+Release:        1%{?dist}
 Summary:        Accounts framework for Linux and POSIX based platforms
 
 License:        LGPLv2
-URL:            http://code.google.com/p/accounts-sso
-#Source0:        http://accounts-sso.googlecode.com/files/signon-%{version}.tar.bz2
-Source0:        signon-%{git_commit}.tar.gz
+URL:            https://code.google.com/p/accounts-sso
+
+# Source available from https://drive.google.com/drive/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
+# as per https://groups.google.com/forum/#!topic/accounts-sso-announce/8MserPgUV5M
+Source0:        signon-%{version}.tar.bz2
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  libproxy-devel
+
+Requires:       dbus
 
 %description
 Single Sign-On is a framework for centrally storing authentication credentials
@@ -43,8 +44,9 @@ The %{name}-doc package contains documentation for %{name}.
 %prep
 %setup -q -n signon-%{version}
 
-%build
 
+%build
+# Make sure it compiles against Fedora's Qt5
 sed -i "s/qdbusxml2cpp/qdbusxml2cpp-qt5/" src/signond/signond.pro
 
 export PATH=%{_qt5_bindir}:$PATH
@@ -56,6 +58,7 @@ make %{?_smp_mflags}
 
 %install
 make install INSTALL_ROOT=%{buildroot}
+
 
 # Remove static libraries
 rm %{buildroot}/%{_libdir}/*.a
@@ -98,11 +101,5 @@ rm %{buildroot}/%{_libdir}/*.a
 
 
 %changelog
-* Fri Jan 23 2015 Daniel Vrátil <dvratil@redhat.com> - 8.57-2.20150122git3ef0a6b
-- Install dbus service files
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 8.57-1.20150122git3ef0a6b
-- Update to latest git snapshot
-
-* Thu Jan 22 2015 Daniel Vrátil <dvratil@redhat.com> - 8.56-1
+* Tue Mar 17 2015 Daniel Vrátil <dvratil@redhat.com> - 8.56-1
 - Initial version
