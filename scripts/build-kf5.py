@@ -24,63 +24,7 @@ import subprocess
 import gitapi
 import os
 
-_MapDeps = { 'kf5-rpm-macros' : 'kf5' }
-
-class Package:
-    _name = None
-    _deps = []
-    _repo = None
-    _spec = None
-
-    def __init__(self, spec):
-        paths = spec.rsplit('/', 2)
-        self._spec = spec
-        self._repo = '%s/%s' % (paths[0], paths[1])
-        self._name = paths[1]
-        self._parseDeps()
-
-    def __repr__(self):
-        return self._name
-
-    def name(self):
-        return self._name
-
-    def deps(self):
-        return self._deps
-
-    def repo(self):
-        return self._repo
-
-    def spec(self):
-        return self._spec
-
-    def _parseDeps(self):
-        f = open(self._spec, 'r')
-        deps = []
-        for line in f:
-            line = line.strip()
-
-            # Skip comments
-            if line.startswith('#'):
-                continue
-
-            if line.startswith('BuildRequires:'):
-                brs = line.split(':')
-                brName = brs[1].strip()
-                if brName.startswith('kf5') or brName == 'extra-cmake-modules':
-                    if brName.endswith('-devel'):
-                        brName = brName[0:-6]
-                    if brName in _MapDeps:
-                        deps.append(_MapDeps[brName])
-                    else:
-                        deps.append(brName)
-                continue
-
-            if line.startswith('%changelong'):
-                break
-
-        self._deps = deps
-
+from Package.py import *
 
 
 def findAllPackages(args):
@@ -88,20 +32,20 @@ def findAllPackages(args):
               Package('%s/extra-cmake-modules/extra-cmake-modules.spec' % args.pkgroot) ]
     for tier in [ 1, 2, 3, 4 ]:
         fws = os.listdir('%s/tier%d' % (args.pkgroot, tier));
-        fws = map(lambda x: Package("%s/tier%d/%s/%s.spec" % (args.pkgroot, tier, x, x)), fws)
+        fws = map(lambda x: Package("%s/tier%d/%s/%s.spec" % (args.pkgroot, tier, x, x), args), fws)
         pkgs += fws
 
     return pkgs
 
 def allDepsAnalyzed(package, groups):
-    deps = package.deps().copy()
+    deps = package.kf5BuildRequiresNames.copy()
     if not deps:
         return True
 
     for group in groups:
         for pkg in group:
-            if pkg.name() in deps:
-                deps.remove(pkg.name())
+            if pkg.name in deps:
+                deps.remove(pkg.name)
                 if not deps:
                     return True
 
@@ -112,16 +56,16 @@ def allDepsAnalyzed(package, groups):
     return False
 
 def findHighestDepBuildGroup(package, groups):
-    if not package.deps():
+    if not package.kf5BuildRequiresNames:
         return -1
 
     maxGroupIndex = 0
-    for dep in package.deps():
+    for dep in package.kf5BuildRequiresNames:
         groupIndex = 0
         for group in groups:
             matched = False
             for pkg in group:
-                if pkg.name() == dep:
+                if pkg.name == dep:
                     matched = True
                     break
 
@@ -189,12 +133,12 @@ def main():
     for group in groups:
         for pkg in group:
             if skipPackages:
-                if args.resume_from == pkg.name():
+                if args.resume_from == pkg.name:
                     skipPackages = False
                 else:
                     continue
 
-            if args.exclude and pkg.name() in args.exclude:
+            if args.exclude and pkg.name in args.exclude:
                 continue
 
             buildChain.append(pkg)
@@ -206,22 +150,23 @@ def main():
     buildChain.pop()
     # Get the last pkg: we'll run chainbuild from there
     lastPkg = buildChain.pop()
+    lastPkgRepo = os.path.split(lastPkg.specFilePath)[0]
 
-    buildChainNames = list(map(lambda x: x.name() if isinstance(x, Package) else x, buildChain))
+    buildChainNames = list(map(lambda x: x.name if isinstance(x, Package) else x, buildChain))
     print('Build chain: %s' % ' '.join(buildChainNames))
     print('Koji Target: %s' % args.target)
     print('Branch: %s' % branch)
-    print('Chainbuild package: %s' % lastPkg.repo())
+    print('Chainbuild package: %s' % lastPkgRepo)
 
     proceed = input('Proceed? [Y/n] ')
     if proceed.lower() == 'n':
         return
 
-    repo = gitapi.Repo(lastPkg.repo())
+    repo = gitapi.Repo(lastPkgRepo)
     repo.git_checkout(branch)
 
     p = subprocess.Popen(['fedpkg', 'chain-build', '--target=%s' % args.target] + buildChainNames,
-                         cwd = lastPkg.repo())
+                         cwd = lastPkgRepo)
     p.wait()
 
 
