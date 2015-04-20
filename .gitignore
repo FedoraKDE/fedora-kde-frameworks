@@ -1,1 +1,3 @@
 *.iso
+__pycache__
+kde_projects.xml.*

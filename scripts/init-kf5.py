@@ -60,7 +60,7 @@ def parseKDEMetaData(metadata):
         repo = module.find("repo")
         if not repo:
             raise ParsingException("Invalid XML: could not find repo information for module %s" % name)
-            
+
         gitweb = None
         for web in repo.iterfind("web"):
             if web.get("type") == "gitweb":
@@ -68,19 +68,19 @@ def parseKDEMetaData(metadata):
                 break
         if not gitweb:
             raise ParsingException("Invalid XML: could not find gitweb information about module %s" % name)
-            
+
         modules[name] = { "name": name,
                           "gitweb": gitweb
                         }
         print("\tFound module frameworks/%s" % name)
-    
+
     print("Done")
     return modules
 
 def mapKDEModuleNameToFedoraPkg(moduleName):
     if moduleName in _KDEToFedoraNamesMap:
         return _KDEToFedoraNamesMap[moduleName]
-  
+
     return "kf5-%s" % moduleName
 
 def fetchYamlMetaData(modules):
@@ -105,7 +105,7 @@ def setupFileSystem():
         if not os.path.exists("tier%d" % tier):
             os.mkdir("tier%d" % tier)
     print("Done")
-    
+
 def cloneModules(modules):
     for moduleName in modules:
         module = modules[moduleName]
@@ -121,7 +121,7 @@ def cloneModules(modules):
 def main():
     metadata = downloadKDEMetaData()
     modules = parseKDEMetaData(metadata)
-    
+
     # Fetch YAML metadata for each module, skip modules that don't have
     # release flag set
     modules = fetchYamlMetaData(modules)
@@ -134,8 +134,8 @@ def main():
     modules["kf5"] = { "name": "kf5",
                        "pkgname": "kf5"
                      }
-    
+
     cloneModules(modules)
-  
+
 if __name__ == "__main__":
         main();

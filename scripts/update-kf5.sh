@@ -22,7 +22,7 @@
 # TODO: Make this a Python script to run together with cmake-to-rpm-deps.py
 
 
-VERSION="5.8.0"
+VERSION="5.9.0"
 RELEASE="1"
 CHANGELOG="KDE Frameworks ${VERSION}"
 AUTHOR="Daniel Vrátil <dvratil@redhat.com>"
@@ -41,8 +41,10 @@ for tier in tier1 tier2 tier3 tier4; do
   for fw in `/usr/bin/ls -1 $tier`; do
     cd ${basedir}/${tier}/${fw}
     echo "======= Tier ${tier}: ${fw} ========"
-    git pull --all
-    git checkout master
+    for branch in f20 f21 f22 master; do
+        git checkout $branch
+        git pull
+    done
 
     sed -i 's/^Version:        [0-9\.]*$/Version:        '"$VERSION"'/' $fw.spec
     sed -i 's/^Release:        [0-9a-z\.]*/Release:        '"$RELEASE"'/' $fw.spec
@@ -63,17 +65,15 @@ for tier in tier1 tier2 tier3 tier4; do
     git add $fw.spec .gitignore sources
     git commit -m "${CHANGELOG}"
     # TODO: Make this smarter
-    git checkout f22
-    git merge master
-    git checkout f21
-    git merge master
-    git checkout f20
-    git merge master
+    for branch in f22 f21 f20; do
+        git checkout $branch
+        git merge master
+    done
     #if [ -n "$DRY_RUN" ]; then
     #    git push --all origin
     #fi
-    git checkout master
-    git push --all origin
+    #git checkout master
+    #git push --all origin
   done
 done
 
