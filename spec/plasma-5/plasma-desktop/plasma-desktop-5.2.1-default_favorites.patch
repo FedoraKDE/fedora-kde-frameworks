@@ -1,0 +1,12 @@
+diff -up plasma-desktop-5.2.1/applets/kickoff/core/favoritesmodel.cpp.default_favorites plasma-desktop-5.2.1/applets/kickoff/core/favoritesmodel.cpp
+--- plasma-desktop-5.2.1/applets/kickoff/core/favoritesmodel.cpp.default_favorites	2015-02-21 13:45:39.000000000 -0600
++++ plasma-desktop-5.2.1/applets/kickoff/core/favoritesmodel.cpp	2015-03-11 08:44:54.066627461 -0500
+@@ -124,7 +124,7 @@ public:
+             browser = browser.mid(1);
+         }
+ 
+-        applications << browser << "kontact" << "systemsettings" << "dolphin" << "ktp-contactlist" << "kate";
++        applications << browser << "kontact" << "systemsettings" << "dolphin" << "ktp-contactlist" << "kate" << "org.kde.konsole" << "apper";
+ 
+         QList<QString> desktopFiles;
+ 
