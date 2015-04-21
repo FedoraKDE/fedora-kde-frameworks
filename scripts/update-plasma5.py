@@ -54,6 +54,8 @@ def main():
                         help='Only update this package. Can be used multiple times')
     parser.add_argument('-u', '--no-upload', action='store_true', default=False,
                         help='Skip uploading tarballs to look-aside cache')
+    parser.add_argument('--no-commit', action='store_true', default=False,
+                        help='Don\'t commit and push the changes')
 
     args = parser.parse_args()
 
@@ -124,12 +126,13 @@ def main():
                 print('Error: %s' % e.message)
                 return
             print('Done')
-        print('Commiting changes...', end = '', flush = True)
-        try:
-            pkg.commit()
-        except PackageException as e:
-            print('Error: %s' % e.message)
-            return
+        if not args.no_commit:
+            print('Commiting changes...', end = '', flush = True)
+            try:
+                pkg.commit()
+            except PackageException as e:
+                print('Error: %s' % e.message)
+                return
         print('Done')
         print('\n')
 
@@ -137,10 +140,11 @@ def main():
     if proceed.lower() == 'n':
         return
 
-    for pkg in pkgs:
-        print('Pushing %s...' % pkg.name, end = '', flush = True)
-        pkg.push()
-        print('Done')
+    if not args.no_commit:
+        for pkg in pkgs:
+            print('Pushing %s...' % pkg.name, end = '', flush = True)
+            pkg.push()
+            print('Done')
 
 
     print('We are done and this lousy script did not screw anything up \o/ Open the champagne!')

@@ -40,9 +40,9 @@ class Package(object):
     release = None
     rawRelease = None
     newRelease = None
-    patches = []
+    patches = None
     hasAutoSetup = False
-    kf5BuildRequiresNames = []
+    kf5BuildRequiresNames = None
 
     specFilePath = None
 
@@ -50,13 +50,16 @@ class Package(object):
 
     _globalVars = None
 
-    _lines = []
+    _lines = None
 
-    _patchesToRemove = []
+    _patchesToRemove = None
 
     def __init__(self, specFilePath, args):
         super(Package, self).__init__()
         self.specFilePath = specFilePath
+        self.kf5BuildRequiresNames = []
+        self.patches = []
+        self._patchesToRemove = []
         self._args = args
         self._lines = []
 
@@ -77,7 +80,7 @@ class Package(object):
         return outStr
 
     def _load(self):
-        specFile = open(self._specFilePath, mode='r')
+        specFile = open(self.specFilePath, mode='r')
 
         globalVars = { '?dist' : '.%s' % self._args.dist }
 
@@ -119,11 +122,11 @@ class Package(object):
                 self.rawRelease = r[1].strip()
                 self.release = self._replaceVars(self.rawRelease, globalVars)
             elif r[0] == 'BuildRequires':
-                brName = brs[1].strip()
+                brName = r[1].strip()
                 if brName.startswith('kf5') or brName == 'extra-cmake-modules':
                     if brName.endswith('-devel'):
                         brName = brName[0:-6]
-                    if brName in _MapDeps:
+                    if brName in self._MapDeps:
                         self.kf5BuildRequiresNames.append(self._MapDeps[brName])
                     else:
                         self.kf5BuildRequiresNames.append(brName)
@@ -189,7 +192,7 @@ class Package(object):
 
 
     def writeSpec(self):
-        specFile = open(self._specFilePath, 'w')
+        specFile = open(self.specFilePath, 'w')
         for line in self._lines:
             specFile.write(line)
         specFile.close()
@@ -197,7 +200,7 @@ class Package(object):
 
     def updateSources(self):
         specDir = "%s/%s" % (os.getcwd(), self.name)
-        p = subprocess.Popen(['spectool', '-s', '0', self._specFilePath],
+        p = subprocess.Popen(['spectool', '-s', '0', self.specFilePath],
                              cwd = specDir,
                              stdout = subprocess.PIPE,
                              stderr = subprocess.PIPE)
@@ -209,7 +212,7 @@ class Package(object):
         srcFile = os.path.expanduser('~/rpmbuild/SOURCES/%s' % srcFileName).strip()
 
         if not os.path.exists(srcFile):
-            p = subprocess.Popen(['spectool', '-g', '-R', self._specFilePath],
+            p = subprocess.Popen(['spectool', '-g', '-R', self.specFilePath],
                                  cwd = specDir,
                                  stdout = subprocess.PIPE,
                                  stderr = subprocess.PIPE)
