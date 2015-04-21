@@ -34,8 +34,6 @@ def main():
                         help='New tag to tag the packages into')
     parser.add_argument('--version', action='store', required = True,
                         help='KDE Frameworks 5 version number')
-    parser.add_argument('--ecm-version', action='store', required = True,
-                        help='ECM version number')
     parser.add_argument('--pkgroot', action='store', default=os.getcwd(),
                         help='Root directory where all fedpkg clones are')
     args = parser.parse_args()
@@ -62,12 +60,8 @@ def main():
     destPkgs = {}
     for srcPkg in allSrcPkgs:
         if srcPkg[0] in srcPkgs:
-            # Check ECM version
-            if srcPkg[0] == 'extra-cmake-modules' and srcPkg[1] != args.ecm_version:
-                continue
-
             # Check kf5-* version
-            if srcPkg[0].startswith('kf5') and srcPkg[1] != args.version:
+            if (srcPkg[0] == 'extra-cmake-modules' or srcPkg[0].startswith('kf5')) and srcPkg[1] != args.version:
                 continue
 
             # We already met package of this name...
