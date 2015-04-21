@@ -14,10 +14,10 @@ repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updat
 #repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
 #repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 
-repo --name=plasma-5-devel --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/devel
+#repo --name=plasma-5-devel --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/devel
 
 repo --name=kf5-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kf5-next/fedora-$releasever-$basearch/
-#repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
+repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
 #repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
 
 
@@ -29,13 +29,38 @@ kernel
 
 #installer
 anaconda
+grub2
+grub2-efi
 
 # Plasma 5
-plasma-5
+plasma-workspace
+plasma-desktop
+plasma-breeze
+kde-style-breeze
+breeze-icon-theme
+plasma-milou
+plasma-nm
+plasma-oxygen
+plasma-systemsettings
+plasma-workspace-wallpapers
+polkit-kde
+sddm-kcm
+kdeplasma-addons
+khelpcenter
+khotkeys
+kinfocenter
+kio-extras
+kmenuedit
+kscreen
+ksshaskpass
 ksysguard
+kwin
+kwrited
+kcm_touchpad
 kf5-baloo
 
-# KDE 4 - make the ISO actually usable
+
+# Apps - make the ISO actually usable
 kde-runtime
 konsole
 kwrite
