@@ -2,7 +2,7 @@
 %define         plasma_version 5.2.2
 
 Name:           kf5-%{framework}
-Version:        5.6.2
+Version:        5.6.95
 Release:        1%{?dist}
 Summary:        A Tier 3 KDE Frameworks 5 module that provides indexing and search functionality
 License:        LGPLv2+
@@ -162,6 +162,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.2-1
 - Plasma 5.2.2
 

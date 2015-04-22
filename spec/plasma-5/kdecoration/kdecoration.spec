@@ -1,6 +1,6 @@
 Name:           kdecoration
 Summary:        A plugin-based library to create window decorations
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 
 License:        LGPLv2
@@ -66,6 +66,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/kdecoration2_version.h
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

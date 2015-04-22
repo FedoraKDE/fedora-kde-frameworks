@@ -4,8 +4,8 @@
 %global         wayland 0
 
 Name:           kwin
-Version:        5.2.2
-Release:        2%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        KDE Window manager
 
 # all sources are effectively GPLv2+, except for:
@@ -222,6 +222,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Tue Apr 07 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-2
 - tarball respin
 

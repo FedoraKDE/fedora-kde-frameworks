@@ -1,5 +1,5 @@
 Name:           khelpcenter
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 Summary:        Application to show KDE Application's documentation
 
@@ -86,6 +86,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.Help.desktop
 %{_kde4_datadir}/kde4/services/khelpcenter.desktop
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

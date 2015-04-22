@@ -3,8 +3,8 @@
 
 Name:           kscreen
 Epoch:          1
-Version:        5.2.2
-Release:        2%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -24,7 +24,6 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 #Source0:        kscreen-%{git_version}.tar.gz
 
 # Upstream patches
-Patch10:        kscreen-5.3-rhbz1211881.patch
 
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
@@ -89,6 +88,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Wed Apr 15 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-2
 - add upstream fix for RHBZ#1211881
 

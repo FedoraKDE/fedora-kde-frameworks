@@ -1,6 +1,6 @@
 Name:           plasma-desktop
-Version:        5.2.2
-Release:        4%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        Plasma Desktop shell
 
 License:        GPLv2+ and (GPLv2 or GPLv3)
@@ -19,7 +19,6 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 Patch100: plasma-desktop-5.2.1-default_favorites.patch
 
 ## upstream patches
-Patch200: plasma-desktop-fix-fontinst-service-path.patch
 
 BuildRequires:  libusb-devel
 BuildRequires:  fontconfig-devel
@@ -222,6 +221,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Thu Apr 02 2015 Daniel Vrátil <dvratil@redhat.com> 5.2.2-4
 - fix fontinst service paths (rhbz#1208229)
 

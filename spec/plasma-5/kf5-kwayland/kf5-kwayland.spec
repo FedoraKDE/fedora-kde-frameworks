@@ -3,7 +3,7 @@
 %global         wayland_min_version 1.3
 
 Name:           kf5-%{framework}
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 Summary:        KDE Frameworks 5 library that wraps Client and Server Wayland libraries
 
@@ -76,6 +76,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

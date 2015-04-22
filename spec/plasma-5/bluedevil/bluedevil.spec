@@ -1,6 +1,6 @@
 Name:           bluedevil
 Summary:        Bluetooth stack for KDE
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 
 License:        GPLv2+
@@ -112,6 +112,9 @@ update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

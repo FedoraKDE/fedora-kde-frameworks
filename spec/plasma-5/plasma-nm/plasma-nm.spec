@@ -1,6 +1,6 @@
 Name:           plasma-nm
-Version:        5.2.2
-Release:        2%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm
@@ -47,7 +47,8 @@ BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-kinit-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-networkmanager-qt-devel
-BuildRequires:  kf5-modemmanager-qt-devel
+# API changed in 5.9.0
+BuildRequires:  kf5-modemmanager-qt-devel >= 5.9.0
 
 BuildRequires:  pkgconfig(NetworkManager) >= 0.9.8
 BuildRequires:  pkgconfig(ModemManager) >= 1.0.0
@@ -97,7 +98,7 @@ Provides:       kde-plasma-nm-openvpn = %{version}-%{release}
 %{summary}.
 
 %package        vpnc
-Summary:        Vpnc support for %{name} 
+Summary:        Vpnc support for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       NetworkManager-vpnc
 Obsoletes:      kde-plasma-networkmanagement-vpnc < 1:0.9.1.0
@@ -155,9 +156,7 @@ Provides:       kde-plasma-nm-pptp = %{version}-%{release}
 %endif
 
 %prep
-%setup -q -n %{name}-%{version}
-
-%patch0 -p1 -b .adapt-to-modemmanager-qt-API-changes
+%autosetup -p1 -n %{name}-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -245,6 +244,9 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 %endif
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Thu Apr 09 2015 Jan Grulich <jgrulich@redhat.com> - 5.2.2-2
 - Rebuild (kf5-modemmanager-qt)
 

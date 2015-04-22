@@ -6,7 +6,7 @@
 
 Name:           kf5-%{framework}
 Summary:        A Tier 2 KDE Framework for extracting file metadata
-Version:        5.6.2
+Version:        5.6.95
 Release:        1%{?dist}
 
 # # KDE e.V. may determine that future LGPL versions are accepted
@@ -80,6 +80,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/KFileMetaData
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.6.2-1
 - Plasma 5.2.2
 

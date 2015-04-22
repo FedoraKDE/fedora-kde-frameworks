@@ -1,6 +1,6 @@
 Name:           kio-extras
-Version:        5.2.2
-Release:        5%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        Additional components to increase the functionality of KIO Framework
 
 License:        GPLv2+
@@ -170,6 +170,9 @@ update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Wed Apr 08 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-5
 - drop Conflicts: kio_mtp (no longer needed with renamed catalog)
 

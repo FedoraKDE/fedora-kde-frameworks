@@ -2,7 +2,7 @@
 
 Name:           polkit-kde
 Summary:        PolicyKit integration for KDE Desktop
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 
 License:        GPLv2+
@@ -77,6 +77,9 @@ mv %{buildroot}/%{_libexecdir}/polkit-kde-authentication-agent-1 \
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

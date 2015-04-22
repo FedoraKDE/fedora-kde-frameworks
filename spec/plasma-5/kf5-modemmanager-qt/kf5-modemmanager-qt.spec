@@ -1,7 +1,7 @@
 %global framework modemmanager-qt
 
 Name:           kf5-%{framework}
-Version:        5.9.0
+Version:        5.2.95
 Release:        1%{?dist}
 Summary:        A Tier 1 KDE Frameworks module wrapping ModemManager DBus API
 
@@ -72,6 +72,9 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_archdatadir}/mkspecs/modules/qt_ModemManagerQt.pri
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Tue Apr 07 2015 Daniel Vrátil <dvratil@redhat.com> - 5.9.0-1
 - KDE Frameworks 5.9.0
 

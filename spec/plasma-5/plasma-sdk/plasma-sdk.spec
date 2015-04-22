@@ -92,5 +92,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/*.desktop
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Tue Apr 21 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Initial version

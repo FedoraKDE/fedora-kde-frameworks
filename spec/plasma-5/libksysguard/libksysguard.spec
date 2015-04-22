@@ -1,6 +1,6 @@
 Name:           libksysguard
-Version:        5.2.2
-Release:        2%{?dist}
+Version:        5.2.95
+Release:        1%{?dist}
 Summary:        Library for managing processes running on the system
 
 License:        GPLv2+
@@ -107,6 +107,9 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Sat Apr 04 2015 Rex Dieter <rdieter@fedoraproject.org> 
 - 5.2.2-2
 - -common: Conflicts: ksysguard < 5.2 (#1185851)

@@ -1,5 +1,5 @@
 Name:           kmenuedit
-Version:        5.2.2
+Version:        5.2.95
 Release:        1%{?dist}
 Summary:        KDE menu editor
 
@@ -82,6 +82,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
+- Plasma 5.2.95
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 
