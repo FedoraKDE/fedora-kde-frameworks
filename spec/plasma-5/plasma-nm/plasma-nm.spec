@@ -1,6 +1,6 @@
 Name:           plasma-nm
 Version:        5.2.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm
@@ -14,7 +14,10 @@ URL:            https://projects.kde.org/projects/kde/workspace/plasma-nm
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
 # Add plasma-nm to default systray if needed, for upgraders...
-Source10:        01-fedora-plasma-nm.js
+Source10:       01-fedora-plasma-nm.js
+
+# Upstream patches
+Patch0:         plasma-nm-adapt-to-modemmanager-qt-API-changes.patch
 
 BuildRequires:  gettext
 
@@ -154,6 +157,8 @@ Provides:       kde-plasma-nm-pptp = %{version}-%{release}
 %prep
 %setup -q -n %{name}-%{version}
 
+%patch0 -p1 -b .adapt-to-modemmanager-qt-API-changes
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -240,6 +245,9 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 %endif
 
 %changelog
+* Thu Apr 09 2015 Jan Grulich <jgrulich@redhat.com> - 5.2.2-2
+- Rebuild (kf5-modemmanager-qt)
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

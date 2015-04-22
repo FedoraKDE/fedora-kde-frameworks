@@ -1,6 +1,6 @@
 Name:           plasma-workspace
 Version:        5.2.2
-Release:        2%{?dist}
+Release:        6%{?dist}
 Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/plasma-workspace
@@ -25,6 +25,9 @@ Source11:       startkde.cmake
 ## upstream Patches
 # http://commits.kde.org/plasma-workspace/24f24e03793c8214a5d1f3414a5aeb48eccef4f4
 Patch4: 0004-Workaround-the-lockscreen-password-field-focus-issue.patch
+
+## master branch Patches
+Patch5: fix-update-scripts.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -121,6 +124,9 @@ Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
 Requires:       kf5-baloo
 Requires:       kf5-kglobalaccel >= 5.7
+# for translations mostly, can drop for plasma-5.3 (#1208947) -- rex
+Requires:       kf5-kxmlrpcclient >= 5.8
+Requires:       khotkeys
 
 # Without the platformtheme plugins we get broken fonts
 Requires:       kf5-frameworkintegration
@@ -141,7 +147,7 @@ Requires:       qt5-qttools
 Requires:       xorg-x11-utils
 Requires:       xorg-x11-server-utils
 
-Requires:       kde-settings
+Requires:       kde-settings-plasma
 
 Requires:       systemd
 
@@ -180,6 +186,9 @@ Documentation and user manuals for %{name}.
 
 mv startkde/startkde.cmake startkde/startkde.cmake.orig
 install -m644 -p %{SOURCE11} startkde/startkde.cmake
+
+# omit conflicts with kf5-kxmlrpcclient-5.8
+rm -fv po/*/libkxmlrpcclient5.po
 
 
 %build
@@ -274,6 +283,18 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 
 
 %changelog
+* Wed Apr 15 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-6
+- Requires: kde-settings-plasma (#1197709)
+
+* Sat Apr 04 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-5
+- conflicts with kf5-kxmlrpcclient (#1208947)
+
+* Tue Mar 31 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-4
+- Requires: khotkeys (#1207079)
+
+* Mon Mar 30 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-3
+- backport fix for update scripts
+
 * Wed Mar 25 2015 Rex Dieter <rdieter@fedoraproject.org> 5.2.2-2
 - Lockscreen: Password field does not have focus (kde#344823)
 

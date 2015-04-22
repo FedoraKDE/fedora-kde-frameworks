@@ -1,6 +1,6 @@
 Name:           libksysguard
 Version:        5.2.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for managing processes running on the system
 
 License:        GPLv2+
@@ -47,10 +47,12 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Obsoletes:      kf5-ksysguard-devel < 5.1.95
 Provides:       kf5-ksysguard-devel = %{version}-%{release}
+Conflicts:      kde-workspace-devel < 1:4.11.16-11
 
 %package        common
 Summary:        Runtime data files shared by libksysguard and ksysguard-libs
 Conflicts:      libksysguard < 5.2.1-2
+Conflicts:      ksysguard < 5.2
 %description    common
 %{summary}.
 
@@ -105,6 +107,11 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/cmake/KF5SysGuard
 
 %changelog
+* Sat Apr 04 2015 Rex Dieter <rdieter@fedoraproject.org> 
+- 5.2.2-2
+- -common: Conflicts: ksysguard < 5.2 (#1185851)
+- -devel: Conflicts: kde-workspace-devel < 1:4.11.16-11
+
 * Fri Mar 20 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.2-1
 - Plasma 5.2.2
 

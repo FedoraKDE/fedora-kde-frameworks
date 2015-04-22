@@ -1,0 +1,12 @@
+diff -up kio-extras-5.2.2/mtp/kio_mtp.cpp.catalog kio-extras-5.2.2/mtp/kio_mtp.cpp
+--- kio-extras-5.2.2/mtp/kio_mtp.cpp.catalog	2015-03-19 07:32:48.000000000 -0500
++++ kio-extras-5.2.2/mtp/kio_mtp.cpp	2015-04-07 07:12:12.867492391 -0500
+@@ -44,7 +44,7 @@ extern "C"
+ int Q_DECL_EXPORT kdemain(int argc, char **argv)
+ {
+     QCoreApplication app(argc, argv);
+-    app.setApplicationName(QLatin1String("kio_mtp"));
++    app.setApplicationName(QLatin1String("kio_mtp5"));
+ 
+     if (argc != 4) {
+         fprintf(stderr, "Usage: kio_mtp protocol domain-socket1 domain-socket2\n");
