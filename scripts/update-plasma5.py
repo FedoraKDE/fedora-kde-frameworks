@@ -136,11 +136,11 @@ def main():
         print('Done')
         print('\n')
 
-    proceed = input("Push changes to distgit? [Y/n] ")
-    if proceed.lower() == 'n':
-        return
-
     if not args.no_commit:
+        proceed = input("Push changes to distgit? [Y/n] ")
+        if proceed.lower() == 'n':
+            return
+
         for pkg in pkgs:
             print('Pushing %s...' % pkg.name, end = '', flush = True)
             pkg.push()
