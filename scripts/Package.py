@@ -60,11 +60,7 @@ class Package(object):
     def __init__(self, specFilePath, args):
         super(Package, self).__init__()
         self.specFilePath = specFilePath
-        self.kf5BuildRequiresNames = []
-        self.patches = []
-        self._patchesToRemove = []
         self._args = args
-        self._lines = []
 
         self._load()
 
@@ -83,6 +79,12 @@ class Package(object):
         return outStr
 
     def _load(self):
+        self.otherBuildRequiresNames = []
+        self.kf5BuildRequiresNames = []
+        self.patches = []
+        self._patchesToRemove = []
+        self._lines = []
+
         specFile = open(self.specFilePath, mode='r')
 
         globalVars = { '?dist' : '.%s' % self._args.dist }
@@ -148,6 +150,9 @@ class Package(object):
         repo = gitapi.Repo("%s/%s" % (os.getcwd(), self.name))
         repo.git_checkout('master')
         repo.git_pull('origin')
+
+        # Reparse
+        self._load()
 
     def removePatch(self, patch):
         self._patchesToRemove += [ patch ]
