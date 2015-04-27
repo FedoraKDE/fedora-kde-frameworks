@@ -20,9 +20,11 @@
 #
 
 
+import os
 import re
 import subprocess
 import gitapi
+from datetime import datetime
 
 class PackageException(Exception):
     def __init__(self, message):
