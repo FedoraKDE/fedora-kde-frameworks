@@ -98,21 +98,21 @@ def createBuildGroups(packages):
     return groups
 
 
-def buildInCopr(args, groups):
+def buildInCopr(args, packages):
 
     buildGroups = []
     buildGroup = []
 
     names = []
-    for group in groups:
-        buildGroup = []
-        for pkg in group:
+    for pkg in packages:
+        if isinstance(pkg, Package):
             buildGroup.append('http://pub.dvratil.cz/kf5/srpm/%s/%s-%s-%s.src.rpm'
                                % (pkg.version, pkg.name, pkg.version, pkg.release))
             names.append(pkg.name)
-
-        names.append(':')
-        buildGroups.append(buildGroup)
+        elif pkg == ':':
+            buildGroups.append(buildGroup)
+            buildGroup = []
+            names.append(':')
 
     print('Packages to build: %s' % ' '.join(names))
     print('Copr: %s' % args.copr)
@@ -177,37 +177,35 @@ def main():
         print("Group %i: %s" % (i, group))
         i += 1
 
+    branch = args.branch
+    if not branch:
+        if args.target.startswith('f23'):
+            branch = 'master'
+        else:
+            branch = args.target
 
-    if args.copr:
-        buildInCopr(args, groups)
-    else:
-        branch = args.branch
-        if not branch:
-            if args.target.startswith('f23'):
-                branch = 'master'
-            else:
-                branch = args.target
-
-        buildChain = []
-        skipPackages = (args.resume_from != None)
-        for group in groups:
-            for pkg in group:
-                if skipPackages:
-                    if args.resume_from == pkg.name:
-                        skipPackages = False
-                    else:
-                        continue
-
-                if args.exclude and pkg.name in args.exclude:
+    buildChain = []
+    skipPackages = (args.resume_from != None)
+    for group in groups:
+        for pkg in group:
+            if skipPackages:
+                if args.resume_from == pkg.name:
+                    skipPackages = False
+                else:
                     continue
 
-                buildChain.append(pkg)
-            if len(buildChain) > 0:
-                if buildChain[-1] != ':':
-                    buildChain.append(':')
+            if args.exclude and pkg.name in args.exclude:
+                continue
 
+            buildChain.append(pkg)
+        if len(buildChain) > 0:
+            if buildChain[-1] != ':':
+                buildChain.append(':')
 
-        buildInKoji(args, buildChain);
+    if args.copr:
+        buildInCopr(args, buildChain)
+    else:
+        buildInKoji(args, buildChain)
 
 
 if __name__ == "__main__":
