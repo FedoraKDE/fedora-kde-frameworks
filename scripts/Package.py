@@ -128,6 +128,10 @@ class Package(object):
                 self.release = self._replaceVars(self.rawRelease, globalVars)
             elif r[0] == 'BuildRequires':
                 brName = r[1].strip()
+                # Remove potential versioned dependency
+                index = brName.find(' ')
+                if index > -1:
+                    brName = brName[0:index]
                 if brName.startswith('kf5') or brName == 'extra-cmake-modules':
                     if brName.endswith('-devel'):
                         brName = brName[0:-6]
