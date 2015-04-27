@@ -44,6 +44,7 @@ class Package(object):
     newRelease = None
     patches = None
     hasAutoSetup = False
+    otherBuildRequiresNames = None
     kf5BuildRequiresNames = None
 
     specFilePath = None
@@ -132,6 +133,12 @@ class Package(object):
                         self.kf5BuildRequiresNames.append(self._MapDeps[brName])
                     else:
                         self.kf5BuildRequiresNames.append(brName)
+                elif brName.endswith('-devel'):
+                    brName = brName[0:-6]
+                    if brName in self._MapDeps:
+                        self.otherBuildRequiresNames.append(self._MapDeps[brName])
+                    else:
+                        self.otherBuildRequiresNames.append(brName)
                 continue
 
         specFile.close()
