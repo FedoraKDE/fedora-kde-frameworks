@@ -9,16 +9,20 @@ firewall --enabled --service=mdns
 part / --size 4096 --fstype ext4
 services --enabled=NetworkManager --disabled=sshd
 
-repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+repo --name=fedora --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/development/$releasever/$basearch/os/
 repo --name=updates --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+
 #repo --name=fedora --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
 #repo --name=updates --baseurl=http://download.englab.brq.redhat.com/pub/fedora/linux/updates/$releasever/$basearch/
 
 #repo --name=plasma-5-devel --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5/fedora-$releasever-$basearch/devel
 
-repo --name=kf5-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kf5-next/fedora-$releasever-$basearch/
-repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
-#repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/ --includepkgs=sddm --cost=10000
+#repo --name=kf5-next --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/kf5-next/fedora-$releasever-$basearch/
+#repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/results/dvratil/plasma-5-beta/fedora-$releasever-$basearch/
+
+repo --name=updates-testing --baseurl=http://dl.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/$basearch/
+
+repo --name=local --baseurl=file:///home/dvratil/Packages/fedora-kde-frameworks/kickstart/repo
 
 
 %packages
@@ -27,9 +31,13 @@ repo --name=plasma-5-beta --baseurl=http://copr-be.cloud.fedoraproject.org/resul
 kernel
 @base-x
 
+#RHBZ#1182362
+tar
+
 #installer
 anaconda
 grub2
+shim
 grub2-efi
 
 # Plasma 5
@@ -56,7 +64,7 @@ ksshaskpass
 ksysguard
 kwin
 kwrited
-kcm_touchpad
+#kcm_touchpad
 kf5-baloo
 
 
@@ -72,6 +80,11 @@ dolphin
 dragon
 konversation
 okular
+apper
+
+# KDE Telepathy (we finally have Plasma 5 builds!)
+@kde-telepathy
+-ktp-call-ui
 
 # Calligra suite - not necessary, but fancy thing to show
 calligra-words
@@ -90,7 +103,8 @@ firefox
 redhat-menus
 
 # Fancy looks
-oxygen-fonts
+oxygen-mono-fonts
+oxygen-sans-fonts
 oxygen-icon-theme
 kde-wallpapers
 
@@ -108,14 +122,12 @@ sddm-kcm
 
 # Needed by start_kde - remove once pkg is rebuilt with deps
 xmessage
-socat
+#socat
 
 %end
 
 %post
 
-ln -s /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
-rm /etc/systemd/system/default.target
 ln -s /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
 # Disable drkonqi until I figure out why everything is crashing so much
@@ -249,14 +261,11 @@ usermod -aG wheel liveuser > /dev/null
 # Remove root password lock
 passwd -d root > /dev/null
 
-# autologin and fancy login screen
+# autologin
 cat > /etc/sddm.conf << SDDM_EOF
 [Autologin]
 User=liveuser
 Session=plasma.desktop
-
-[Theme]
-Current=breeze
 SDDM_EOF
 
 
