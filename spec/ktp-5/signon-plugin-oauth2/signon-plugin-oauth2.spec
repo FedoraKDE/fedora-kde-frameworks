@@ -32,7 +32,9 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %build
 export PATH=%{_qt5_bindir}:$PATH
 %{qmake_qt5} QMF_INSTALL_ROOT=%{_prefix} \
-    CONFIG+=release signon-oauth2.pro
+    CONFIG+=release \
+    LIBDIR=%{_libdir} \
+    signon-oauth2.pro
 
 make %{?_smp_mflags}
 
@@ -60,5 +62,8 @@ rm -rvf %{buildroot}/%{_sysconfdir}
 
 
 %changelog
+* Wed Apr 29 2015 Daniel Vrátil <dvratil@redhat.com> - 0.21-2
+- Set correct libdir for installation
+
 * Tue Mar 17 2015 Daniel Vrátil <dvratil@redhat.com> - 0.21-1
 - Initial version
