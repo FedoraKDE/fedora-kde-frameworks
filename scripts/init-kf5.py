@@ -60,7 +60,7 @@ def parseKDEMetaData(metadata):
         repo = module.find("repo")
         if not repo:
             raise ParsingException("Invalid XML: could not find repo information for module %s" % name)
-            
+
         gitweb = None
         for web in repo.iterfind("web"):
             if web.get("type") == "gitweb":
@@ -68,19 +68,19 @@ def parseKDEMetaData(metadata):
                 break
         if not gitweb:
             raise ParsingException("Invalid XML: could not find gitweb information about module %s" % name)
-            
+
         modules[name] = { "name": name,
                           "gitweb": gitweb
                         }
         print("\tFound module frameworks/%s" % name)
-    
+
     print("Done")
     return modules
 
 def mapKDEModuleNameToFedoraPkg(moduleName):
     if moduleName in _KDEToFedoraNamesMap:
         return _KDEToFedoraNamesMap[moduleName]
-  
+
     return "kf5-%s" % moduleName
 
 def fetchYamlMetaData(modules):
@@ -93,40 +93,28 @@ def fetchYamlMetaData(modules):
             del modules[moduleName]
             continue
 
-        modules[moduleName]["tier"] = yamlData["tier"]
         modules[moduleName]["pkgname"] = mapKDEModuleNameToFedoraPkg(moduleName)
         print("Done")
 
     return modules;
 
-def setupFileSystem():
-    print("Setting up file system...", end = '', flush = True)
-    for tier in [ 1, 2, 3, 4 ]:
-        if not os.path.exists("tier%d" % tier):
-            os.mkdir("tier%d" % tier)
-    print("Done")
-    
 def cloneModules(modules):
     for moduleName in modules:
         module = modules[moduleName]
-        cwd = "tier%d" % module["tier"] if "tier" in module else None
-        if os.path.exists("%s/%s" % (cwd if cwd else ".", module["pkgname"])):
+        if os.path.exists(module["pkgname"]):
             print("Skipping %s, because it already exists" % module["pkgname"])
             continue
 
-        p = subprocess.Popen([ "fedpkg", "clone", module["pkgname"] ],
-                             cwd = cwd)
+        p = subprocess.Popen([ "fedpkg", "clone", module["pkgname"] ])
         p.wait()
 
 def main():
     metadata = downloadKDEMetaData()
     modules = parseKDEMetaData(metadata)
-    
+
     # Fetch YAML metadata for each module, skip modules that don't have
     # release flag set
     modules = fetchYamlMetaData(modules)
-
-    setupFileSystem()
 
     modules["extra-cmake-modules"] = { "name": "extra-cmake-modulues",
                                        "pkgname": "extra-cmake-modules"
@@ -134,8 +122,8 @@ def main():
     modules["kf5"] = { "name": "kf5",
                        "pkgname": "kf5"
                      }
-    
+
     cloneModules(modules)
-  
+
 if __name__ == "__main__":
         main();
