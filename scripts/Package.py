@@ -246,12 +246,16 @@ class Package(object):
         if com[1]:
             raise PackageException(com[1].decode('UTF-8'))
 
-    def commit(self):
+    def commit(self, branches = ['master']):
         repo = gitapi.Repo( "%s/%s" % (os.getcwd(), self.name))
         repo.git_add('.')
         repo.git_commit(self._args.changelog)
-        repo.git_checkout('f22')
-        repo.git_merge('master')
+        for branch in branches:
+            if branch == 'master':
+                continue
+            repo.git_checkout(branch)
+            repo.git_merge('master')
+
         repo.git_checkout('master')
 
     def push(self):

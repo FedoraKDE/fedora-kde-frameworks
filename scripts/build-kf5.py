@@ -28,12 +28,10 @@ from Package import *
 
 
 def findAllPackages(args):
-    pkgs =  [ Package('%s/kf5/kf5.spec' % args.pkgroot, args),
-              Package('%s/extra-cmake-modules/extra-cmake-modules.spec' % args.pkgroot, args) ]
-    for tier in [ 1, 2, 3, 4 ]:
-        fws = os.listdir('%s/tier%d' % (args.pkgroot, tier));
-        fws = map(lambda x: Package("%s/tier%d/%s/%s.spec" % (args.pkgroot, tier, x, x), args), fws)
-        pkgs += fws
+    pkgs = []
+    fws = os.listdir(args.pkgroot);
+    fws = map(lambda x: Package("%s/%s/%s.spec" % (args.pkgroot, x, x), args), fws)
+    pkgs += fws
 
     return pkgs
 
@@ -134,21 +132,22 @@ def buildInKoji(args, packages):
     # Get the last pkg: we'll run chainbuild from there
     lastPkg = packages.pop()
 
-    print('Packages to build: %s' % ' '.join(packages))
+    pkgnames = list(map(lambda x: x.name if isinstance(x, Package) else x, packages))
+    print('Packages to build: %s' % ' '.join(pkgnames))
     print('Koji Target: %s' % args.target)
-    print('Branch: %s' % branch)
-    print('Chainbuild package: %s/%s' % (args.pkgroot, lastPkg))
+    print('Branch: %s' % args.branch)
+    print('Chainbuild package: %s/%s' % (args.pkgroot, lastPkg.name))
 
     proceed = input('Proceed? [Y/n] ')
     if proceed.lower() == 'n':
         return
 
-    repo = gitapi.Repo('%s/%s' % (args.pkgroot, lastPkg))
-    repo.git_checkout(branch)
+    repo = gitapi.Repo('%s/%s' % (args.pkgroot, lastPkg.name))
+    repo.git_checkout(args.branch)
     repo.git_pull()
 
-    p = subprocess.Popen(['fedpkg', 'chain-build', '--target=%s' % args.target] + packages,
-                     cwd = '%s/%s' % (args.pkgroot, lastPkg))
+    p = subprocess.Popen(['fedpkg', 'chain-build', '--target=%s' % args.target] + pkgnames,
+                     cwd = '%s/%s' % (args.pkgroot, lastPkg.name))
     p.wait()
 
 
