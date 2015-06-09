@@ -35,7 +35,8 @@ _KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadwea
 # Stuff that matches our filters, but must be ommitted
 # - kf5-kdelibs4support-devel is listed because no frameworks are allowed to depend on KDELibs4Support,
 #   but from time to time there's a dep in a disabled (unported) subfolder, which we cannot distinguish easilly
-_IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel", "qt5-qtmacextras-devel", "kf5-kdelibs4support-devel" ]
+_IgnoredDeps = [ "kf5-rpm-macros", "kf5-filesystem", "extra-cmake-modules", "qt5-qtwinextras-devel",
+                 "qt5-qtmacextras-devel", "kf5-kdelibs4support-devel", "qt5-qttexttospeech-devel" ]
 
 # Stuff that breaks our assumption that all BR must have -devel suffix
 _NoDevelSuffix = [ "qt5-qttools-static" ]
