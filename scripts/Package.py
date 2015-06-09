@@ -62,7 +62,7 @@ class Package(object):
         self.specFilePath = specFilePath
         self._args = args
 
-        self._load()
+        self.load()
 
         if 'plasma_version' in self._globalVars:
             self.plasmaVersion = self._globalVars['plasma_version']
@@ -78,7 +78,7 @@ class Package(object):
 
         return outStr
 
-    def _load(self):
+    def load(self):
         self.otherBuildRequiresNames = []
         self.kf5BuildRequiresNames = []
         self.patches = []
@@ -156,7 +156,7 @@ class Package(object):
         repo.git_pull('origin')
 
         # Reparse
-        self._load()
+        self.load()
 
     def removePatch(self, patch):
         self._patchesToRemove += [ patch ]

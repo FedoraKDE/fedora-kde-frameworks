@@ -26,9 +26,10 @@ from datetime import datetime
 import os
 import subprocess
 
-from prettytable import PrettyTable
+from prettytable import PrettyTable, ALL
 
 from Package import *
+from DependencyScanner import *
 
 def main():
     parser = ArgumentParser(description = 'Update KF5 spec files to new version.')
@@ -77,6 +78,8 @@ def main():
 
         print('Loading %s...' % name, end = '', flush = True)
         pkg = Package("%s/%s/%s.spec" % (args.pkgroot, name, name), args)
+        print('Done')
+        print('Updating %s...' % name, end = '', flush = True)
         if not args.skip_git_update:
             pkg.gitUpdate()
 
@@ -91,15 +94,25 @@ def main():
         if not args.no_update:
             pkg.updateSpec()
 
+        scanner = DependencyScanner(pkg)
+        scanner.load()
+        pkg.scanner = scanner
+
         pkgs.append(pkg)
         print('Done')
 
-    table = PrettyTable(['Package', 'Old Version', 'New Version'])
+
+    table = PrettyTable(['Package', 'Old Version', 'New Version', 'Added deps', 'Removed deps', 'Added devel deps', 'Removed devel deps'])
     table.align = 'l'
+    table.hrules = ALL
     for pkg in pkgs:
         table.add_row([pkg.name,
                       "%s-%s" % (pkg.rawVersion, pkg.rawRelease),
-                      "%s-%s" % (pkg.newVersion, pkg.newRelease)])
+                      "%s-%s" % (pkg.newVersion, pkg.newRelease),
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsAdd))),
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsRemove))),
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsAdd))),
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsRemove)))])
     print(table.get_string(sortby='Package'))
 
     proceed = input("Proceed? [Y/n] ")
@@ -116,6 +129,13 @@ def main():
             except PackageException as e:
                 print('Error: %s' % e.message)
                 return
+
+            try:
+                pkg.scanner.write()
+            except DependencyException as e:
+                print('Error: %s' % e.message)
+                return
+
             print('Done')
 
         if not args.no_upload:
