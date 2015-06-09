@@ -19,8 +19,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 #
 
-
-
 import argparse
 import io
 import os
@@ -44,6 +42,78 @@ _NoDevelSuffix = [ "qt5-qttools-static" ]
 # http://www.cmake.org/cmake/help/v3.0/command/find_package.html + some more custom keywords
 _FindPackageKeywords = [ "EXACT", "QUIET", "MODULE", "REQUIRED",  "COMPONENTS",
                          "CONFIG", "NO_MODULE", "OPTIONAL_COMPONENTS", "NO_POLICY_SCOPE" ]
+
+
+class DependencyException(Exception):
+    def __init__(self, reason):
+        super(DependencyException, self).__init__(reason)
+
+class Dependency:
+    _pkgname = None
+    _isa = None
+    _versionCond = None
+    _version = None
+
+    def __init__(self, dep):
+        parts = re.search(r'([\w-]+)[\ ]*(\([\w]+\)){0,1}[\ ]*([\<\>\=]*){1}[\ ]*([0-9\.\-\w]*){1}', dep)
+        if not parts or len(parts.groups()) < 4:
+            raise DependencyException("'%s' is not a valid dependency string" % dep)
+
+        groups = parts.groups()
+        self._pkgname = groups[0]
+        self._isa = groups[1]
+        self._versionCond = groups[2] if groups[2] else None
+        self._version = groups[3] if groups[3] else None
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        if self._isa:
+            name = '%s%s' % (self._pkgname, self._isa)
+        else:
+            name = self._pkgname
+
+        if self._versionCond and self._version:
+            return '%s %s %s' % (name, self._versionCond, self._version)
+        else:
+            return name
+
+    def __eq__(self, other):
+        return self._pkgname == other.name()
+
+    def __lt__(self, other):
+        return self._pkgname < other.name()
+
+    def __hash__(self):
+        return self._pkgname.__hash__()
+
+    def name(self):
+        return self._pkgname
+
+    def isa(self):
+        return self._isa
+
+    def versionCond(self):
+        return self._versionCond
+
+    def version(self):
+        return self._version
+
+    def isIgnored(self):
+        return self._pkgname in _IgnoredDeps
+
+    def isQt5(self):
+        return self._pkgname.startswith('qt5-')
+
+    def isKF5(self):
+        return self._pkgname.startswith('kf5-')
+
+    def isQt5OrKF5(self):
+        return self.isQt5() or self.isKF5()
+
+
+
 
 def cmakeName2PkgName(cmakeName, prefix = None):
     cmakeName = cmakeName.lower()
@@ -141,8 +211,7 @@ def parseRequires(requires, buildRequires = False):
 
     matches = re.match(r"%s:[\ ]*([\w\-]+)[.]*" % keyword, requires)
     if matches:
-        match = matches.groups(1)[0]
-        return match
+        return Dependency(matches.groups(1)[0])
 
     return None
 
@@ -176,7 +245,7 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
             if line.startswith("BuildRequires:"):
                 br = parseRequires(line, True)
                 if br:
-                    if br.startswith("kf5-"):
+                    if br.isKF5():
                         inKF5Requires = True
                     if br in depsRemove:
                         continue
@@ -200,7 +269,7 @@ def updateSpecFile(specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove)
             if line.startswith("Requires:"):
                 br = parseRequires(line)
                 if br:
-                    if br.startswith("kf5-"):
+                    if br.isKF5():
                         inKF5Requires = True
 
                     if br in develDepsRemove:
@@ -284,7 +353,7 @@ def parseBuildDeps(cmakeFile, variablesDict = None):
                         if not name in _NoDevelSuffix:
                             name = "%s-devel" % name
                         if name not in _IgnoredDeps:
-                            deps.append(name)
+                            deps.append(Dependency(name))
 
         # Handle find_package(Qt5Foo ...)
         elif macro and prefix and not isComponent:
@@ -296,11 +365,11 @@ def parseBuildDeps(cmakeFile, variablesDict = None):
                 if not name in _NoDevelSuffix:
                     name = "%s-devel" % name
                 if name not in _IgnoredDeps:
-                    deps.append(name)
+                    deps.append(Dependency(name))
 
         # Look for inclusion of ECMPoQmTools, which requires qt5-qttools-devel installed
         elif not macro and re.match("^include[\ ]*\([\ ]*ECMPoQmTools[\ ]*\)", line):
-                deps.append("qt5-qttools-devel")
+                deps.append(Dependency("qt5-qttools-devel"))
 
 
     return deps
@@ -312,27 +381,49 @@ def main():
     parser.add_argument('specfile', metavar='SPEC')
     args = parser.parse_args()
 
+    providesSP = subprocess.Popen(['rpmspec', '-q', '--provides', args.specfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, errs = providesSP.communicate()
+    if errs.decode('UTF-8'):
+        print("Error processing %s: %s" % (args.specfile, errs.decode('UTF-8')))
+        return
+    provides = out.decode('UTF-8').split('\n')
 
-    f = open(args.specfile, 'r')
+    parsedSP = subprocess.Popen(['rpmspec', '-P', args.specfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, errs = parsedSP.communicate()
+    if errs.decode('UTF-8'):
+        print("Error processing %s: %s:" % (args.specfile, errs.decode('UTF-8')))
+        return
+    parsed = out.decode('UTF-8').split('\n')
+
     inFilesDevel = False
     inPkgDevel = False
     cmakeName = None
     currentDeps = [];
     currentDevelDeps = []
+    pkgName = None
 
     # Parse the SPEC file
-    for line in f:
+    for line in parsed:
         line = line.strip()
 
         # Skip comments
         if line.startswith("#"):
             continue;
 
+        # Get package name
+        if line.startswith("Name:"):
+            pkgName = line.rsplit(' ', 1)[1]
+            continue
+
         # Parse all BR that start with qt5- or kf5-
         if line.startswith("BuildRequires:"):
-            dep = line.rsplit(' ', 1)[1]
-            if dep.startswith("qt5-") or dep.startswith("kf5-") and dep not in _IgnoredDeps:
-                currentDeps.append(dep);
+            try:
+                dep = Dependency(line.rsplit(' ', 1)[1])
+            except DependencyException:
+                continue
+
+            if not dep.isIgnored() and dep.isQt5OrKF5():
+                currentDeps.append(dep)
             continue
 
         # Detect beginning of -devel subpackage
@@ -343,8 +434,8 @@ def main():
         else:
             # Parse all qt5- or kf5- Requires within -devel subpackage
             if line.startswith("Requires:"):
-                dep = line.rsplit(' ', 1)[1]
-                if dep.startswith("qt5-") or dep.startswith("kf5-"):
+                dep = Dependency(line.rsplit(' ', 1)[1])
+                if dep.isQt5OrKF5():
                     currentDevelDeps.append(dep);
             # Reaching %description macro within -devel subpackage means end of -devel
             elif line.startswith("%description"):
@@ -365,9 +456,9 @@ def main():
             # Match FooBar from %{_kf5_libdir}/cmake/FooBar
             # This is the only "clever" way how to get the name of the actual
             # CMake module.
-            m = re.search(r"%{_kf5_libdir}/cmake/([\w]+)[/]*", line)
+            m = re.search(r"/usr/lib(|64)/cmake/([\w]+)[/]*", line)
             if m:
-                cmakeName = m.groups(1)[0]
+                cmakeName = m.groups(1)[1]
                 # This is the last thing we need from this loop
                 break
 
@@ -376,6 +467,7 @@ def main():
         print("Failed to detect CMake name for %s" % args.specfile)
         return
 
+    print("%s => %s" % (pkgName, cmakeName))
 
     srcFile = getSource(args.specfile)
     if not srcFile:
@@ -404,7 +496,7 @@ def main():
 
     cleanupSource(srcDir)
 
-    print(cmakeName)
+
     currentDeps = list(set(currentDeps))
     deps = list(set(deps))
     depsAdd = list(set(deps) - set(currentDeps))
