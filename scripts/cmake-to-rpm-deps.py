@@ -77,7 +77,7 @@ def cmakeName2PkgName(cmakeName, prefix = None):
         # Fedora-specific mapping of Qt5 modules to package names
         if fwname in [ "concurrent", "core", "dbus", "gui", "network", "sql", "widgets", "xml", "test", "printsupport" ]:
             fwname = "qtbase"
-        elif fwname in [ "qml", "quick", "quickwidgets" ]:
+        elif fwname in [ "qml", "quick", "quickwidgets", "quicktest" ]:
             fwname = "qtdeclarative"
         elif fwname == "declarative":
             fwname = "qtquick1"
