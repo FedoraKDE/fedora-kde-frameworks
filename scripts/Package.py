@@ -69,6 +69,8 @@ class Package(object):
         else:
             self.plasmaVersion = self.version
 
+    def __repr__(self):
+        return "<Package %s>" % self.name
 
     def _replaceVars(self, inStr, globalVars):
         outStr = inStr

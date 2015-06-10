@@ -30,7 +30,8 @@ import tempfile
 from Package import *
 
 # Those are frameworks that don't have "K" prefix
-_KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver", "plasma", "networkmanager-qt" ]
+_KExceptions = [ "attica", "frameworkintegration", "solid", "sonnet", "threadweaver",
+                 "plasma", "networkmanager-qt", "modemmanager-qt" ]
 
 # Stuff that matches our filters, but must be ommitted
 # - kf5-kdelibs4support-devel is listed because no frameworks are allowed to depend on KDELibs4Support,
@@ -153,6 +154,9 @@ class DependencyScanner:
             # Handle "KF5Su" -> "KF5KDESu"
             elif fwname == "su":
                 fwname ="kdesu"
+            # modemmanagerqt -> modemmanager-qt, bluezqt -> bluez-qt, ...
+            elif fwname.endswith("qt"):
+                fwname = fwname[:-2] + "-qt";
 
             if (not fwname in _KExceptions) and (not fwname[0] == 'k'):
                 fwname = "k%s" % fwname
@@ -234,12 +238,11 @@ class DependencyScanner:
 
     def _updateSpecFile(self, specfile, depsAdd, depsRemove, develDepsAdd, develDepsRemove):
         out = []
-        f = open(specfile, 'r')
         inMain = True
         inDevel = False
         inRequires = False
         inKF5Requires = False
-        for line in f:
+        for line in self._pkg._lines:
             origLine = line
             line = line.strip()
 
@@ -364,10 +367,11 @@ class DependencyScanner:
 
                         if not (m == "KF5" or m == "Qt5" or m in _FindPackageKeywords or re.match(r"[\"]*(?:@|\${)[\w\-]*(?:@|})[\"]*", m) or re.match(r"[0-9\.]+", m)):
                             name = self._cmakeName2PkgName(m, prefix)
-                            if not name in _NoDevelSuffix:
-                                name = "%s-devel" % name
-                            if name not in _IgnoredDeps:
-                                deps.append(Dependency(name))
+                            if not name == self._pkg.name:
+                                if not name in _NoDevelSuffix:
+                                    name = "%s-devel" % name
+                                if name not in _IgnoredDeps:
+                                    deps.append(Dependency(name))
 
             # Handle find_package(Qt5Foo ...)
             elif macro and prefix and not isComponent:
@@ -376,10 +380,11 @@ class DependencyScanner:
                 if matches:
                     match = matches.groups(1)[0]
                     name = self._cmakeName2PkgName(match)
-                    if not name in _NoDevelSuffix:
-                        name = "%s-devel" % name
-                    if name not in _IgnoredDeps:
-                        deps.append(Dependency(name))
+                    if not name == self._pkg.name:
+                        if not name in _NoDevelSuffix:
+                            name = "%s-devel" % name
+                        if name not in _IgnoredDeps:
+                            deps.append(Dependency(name))
 
             # Look for inclusion of ECMPoQmTools, which requires qt5-qttools-devel installed
             elif not macro and re.match("^include[\ ]*\([\ ]*ECMPoQmTools[\ ]*\)", line):
@@ -400,7 +405,7 @@ class DependencyScanner:
         out, errs = parsedSP.communicate()
         if errs.decode('UTF-8'):
             print("Error processing %s: %s:" % (tmpfile.name, errs.decode('UTF-8')))
-            return
+            return False
         parsed = out.decode('UTF-8').split('\n')
 
         inFilesDevel = False
@@ -473,25 +478,25 @@ class DependencyScanner:
 
         if not cmakeName:
             print("Failed to detect CMake name for %s" % self._pkg.specFilePath)
-            return
+            return False
 
         srcFile = self._getSource(tmpfile.name)
         if not srcFile:
             print("Failed to detect source")
-            return
+            return False
 
         srcDir = self._extractSource(srcFile)
 
         cmakeConfigFile = self._findCMakeConfigFile(srcDir, cmakeName)
         if not cmakeConfigFile:
             print("Failed to find CMake config file")
-            return
+            return False
         develDeps = self._parseBuildDeps(cmakeConfigFile)
 
         cmakeListsFiles = self._findCMakeListsFiles(srcDir)
         if not cmakeListsFiles:
             print("Failed to find CMakeLists.txt file")
-            return
+            return False
 
         deps = []
         # We need to iterate through all CMakeLists.txt files, since some
@@ -513,9 +518,11 @@ class DependencyScanner:
         self.develDepsAdd = list(set(develDeps) - set(currentDevelDeps))
         self.develDepsRemove = list(set(currentDevelDeps) - set(develDeps))
 
+        return True
+
     def write(self):
         if self.depsAdd or self.depsRemove or self.develDepsAdd or self.develDepsRemove:
-            updateSpecFile(self._pkg.specFilePath, self.depsAdd, self.depsRemove, self.develDepsAdd, self.develDepsRemove)
+            self._updateSpecFile(self._pkg.specFilePath, self.depsAdd, self.depsRemove, self.develDepsAdd, self.develDepsRemove)
 
 
 if __name__ == "__main__":

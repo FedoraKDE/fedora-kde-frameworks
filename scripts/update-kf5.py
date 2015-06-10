@@ -55,7 +55,8 @@ def main():
                         help='Don\'t commit and push the changes')
     parser.add_argument('--pkgroot', action='store', default=os.getcwd(),
                         help='Package root dir')
-
+    parser.add_argument('--resume-from', action='store',
+                        help='Resume from specified package')
     args = parser.parse_args()
 
     if not args.changelog:
@@ -67,11 +68,17 @@ def main():
 
     pkgs = []
     names = os.listdir(args.pkgroot)
+    shouldSkip = not (args.resume_from == None)
     for name in names:
         if args.exclude and name in args.exclude:
             print("Skipping %s" % name)
             continue
-
+        if shouldSkip:
+            if name == args.resume_from:
+                shouldSkip = False
+            else:
+                print("Skipping %s" % name)
+                continue
 
         if not os.path.isdir('%s/%s' % (args.pkgroot, name)):
             continue
@@ -95,8 +102,10 @@ def main():
             pkg.updateSpec()
 
         scanner = DependencyScanner(pkg)
-        scanner.load()
-        pkg.scanner = scanner
+        if scanner.load():
+            pkg.scanner = scanner
+        else:
+            pkg.scanner = None
 
         pkgs.append(pkg)
         print('Done')
@@ -109,10 +118,10 @@ def main():
         table.add_row([pkg.name,
                       "%s-%s" % (pkg.rawVersion, pkg.rawRelease),
                       "%s-%s" % (pkg.newVersion, pkg.newRelease),
-                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsAdd))),
-                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsRemove))),
-                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsAdd))),
-                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsRemove)))])
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsAdd))) if pkg.scanner else "[error]",
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.depsRemove))) if pkg.scanner else "[error]",
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsAdd))) if pkg.scanner else "[error]",
+                      '\n'.join(list(map(lambda x : x.name(), pkg.scanner.develDepsRemove))) if pkg.scanner else "[error]"])
     print(table.get_string(sortby='Package'))
 
     proceed = input("Proceed? [Y/n] ")
@@ -125,16 +134,12 @@ def main():
         if not args.no_update:
             print('Updating SPEC file...', end = '', flush = True)
             try:
-                pkg.writeSpec()
-            except PackageException as e:
+                if pkg.scanner and (pkg.scanner.depsAdd or pkg.scanner.depsRemove or pkg.scanner.develDepsAdd or pkg.scanner.develDepsRemove):
+                    pkg.scanner.write()
+                else:
+                    pkg.writeSpec()
+            except (PackageException, DependencyException) as e:
                 print('Error: %s' % e.message)
-                return
-
-            try:
-                pkg.scanner.write()
-            except DependencyException as e:
-                print('Error: %s' % e.message)
-                return
 
             print('Done')
 
