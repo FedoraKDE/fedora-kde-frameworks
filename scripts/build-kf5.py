@@ -23,6 +23,7 @@ import argparse
 import subprocess
 import gitapi
 import os
+import itertools
 
 from Package import *
 
@@ -40,12 +41,13 @@ def allDepsAnalyzed(package, groups):
     if not deps:
         return True
 
-    for group in groups:
-        for pkg in group:
-            if pkg.name in deps:
-                deps.remove(pkg.name)
-                if not deps:
-                    return True
+    l = []
+    knownDeps = list(map(lambda x : x.name, itertools.chain.from_iterable(groups)))
+    for dep in package.kf5BuildRequiresNames:
+        if dep in knownDeps:
+            deps.remove(dep)
+            if not deps:
+                return True
 
     if not deps:
         return True
@@ -169,6 +171,7 @@ def main():
     args = parser.parse_args()
 
     packages = findAllPackages(args)
+    print(packages)
     groups = createBuildGroups(packages)
 
     i = 0
