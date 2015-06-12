@@ -50,12 +50,7 @@ def main():
 
         allSrcPkgs.append(( pkgParts[0], pkgParts[1], pkgParts[2] ))
 
-    srcPkgs = os.listdir('%s/tier1' % args.pkgroot) \
-            + os.listdir('%s/tier2' % args.pkgroot) \
-            + os.listdir('%s/tier3' % args.pkgroot) \
-            + os.listdir('%s/tier4' % args.pkgroot)
-    srcPkgs.append('kf5')
-    srcPkgs.append('extra-cmake-modules')
+    srcPkgs = os.listdir('%s' % args.pkgroot)
 
     destPkgs = {}
     for srcPkg in allSrcPkgs:
