@@ -1,0 +1,14 @@
+diff --git a/src/bluetooth/bluez/bluez_data_p.h b/src/bluetooth/bluez/bluez_data_p.h
+index 9d0d9d9..92f0e63 100644
+--- a/src/bluetooth/bluez/bluez_data_p.h
++++ b/src/bluetooth/bluez/bluez_data_p.h
+@@ -168,6 +168,9 @@ static inline quint16 bt_get_le16(const void *ptr)
+     return bt_get_unaligned((const quint16 *) ptr);
+ }
+ #elif __BYTE_ORDER == __BIG_ENDIAN
++#ifndef bswap_16
++#define bswap_16(x) (((x) & 0x00ff) << 8 | ((x) & 0xff00) >> 8)
++#endif
+ static inline quint16 bt_get_le16(const void *ptr)
+ {
+     return qbswap(bt_get_unaligned((const quint16 *) ptr));

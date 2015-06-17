@@ -1,0 +1,30 @@
+%_qt5 @@NAME@@
+%_qt5_epoch @@EPOCH@@
+%_qt5_version @@VERSION@@
+%_qt5_evr @@EVR@@
+%_qt5_prefix %{_libdir}/qt5
+%_qt5_archdatadir %{_qt5_prefix}
+%_qt5_bindir %{_qt5_prefix}/bin
+%_qt5_datadir %{_datadir}/qt5
+%_qt5_docdir %{_docdir}/qt5
+%_qt5_examplesdir %{_qt5_prefix}/examples
+%_qt5_headerdir %{_includedir}/qt5
+%_qt5_importdir %{_qt5_archdatadir}/imports
+%_qt5_libdir %{_libdir}
+%_qt5_libexecdir %{_qt5_archdatadir}/libexec
+%_qt5_plugindir %{_qt5_archdatadir}/plugins
+%_qt5_qmake %{_qt5_bindir}/qmake
+%_qt5_settingsdir %{_sysconfdir}/xdg
+%_qt5_sysconfdir %{_qt5_settingsdir}
+%_qt5_translationdir %{_datadir}/qt5/translations
+
+%qmake_qt5 \
+  %{_qt5_qmake} \\\
+  QMAKE_CFLAGS_DEBUG="${CFLAGS:-%optflags}" \\\
+  QMAKE_CFLAGS_RELEASE="${CFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_LFLAGS_DEBUG="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_LFLAGS_RELEASE="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_STRIP=
+

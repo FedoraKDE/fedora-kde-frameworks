@@ -1,0 +1,42 @@
+diff --git a/src/qml/jsruntime/jsruntime.pri b/src/qml/jsruntime/jsruntime.pri
+index c27aaa9..05c86e8 100644
+--- a/src/qml/jsruntime/jsruntime.pri
++++ b/src/qml/jsruntime/jsruntime.pri
+@@ -105,6 +105,11 @@ SOURCES += \
+     $$PWD/qv4string.cpp \
+     $$PWD/qv4value.cpp
+ 
++linux-g++*:isEqual(QT_ARCH,i386):!no_sse2 {
++    QMAKE_CFLAGS += -msse2 -mfpmath=sse
++    QMAKE_CXXFLAGS += -msse2 -mfpmath=sse
++}
++
+ valgrind {
+     DEFINES += V4_USE_VALGRIND
+ }
+diff --git a/src/qml/jsruntime/qv4global_p.h b/src/qml/jsruntime/qv4global_p.h
+index 1208f0f..31b9c38 100644
+--- a/src/qml/jsruntime/qv4global_p.h
++++ b/src/qml/jsruntime/qv4global_p.h
+@@ -69,7 +69,7 @@ inline double trunc(double d) { return d > 0 ? floor(d) : ceil(d); }
+ //
+ // NOTE: This should match the logic in qv4targetplatform_p.h!
+ 
+-#if defined(Q_PROCESSOR_X86) && !defined(__ILP32__) \
++#if defined(Q_PROCESSOR_X86) && !defined(__ILP32__) && defined(__SSE2__) \
+     && (defined(Q_OS_WIN) || defined(Q_OS_LINUX) || defined(Q_OS_QNX) || defined(Q_OS_FREEBSD))
+ #define V4_ENABLE_JIT
+ #elif defined(Q_PROCESSOR_X86_64) && !defined(__ILP32__) \
+diff --git a/src/qml/qml/v8/qv8engine.cpp b/src/qml/qml/v8/qv8engine.cpp
+index 39b816f..7aedf9e 100644
+--- a/src/qml/qml/v8/qv8engine.cpp
++++ b/src/qml/qml/v8/qv8engine.cpp
+@@ -121,7 +121,7 @@ QV8Engine::QV8Engine(QJSEngine* qq)
+     , m_xmlHttpRequestData(0)
+     , m_listModelData(0)
+ {
+-#ifdef Q_PROCESSOR_X86_32
++#if defined(Q_PROCESSOR_X86_32) && defined(__SSE2__)
+     if (!qCpuHasFeature(SSE2)) {
+         qFatal("This program requires an X86 processor that supports SSE2 extension, at least a Pentium 4 or newer");
+     }
