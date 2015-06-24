@@ -15,12 +15,12 @@
 Summary: Qt5 - QtDeclarative component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtdeclarative-opensource-src-5.5.0-rc.tar.xz
 
 # support no_sse2 CONFIG (fedora i686 builds cannot assume -march=pentium4 -msse2 -mfpmath=sse flags, or the JIT that needs them)
 # https://codereview.qt-project.org/#change,73710
@@ -73,14 +73,10 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-
-pushd %{qt_module}
+%setup -q -n qtdeclarative-opensource-src-%{version}-rc
 %patch1 -p1 -b .no_sse2
-popd
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -102,12 +98,7 @@ popd
 make %{?_smp_mflags} docs -C %{_target_platform}
 %endif
 
-# %{qt_module}
-popd
-
-
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %ifarch %{ix86}
@@ -155,16 +146,11 @@ for prl_file in libQt5*.prl ; do
 done
 popd
 
-# %{qt_module}
-popd
-
-
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
 %doc LICENSE.LGPL* LGPL_EXCEPTION.txt
-%doc %{qt_module}/dist/changes*
 %{_qt5_libdir}/libQt5Qml.so.5*
 %ifarch %{ix86}
 %{_qt5_libdir}/sse2/libQt5Qml.so.5*
@@ -212,6 +198,8 @@ popd
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
 * Mon Jun 08 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.2-2
 - restore fix for QTBUG-45753/kde-345544 lost in 5.4.2 rebase
 
