@@ -4,16 +4,11 @@
 Summary: Main Qt5 Reference Documentation
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 License: GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtdoc-opensource-src-5.5.0-rc.tar.xz 
 
 BuildArch: noarch
 
@@ -26,20 +21,15 @@ overviews, Qt topics, and examples not specific to any Qt module.
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}-rc
 
 
 %build
-pushd %{qt_module}
 qmake-qt5
 make docs %{?_smp_mflags}
-popd
 
 %install
-pushd %{qt_module}
 make install_docs INSTALL_ROOT=%{buildroot}
-popd
 
 
 %files
@@ -49,6 +39,9 @@ popd
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2-rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1-rc
 - Qt 5.5.0 RC1
 
