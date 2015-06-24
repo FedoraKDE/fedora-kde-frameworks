@@ -6,12 +6,12 @@
 Summary: Qt5 - Connectivity components
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
-# See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
+# See LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/%{version}-rc/latest_src/qt-everywhere-opensource-src-%{version}-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtconnectivity-opensource-src-5.5.0-rc.tar.xz 
 
 ## upstreamable patches
 # bswap_16 apparently missing on el6/ppc64
@@ -52,15 +52,10 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-
-pushd %{qt_module}
+%setup -q -n %{qt_module}-opensource-src-%{version}-rc
 %patch50 -p1 -b .bswap_16
-popd
-
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -72,11 +67,7 @@ make %{?_smp_mflags} docs
 %endif
 popd
 
-# %{qt_module}
-popd
-
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -107,15 +98,12 @@ for prl_file in libQt5*.prl ; do
 done
 popd
 
-# %{qt_module}
-popd
-
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc %{qt_module}/LGPL_EXCEPTION.txt LICENSE.GPL* LICENSE.LGPL*
+%doc LICENSE.GPL* LICENSE.LGPL*
 %{_bindir}/sdpscanner
 %{_qt5_bindir}/sdpscanner
 %{_qt5_libdir}/libQt5Bluetooth.so.5*
@@ -155,6 +143,9 @@ popd
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Mon Jun 15 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 
