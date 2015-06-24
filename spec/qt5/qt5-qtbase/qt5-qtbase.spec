@@ -42,12 +42,12 @@
 Summary: Qt5 - QtBase components
 Name:    qt5-qtbase
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url: http://qt-project.org/
-Source0: http://download.qt.io/snapshots/qt/5.5/%{version}-rc/latest_src/qt-everywhere-opensource-src-5.5.0-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtbase-opensource-src-5.5.0-rc.tar.xz 
 
 # header file to workaround multilib issue
 # https://bugzilla.redhat.com/show_bug.cgi?id=1036956
@@ -59,10 +59,13 @@ Source6: 10-qt5-check-opengl2.sh
 
 # support the old version of libxcb and the resulting lack of libxkbcommon-x11
 # in F19 and F20
+%if 0%{?old_xcb}
 Patch0: qtbase-opensource-src-5.4.0-rc-old_xcb.patch
-
+%if 0%{?old_xkbcommon}
 # support the old version of libxkbcommon in F19
 Patch1: qtbase-opensource-src-5.4.0-rc-old_xkbcommon.patch
+%endif
+%endif
 
 # support multilib optflags
 Patch2: qtbase-multilib_optflags.patch
@@ -72,10 +75,6 @@ Patch4: qtbase-opensource-src-5.3.2-QTBUG-35459.patch
 
 # unconditionally enable freetype lcdfilter support
 Patch12: qtbase-opensource-src-5.2.0-enable_ft_lcdfilter.patch
-
-# hack out largely useless (to users) warnings about qdbusconnection
-# (often in kde apps), keep an eye on https://git.reviewboard.kde.org/r/103699/
-Patch25: qtbase-opensource-src-5.5.1-qdbusconnection_no_debug.patch
 
 # upstreamable patches
 # support poll
@@ -320,8 +319,7 @@ Qt5 libraries used for drawing widgets and OpenGL items.
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-pushd qtbase
+%setup -q -n qtbase-opensource-src-%{version}-rc 
 
 %if 0%{?old_xcb}
 %patch0 -p1 -b .old_xcb
@@ -335,7 +333,6 @@ rm -fv mkspecs/linux-g++*/qmake.conf.multilib-optflags
 
 %patch4 -p1 -b .QTBUG-35459
 %patch12 -p1 -b .enable_ft_lcdfilter
-%patch25 -p1 -b .qdbusconnection_no_debug
 
 #patch50 -p1 -b .poll
 
@@ -362,16 +359,13 @@ mv sqlite UNUSED/
 %endif
 popd
 
-
 # builds failing mysteriously on f20
 # ./configure: Permission denied
 # check to ensure that can't happen -- rex
 test -x configure || chmod +x configure
 
-popd
 
 %build
-pushd qtbase
 # limit -reduce-relocations to %%ix86 x86_64 archs, https://bugreports.qt-project.org/browse/QTBUG-36129
 ./configure -v \
   -confirm-license \
@@ -438,7 +432,6 @@ make %{?_smp_mflags} docs
 
 
 %install
-pushd qtbase
 make install INSTALL_ROOT=%{buildroot}
 
 %if 0%{?docs}
@@ -531,12 +524,8 @@ popd
 
 install -p -m755 -D %{SOURCE6} %{buildroot}%{_sysconfdir}/X11/xinit/xinitrc.d/10-qt5-check-opengl2.sh
 
-# qtbase
-popd
-
 ## work-in-progress, doesn't work yet -- rex
 %check
-pushd qtbase
 export CMAKE_PREFIX_PATH=%{buildroot}%{_prefix}
 export CTEST_OUTPUT_ON_FAILURE=1
 export PATH=%{buildroot}%{_bindir}:$PATH
@@ -545,7 +534,6 @@ mkdir tests/auto/cmake/%{_target_platform}
 pushd tests/auto/cmake/%{_target_platform}
 cmake .. ||:
 ctest --output-on-failure ||:
-popd
 popd
 
 %if 0%{?qtchooser}
@@ -889,6 +877,9 @@ fi
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Mon Jun 15 2015 Daniel Vratil <dvratil@redhat.com> 5.5.0-0.1.rc
 - Qt 5.5 RC 1
 
