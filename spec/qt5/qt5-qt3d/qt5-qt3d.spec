@@ -3,7 +3,7 @@
 # define to build docs, need to undef this for bootstrapping
 %define docs 1
 
-%define pre rc
+%define prerelease rc
 
 Summary: Qt5 - Qt3D QML bindings and C++ APIs
 Name:    qt5-%{qt_module}
@@ -14,7 +14,7 @@ Release: 0.2.rc%{?dist}
 # See also http://doc.qt.io/qt-5/licensing.html
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?prerelease:-%{prerelease}}/submodules/%{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}.tar.xz
 
 BuildRequires:  qt5-qtbase-static >= %{version}
 BuildRequires:  qt5-qtxmlpatterns-devel >= %{version}
@@ -26,6 +26,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5XmlPatterns)
 BuildRequires:  pkgconfig(Qt5Declarative)
 BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires:  pkgconfig(assimp)
 
 Requires:       qt5-qtimageformats >= %{version}
 
@@ -62,7 +63,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 
 
 %build
@@ -111,37 +112,40 @@ popd
 %{_qt5_libdir}/libQt53DCore.so.5*
 %{_qt5_archdatadir}/qml/Qt3D/
 %{_qt5_archdatadir}/qml/QtQuick/Scene3D
+%{_qt5_plugindir}/sceneparsers/libassimpsceneparser.so
 
 %files devel
 %{_qt5_libdir}/libQt53DQuickRenderer.so
 %{_qt5_libdir}/libQt53DQuickRenderer.prl
 %{_qt5_libdir}/cmake/Qt53DQuickRenderer
 %{_qt5_headerdir}/Qt3DQuickRenderer
+%{_qt5_libdir}/pkgconfig/Qt53DQuickRenderer.pc
 %{_qt5_libdir}/libQt53DQuick.so
 %{_qt5_libdir}/libQt53DQuick.prl
 %{_qt5_libdir}/cmake/Qt53DQuick
 %{_qt5_headerdir}/Qt3DQuick
+%{_qt5_libdir}/pkgconfig/Qt53DQuick.pc
 %{_qt5_libdir}/libQt53DInput.so
 %{_qt5_libdir}/libQt53DInput.prl
 %{_qt5_libdir}/cmake/Qt53DInput
 %{_qt5_headerdir}/Qt3DInput/
+%{_qt5_libdir}/pkgconfig/Qt53DInput.pc
 %{_qt5_libdir}/libQt53DRenderer.so
 %{_qt5_libdir}/libQt53DRenderer.prl
 %{_qt5_libdir}/cmake/Qt53DRenderer
 %{_qt5_headerdir}/Qt3DRenderer/
+%{_qt5_libdir}/pkgconfig/Qt53DRenderer.pc
 %{_qt5_libdir}/libQt53DCore.so
 %{_qt5_libdir}/libQt53DCore.prl
 %{_qt5_libdir}/cmake/Qt53DCore/
 %{_qt5_headerdir}/Qt3DCore/
+%{_qt5_libdir}/pkgconfig/Qt53DCore.pc
 %{_qt5_archdatadir}/mkspecs/modules/*.pri
 
 
 %if 0%{?docs}
 %files doc
-%{_qt5_docdir}/qt3dcore.qch
-%{_qt5_docdir}/qt3dcore/
-%{_qt5_docdir}/qt3drender.qch
-%{_qt5_docdir}/qt3drenderer/
+%{_qt5_docdir}/*
 %endif
 
 %if 0%{?_qt5_examplesdir:1}
