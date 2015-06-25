@@ -8,7 +8,7 @@
 Summary: Qt5 - WebSockets component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://doc.qt.io/qt-5/licensing.html
@@ -80,11 +80,23 @@ make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 %endif
 
+## .prl/.la file love
+# nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
+pushd %{buildroot}%{_qt5_libdir}
+for prl_file in libQt5*.prl ; do
+sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
+if [ -f "$(basename ${prl_file} .prl).so" ]; then
+rm -fv "$(basename ${prl_file} .prl).la"
+sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
+fi
+done
+popd
+
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc LICENSE.GPL* LICENSE.LGPL*
+%doc LICENSE.*
 %{_qt5_libdir}/libQt5WebSockets.so.5*
 %{_qt5_archdatadir}/qml/QtWebSockets/
 %{_qt5_archdatadir}/qml/Qt/WebSockets/
@@ -111,6 +123,9 @@ make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

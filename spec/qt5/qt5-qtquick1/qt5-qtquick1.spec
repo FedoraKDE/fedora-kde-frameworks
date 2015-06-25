@@ -10,7 +10,7 @@
 Summary: A declarative language for describing user interfaces in Qt5
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.2.rc%{?dist}
+Release: 0.1.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
@@ -21,7 +21,7 @@ BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtscript-devel >= %{version}
 BuildRequires: qt5-qttools-devel >= %{version}
 BuildRequires: qt5-qtxmlpatterns-devel >= %{version}
-BuildRequires: qt5-qtwebkit-devel
+BuildRequires: qt5-qtwebkit-devel >= %{version}
 
 %{?_qt5_version:Requires: qt5-qtbase%{?_isa} >= %{_qt5_version}}
 
@@ -123,7 +123,7 @@ popd
 %postun -p /sbin/ldconfig
 
 %files
-%doc LICENSE.GPL* LICENSE.LGPL* LGPL_EXCEPTION.txt
+%doc LICENSE.LGPL* LGPL_EXCEPTION.txt
 %{_qt5_libdir}/libQt5Declarative.so.5*
 %{_qt5_importdir}/Qt/
 %{_qt5_importdir}/QtWebKit/
@@ -160,9 +160,6 @@ popd
 
 
 %changelog
-* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
-- Update for official RC1 released packages
-
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

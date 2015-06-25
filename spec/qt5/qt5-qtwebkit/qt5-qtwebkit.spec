@@ -16,7 +16,7 @@
 Summary: Qt5 - QtWebKit components
 Name:    qt5-qtwebkit
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -176,8 +176,8 @@ popd
 %postun -p /sbin/ldconfig
 
 %files
-%doc %{qt_module}/Source/WebCore/LICENSE*
-%doc %{qt_module}/ChangeLog* %{qt_module}/VERSION
+%doc Source/WebCore/LICENSE*
+%doc ChangeLog* VERSION
 %{_qt5_libdir}/libQt5WebKit.so.5*
 %{_qt5_libdir}/libQt5WebKitWidgets.so.5*
 %{_qt5_libexecdir}/QtWebPluginProcess
@@ -200,6 +200,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 03 2015 Jan Grulich <jgrulich@redhat.com> - 5.4.2-1
 - 5.4.2
 

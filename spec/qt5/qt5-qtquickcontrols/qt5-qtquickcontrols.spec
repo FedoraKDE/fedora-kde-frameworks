@@ -79,8 +79,7 @@ make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 # better to own this elsewhere? qt5-qtbase? -- rex
 %dir %{_qt5_archdatadir}/qml
 %{_qt5_archdatadir}/qml/QtQuick/
-%doc LICENSE.LGPL*
-%doc LICENSE.GPL*
+%doc LICENSE.*
 
 %if 0%{?docs}
 %files doc
