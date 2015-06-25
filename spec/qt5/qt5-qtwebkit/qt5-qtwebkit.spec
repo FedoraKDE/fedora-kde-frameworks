@@ -11,6 +11,8 @@
 %define docs 0
 %endif
 
+%define pre rc
+
 Summary: Qt5 - QtWebKit components
 Name:    qt5-qtwebkit
 Version: 5.5.0
@@ -20,12 +22,7 @@ Release: 0.1.rc%{?dist}
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 # Search /usr/lib{,64}/mozilla/plugins-wrapped for browser plugins too
 Patch1: qtwebkit-opensource-src-5.2.0-pluginpath.patch
@@ -114,10 +111,8 @@ BuildArch: noarch
 
 
 %prep
-#%setup -q -n qtwebkit-opensource-src-%{version}%{?pre:-%{pre}}
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
-pushd %{qt_module}
 %patch1 -p1 -b .pluginpath
 %patch3 -p1 -b .debuginfo
 %patch4 -p1 -b .save_memory
@@ -139,11 +134,7 @@ mv Source/ThirdParty/ANGLE/ \
    Source/ThirdParty/orig/
 %endif
 
-# %{qt_module}
-popd
-
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 
@@ -162,11 +153,7 @@ make %{?_smp_mflags} docs
 %endif
 popd
 
-# %{qt_module}
-popd
-
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -184,10 +171,6 @@ for prl_file in libQt5*.prl ; do
   fi
 done
 popd
-
-# %{qt_module}
-popd
-
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

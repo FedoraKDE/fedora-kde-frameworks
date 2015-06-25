@@ -15,9 +15,7 @@
 
 %global rpm_macros_dir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
-#%if 0%{?fedora} > 22
-%global bootstrap 1
-#%endif
+%global bootstrap 0
 
 %if 0%{?fedora} > 21
 # use external qt_settings pkg
@@ -35,19 +33,17 @@
 
 %define examples 1
 
-#define pre rc
-#define snap 2014-10-07_40
-#define snap_tag 20141007_40
+%define pre rc
 
 Summary: Qt5 - QtBase components
 Name:    qt5-qtbase
 Version: 5.5.0
-Release: 0.2.rc%{?dist}
+Release: 0.3.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url: http://qt-project.org/
-Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtbase-opensource-src-5.5.0-rc.tar.xz 
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 # header file to workaround multilib issue
 # https://bugzilla.redhat.com/show_bug.cgi?id=1036956
@@ -319,7 +315,7 @@ Qt5 libraries used for drawing widgets and OpenGL items.
 
 
 %prep
-%setup -q -n qtbase-opensource-src-%{version}-rc 
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %if 0%{?old_xcb}
 %patch0 -p1 -b .old_xcb
@@ -877,6 +873,9 @@ fi
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.3.rc
+- Disable bootstrap
+
 * Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
 - Update for official RC1 released packages
 

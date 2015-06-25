@@ -3,21 +3,24 @@
 # define to build docs, need to undef this for bootstrapping
 %define docs 0
 
+%define pre rc
+
 Summary: Qt5 - Location component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 ## upstreamable patches
 # try to support older glib2 (like el6)
 Patch50: qtlocation-opensource-src-5.4.0-G_VALUE_INIT.patch
 
 BuildRequires: qt5-qtbase-devel >= %{version}
+BuildRequires: qt5-qtdeclarative-devel >= %{version}
 BuildRequires: pkgconfig(Qt5Qml) >= 5.4.0
 BuildRequires: pkgconfig(geoclue)
 %if 0%{?rhel} < 7
@@ -57,14 +60,11 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-pushd %{qt_module}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 ## G_VALUE_INIT is new in glib-2.30+ only
 %patch50 -p1 -b .G_VALUE_INIT
-popd
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -76,11 +76,7 @@ make %{?_smp_mflags} docs
 %endif
 popd
 
-# %{qt_module}
-popd
-
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -97,9 +93,6 @@ for prl_file in libQt5*.prl ; do
     sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
   fi
 done
-popd
-
-# %{qt_module}
 popd
 
 %post -p /sbin/ldconfig
@@ -149,6 +142,9 @@ popd
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Mon Jun 15 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

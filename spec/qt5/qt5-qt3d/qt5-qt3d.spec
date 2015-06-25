@@ -1,39 +1,39 @@
 
-%global qt_module qtwebchannel
+%global qt_module qt3d
 # define to build docs, need to undef this for bootstrapping
 %define docs 1
 
 %define pre rc
 
-Summary: Qt5 - WebChannel component
+Summary: Qt5 - Qt3D QML bindings and C++ APIs
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://doc.qt.io/qt-5/licensing.html
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
 Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt.io/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt.io/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
 
-BuildRequires:  qt5-qtbase-devel >= %{version}
-BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  qt5-qtbase-static >= %{version}
+BuildRequires:  qt5-qtxmlpatterns-devel >= %{version}
+BuildRequires:  qt5-qtdeclarative-devel >= %{version}
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5XmlPatterns)
+BuildRequires:  pkgconfig(Qt5Declarative)
+BuildRequires:  pkgconfig(Qt5OpenGL)
 
-# Qt5WebSockets package is optional and only needed for examples
-BuildRequires:  pkgconfig(Qt5WebSockets)
+Requires:       qt5-qtimageformats >= %{version}
 
 %{?_qt5_version:Requires: qt5-qtbase%{?_isa} >= %{_qt5_version}}
 
 %description
-The Qt WebChannel module provides a library for seamless integration of C++
-and QML applications with HTML/JavaScript clients. Any QObject can be
-published to remote clients, where its public API becomes available.
+The QtWebSockets module implements the WebSocket protocol as specified in RFC
+6455. It solely depends on Qt (no external dependencies).
 
 %package devel
 Summary: Development files for %{name}
@@ -63,11 +63,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %prep
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -76,15 +74,13 @@ make %{?_smp_mflags}
 
 %if 0%{?docs}
 # HACK to avoid multilib conflicts in noarch content
-# see also https://bugreports.qt.io/browse/QTBUG-42071
+# see also https://bugreports.qt-project.org/browse/QTBUG-42071
 QT_HASH_SEED=0; export QT_HASH_SEED
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -103,29 +99,49 @@ for prl_file in libQt5*.prl ; do
 done
 popd
 
-popd
-
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
 %doc LICENSE.GPL* LICENSE.LGPL*
-%{_qt5_libdir}/libQt5WebChannel.so.5*
-%{_qt5_archdatadir}/qml/QtWebChannel/
+%{_qt5_libdir}/libQt53DQuickRenderer.so.5*
+%{_qt5_libdir}/libQt53DQuick.so.5*
+%{_qt5_libdir}/libQt53DInput.so.5*
+%{_qt5_libdir}/libQt53DRenderer.so.5*
+%{_qt5_libdir}/libQt53DCore.so.5*
+%{_qt5_archdatadir}/qml/Qt3D/
+%{_qt5_archdatadir}/qml/QtQuick/Scene3D
 
 %files devel
-%{_qt5_headerdir}/QtWebChannel/
-%{_qt5_libdir}/libQt5WebChannel.so
-%{_qt5_libdir}/libQt5WebChannel.prl
-%dir %{_qt5_libdir}/cmake/Qt5WebChannel/
-%{_qt5_libdir}/cmake/Qt5WebChannel/Qt5WebChannelConfig*.cmake
-%{_qt5_libdir}/pkgconfig/Qt5WebChannel.pc
-%{_qt5_archdatadir}/mkspecs/modules/qt_lib_webchannel*.pri
+%{_qt5_libdir}/libQt53DQuickRenderer.so
+%{_qt5_libdir}/libQt53DQuickRenderer.prl
+%{_qt5_libdir}/cmake/Qt53DQuickRenderer
+%{_qt5_headerdir}/Qt3DQuickRenderer
+%{_qt5_libdir}/libQt53DQuick.so
+%{_qt5_libdir}/libQt53DQuick.prl
+%{_qt5_libdir}/cmake/Qt53DQuick
+%{_qt5_headerdir}/Qt3DQuick
+%{_qt5_libdir}/libQt53DInput.so
+%{_qt5_libdir}/libQt53DInput.prl
+%{_qt5_libdir}/cmake/Qt53DInput
+%{_qt5_headerdir}/Qt3DInput/
+%{_qt5_libdir}/libQt53DRenderer.so
+%{_qt5_libdir}/libQt53DRenderer.prl
+%{_qt5_libdir}/cmake/Qt53DRenderer
+%{_qt5_headerdir}/Qt3DRenderer/
+%{_qt5_libdir}/libQt53DCore.so
+%{_qt5_libdir}/libQt53DCore.prl
+%{_qt5_libdir}/cmake/Qt53DCore/
+%{_qt5_headerdir}/Qt3DCore/
+%{_qt5_archdatadir}/mkspecs/modules/*.pri
+
 
 %if 0%{?docs}
 %files doc
-%{_qt5_docdir}/%{qt_module}.qch
-%{_qt5_docdir}/%{qt_module}/
+%{_qt5_docdir}/qt3dcore.qch
+%{_qt5_docdir}/qt3dcore/
+%{_qt5_docdir}/qt3drender.qch
+%{_qt5_docdir}/qt3drenderer/
 %endif
 
 %if 0%{?_qt5_examplesdir:1}
@@ -135,11 +151,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
-- Qt 5.5.0 RC1
+- Qt 5.5.0 RC1 (initial version)
 
-* Sun Jun 07 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.2-1
-- 5.4.2
-
-* Tue Dec 23 2014 Taylor Braun-Jones <taylor.braun-jones@ge.com> - 5.4.0-1
-- Initial release.

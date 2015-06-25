@@ -5,19 +5,16 @@
 # where qt5-qttools builds are not yet available
 %define docs 1
 
+%define pre rc
+
 Name:    qt5-%{qt_module}
 Summary: Qt5 - module with set of QtQuick controls
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
-License: BSD and (LGPLv2 with exceptions or GPLv3 with exceptions) and GFDL
+License: LGPLv2 or LGPLv3 and GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel >= %{version}
 BuildRequires:  qt5-qtbase-static >= %{version}
@@ -53,12 +50,10 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -72,18 +67,13 @@ QT_HASH_SEED=0; export QT_HASH_SEED
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
-
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
 make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 %endif
-popd
-
 
 %files
 # better to own this elsewhere? qt5-qtbase? -- rex
@@ -91,7 +81,6 @@ popd
 %{_qt5_archdatadir}/qml/QtQuick/
 %doc LICENSE.LGPL*
 %doc LICENSE.GPL*
-%doc LGPL_EXCEPTION.txt
 
 %if 0%{?docs}
 %files doc
@@ -113,6 +102,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

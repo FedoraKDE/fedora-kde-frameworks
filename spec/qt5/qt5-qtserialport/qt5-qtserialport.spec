@@ -3,20 +3,17 @@
 # define to build docs, need to undef this for bootstrapping
 %define docs 1
 
+%define pre rc
+
 Summary: Qt5 - SerialPort component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: pkgconfig(libudev)
@@ -53,12 +50,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
-
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} .. \
@@ -73,10 +67,8 @@ QT_HASH_SEED=0; export QT_HASH_SEED
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -99,9 +91,6 @@ for prl_file in libQt5*.prl ; do
     sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
   fi
 done
-popd
-
-# %{qt_module}
 popd
 
 
@@ -136,6 +125,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

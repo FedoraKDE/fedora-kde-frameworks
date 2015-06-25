@@ -4,18 +4,15 @@
 # build support for non-egl platforms
 %define nogl 1
 
+%define pre rc
+
 Summary:        Qt5 - Wayland platform support and QtCompositor module
 Name:           qt5-%{qt_module}
 Version:        5.5.0
-Release:        0.1.rc%{?dist}
-License:        LGPLv2 with exceptions or GPLv3 with exceptions
+Release:        0.2.rc%{?dist}
+License:        LGPLv2 with exceptions or LGPLv3 with exceptions
 Url:            http://www.qt.io
-Source0:        http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel >= %{version} 
 BuildRequires:  qt5-qtbase-static
@@ -54,19 +51,9 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
-
-# Presence of .git/ qmake into invoking syncqt for us with
-# correct arguments at make time.
-# else, out-of-src-tree builds fail with stuff like:
-# qwaylanddisplay_p.h:52:54: fatal error: QtWaylandClient/private/qwayland-wayland.h: No such file or directory
-# #include <QtWaylandClient/private/qwayland-wayland.h>
-#mkdir .git
-
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %build
-pushd %{qt_module}
 %if 0%{?nogl}
 # build support for non-egl platforms
 mkdir nogl
@@ -78,10 +65,8 @@ make %{?_smp_mflags} -C nogl
 
 %{_qt5_qmake} CONFIG+=wayland-compositor
 make %{?_smp_mflags}
-popd
 
 %install
-pushd %{qt_module}
 %if 0%{?nogl}
 make install INSTALL_ROOT=%{buildroot} -C nogl/
 %endif
@@ -105,15 +90,12 @@ install -pm644 \
   include/QtCompositor/%{version}/QtCompositor/private/{wayland-wayland-server-protocol.h,qwayland-server-wayland.h} \
   %{buildroot}%{_qt5_headerdir}/QtCompositor/%{version}/QtCompositor/private/
 
-# %{qt_module}
-popd
-
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc %{qt_module}/README
-%doc LICENSE.LGPL* LICENSE.GPL* LGPL_EXCEPTION.txt
+%doc README
+%doc LICENSE.LGPL* LGPL_EXCEPTION.txt
 %{_qt5_libdir}/libQt5Compositor.so.5*
 %{_qt5_libdir}/libQt5WaylandClient.so.5*
 %dir %{_qt5_plugindir}/wayland-decoration-client/
@@ -149,6 +131,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt5 5.5.0 RC1
 

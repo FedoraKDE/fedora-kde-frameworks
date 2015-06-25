@@ -1,19 +1,16 @@
 
 %global qt_module qttranslations
 
+%define pre rc
+
 Summary: Qt5 - QtTranslations module
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 License: LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildArch: noarch
 
@@ -54,25 +51,18 @@ Provides: %{_qt5}-zn_TW = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
-
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %build
-pushd %{qt_module}
 qmake-qt5
 make %{?_smp_mflags}
-popd
 
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot}
 
 # not used currently, since we track locales manually to keep %files/Provides sync'd -- rex
 %find_lang %{name} --all-name --with-qt --without-mo
-popd
-
 
 %files
 %doc LICENSE.LGPL* LGPL_EXCEPTION.txt
@@ -105,6 +95,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

@@ -5,20 +5,17 @@
 # where qt5-qttools builds are not yet available
 %define docs 1
 
+%define pre rc
+
 Summary: Qt5 - QtGraphicalEffects component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively from qt5-qtbase for details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/%{version}/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 # debuginfo.list ends up empty/blank anyway, since the included qml is *basically* noarch
 # todo: look into making this pkg proper noarch instead
@@ -50,12 +47,10 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -66,18 +61,14 @@ make %{?_smp_mflags}
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
 
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
 make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 %endif
-
-popd
 
 %files
 %doc LGPL_EXCEPTION.txt LICENSE.LGPL*
@@ -93,6 +84,9 @@ popd
 
 
 %changelog
+* Wed Jun 24 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages 
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

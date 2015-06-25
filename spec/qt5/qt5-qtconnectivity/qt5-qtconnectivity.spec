@@ -1,7 +1,7 @@
 
 %global qt_module qtconnectivity
-# define to build docs, need to undef this for bootstrapping
-#%define docs 1
+
+%define pre rc
 
 Summary: Qt5 - Connectivity components
 Name:    qt5-%{qt_module}
@@ -11,7 +11,7 @@ Release: 0.2.rc%{?dist}
 # See LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtconnectivity-opensource-src-5.5.0-rc.tar.xz 
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 ## upstreamable patches
 # bswap_16 apparently missing on el6/ppc64
@@ -52,7 +52,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}-rc
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 %patch50 -p1 -b .bswap_16
 
 %build

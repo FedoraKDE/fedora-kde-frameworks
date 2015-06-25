@@ -5,30 +5,23 @@
 # where qt5-qttools builds are not yet available
 #define docs 1
 
+%define pre rc
+
 Summary: A declarative language for describing user interfaces in Qt5
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/%{version}/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
-#%if 0%{?snap:1}
-#Source0: http://download.qt-project.org/snapshots/qt/5.4/%{version}-%{pre}/%{snap}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtscript-devel >= %{version}
 BuildRequires: qt5-qttools-devel >= %{version}
-BuildRequires: qt5-qtwebkit-devel >= %{version}
 BuildRequires: qt5-qtxmlpatterns-devel >= %{version}
+BuildRequires: qt5-qtwebkit-devel
 
 %{?_qt5_version:Requires: qt5-qtbase%{?_isa} >= %{_qt5_version}}
 
@@ -69,12 +62,10 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -85,10 +76,8 @@ make %{?_smp_mflags}
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -129,10 +118,6 @@ for prl_file in libQt5*.prl ; do
   fi
 done
 popd
-
-# %{qt_module}
-popd
-
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -175,6 +160,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 17 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 

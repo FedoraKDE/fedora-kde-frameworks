@@ -3,15 +3,17 @@
 # define to build docs, need to undef this for bootstrapping
 %define docs 0
 
+%define pre rc
+
 Summary: Qt5 - Sensors component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io/
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: pkgconfig(Qt5Qml) >= 5.5.0
@@ -49,12 +51,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-#%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -66,11 +65,8 @@ make %{?_smp_mflags} docs
 %endif
 popd
 
-# %{qt_module}
-popd
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -87,9 +83,6 @@ for prl_file in libQt5*.prl ; do
     sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
   fi
 done
-popd
-
-# %{qt_module}
 popd
 
 %post -p /sbin/ldconfig
@@ -126,6 +119,9 @@ popd
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Wed Jun 03 2015 Jan Grulich <jgrulich@redhat.com> - 5.4.2-1
 - 5.4.2
 

@@ -12,6 +12,8 @@
 %endif
 %endif
 
+%define pre rc
+
 Summary: Qt5 - QtDeclarative component
 Name:    qt5-%{qt_module}
 Version: 5.5.0
@@ -20,7 +22,7 @@ Release: 0.2.rc%{?dist}
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/5.5.0-rc/submodules/qtdeclarative-opensource-src-5.5.0-rc.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 # support no_sse2 CONFIG (fedora i686 builds cannot assume -march=pentium4 -msse2 -mfpmath=sse flags, or the JIT that needs them)
 # https://codereview.qt-project.org/#change,73710
@@ -73,7 +75,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n qtdeclarative-opensource-src-%{version}-rc
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 %patch1 -p1 -b .no_sse2
 
 %build

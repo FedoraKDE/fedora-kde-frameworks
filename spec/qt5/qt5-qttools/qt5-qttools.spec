@@ -15,20 +15,16 @@
 %endif
 %endif
 
+%define pre rc
+
 Summary: Qt5 - QtTool components
 Name:    qt5-qttools
 Version: 5.5.0
-Release: 0.1.rc%{?dist}
+Release: 0.2.rc%{?dist}
 
-# See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
-License: LGPLv2 with exceptions or GPLv3 with exceptions
+License: LGPLv3 or LGPLv2
 Url:     http://www.qt.io
-Source0: http://download.qt.io/snapshots/qt/5.5/latest_srcs/qt-everywhere-opensource-src-%{version}-rc.tar.xz 
-#%if 0%{?pre:1}
-#Source0: http://download.qt-project.org/development_releases/qt/5.4/%{version}-%{pre}/submodules/%{qt_module}-opensource-src-%{version}-%{pre}.tar.xz
-#%else
-#Source0: http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{qt_module}-opensource-src-%{version}.tar.xz
-#%endif
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
 
 Patch1: qttools-opensource-src-5.3.2-system-clucene.patch
 
@@ -49,8 +45,8 @@ BuildRequires: cmake
 %endif
 BuildRequires: desktop-file-utils
 BuildRequires: qt5-qtbase-devel >= %{version}
-BuildRequires: qt5-qtbase-static
-BuildRequires: qt5-qtdeclarative-static
+BuildRequires: qt5-qtbase-static >= %{version}
+BuildRequires: qt5-qtdeclarative-static >= %{version}
 BuildRequires: qt5-qtwebkit-devel
 
 %if 0%{?system_clucene}
@@ -161,9 +157,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 
 %prep
-#%setup -q -n qttools-opensource-src-%{version}%{?pre:-%{pre}}
-%setup -q -n qt-everywhere-opensource-src-%{version}-rc
-pushd %{qt_module}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
 
 %if 0%{?system_clucene}
 %patch1 -p1 -b .system_clucene
@@ -172,10 +166,7 @@ rm -rf src/assistant/3rdparty/clucene
 %endif
 %patch2 -p1 -b .qmake-qt5
 
-popd
-
 %build
-pushd %{qt_module}
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{qmake_qt5} ..
@@ -186,11 +177,9 @@ make %{?_smp_mflags}
 make %{?_smp_mflags} docs
 %endif
 popd
-popd
 
 
 %install
-pushd %{qt_module}
 make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 
 %if 0%{?docs}
@@ -243,13 +232,9 @@ for prl_file in libQt5*.prl ; do
 done
 popd
 
-# %{qt_module}
-popd
-
 ## work-in-progress... -- rex
 %if 0%{?fedora} || 0%{?rhel} > 6
 %check
-pushd %{qt_module}
 export CMAKE_PREFIX_PATH=%{buildroot}%{_qt5_prefix}:%{buildroot}%{_prefix}
 export PATH=%{buildroot}%{_qt5_bindir}:%{_qt5_bindir}:$PATH
 export LD_LIBRARY_PATH=%{buildroot}%{_qt5_libdir}
@@ -257,7 +242,6 @@ mkdir tests/auto/cmake/%{_target_platform}
 pushd tests/auto/cmake/%{_target_platform}
 cmake ..
 ctest --output-on-failure ||:
-popd
 popd
 %endif
 
@@ -270,7 +254,7 @@ popd
 %{_qt5_bindir}/qtpaths
 
 %files common
-%doc %{qt_module}/LGPL_EXCEPTION.txt %{qt_module}/LICENSE.LGPL*
+%doc LICENSE.LGPL*
 
 %post   libs-clucene -p /sbin/ldconfig
 %postun libs-clucene -p /sbin/ldconfig
@@ -441,6 +425,9 @@ fi
 
 
 %changelog
+* Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
+- Update for official RC1 released packages
+
 * Mon Jun 15 2015 Daniel Vrátil <dvratil@redhat.com> - 5.5.0-0.1.rc
 - Qt 5.5.0 RC1
 
