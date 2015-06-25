@@ -1,7 +1,7 @@
 
 %global qt_module qtdoc
 
-%define pre rc
+%define prerelease rc
 
 Summary: Main Qt5 Reference Documentation
 Name:    qt5-%{qt_module}
@@ -10,7 +10,7 @@ Release: 0.2.rc%{?dist}
 
 License: GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?prerelease:-%{prerelease}}/submodules/%{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}.tar.xz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ overviews, Qt topics, and examples not specific to any Qt module.
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 
 
 %build

@@ -1,7 +1,7 @@
 
 %global qt_module qttranslations
 
-%define pre rc
+%define prerelease rc
 
 Summary: Qt5 - QtTranslations module
 Name:    qt5-%{qt_module}
@@ -10,7 +10,7 @@ Release: 0.2.rc%{?dist}
 
 License: LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?prerelease:-%{prerelease}}/submodules/%{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}.tar.xz
 
 BuildArch: noarch
 
@@ -51,7 +51,7 @@ Provides: %{_qt5}-zn_TW = %{version}-%{release}
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 
 %build
 qmake-qt5

@@ -5,7 +5,7 @@
 # where qt5-qttools builds are not yet available
 %define docs 1
 
-%define pre rc
+%define prerelease rc
 
 Name:    qt5-%{qt_module}
 Summary: Qt5 - module with set of QtQuick controls
@@ -14,7 +14,7 @@ Release: 0.2.rc%{?dist}
 
 License: LGPLv2 or LGPLv3 and GFDL
 Url:     http://www.qt.io
-Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?prerelease:-%{prerelease}}/submodules/%{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}.tar.xz
 
 BuildRequires:  qt5-qtbase-devel >= %{version}
 BuildRequires:  qt5-qtbase-static >= %{version}
@@ -50,7 +50,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 
 
 %build

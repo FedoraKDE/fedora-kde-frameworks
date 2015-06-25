@@ -33,7 +33,7 @@
 
 %define examples 1
 
-%define pre rc
+%define prerelease rc
 
 Summary: Qt5 - QtBase components
 Name:    qt5-qtbase
@@ -43,7 +43,7 @@ Release: 0.3.rc%{?dist}
 # See LGPL_EXCEPTIONS.txt, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url: http://qt-project.org/
-Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?pre:-%{pre}}/submodules/%{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}.tar.xz
+Source0: http://download.qt.io/development_releases/qt/5.5/%{version}%{?prerelease:-%{prerelease}}/submodules/%{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}.tar.xz
 
 # header file to workaround multilib issue
 # https://bugzilla.redhat.com/show_bug.cgi?id=1036956
@@ -315,7 +315,7 @@ Qt5 libraries used for drawing widgets and OpenGL items.
 
 
 %prep
-%setup -q -n %{qt_module}-opensource-src-%{version}%{?pre:-%{pre}}
+%setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 
 %if 0%{?old_xcb}
 %patch0 -p1 -b .old_xcb
@@ -526,7 +526,7 @@ export CMAKE_PREFIX_PATH=%{buildroot}%{_prefix}
 export CTEST_OUTPUT_ON_FAILURE=1
 export PATH=%{buildroot}%{_bindir}:$PATH
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-mkdir tests/auto/cmake/%{_target_platform}
+mkdir -p tests/auto/cmake/%{_target_platform}
 pushd tests/auto/cmake/%{_target_platform}
 cmake .. ||:
 ctest --output-on-failure ||:
@@ -577,8 +577,8 @@ fi
 %endif
 
 %files
-%doc LICENSE.LGPL* LGPL_EXCEPTION.txt
-%if 0%{?qtchooser}
+%doc LICENSE.LGPL* LGPL_EXCEPTION.txt LICENSE.FDL
+%if -1%{?qtchooser}
 %dir %{_sysconfdir}/xdg/qtchooser
 # not editable config files, so not using %%config here
 %ghost %{_sysconfdir}/xdg/qtchooser/default.conf
@@ -621,7 +621,6 @@ fi
 %{_qt5_libdir}/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake
 %{_qt5_libdir}/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake
 %{_qt5_libdir}/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake
-#dir %{_qt5_plugindir}/accessible/
 %dir %{_qt5_plugindir}/designer/
 %dir %{_qt5_plugindir}/generic/
 %dir %{_qt5_plugindir}/iconengines/
@@ -820,7 +819,6 @@ fi
 %{_qt5_libdir}/libQt5PrintSupport.so.5*
 %{_qt5_libdir}/libQt5Widgets.so.5*
 %{_qt5_libdir}/libQt5XcbQpa.so.5*
-#{_qt5_plugindir}/accessible/libqtaccessiblewidgets.so
 %{_qt5_plugindir}/generic/libqevdevkeyboardplugin.so
 %{_qt5_plugindir}/generic/libqevdevmouseplugin.so
 %{_qt5_plugindir}/generic/libqevdevtabletplugin.so
