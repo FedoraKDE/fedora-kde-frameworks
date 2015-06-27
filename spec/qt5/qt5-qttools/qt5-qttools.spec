@@ -1,5 +1,5 @@
 
-%global bootstrap 1
+%global bootstrap 0
 
 %global qt_module qttools
 %if 0%{?fedora} > 19 || 0%{?rhel} > 6
@@ -20,7 +20,7 @@
 Summary: Qt5 - QtTool components
 Name:    qt5-qttools
 Version: 5.5.0
-Release: 0.2.rc%{?dist}
+Release: 0.3.rc%{?dist}
 
 License: LGPLv3 or LGPLv2
 Url:     http://www.qt.io
@@ -425,6 +425,9 @@ fi
 
 
 %changelog
+* Sat Jun 27 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.3.rc
+- Disable bootstrap
+
 * Thu Jun 25 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-0.2.rc
 - Update for official RC1 released packages
 
