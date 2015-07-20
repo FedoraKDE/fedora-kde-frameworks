@@ -1,0 +1,116 @@
+diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp
+--- a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp	1969-12-31 21:00:00.000000000 -0300
++++ b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp	2015-07-17 18:12:08.776913300 -0300
+@@ -0,0 +1,25 @@
++# Copyright 2013 The Chromium Authors. All rights reserved.
++# Use of this source code is governed by a BSD-style license that can be
++# found in the LICENSE file.
++
++{
++  'targets': [
++    {
++      'target_name': 'openssl',
++      'type': 'none',
++      'direct_dependent_settings': {
++        'cflags': [
++          '<!@(pkg-config --cflags openssl)',
++        ],
++      },
++      'link_settings': {
++        'ldflags': [
++          '<!@(pkg-config --libs-only-L --libs-only-other openssl)',
++        ],
++        'libraries': [
++          '<!@(pkg-config --libs-only-l openssl)',
++        ],
++      },
++    }
++  ],
++}
+diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp b/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp
+--- a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp	2015-06-29 17:09:36.000000000 -0300
++++ b/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp	2015-07-17 18:44:44.869755794 -0300
+@@ -6,12 +6,7 @@
+   'variables': {
+     # Check for presence of harfbuzz-icu library, use it if present.
+     'harfbuzz_libraries':
+-        '<!(python <(DEPTH)/tools/compile_test/compile_test.py '
+-        '--code "int main() { return 0; }" '
+-        '--run-linker '
+-        '--on-success "harfbuzz harfbuzz-icu" '
+-        '--on-failure "harfbuzz" '
+-        '-- -lharfbuzz-icu)',
++        'harfbuzz-icu'
+   },
+   'targets': [
+     {
+diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp b/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp
+--- a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp	2015-06-29 17:09:36.000000000 -0300
++++ b/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp	2015-07-17 18:28:27.394402679 -0300
+@@ -14,13 +14,7 @@
+       },
+       'link_settings': {
+         'libraries': [
+-          # Check for presence of webpdemux library, use it if present.
+-          '<!(python <(DEPTH)/tools/compile_test/compile_test.py '
+-          '--code "int main() { return 0; }" '
+-          '--run-linker '
+-          '--on-success "-lwebp -lwebpdemux" '
+-          '--on-failure "-lwebp" '
+-          '-- -lwebpdemux)',
++          '-lwebp -lwebpdemux',
+         ],
+       },
+     }
+diff -u -r -N a/src/core/config/desktop_linux.pri b/src/core/config/desktop_linux.pri
+--- a/src/core/config/desktop_linux.pri	2015-06-29 17:10:14.000000000 -0300
++++ b/src/core/config/desktop_linux.pri	2015-07-17 15:41:52.304048577 -0300
+@@ -15,7 +15,46 @@
+     use_pango=0 \
+     host_clang=0 \
+     clang=0 \
++    use_pulseaudio=1 \
++    linux_link_libpci=1 \
++    linux_link_gsettings=1 \
++    linux_link_libspeechd=1 \
++    use_system_re2=1 \
++    use_system_yasm=1 \
++    use_system_opus=1 \
++    use_system_zlib=1 \
++    use_system_speex=1 \
++    use_system_expat=1 \
++    use_system_snappy=1 \
++    use_system_libpng=1 \
++    use_system_libxml=1 \
++    use_system_libjpeg=1 \
++    use_system_libwebp=1 \
++    use_system_libxslt=1 \
++    use_system_libsrtp=1 \
++    use_system_jsoncpp=1 \
++    use_system_libevent=1 \
++    use_system_protobuf=1 \
++    use_system_harfbuzz=1 \
++    use_system_xdg_utils=1 \
++    use_system_ffmpeg=0 \
++    build_ffmpegsumo=1 \
++	use_system_expat=1 \
++	use_system_flac=1 \
++	use_system_icu=1 \
++	use_system_jsoncpp=1 \
++	use_system_libusb=1 \
++	use_system_libxml=1 \
++	use_system_openssl=1 \
++	use_system_opus=1 \
++	use_system_v8=1 \
++	use_system_snappy=1 \
++	use_system_speex=1 \
++	use_system_harfbuzz=1 \
++	use_system_libwebp=1 \
++	use_system_libvpx=1 \
++	use_system_re2=1 \
++	use_system_sqlite=1
+ 
+-contains(QT_CONFIG, system-jpeg): GYP_CONFIG += use_system_libjpeg=1
+ 
+-!contains(QT_CONFIG, pulseaudio): GYP_CONFIG += use_pulseaudio=0
++contains(QT_CONFIG, system-jpeg): GYP_CONFIG += use_system_libjpeg=1

@@ -1,0 +1,41 @@
+diff -u -r a/src/3rdparty/chromium/build/common.gypi b/src/3rdparty/chromium/build/common.gypi
+--- a/src/3rdparty/chromium/build/common.gypi	2015-06-29 17:09:36.000000000 -0300
++++ b/src/3rdparty/chromium/build/common.gypi	2015-07-16 10:10:35.109131951 -0300
+@@ -3065,11 +3065,6 @@
+               # Don't warn about hash_map in third-party code.
+               '-Wno-deprecated',
+             ],
+-            'cflags': [
+-              # Don't warn about printf format problems.
+-              # This is off by default in gcc but on in Ubuntu's gcc(!).
+-              '-Wno-format',
+-            ],
+             'cflags_cc!': [
+               # Necessary because llvm.org/PR10448 is WONTFIX (crbug.com/90453).
+               '-Wsign-compare',
+diff -u -r a/src/3rdparty/chromium/build/config/compiler/BUILD.gn b/src/3rdparty/chromium/build/config/compiler/BUILD.gn
+--- a/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2015-06-29 17:09:36.000000000 -0300
++++ b/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2015-07-16 10:11:03.106194197 -0300
+@@ -571,11 +571,6 @@
+   }
+ 
+   if (is_linux || is_android) {
+-    cflags += [
+-      # Don't warn about printf format problems. This is off by default in gcc
+-      # but on in Ubuntu's gcc(!).
+-      "-Wno-format",
+-    ]
+     cflags_cc += [
+       # Don't warn about hash_map in third-party code.
+       "-Wno-deprecated",
+diff -u -r a/src/3rdparty/chromium/third_party/skia/platform_tools/chromeos/gyp/dependencies.gypi b/src/3rdparty/chromium/third_party/skia/platform_tools/chromeos/gyp/dependencies.gypi
+--- a/src/3rdparty/chromium/third_party/skia/platform_tools/chromeos/gyp/dependencies.gypi	2015-06-29 17:07:06.000000000 -0300
++++ b/src/3rdparty/chromium/third_party/skia/platform_tools/chromeos/gyp/dependencies.gypi	2015-07-16 10:12:20.866367081 -0300
+@@ -19,7 +19,6 @@
+         '../third_party/externals/gif',
+       ],
+       'cflags': [
+-        '-Wno-format',
+         '-DHAVE_CONFIG_H',
+       ],
+       'cflags!': [
