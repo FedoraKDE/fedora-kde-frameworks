@@ -53,6 +53,7 @@ BuildRequires: pkgconfig(hunspell)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libssl)
 %if 0%{?fedora} || 0%{?rhel} > 6
 BuildRequires: pkgconfig(libwebp)
 %endif
@@ -70,7 +71,7 @@ BuildRequires: pkgconfig(flac++)
 BuildRequires: pkgconfig(minizip)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libxslt)
-BuildRequires: pkgconfig(sqlite3)
+#BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(xrender)
 BuildRequires: pkgconfig(xcomposite) 
 BuildRequires: pkgconfig(xrandr) 
@@ -86,6 +87,7 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(nss)
 BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(speex)
+BuildRequires: pkgconfig(libsrtp)
 BuildRequires: perl perl(version) perl(Digest::MD5) perl(Text::ParseWords)
 BuildRequires: ruby
 BuildRequires: python-devel
@@ -131,6 +133,10 @@ BuildArch: noarch
 export STRIP=strip
 export NINJAFLAGS="-v %{_smp_mflags}"
 
+# Something to evaluate 
+# libvpx not compiles against Fedora 1.4.0  -Duse_system_libvpx=1
+# sqlite3 extra functions - Read src/3rdparty/chromium/third_party/sqlite/README.chromium -Duse_system_sqlite=1"
+
 unbundle_conf+="
 	-Duse_system_expat=1
 	-Duse_system_flac=1
@@ -142,17 +148,14 @@ unbundle_conf+="
 	-Duse_system_libusb=1
 	-Duse_system_libxml=1
 	-Duse_system_libxslt=1
-	-Duse_system_openssl=1
 	-Duse_system_opus=1
-	-Duse_system_v8=1
 	-Duse_system_snappy=1
 	-Duse_system_speex=1
 	-Duse_system_harfbuzz=1
 	-Duse_system_libwebp=1
-	-Duse_system_libvpx=1
 	-Duse_system_re2=1
-	-Duse_system_zlib=1
-	-Duse_system_sqlite=1"
+	-Duse_system_openssl=1
+	-Duse_system_zlib=1"
 												   
 pushd src/3rdparty/chromium/
 	build/linux/unbundle/replace_gyp_files.py $unbundle_conf
@@ -200,7 +203,6 @@ popd
 %{_qt5_translationdir}/*
 
 %{_qt5_plugindir}/qtwebengine
-%{_qt5_datadir}/icudtl.dat
 %{_qt5_datadir}/qtwebengine_resources.pak
 
 %files devel
@@ -222,7 +224,9 @@ popd
 
 %changelog
 * Fri Jul 17 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-2
-- Update with unbundle flags. Borrowed from Suse package
+- Update with unbundle flags. Adapted from original 5.4 Suse package
+- Disable vpx and sqlite as unbundle due some compilation issues
+- Enable verbose build
 
 * Fri Jul 17 2015 Helio Chissini de Castro <helio@kde.org> - 5.5.0-1
 - Initial spec

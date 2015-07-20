@@ -1,6 +1,6 @@
-diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp
+diff -r -u -N a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp
 --- a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp	1969-12-31 21:00:00.000000000 -0300
-+++ b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp	2015-07-17 18:12:08.776913300 -0300
++++ b/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp	2015-07-20 14:33:47.312282702 -0300
 @@ -0,0 +1,25 @@
 +# Copyright 2013 The Chromium Authors. All rights reserved.
 +# Use of this source code is governed by a BSD-style license that can be
@@ -9,7 +9,7 @@ diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp b/src/3
 +{
 +  'targets': [
 +    {
-+      'target_name': 'openssl',
++      'target_name': 'boringssl',
 +      'type': 'none',
 +      'direct_dependent_settings': {
 +        'cflags': [
@@ -27,7 +27,7 @@ diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/boringssl.gyp b/src/3
 +    }
 +  ],
 +}
-diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp b/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp
+diff -r -u -N a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp b/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp
 --- a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp	2015-06-29 17:09:36.000000000 -0300
 +++ b/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp	2015-07-17 18:44:44.869755794 -0300
 @@ -6,12 +6,7 @@
@@ -44,7 +44,7 @@ diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/harfbuzz.gyp b/src/3r
    },
    'targets': [
      {
-diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp b/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp
+diff -r -u -N a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp b/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp
 --- a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp	2015-06-29 17:09:36.000000000 -0300
 +++ b/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp	2015-07-17 18:28:27.394402679 -0300
 @@ -14,13 +14,7 @@
@@ -62,9 +62,9 @@ diff -u -r -N a/src/3rdparty/chromium/build/linux/unbundle/libwebp.gyp b/src/3rd
          ],
        },
      }
-diff -u -r -N a/src/core/config/desktop_linux.pri b/src/core/config/desktop_linux.pri
+diff -r -u -N a/src/core/config/desktop_linux.pri b/src/core/config/desktop_linux.pri
 --- a/src/core/config/desktop_linux.pri	2015-06-29 17:10:14.000000000 -0300
-+++ b/src/core/config/desktop_linux.pri	2015-07-17 15:41:52.304048577 -0300
++++ b/src/core/config/desktop_linux.pri	2015-07-20 14:29:37.010101451 -0300
 @@ -15,7 +15,46 @@
      use_pango=0 \
      host_clang=0 \
@@ -106,9 +106,9 @@ diff -u -r -N a/src/core/config/desktop_linux.pri b/src/core/config/desktop_linu
 +	use_system_speex=1 \
 +	use_system_harfbuzz=1 \
 +	use_system_libwebp=1 \
-+	use_system_libvpx=1 \
++	use_system_libvpx=0 \
 +	use_system_re2=1 \
-+	use_system_sqlite=1
++	use_system_sqlite=0
  
 -contains(QT_CONFIG, system-jpeg): GYP_CONFIG += use_system_libjpeg=1
  
