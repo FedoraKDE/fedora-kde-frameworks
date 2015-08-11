@@ -1,0 +1,44 @@
+From f399aa8b48db02f809454be5427c0ca01b809882 Mon Sep 17 00:00:00 2001
+From: David Edmundson <kde@davidedmundson.co.uk>
+Date: Tue, 7 Jul 2015 11:54:11 +0100
+Subject: [PATCH 1/6] Only resize plot texture if size actually changes
+
+Test compared rounded QSize with QSizeF, which will be almost always
+returning true.
+
+CCBUG: 348385
+REVIEW: 124280
+---
+ src/qmlcontrols/kquickcontrolsaddons/plotter.cpp | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp b/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
+index 9a939c3..93da3c7 100644
+--- a/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
++++ b/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
+@@ -799,16 +799,15 @@ QSGNode *Plotter::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *updateP
+         u_matrix = s_program->uniformLocation("matrix");
+     }
+ 
+-    if (n->texture()->textureSize() != boundingRect().size()) {
+-        //we need a size always equal or smaller, size.toSize() won't do
+-        static_cast<PlotTexture *>(n->texture())->recreate(QSize(qRound(boundingRect().size().width()), qRound(boundingRect().size().height())));
++    //we need a size always equal or smaller, size.toSize() won't do
++    const QSize targetTextureSize(qRound(boundingRect().size().width()), qRound(boundingRect().size().height()));
++    if (n->texture()->textureSize() != targetTextureSize) {
++        static_cast<PlotTexture *>(n->texture())->recreate(targetTextureSize);
+         m_matrix = QMatrix4x4();
+-        m_matrix.ortho(0, qRound(width()), 0, qRound(height()), -1, 1);
++        m_matrix.ortho(0, targetTextureSize.width(), 0, targetTextureSize.height(), -1, 1);
+     }
+ 
+-    n->setRect(QRect(QPoint(0,0),
+-                     QSize(qRound(boundingRect().size().width()),
+-                           qRound(boundingRect().size().height()))));
++    n->setRect(QRect(QPoint(0,0), targetTextureSize));
+     return n;
+ }
+ 
+-- 
+1.9.3
+

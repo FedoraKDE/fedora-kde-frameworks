@@ -1,0 +1,42 @@
+From 1e77e17135b0f1828ca88aecb3cd75c3de111e0a Mon Sep 17 00:00:00 2001
+From: David Edmundson <kde@davidedmundson.co.uk>
+Date: Mon, 27 Jul 2015 23:29:36 +0200
+Subject: [PATCH 6/6] Detect initial face icon being created
+
+REVIEW: 124499
+---
+ src/qmlcontrols/kcoreaddons/kuserproxy.cpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/src/qmlcontrols/kcoreaddons/kuserproxy.cpp b/src/qmlcontrols/kcoreaddons/kuserproxy.cpp
+index 383220f..a0b4425 100644
+--- a/src/qmlcontrols/kcoreaddons/kuserproxy.cpp
++++ b/src/qmlcontrols/kcoreaddons/kuserproxy.cpp
+@@ -21,6 +21,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ #include "kuserproxy.h"
+ #include <QFile>
++#include <QDir>
+ #include <QHostInfo>
+ #include <QTextStream>
+ #include <QUrl>
+@@ -35,7 +36,15 @@ KUserProxy::KUserProxy (QObject *parent)
+     : QObject(parent),
+     m_temporaryEmptyFaceIconPath(false)
+ {
+-    m_dirWatch.addFile(m_user.faceIconPath());
++    QString pathToFaceIcon(m_user.faceIconPath());
++    if (pathToFaceIcon.isEmpty()) {
++        //KUser returns null if the current faceIconPath is empty
++        //so we should explicitly watch ~/.face.icon rather than faceIconPath()
++        //as we want to watch for this file being created
++        pathToFaceIcon = QDir::homePath() + QStringLiteral("/.face.icon");
++    }
++
++    m_dirWatch.addFile(pathToFaceIcon);
+     if (QFile::exists(etcPasswd)) {
+         m_dirWatch.addFile(etcPasswd);
+     }
+-- 
+1.9.3
+

@@ -1,0 +1,25 @@
+From 12d8398896207c602bafdffcbef053cd9579ce08 Mon Sep 17 00:00:00 2001
+From: l10n daemon script <scripty@kde.org>
+Date: Fri, 10 Jul 2015 10:12:12 +0000
+Subject: [PATCH 2/6] Upgrade KF5 version to 5.13.0.
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 359a899..d440172 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,7 +11,7 @@ feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKA
+ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+ 
+ set(REQUIRED_QT_VERSION "5.2.0")
+-set(KF5_VERSION "5.12.0") # handled by release scripts
++set(KF5_VERSION "5.13.0") # handled by release scripts
+ set(KF5_DEP_VERSION "5.12.0") # handled by release scripts
+ 
+ find_package(Qt5 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Qml Quick Gui)
+-- 
+1.9.3
+

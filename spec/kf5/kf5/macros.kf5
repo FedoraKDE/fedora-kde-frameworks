@@ -1,0 +1,67 @@
+%_kf5_prefix %_prefix
+%_kf5_archdatadir %_libdir/qt5
+%_kf5_bindir %_kf5_prefix/bin
+%_kf5_datadir %_datadir
+%_kf5_docdir /usr/share/doc
+%_kf5_includedir %_includedir/KF5
+%_kf5_libdir %_libdir
+%_kf5_libexecdir %_libexecdir/kf5
+%_kf5_qtplugindir %_qt5_plugindir
+%_kf5_plugindir %_qt5_plugindir/kf5
+%_kf5_sysconfdir %_sysconfdir
+%_kf5_mandir %_kf5_datadir/man
+%_kf5_buildtype release
+%_kf5_qmldir %_qt5_prefix/qml
+
+%cmake_kf5 \
+  QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
+  PATH="%{_qt5_bindir}:$PATH" ; export PATH ; \
+  CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
+  CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
+  FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
+  %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
+  %{__cmake} \\\
+    -DBUILD_SHARED_LIBS:BOOL=ON \\\
+    -DBUILD_TESTING:BOOL=FALSE \\\
+    -DCMAKE_BUILD_TYPE=%{_kf5_buildtype} \\\
+    -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \\\
+    -DCMAKE_INSTALL_FULL_BINDIR=%{_kf5_bindir} \\\
+    -DCMAKE_INSTALL_FULL_LIBEXECDIR=%{_libexecdir} \\\
+    -DCMAKE_INSTALL_FULL_LIBEXECDIR_KF5=%{_kf5_libexecdir} \\\
+    -DCMAKE_USE_RELATIVE_PATHS:BOOL=ON \\\
+    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \\\
+    -DBIN_INSTALL_DIR:PATH=%{_kf5_bindir} \\\
+    -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \\\
+    -DLIB_INSTALL_DIR:PATH=%{_lib} \\\
+%if "%{?_lib}" == "lib64" \
+     %{?_cmake_lib_suffix64} \\\
+%endif \
+    -DKCFG_INSTALL_DIR:PATH=%{_datadir}/config.kcfg \\\
+    -DPLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
+    -DQT_PLUGIN_INSTALL_DIR:PATH=%{_qt5_plugindir} \\\
+    -DQML_INSTALL_DIR:PATH=%{_kf5_qmldir} \\\
+    -DIMPORTS_INSTALL_DIR:PATH=%{_qt5_importdir} \\\
+    -DECM_MKSPECS_INSTALL_DIR:PATH=%{_kf5_libdir}/qt5/mkspecs/modules \\\
+    -DSYSCONF_INSTALL_DIR:PATH=%{_kf5_sysconfdir} \\\
+    -DLIBEXEC_INSTALL_DIR:PATH=%{_libexecdir} \\\
+    -DKF5_LIBEXEC_INSTALL_DIR=%{_kf5_libexecdir} \\\
+    -DKF5_INCLUDE_INSTALL_DIR=%{_kf5_includedir} \\\
+    -DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+
+# %%find_lang_kf5
+#
+# This macro is used in KDE Frameworks 5 packages instead of %%find_lang,
+# becasue find_lang is broken an it thinks that "_qt" in foobar_qt.qm is
+# the name of the language.
+# This macro should NOT be used with anything else but KDE Frameworks, since
+# it does some assumptions regarding the names and locations and it might not
+# work with other packages.
+# We should eventually get this to RPM, or fix %%find_lang
+#                                                       -- dvratil
+# Usage: find_lang_kf5 fooBar5
+#   - will look for fooBar5_qt.qm files in %%{buildroot}/usr/share/locale/
+#
+%find_lang_kf5() \
+    (find %{buildroot}/%{_datadir}/locale/ -name "%1.qm" -type f | sed ' \
+        s:%{buildroot}/:: \
+        s:%{_datadir}/locale/\\([a-zA-Z_\\@]*\\)/\\([a-zA-Z_]*\\)/%1.qm:%lang(\\1) %{_datadir}/locale/\\1/\\2/%1.qm:' > %1.lang)

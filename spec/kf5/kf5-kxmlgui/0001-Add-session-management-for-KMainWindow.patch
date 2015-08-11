@@ -1,0 +1,56 @@
+From c36189b575bef885aeb005f3f1c472ec8e48aacf Mon Sep 17 00:00:00 2001
+From: Stefan Becker <chemobejk@gmail.com>
+Date: Sat, 9 May 2015 17:17:25 +0300
+Subject: [PATCH] Add session management for KMainWindow
+
+- replace the KConfig object in KConfigGui with a new one using the
+  session id and key from the QSessionManager object
+- make sure that the data is stored after the application has update it
+- if the KConfig object is represented by a local file then add a
+  discard command to the session manager object
+
+BUG: 346768
+REVIEW: 123706
+---
+ src/kmainwindow.cpp | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/src/kmainwindow.cpp b/src/kmainwindow.cpp
+index 15eecb7..7c86841 100644
+--- a/src/kmainwindow.cpp
++++ b/src/kmainwindow.cpp
+@@ -127,8 +127,10 @@ KMWSessionManager::~KMWSessionManager()
+ {
+ }
+ 
+-bool KMWSessionManager::saveState(QSessionManager &)
++bool KMWSessionManager::saveState(QSessionManager &sm)
+ {
++    KConfigGui::setSessionConfig(sm.sessionId(), sm.sessionKey());
++
+     KConfig *config = KConfigGui::sessionConfig();
+     if (KMainWindow::memberList().count()) {
+         // According to Jochen Wilhelmy <digisnap@cs.tu-berlin.de>, this
+@@ -144,6 +146,19 @@ bool KMWSessionManager::saveState(QSessionManager &)
+ 
+     KConfigGroup group(config, "Number");
+     group.writeEntry("NumberOfWindows", n);
++
++    // store new status to disk
++    config->sync();
++
++    // generate discard command for new file
++    QString localFilePath =  QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QLatin1Char('/') + config->name();
++    if (QFile::exists(localFilePath)) {
++        QStringList discard;
++        discard << QLatin1String("rm");
++        discard << localFilePath;
++        sm.setDiscardCommand(discard);
++    }
++
+     return true;
+ }
+ 
+-- 
+2.4.0
+

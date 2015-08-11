@@ -1,0 +1,13 @@
+diff --git a/src/platformstatus/platformstatus.cpp b/src/platformstatus/platformstatus.cpp
+index e03c16d..7e70d97 100644
+--- a/src/platformstatus/platformstatus.cpp
++++ b/src/platformstatus/platformstatus.cpp
+@@ -87,7 +87,7 @@ void PlatformStatus::findLookAndFeelPackage(bool sendSignal)
+                             QStandardPaths::LocateDirectory);
+         if (path.isEmpty()) {
+             if (package != defaultPackage) {
+-                group.deleteEntry("LookAndFeel");
++                group.deleteEntry("LookAndFeelPackage");
+                 findLookAndFeelPackage(sendSignal);
+             }
+ 

@@ -1,0 +1,248 @@
+From ba267253dbaeac32bb033e2f519d10651075c766 Mon Sep 17 00:00:00 2001
+From: Martin Klapetek <mklapetek@kde.org>
+Date: Tue, 21 Jul 2015 20:39:04 +0200
+Subject: [PATCH 4/8] Remove KService and KIconThemes usage from KNotifications
+
+This patch reduces the dependencies of KNotifications framework and
+effectively makes it a tier 2 framework.
+
+KService is used only for locating additional notification plugins and
+to my knowledge, there are none such plugins currently existing, at
+least not in all around KDE plus the class for the plugins wasn't
+exported until about two months ago, so this should be safe without
+a legacy support.
+
+KIconThemes is used only to get "KIconLoader::Small" icon pixmap for
+notifications using KPassivePopup. After some playing around it turns
+out that it puts the icon into the KPassivePopup title and makes it as
+big as the text. So I've made the icon size to be the same as the text
+height. So this keeps things visually the same + still DPI aware,
+though I believe the KPassivePopup should receive a complete visual
+overhaul anyway.
+
+Additionally, KCodecs dependency has again one single usage for decoding
+html entities to QChars within QXmlStreamReader parser, so eventually
+could also be removed/replaced with QTextDocument::toPlainText() which
+seems to do the same job as QXmlStreamReader+KCodecs.
+
+REVIEW: 124281
+CHANGELOG: Reduce dependencies and move to Tier 2
+---
+ CMakeLists.txt               |  2 --
+ metainfo.yaml                |  2 +-
+ src/CMakeLists.txt           |  2 --
+ src/knotificationmanager.cpp | 21 ++++++++++-----------
+ src/knotificationplugin.cpp  |  2 --
+ src/notifybypopup.cpp        | 16 ++++++++--------
+ tests/kpassivepopuptest.cpp  | 13 +++++++++++++
+ tests/kpassivepopuptest.h    |  1 +
+ 8 files changed, 33 insertions(+), 26 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7b600a4..62c2038 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -53,9 +53,7 @@ if(X11_FOUND)
+ endif()
+ 
+ find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
+-find_package(KF5Service ${KF5_DEP_VERSION} REQUIRED)
+ find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
+-find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
+ find_package(KF5Codecs ${KF5_DEP_VERSION} REQUIRED)
+ find_package(KF5CoreAddons ${KF5_DEP_VERSION} REQUIRED)
+ 
+diff --git a/metainfo.yaml b/metainfo.yaml
+index 7fc15f7..d1b9745 100644
+--- a/metainfo.yaml
++++ b/metainfo.yaml
+@@ -1,6 +1,6 @@
+ maintainer: mklapetek
+ description: Abstraction for system notifications
+-tier: 3
++tier: 2
+ type: solution
+ platforms:
+ portingAid: false
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 1cebece..13390f1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -62,8 +62,6 @@ target_link_libraries(KF5Notifications PUBLIC
+ target_link_libraries(KF5Notifications PRIVATE
+    ${PHONON_LIBRARIES}
+    KF5::CoreAddons
+-   KF5::IconThemes
+-   KF5::Service
+    KF5::ConfigCore
+    KF5::WindowSystem
+    KF5::Codecs
+diff --git a/src/knotificationmanager.cpp b/src/knotificationmanager.cpp
+index 8d4f953..38bbc89 100644
+--- a/src/knotificationmanager.cpp
++++ b/src/knotificationmanager.cpp
+@@ -25,8 +25,7 @@
+ #include <QDBusConnection>
+ #include <QPointer>
+ #include <QBuffer>
+-
+-#include <kservicetypetrader.h>
++#include <KPluginLoader>
+ 
+ #include "knotifyconfig.h"
+ #include "knotificationplugin.h"
+@@ -83,17 +82,17 @@ KNotificationManager::KNotificationManager()
+     addPlugin(new NotifyByTTS(this));
+ #endif
+ 
+-    KService::List offers = KServiceTypeTrader::self()->query("KNotification/NotifyPlugin");
+-
+-    QVariantList args;
+-    QString error;
++    QList<QObject*> plugins = KPluginLoader::instantiatePlugins(QStringLiteral("knotification/notifyplugins"),
++                                                                std::function<bool(const KPluginMetaData &)>(),
++                                                                this);
+ 
+-    Q_FOREACH (const KService::Ptr service, offers) {
+-        KNotificationPlugin *plugin = service->createInstance<KNotificationPlugin>(this, args, &error);
+-        if (plugin) {
+-            addPlugin(plugin);
++    Q_FOREACH (QObject *plugin, plugins) {
++        KNotificationPlugin *notifyPlugin = qobject_cast<KNotificationPlugin*>(plugin);
++        if (notifyPlugin) {
++            addPlugin(notifyPlugin);
+         } else {
+-            qDebug() << "Could not load plugin" << service->name() << "due to:" << error;
++            // not our/valid plugin, so delete the created object
++            plugin->deleteLater();
+         }
+     }
+ }
+diff --git a/src/knotificationplugin.cpp b/src/knotificationplugin.cpp
+index 7315c17..acf964c 100644
+--- a/src/knotificationplugin.cpp
++++ b/src/knotificationplugin.cpp
+@@ -19,8 +19,6 @@
+ 
+  */
+ 
+-#include <KPluginFactory>
+-
+ #include "knotificationplugin.h"
+ 
+ KNotificationPlugin::KNotificationPlugin(QObject *parent, const QVariantList &args)
+diff --git a/src/notifybypopup.cpp b/src/notifybypopup.cpp
+index bb96465..fa2834a 100644
+--- a/src/notifybypopup.cpp
++++ b/src/notifybypopup.cpp
+@@ -33,7 +33,7 @@
+ #include <QImage>
+ #include <QLabel>
+ #include <QTextDocument>
+-#include <QApplication>
++#include <QGuiApplication>
+ #include <QBoxLayout>
+ #include <QLayout>
+ #include <QDBusConnection>
+@@ -50,9 +50,10 @@
+ #include <QMutableListIterator>
+ #include <QThread>
+ #include <QScreen>
++#include <QFontMetrics>
++#include <QIcon>
+ 
+ #include <kconfiggroup.h>
+-#include <KIconThemes/KIconLoader>
+ #include <KCodecs/KCharsets>
+ 
+ static const char dbusServiceName[] = "org.freedesktop.Notifications";
+@@ -262,15 +263,14 @@ void NotifyByPopup::notify(KNotification *notification, const KNotifyConfig &not
+             iconName = notification->iconName();
+         }
+ 
+-        KIconLoader iconLoader(iconName);
+-        QPixmap appIcon = iconLoader.loadIcon(iconName, KIconLoader::Small);
+-
+         // Our growl implementation does not support html stuff
+         // so strip it off right away
+         QString text = notification->text();
+         text = d->stripHtml(text);
+ 
+-        NotifyByPopupGrowl::popup(&appIcon, timeout, appCaption, text);
++        // The first arg is QPixmap*, however that pixmap is not used
++        // at all (it has Q_UNUSED) so just set it to 0
++        NotifyByPopupGrowl::popup(Q_NULLPTR, timeout, appCaption, text);
+ 
+         // Finish immediately, because current NotifyByPopupGrowl can't callback
+         finish(notification);
+@@ -555,8 +555,8 @@ void NotifyByPopupPrivate::fillPopup(KPassivePopup *popup, KNotification *notifi
+     // of galago notifications
+     queryPopupServerCapabilities();
+ 
+-    KIconLoader iconLoader(iconName);
+-    QPixmap appIcon = iconLoader.loadIcon(iconName, KIconLoader::Small);
++    int iconDimension = QFontMetrics(QFont()).height();
++    QPixmap appIcon = QIcon::fromTheme(iconName).pixmap(iconDimension, iconDimension);
+ 
+     QWidget *vb = popup->standardView(notification->title().isEmpty() ? appCaption : notification->title(),
+                                       notification->pixmap().isNull() ? notification->text() : QString(),
+diff --git a/tests/kpassivepopuptest.cpp b/tests/kpassivepopuptest.cpp
+index 2486fd8..b749ad8 100644
+--- a/tests/kpassivepopuptest.cpp
++++ b/tests/kpassivepopuptest.cpp
+@@ -13,6 +13,7 @@ QPushButton *pb3;
+ QPushButton *pb4;
+ QPushButton *pb5;
+ QPushButton *pb6;
++QPushButton *pb7;
+ QSystemTrayIcon *icon;
+ 
+ void Test::showIt()
+@@ -47,6 +48,12 @@ void Test::showIt6()
+     KPassivePopup::message(KPassivePopup::Boxed, QLatin1String("The caption is..."), QLatin1String("Hello World"), pb6);
+ }
+ 
++void Test::showIt7()
++{
++    int iconDimension = QApplication::fontMetrics().height();
++    KPassivePopup::message(QLatin1String("The caption is..."), QLatin1String("Hello World"), QIcon::fromTheme("dialog-ok").pixmap(iconDimension, iconDimension), pb2);
++}
++
+ void Test::showItIcon(QSystemTrayIcon::ActivationReason reason)
+ {
+     if (reason == QSystemTrayIcon::Trigger) {
+@@ -58,6 +65,7 @@ int main(int argc, char **argv)
+ {
+     QApplication::setApplicationName(QLatin1String("test"));
+     QApplication app(argc, argv);
++    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+ 
+     Test *t = new Test();
+ 
+@@ -93,6 +101,11 @@ int main(int argc, char **argv)
+     pb6->show();
+     KWindowSystem::setState(pb6->effectiveWinId(), NET::SkipTaskbar);
+ 
++    pb7 = new QPushButton();
++    pb7->setText(QLatin1String("By taskbar entry (with caption and icon, default style)"));
++    pb7->connect(pb7, SIGNAL(clicked()), t, SLOT(showIt7()));
++    pb7->show();
++
+     icon = new QSystemTrayIcon();
+     // TODO icon->setIcon(icon->loadIcon("xorg"));
+     icon->connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), t, SLOT(showItIcon(QSystemTrayIcon::ActivationReason)));
+diff --git a/tests/kpassivepopuptest.h b/tests/kpassivepopuptest.h
+index bc0dedc..d78f46d 100644
+--- a/tests/kpassivepopuptest.h
++++ b/tests/kpassivepopuptest.h
+@@ -19,6 +19,7 @@ public Q_SLOTS:
+     void showIt4();
+     void showIt5();
+     void showIt6();
++    void showIt7();
+     void showItIcon(QSystemTrayIcon::ActivationReason);
+ };
+ 
+-- 
+1.9.3
+

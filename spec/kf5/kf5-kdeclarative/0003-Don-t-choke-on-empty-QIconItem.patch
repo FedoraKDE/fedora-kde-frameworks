@@ -1,0 +1,44 @@
+From 78b455d447c14d782b8a7fcf01ea122a98f40edc Mon Sep 17 00:00:00 2001
+From: Aleix Pol <aleixpol@kde.org>
+Date: Wed, 15 Jul 2015 17:22:27 +0200
+Subject: [PATCH 3/6] Don't choke on empty QIconItem
+
+Sometimes QML components have 0 width and height and that's perfectly fine.
+
+If we try to paint it, we get warnings such as:
+`QPainter::begin: Paint device returned engine == 0, type: 2`
+
+REVIEW: 124306
+---
+ src/qmlcontrols/kquickcontrolsaddons/qiconitem.cpp | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/qmlcontrols/kquickcontrolsaddons/qiconitem.cpp b/src/qmlcontrols/kquickcontrolsaddons/qiconitem.cpp
+index 3a9dd17..2a90c34 100644
+--- a/src/qmlcontrols/kquickcontrolsaddons/qiconitem.cpp
++++ b/src/qmlcontrols/kquickcontrolsaddons/qiconitem.cpp
+@@ -118,7 +118,6 @@ QSGNode* QIconItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeDa
+             mNode = new ManagedTextureNode;
+         }
+ 
+-        const QSize size(width(), height());
+         QIcon::Mode mode;
+         switch(m_state) {
+             case DefaultState:
+@@ -132,7 +131,12 @@ QSGNode* QIconItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeDa
+                 break;
+         }
+ 
+-        mNode->setTexture(s_iconImageCache->loadTexture(window(), m_icon.pixmap(size, mode, QIcon::On).toImage()));
++        QImage img;
++        const QSize size(width(), height());
++        if (!size.isEmpty()) {
++            img = m_icon.pixmap(size, mode, QIcon::On).toImage();
++        }
++        mNode->setTexture(s_iconImageCache->loadTexture(window(), img));
+         mNode->setRect(QRect(QPoint(0,0), size));
+         node = mNode;
+     }
+-- 
+1.9.3
+

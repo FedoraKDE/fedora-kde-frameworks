@@ -1,0 +1,33 @@
+From 7a6a2cda780784e504960c96b4b41241ddf10531 Mon Sep 17 00:00:00 2001
+From: David Edmundson <kde@davidedmundson.co.uk>
+Date: Mon, 27 Jul 2015 12:54:17 +0200
+Subject: [PATCH 5/6] Don't refresh the entire window when we render the
+ plotter
+
+This means the window is only updated when the plotter changes, rather
+than effectively every possible frame.
+
+Reviewed by: Marco Martin
+
+CCBUG: 348385
+---
+ src/qmlcontrols/kquickcontrolsaddons/plotter.cpp | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp b/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
+index 93da3c7..233dd6b 100644
+--- a/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
++++ b/src/qmlcontrols/kquickcontrolsaddons/plotter.cpp
+@@ -709,9 +709,6 @@ void Plotter::render()
+ 
+     // Delete the VBO
+     glDeleteBuffers(1, &vbo);
+-    if (window()) {
+-        window()->update();
+-    }
+ }
+ 
+ QSGNode *Plotter::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *updatePaintNodeData)
+-- 
+1.9.3
+

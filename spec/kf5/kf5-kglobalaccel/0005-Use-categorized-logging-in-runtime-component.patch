@@ -1,0 +1,669 @@
+From 8cc732ecc066b5250e501c85b7e2615d47c828ec Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Gr=C3=A4=C3=9Flin?= <mgraesslin@kde.org>
+Date: Wed, 22 Apr 2015 09:53:26 +0200
+Subject: [PATCH 5/5] Use categorized logging in runtime component
+
+BUG: 346429
+REVIEW: 123463
+---
+ src/runtime/CMakeLists.txt              |  1 +
+ src/runtime/component.cpp               | 15 ++++++++-------
+ src/runtime/globalshortcut.cpp          |  8 ++++----
+ src/runtime/globalshortcutsregistry.cpp | 17 +++++++++--------
+ src/runtime/kglobalaccel_mac.cpp        | 27 ++++++++++++++-------------
+ src/runtime/kglobalaccel_win.cpp        |  3 ++-
+ src/runtime/kglobalaccel_x11.cpp        | 23 ++++++++++++-----------
+ src/runtime/kglobalacceld.cpp           | 31 ++++++++++++++++---------------
+ src/runtime/logging.cpp                 | 21 +++++++++++++++++++++
+ src/runtime/logging_p.h                 | 26 ++++++++++++++++++++++++++
+ src/runtime/main.cpp                    |  3 ++-
+ 11 files changed, 115 insertions(+), 60 deletions(-)
+ create mode 100644 src/runtime/logging.cpp
+ create mode 100644 src/runtime/logging_p.h
+
+diff --git a/src/runtime/CMakeLists.txt b/src/runtime/CMakeLists.txt
+index e639fa5..8c7c761 100644
+--- a/src/runtime/CMakeLists.txt
++++ b/src/runtime/CMakeLists.txt
+@@ -9,6 +9,7 @@ set(kglobalaccel_SRCS
+     main.cpp
+     kglobalacceld.cpp
+     component.cpp
++    logging.cpp
+     globalshortcut.cpp
+     globalshortcutsregistry.cpp
+     globalshortcutcontext.cpp)
+diff --git a/src/runtime/component.cpp b/src/runtime/component.cpp
+index 3b5bdf9..663d0ad 100644
+--- a/src/runtime/component.cpp
++++ b/src/runtime/component.cpp
+@@ -21,6 +21,7 @@
+ #include "globalshortcut.h"
+ #include "globalshortcutcontext.h"
+ #include "globalshortcutsregistry.h"
++#include "logging_p.h"
+ #include <config-kglobalaccel.h>
+ 
+ #include <QDebug>
+@@ -165,7 +166,7 @@ bool Component::cleanUp()
+ 
+     Q_FOREACH (GlobalShortcut *shortcut, _current->_actions)
+         {
+-        qDebug() << _current->_actions.size();
++        qCDebug(KGLOBALACCELD) << _current->_actions.size();
+         if (!shortcut->isPresent())
+             {
+             changed = true;
+@@ -189,7 +190,7 @@ bool Component::createGlobalShortcutContext(
+     {
+     if (_contexts.value(uniqueName))
+         {
+-        qDebug() << "Shortcut Context " << uniqueName << "already exists for component " << _uniqueName;
++        qCDebug(KGLOBALACCELD) << "Shortcut Context " << uniqueName << "already exists for component " << _uniqueName;
+         return false;
+         }
+     _contexts.insert(uniqueName, new GlobalShortcutContext(uniqueName, friendlyName, this));
+@@ -327,7 +328,7 @@ bool Component::isShortcutAvailable(
+         const QString &component,
+         const QString &context) const
+     {
+-    qDebug() << QKeySequence(key).toString() << component;
++    qCDebug(KGLOBALACCELD) << QKeySequence(key).toString() << component;
+ 
+     // if this component asks for the key. only check the keys in the same
+     // context
+@@ -382,7 +383,7 @@ void Component::loadSettings(KConfigGroup &configGroup)
+                     // The shortcut is already used. The config file is
+                     // broken. Ignore the request.
+                     keys.removeAll(key);
+-                    qWarning() << "Shortcut found twice in kglobalshortcutsrc.";
++                    qCWarning(KGLOBALACCELD) << "Shortcut found twice in kglobalshortcutsrc.";
+                     }
+                 }
+             }
+@@ -466,11 +467,11 @@ void Component::writeSettings(KConfigGroup& configGroup) const
+             contextGroup.writeEntry("_k_friendly_name", context->friendlyName());
+             }
+ 
+-        // qDebug() << "writing group " << _uniqueName << ":" << context->uniqueName();
++        // qCDebug(KGLOBALACCELD) << "writing group " << _uniqueName << ":" << context->uniqueName();
+ 
+         Q_FOREACH(const GlobalShortcut *shortcut, context->_actions)
+             {
+-            // qDebug() << "writing" << shortcut->uniqueName();
++            // qCDebug(KGLOBALACCELD) << "writing" << shortcut->uniqueName();
+ 
+             // We do not write fresh shortcuts.
+             // We do not write session shortcuts
+@@ -478,7 +479,7 @@ void Component::writeSettings(KConfigGroup& configGroup) const
+                 {
+                 continue;
+                 }
+-            // qDebug() << "really writing" << shortcut->uniqueName();
++            // qCDebug(KGLOBALACCELD) << "really writing" << shortcut->uniqueName();
+ 
+             QStringList entry(stringFromKeys(shortcut->keys()));
+             entry.append(stringFromKeys(shortcut->defaultKeys()));
+diff --git a/src/runtime/globalshortcut.cpp b/src/runtime/globalshortcut.cpp
+index 3fe7bd9..2fd8462 100644
+--- a/src/runtime/globalshortcut.cpp
++++ b/src/runtime/globalshortcut.cpp
+@@ -26,7 +26,7 @@
+ #include "component.h"
+ #include "globalshortcutcontext.h"
+ #include "globalshortcutsregistry.h"
+-
++#include "logging_p.h"
+ 
+ #include <QDebug>
+ 
+@@ -189,7 +189,7 @@ void GlobalShortcut::setKeys(const QList<int> newKeys)
+             }
+         else
+             {
+-            qDebug() << _uniqueName << "skipping because key" << QKeySequence(key).toString() << "is already taken";
++            qCDebug(KGLOBALACCELD) << _uniqueName << "skipping because key" << QKeySequence(key).toString() << "is already taken";
+             _keys.append(0);
+             }
+         }
+@@ -226,7 +226,7 @@ void GlobalShortcut::setActive()
+         {
+         if (key != 0 && !GlobalShortcutsRegistry::self()->registerKey(key, this))
+             {
+-            qDebug() << uniqueName() << ": Failed to register " << QKeySequence(key).toString();
++            qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to register " << QKeySequence(key).toString();
+             }
+         }
+ 
+@@ -246,7 +246,7 @@ void GlobalShortcut::setInactive()
+         {
+         if (key != 0 && !GlobalShortcutsRegistry::self()->unregisterKey(key, this))
+             {
+-            qDebug() << uniqueName() << ": Failed to unregister " << QKeySequence(key).toString();
++            qCDebug(KGLOBALACCELD) << uniqueName() << ": Failed to unregister " << QKeySequence(key).toString();
+             }
+         }
+ 
+diff --git a/src/runtime/globalshortcutsregistry.cpp b/src/runtime/globalshortcutsregistry.cpp
+index 3e4d720..446e766 100644
+--- a/src/runtime/globalshortcutsregistry.cpp
++++ b/src/runtime/globalshortcutsregistry.cpp
+@@ -21,6 +21,7 @@
+ #include "globalshortcut.h"
+ #include "globalshortcutcontext.h"
+ #include <config-kglobalaccel.h>
++#include "logging_p.h"
+ 
+ #include <QDebug>
+ #include <KLocalizedString>
+@@ -189,20 +190,20 @@ bool GlobalShortcutsRegistry::keyPressed(int keyQt)
+         // ALT+PRINT is SYSREQ on my keyboard. So we grab something we think
+         // is ALT+PRINT but symXToKeyQt and modXToQt make ALT+SYSREQ of it
+         // when pressed (correctly). We can't match that.
+-        qDebug() << "Got unknown key" << QKeySequence(keyQt).toString();
++        qCDebug(KGLOBALACCELD) << "Got unknown key" << QKeySequence(keyQt).toString();
+ 
+         // In production mode just do nothing.
+         return false;
+         }
+     else if (!shortcut->isActive())
+         {
+-        qDebug() << "Got inactive key" << QKeySequence(keyQt).toString();
++        qCDebug(KGLOBALACCELD) << "Got inactive key" << QKeySequence(keyQt).toString();
+ 
+         // In production mode just do nothing.
+         return false;
+         }
+ 
+-    qDebug() << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
++    qCDebug(KGLOBALACCELD) << QKeySequence(keyQt).toString() << "=" << shortcut->uniqueName();
+ 
+     QStringList data(shortcut->context()->component()->uniqueName());
+     data.append(shortcut->uniqueName());
+@@ -228,7 +229,7 @@ void GlobalShortcutsRegistry::loadSettings()
+     {
+     foreach (const QString &groupName, _config.groupList())
+         {
+-        qDebug() << "Loading group " << groupName;
++        qCDebug(KGLOBALACCELD) << "Loading group " << groupName;
+ 
+         Q_ASSERT(groupName.indexOf('\x1d')==-1);
+ 
+@@ -288,17 +289,17 @@ bool GlobalShortcutsRegistry::registerKey(int key, GlobalShortcut *shortcut)
+     {
+     if (key == 0)
+         {
+-        qDebug() << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString()
++        qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Key '" << QKeySequence(key).toString()
+                  << "' already taken by " << _active_keys.value(key)->uniqueName() << ".";
+         return false;
+         }
+     else if (_active_keys.value(key))
+         {
+-        qDebug() << shortcut->uniqueName() << ": Attempt to register key 0.";
++        qCDebug(KGLOBALACCELD) << shortcut->uniqueName() << ": Attempt to register key 0.";
+         return false;
+         }
+ 
+-    qDebug() << "Registering key" << QKeySequence(key).toString() << "for"
++    qCDebug(KGLOBALACCELD) << "Registering key" << QKeySequence(key).toString() << "for"
+              << shortcut->context()->component()->uniqueName() << ":" << shortcut->uniqueName();
+ 
+     _active_keys.insert(key, shortcut);
+@@ -340,7 +341,7 @@ bool GlobalShortcutsRegistry::unregisterKey(int key, GlobalShortcut *shortcut)
+         return false;
+         }
+ 
+-    qDebug() << "Unregistering key" << QKeySequence(key).toString() << "for"
++    qCDebug(KGLOBALACCELD) << "Unregistering key" << QKeySequence(key).toString() << "for"
+              << shortcut->context()->component()->uniqueName() << ":" << shortcut->uniqueName();
+ 
+     _manager->grabKey(key, false);
+diff --git a/src/runtime/kglobalaccel_mac.cpp b/src/runtime/kglobalaccel_mac.cpp
+index daaa24c..b79eec1 100644
+--- a/src/runtime/kglobalaccel_mac.cpp
++++ b/src/runtime/kglobalaccel_mac.cpp
+@@ -29,6 +29,7 @@
+ 
+ #include "globalshortcutsregistry.h"
+ #include "kkeyserver.h"
++#include "logging_p.h"
+ 
+ OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData)
+ {
+@@ -36,14 +37,14 @@ OSStatus hotKeyEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEve
+     if (eventKind == kEventRawKeyDown) {
+         UInt32 keycode;
+         if (GetEventParameter(inEvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(keycode), NULL, &keycode) != noErr) {
+-            qWarning() << "Error retrieving keycode parameter from event";
++            qCWarning(KGLOBALACCELD) << "Error retrieving keycode parameter from event";
+         }
+-        qDebug() << " key down, keycode = " << keycode;
++        qCDebug(KGLOBALACCELD) << " key down, keycode = " << keycode;
+     } else if (eventKind == kEventHotKeyPressed) {
+         KGlobalAccelImpl* impl = static_cast<KGlobalAccelImpl *>(inUserData);
+         EventHotKeyID hotkey;
+         if (GetEventParameter(inEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotkey), NULL, &hotkey) != noErr) {
+-            qWarning() << "Error retrieving hotkey parameter from event";
++            qCWarning(KGLOBALACCELD) << "Error retrieving hotkey parameter from event";
+             return eventNotHandledErr;
+         }
+         // Typecasts necesary to prevent a warning from gcc
+@@ -72,7 +73,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
+         CFNotificationCenterAddObserver(CFNotificationCenterGetDistributedCenter(), this, layoutChanged, str, NULL, CFNotificationSuspensionBehaviorHold);
+         CFRelease(str);
+     } else {
+-        qWarning() << "Couldn't create CFString to register for keyboard notifications";
++        qCWarning(KGLOBALACCELD) << "Couldn't create CFString to register for keyboard notifications";
+     }
+ }
+ 
+@@ -86,15 +87,15 @@ KGlobalAccelImpl::~KGlobalAccelImpl()
+ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+ {
+     if (grab) {
+-        qDebug() << "Grabbing key " << keyQt;
++        qCDebug(KGLOBALACCELD) << "Grabbing key " << keyQt;
+         QList<uint> keyCodes;
+         uint mod;
+         KKeyServer::keyQtToCodeMac( keyQt, keyCodes );
+         KKeyServer::keyQtToModMac( keyQt, mod );
+         
+-        qDebug() << "keyQt: " << keyQt << " mod: " << mod;
++        qCDebug(KGLOBALACCELD) << "keyQt: " << keyQt << " mod: " << mod;
+         foreach (uint keyCode, keyCodes) {
+-            qDebug() << "  keyCode: " << keyCode;
++            qCDebug(KGLOBALACCELD) << "  keyCode: " << keyCode;
+         }
+         
+         EventHotKeyID ehkid;
+@@ -104,17 +105,17 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+         foreach (uint keyCode, keyCodes) {
+             EventHotKeyRef ref;
+             if (RegisterEventHotKey(keyCode, mod, ehkid, m_eventTarget, 0, &ref) != noErr) {
+-                qWarning() << "RegisterEventHotKey failed!";
++                qCWarning(KGLOBALACCELD) << "RegisterEventHotKey failed!";
+             }
+             hotkeys.append(ref);
+         }
+         refs->insert(keyQt, hotkeys);
+     } else {
+-        qDebug() << "Ungrabbing key " << keyQt;
+-        if (refs->count(keyQt) == 0) qWarning() << "Trying to ungrab a key thas is not grabbed";
++        qCDebug(KGLOBALACCELD) << "Ungrabbing key " << keyQt;
++        if (refs->count(keyQt) == 0) qCWarning(KGLOBALACCELD) << "Trying to ungrab a key thas is not grabbed";
+         foreach (const EventHotKeyRef &ref, refs->value(keyQt)) {
+             if (UnregisterEventHotKey(ref) != noErr) {
+-                qWarning() << "UnregisterEventHotKey should not fail!";
++                qCWarning(KGLOBALACCELD) << "UnregisterEventHotKey should not fail!";
+             }
+         }
+         refs->remove(keyQt);
+@@ -126,10 +127,10 @@ void KGlobalAccelImpl::setEnabled(bool enable)
+ {
+     if (enable) {
+         if (InstallEventHandler(m_eventTarget, m_eventHandler, 1, m_eventType, this, &m_curHandler) != noErr)
+-            qWarning() << "InstallEventHandler failed!";
++            qCWarning(KGLOBALACCELD) << "InstallEventHandler failed!";
+     } else {
+         if (RemoveEventHandler(m_curHandler) != noErr)
+-            qWarning() << "RemoveEventHandler failed!";
++            qCWarning(KGLOBALACCELD) << "RemoveEventHandler failed!";
+     }
+ }
+ 
+diff --git a/src/runtime/kglobalaccel_win.cpp b/src/runtime/kglobalaccel_win.cpp
+index 7457e34..079fc9f 100644
+--- a/src/runtime/kglobalaccel_win.cpp
++++ b/src/runtime/kglobalaccel_win.cpp
+@@ -26,6 +26,7 @@
+ 
+ #include "kglobalaccel.h"
+ #include "globalshortcutsregistry.h"
++#include "logging_p.h"
+ 
+ #include <QDebug>
+ 
+@@ -39,7 +40,7 @@ KGlobalAccelImpl::KGlobalAccelImpl(GlobalShortcutsRegistry* owner)
+ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+ {
+     if( !keyQt ) {
+-        qWarning() << "Tried to grab key with null code.";
++        qCWarning(KGLOBALACCELD) << "Tried to grab key with null code.";
+         return false;
+     }
+ 
+diff --git a/src/runtime/kglobalaccel_x11.cpp b/src/runtime/kglobalaccel_x11.cpp
+index abee5bc..2600220 100644
+--- a/src/runtime/kglobalaccel_x11.cpp
++++ b/src/runtime/kglobalaccel_x11.cpp
+@@ -20,6 +20,7 @@
+ 
+ #include "kglobalaccel_x11.h"
+ 
++#include "logging_p.h"
+ #include "globalshortcutsregistry.h"
+ #include "kkeyserver.h"
+ #include <netwm.h>
+@@ -54,7 +55,7 @@ static void calculateGrabMasks()
+ 			KKeyServer::modXNumLock() |
+ 			KKeyServer::modXScrollLock() |
+ 			KKeyServer::modXModeSwitch();
+-	//qDebug() << "g_keyModMaskXAccel = " << g_keyModMaskXAccel
++	//qCDebug(KGLOBALACCELD) << "g_keyModMaskXAccel = " << g_keyModMaskXAccel
+ 	//	<< "g_keyModMaskXOnOrOff = " << g_keyModMaskXOnOrOff << endl;
+ }
+ 
+@@ -91,7 +92,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+         return false;
+     }
+ 	if( !keyQt ) {
+-        qDebug() << "Tried to grab key with null code.";
++        qCDebug(KGLOBALACCELD) << "Tried to grab key with null code.";
+ 		return false;
+ 	}
+ 
+@@ -100,13 +101,13 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+ 
+ 	// Resolve the modifier
+ 	if( !KKeyServer::keyQtToModX(keyQt, &keyModX) ) {
+-		qDebug() << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 modifier";
++		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 modifier";
+ 		return false;
+ 	}
+ 
+ 	// Resolve the X symbol
+ 	if( !KKeyServer::keyQtToSymX(keyQt, (int *)&keySymX) ) {
+-		qDebug() << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 keycode";
++		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") failed to resolve to x11 keycode";
+ 		return false;
+ 	}
+ 
+@@ -124,14 +125,14 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+ 	    keySymX != xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 0) &&
+ 	    keySymX == xcb_key_symbols_get_keysym(m_keySymbols, keyCodeX, 1) )
+ 	{
+-		qDebug() << "adding shift to the grab";
++		qCDebug(KGLOBALACCELD) << "adding shift to the grab";
+ 		keyModX |= KKeyServer::modXShift();
+ 	}
+ 
+ 	keyModX &= g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
+ 
+ 	if( !keyCodeX ) {
+-		qDebug() << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
++		qCDebug(KGLOBALACCELD) << "keyQt (0x" << hex << keyQt << ") was resolved to x11 keycode 0";
+ 		return false;
+ 	}
+ 
+@@ -169,7 +170,7 @@ bool KGlobalAccelImpl::grabKey( int keyQt, bool grab )
+                 }
+             }
+ 		if( failed ) {
+-			qDebug() << "grab failed!\n";
++			qCDebug(KGLOBALACCELD) << "grab failed!\n";
+ 			for( uint m = 0; m <= 0xff; m++ ) {
+ 				if(( m & keyModMaskX ) == 0 )
+                                     xcb_ungrab_key(QX11Info::connection(), keyCodeX, QX11Info::appRootWindow(), keyModX | m);
+@@ -189,13 +190,13 @@ bool KGlobalAccelImpl::nativeEventFilter(const QByteArray &eventType, void *mess
+     const uint8_t responseType = event->response_type & ~0x80;
+     switch (responseType) {
+         case XCB_MAPPING_NOTIFY:
+-            qDebug() << "Got XMappingNotify event";
++            qCDebug(KGLOBALACCELD) << "Got XMappingNotify event";
+             xcb_refresh_keyboard_mapping(m_keySymbols, reinterpret_cast<xcb_mapping_notify_event_t*>(event));
+             x11MappingNotify();
+             return true;
+ 
+         case XCB_KEY_PRESS:
+-            qDebug() << "Got XKeyPress event";
++            qCDebug(KGLOBALACCELD) << "Got XKeyPress event";
+             return x11KeyPress(reinterpret_cast<xcb_key_press_event_t*>(event));
+ 
+         default:
+@@ -228,7 +229,7 @@ void KGlobalAccelImpl::x11MappingNotify()
+ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
+ {
+ 	if (QWidget::keyboardGrabber() || QApplication::activePopupWidget()) {
+-		qWarning() << "kglobalacceld should be popup and keyboard grabbing free!";
++		qCWarning(KGLOBALACCELD) << "kglobalacceld should be popup and keyboard grabbing free!";
+ 	}
+ 
+ 	// Keyboard needs to be ungrabed after XGrabKey() activates the grab,
+@@ -270,7 +271,7 @@ bool KGlobalAccelImpl::x11KeyPress(xcb_key_press_event_t *pEvent)
+ 	KKeyServer::modXToQt(keyModX, &keyModQt);
+ 
+ 	if( keyModQt & Qt::SHIFT && !KKeyServer::isShiftAsModifierAllowed( keyCodeQt ) ) {
+-		qDebug() << "removing shift modifier";
++		qCDebug(KGLOBALACCELD) << "removing shift modifier";
+ 		keyModQt &= ~Qt::SHIFT;
+ 	}
+ 
+diff --git a/src/runtime/kglobalacceld.cpp b/src/runtime/kglobalacceld.cpp
+index 4e7cb9d..e5d39c1 100644
+--- a/src/runtime/kglobalacceld.cpp
++++ b/src/runtime/kglobalacceld.cpp
+@@ -26,6 +26,7 @@
+ #include "globalshortcut.h"
+ #include "globalshortcutcontext.h"
+ #include "globalshortcutsregistry.h"
++#include "logging_p.h"
+ 
+ #include <QtCore/QTimer>
+ #include <QtCore/QMetaMethod>
+@@ -85,7 +86,7 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(const QStringList &actionId) co
+     // Check if actionId is valid
+     if (actionId.size() != 4)
+         {
+-        qDebug() << "Invalid! '" << actionId << "'";
++        qCDebug(KGLOBALACCELD) << "Invalid! '" << actionId << "'";
+         return NULL;
+         }
+ 
+@@ -117,7 +118,7 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(
+     if (!component)
+         {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-        qDebug() << componentUnique << "not found";
++        qCDebug(KGLOBALACCELD) << componentUnique << "not found";
+ #endif
+         return NULL;
+         }
+@@ -129,13 +130,13 @@ GlobalShortcut *KGlobalAccelDPrivate::findAction(
+ #ifdef KDEDGLOBALACCEL_TRACE
+     if (shortcut)
+         {
+-        qDebug() << componentUnique
++        qCDebug(KGLOBALACCELD) << componentUnique
+                  << contextUnique
+                  << shortcut->uniqueName();
+         }
+     else
+         {
+-        qDebug() << "No match for" << shortcutUnique;
++        qCDebug(KGLOBALACCELD) << "No match for" << shortcutUnique;
+         }
+ #endif
+     return shortcut;
+@@ -219,7 +220,7 @@ bool KGlobalAccelD::init()
+             reg, SLOT(writeSettings()));
+ 
+     if (!QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kglobalaccel"))) {
+-        qWarning() << "Failed to register service org.kde.kglobalaccel";
++        qCWarning(KGLOBALACCELD) << "Failed to register service org.kde.kglobalaccel";
+         return false;
+     }
+ 
+@@ -227,7 +228,7 @@ bool KGlobalAccelD::init()
+             QStringLiteral("/kglobalaccel"),
+             this,
+             QDBusConnection::ExportScriptableContents)) {
+-        qWarning() << "Failed to register object kglobalaccel in org.kde.kglobalaccel";
++        qCWarning(KGLOBALACCELD) << "Failed to register object kglobalaccel in org.kde.kglobalaccel";
+         return false;
+     }
+ 
+@@ -336,7 +337,7 @@ QList<QDBusObjectPath> KGlobalAccelD::allComponents() const
+ void KGlobalAccelD::blockGlobalShortcuts(bool block)
+     {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << block;
++    qCDebug(KGLOBALACCELD) << block;
+ #endif
+     block
+         ? GlobalShortcutsRegistry::self()->deactivateShortcuts(true)
+@@ -367,7 +368,7 @@ QList<int> KGlobalAccelD::defaultShortcut(const QStringList &action) const
+ void KGlobalAccelD::doRegister(const QStringList &actionId)
+ {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << actionId;
++    qCDebug(KGLOBALACCELD) << actionId;
+ #endif
+ 
+     // Check because we would not want to add a action for an invalid
+@@ -397,7 +398,7 @@ void KGlobalAccelD::doRegister(const QStringList &actionId)
+ QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) const
+     {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << componentUnique;
++    qCDebug(KGLOBALACCELD) << componentUnique;
+ #endif
+ 
+     KdeDGlobalAccel::Component *component =
+@@ -418,7 +419,7 @@ QDBusObjectPath KGlobalAccelD::getComponent(const QString &componentUnique) cons
+ QList<KGlobalShortcutInfo> KGlobalAccelD::getGlobalShortcutsByKey(int key) const
+     {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << key;
++    qCDebug(KGLOBALACCELD) << key;
+ #endif
+     QList<GlobalShortcut*> shortcuts =
+         GlobalShortcutsRegistry::self()->getShortcutsByKey(key);
+@@ -427,7 +428,7 @@ QList<KGlobalShortcutInfo> KGlobalAccelD::getGlobalShortcutsByKey(int key) const
+     Q_FOREACH(const GlobalShortcut *sc, shortcuts)
+         {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << sc->context()->uniqueName() << sc->uniqueName();
++    qCDebug(KGLOBALACCELD) << sc->context()->uniqueName() << sc->uniqueName();
+ #endif
+         rc.append(static_cast<KGlobalShortcutInfo>(*sc));
+         }
+@@ -448,7 +449,7 @@ bool KGlobalAccelD::isGlobalShortcutAvailable(int shortcut, const QString &compo
+ void KGlobalAccelD::setInactive(const QStringList &actionId)
+     {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << actionId;
++    qCDebug(KGLOBALACCELD) << actionId;
+ #endif
+ 
+     GlobalShortcut *shortcut = d->findAction(actionId);
+@@ -460,7 +461,7 @@ void KGlobalAccelD::setInactive(const QStringList &actionId)
+ bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &shortcutUnique)
+ {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << componentUnique << shortcutUnique;
++    qCDebug(KGLOBALACCELD) << componentUnique << shortcutUnique;
+ #endif
+ 
+     // Stop grabbing the key
+@@ -478,7 +479,7 @@ bool KGlobalAccelD::unregister(const QString &componentUnique, const QString &sh
+ void KGlobalAccelD::unRegister(const QStringList &actionId)
+ {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << actionId;
++    qCDebug(KGLOBALACCELD) << actionId;
+ #endif
+ 
+     // Stop grabbing the key
+@@ -545,7 +546,7 @@ QList<int> KGlobalAccelD::setShortcut(const QStringList &actionId,
+ void KGlobalAccelD::setForeignShortcut(const QStringList &actionId, const QList<int> &keys)
+ {
+ #ifdef KDEDGLOBALACCEL_TRACE
+-    qDebug() << actionId;
++    qCDebug(KGLOBALACCELD) << actionId;
+ #endif
+ 
+     GlobalShortcut *shortcut = d->findAction(actionId);
+diff --git a/src/runtime/logging.cpp b/src/runtime/logging.cpp
+new file mode 100644
+index 0000000..3b2c377
+--- /dev/null
++++ b/src/runtime/logging.cpp
+@@ -0,0 +1,21 @@
++/********************************************************************
++Copyright 2015  Martin Gräßlin <mgraesslin@kde.org>
++
++This library is free software; you can redistribute it and/or
++modify it under the terms of the GNU Lesser General Public
++License as published by the Free Software Foundation; either
++version 2.1 of the License, or (at your option) version 3, or any
++later version accepted by the membership of KDE e.V. (or its
++successor approved by the membership of KDE e.V.), which shall
++act as a proxy defined in Section 6 of version 3 of the license.
++
++This library is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++Lesser General Public License for more details.
++
++You should have received a copy of the GNU Lesser General Public
++License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++*********************************************************************/
++#include "logging_p.h"
++Q_LOGGING_CATEGORY(KGLOBALACCELD, "kglobalaccel-runtime");
+diff --git a/src/runtime/logging_p.h b/src/runtime/logging_p.h
+new file mode 100644
+index 0000000..6895851
+--- /dev/null
++++ b/src/runtime/logging_p.h
+@@ -0,0 +1,26 @@
++/********************************************************************
++Copyright 2015  Martin Gräßlin <mgraesslin@kde.org>
++
++This library is free software; you can redistribute it and/or
++modify it under the terms of the GNU Lesser General Public
++License as published by the Free Software Foundation; either
++version 2.1 of the License, or (at your option) version 3, or any
++later version accepted by the membership of KDE e.V. (or its
++successor approved by the membership of KDE e.V.), which shall
++act as a proxy defined in Section 6 of version 3 of the license.
++
++This library is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++Lesser General Public License for more details.
++
++You should have received a copy of the GNU Lesser General Public
++License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++*********************************************************************/
++#ifndef KGLOBALACCELD_LOGGING_P_H
++#define KGLOBALACCELD_LOGGING_P_H
++#include <QDebug>
++#include <QLoggingCategory>
++Q_DECLARE_LOGGING_CATEGORY(KGLOBALACCELD)
++
++#endif
+diff --git a/src/runtime/main.cpp b/src/runtime/main.cpp
+index fdf4d62..2e1a9cb 100644
+--- a/src/runtime/main.cpp
++++ b/src/runtime/main.cpp
+@@ -20,6 +20,7 @@
+   */
+ 
+ #include "kglobalacceld.h"
++#include "logging_p.h"
+ 
+ #include <kcrash.h>
+ #include <KAboutData>
+@@ -71,7 +72,7 @@ extern "C" Q_DECL_EXPORT int main(int argc, char **argv)
+ 
+     // check if kglobalaccel is disabled
+     if (!isEnabled()) {
+-        qDebug() << "kglobalaccel is disabled!";
++        qCDebug(KGLOBALACCELD) << "kglobalaccel is disabled!";
+         return 0;
+     }
+ 
+-- 
+1.9.3
+

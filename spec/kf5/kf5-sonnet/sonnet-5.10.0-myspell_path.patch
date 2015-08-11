@@ -1,0 +1,27 @@
+diff -up sonnet-5.10.0/src/plugins/hunspell/hunspellclient.cpp.myspell_path sonnet-5.10.0/src/plugins/hunspell/hunspellclient.cpp
+--- sonnet-5.10.0/src/plugins/hunspell/hunspellclient.cpp.myspell_path	2015-05-03 10:28:45.000000000 -0500
++++ sonnet-5.10.0/src/plugins/hunspell/hunspellclient.cpp	2015-06-03 11:30:16.509324330 -0500
+@@ -47,7 +47,7 @@ SpellerPlugin *HunspellClient::createSpe
+ QStringList HunspellClient::languages() const
+ {
+     QStringList lst;
+-    QDir dir(QStringLiteral("/usr/share/myspell/dicts/"));
++    QDir dir(QStringLiteral("/usr/share/myspell/"));
+     if (dir.exists()) {
+         QStringList lstDic = dir.entryList(QStringList(QStringLiteral("*.dic")), QDir::Files);
+         foreach (const QString &tmp, lstDic) {
+diff -up sonnet-5.10.0/src/plugins/hunspell/hunspelldict.cpp.myspell_path sonnet-5.10.0/src/plugins/hunspell/hunspelldict.cpp
+--- sonnet-5.10.0/src/plugins/hunspell/hunspelldict.cpp.myspell_path	2015-06-03 11:26:37.874222011 -0500
++++ sonnet-5.10.0/src/plugins/hunspell/hunspelldict.cpp	2015-06-03 11:30:36.993427926 -0500
+@@ -31,9 +31,9 @@ HunspellDict::HunspellDict(const QString
+     : SpellerPlugin(lang), m_speller(0)
+ {
+     qCDebug(SONNET_HUNSPELL) << " HunspellDict::HunspellDict( const QString& lang ):" << lang;
+-    QString dic = QStringLiteral("/usr/share/myspell/dicts/%1.dic").arg(lang);
++    QString dic = QStringLiteral("/usr/share/myspell/%1.dic").arg(lang);
+     if (QFileInfo(dic).exists()) {
+-        m_speller = new Hunspell(QStringLiteral("/usr/share/myspell/dicts/%1.aff").arg(lang).toUtf8().constData(), dic.toUtf8().constData());
++        m_speller = new Hunspell(QStringLiteral("/usr/share/myspell/%1.aff").arg(lang).toUtf8().constData(), dic.toUtf8().constData());
+     } else {
+         m_speller = 0;
+     }
