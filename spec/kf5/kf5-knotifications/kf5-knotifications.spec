@@ -18,8 +18,6 @@ URL:            http://www.kde.org
 Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
 
 ## upstream patches
-Patch3: 0003-catch-unknown-notification-entries-nullptr-deref.patch
-# allows knotifications to be tier 2 now
 
 BuildRequires:  libX11-devel
 

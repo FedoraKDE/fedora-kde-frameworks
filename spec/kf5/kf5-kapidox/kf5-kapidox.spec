@@ -58,6 +58,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_bindir}/depdiagram-generate
 %{_kf5_bindir}/kgenframeworksapidox
 %{_kf5_bindir}/depdiagram-generate-all
+%{_mandir}/man1/*
 
 
 %changelog

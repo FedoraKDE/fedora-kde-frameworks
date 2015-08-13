@@ -32,6 +32,7 @@ BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-kfilemetadata-devel
+BuildRequires:  kf5-kio-devel
 
 Requires:       kf5-filesystem
 
@@ -136,9 +137,10 @@ fi
 %{_prefix}/lib/sysctl.d/97-kde-baloo-filewatch-inotify.conf
 %{_kf5_bindir}/baloo_file
 %{_kf5_bindir}/baloo_file_extractor
-%{_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
+%{_kf5_libexecdir}/kauth/kde_baloo_filewatch_raiselimit
 %{_kf5_sysconfdir}/xdg/autostart/baloo_file.desktop
 %{_kf5_sysconfdir}/dbus-1/system.d/org.kde.baloo.filewatch.conf
+%{_kf5_datadir}/polkit-1/actions/org.kde.baloo.filewatch.policy
 %{_kf5_datadir}/dbus-1/system-services/org.kde.baloo.filewatch.service
 %{_kf5_datadir}/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 

@@ -65,6 +65,9 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files -f kwindowsystem5_qt.lang
 %doc COPYING.LIB README.md
 %{_kf5_libdir}/libKF5WindowSystem.so.*
+%dir %{_kf5_plugindir}/org.kde.kwindowsystem.platforms
+%{_kf5_plugindir}/org.kde.kwindowsystem.platforms/KF5WindowSystemWaylandPlugin.so
+%{_kf5_plugindir}/org.kde.kwindowsystem.platforms/KF5WindowSystemX11Plugin.so
 
 %files devel
 %{_kf5_includedir}/kwindowsystem_version.h

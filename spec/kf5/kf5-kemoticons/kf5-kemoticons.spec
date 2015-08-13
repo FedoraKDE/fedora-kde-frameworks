@@ -69,6 +69,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kservices5/*
 %{_kf5_datadir}/kservicetypes5/*
 %{_kf5_datadir}/emoticons/Glass
+%{_kf5_datadir}/emoticons/Breeze
 
 %files devel
 %{_kf5_includedir}/kemoticons_version.h

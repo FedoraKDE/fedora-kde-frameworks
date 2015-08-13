@@ -61,6 +61,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %files
 %doc COPYING COPYING.LIB README.md
 %{_kf5_libdir}/libKF5IdleTime.so.*
+%dir %{_kf5_plugindir}/org.kde.kidletime.platforms
+%{_kf5_plugindir}/org.kde.kidletime.platforms/KF5IdleTimeXcbPlugin0.so
 
 %files devel
 %doc
