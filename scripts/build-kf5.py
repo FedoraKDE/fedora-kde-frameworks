@@ -167,7 +167,7 @@ def main():
                         help='Distgit branch to build from')
     parser.add_argument('--copr', action='store',
                         help='Copr to build in')
-    parser.add_argument('--dist', action='store', default='fc21')
+    parser.add_argument('--dist', action='store', default='fc22')
     args = parser.parse_args()
 
     packages = findAllPackages(args)
