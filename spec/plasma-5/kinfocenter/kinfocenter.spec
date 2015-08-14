@@ -1,5 +1,5 @@
 Name:           kinfocenter
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        KDE Info Center
 
@@ -37,6 +37,8 @@ BuildRequires:  kf5-solid-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-kxmlgui-devel
+BuildRequires:  kf5-kdeclarative-devel
+BuildRequires:  kf5-kpackage-devel
 
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLES-devel
@@ -64,37 +66,67 @@ Conflicts:      kde-workspace < 4.11.15-3
 %prep
 %setup -q -n %{name}-%{version}
 
-%build
 
-mkdir -p %{_target_platform}
+%build
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
+
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang kinfocenter5 --with-qt --with-kde --all-name
+
+%find_lang kinfocenter5 --all-name
+
 
 %files -f kinfocenter5.lang
 %doc COPYING COPYING.DOC
 %{_bindir}/kinfocenter
 %{_kf5_qtplugindir}/*.so
+%{_kf5_qtplugindir}/kcms/*.so
 %ifnarch s390 s390x
-%{_datadir}/kcmview1394
+%{_datadir}/kcmview1394/
 %endif
-%{_datadir}/kcmusb
-%config %{_sysconfdir}/xdg/menus/kinfocenter.menu
+%{_datadir}/kcmusb/
+%{_sysconfdir}/xdg/menus/kinfocenter.menu
 %{_datadir}/applications/org.kde.kinfocenter.desktop
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_datadir}/desktop-directories/kinfocenter.directory
-%{_kf5_datadir}/kxmlgui5/kinfocenter
-%{_datadir}/doc/HTML/*/kinfocenter
+%{_kf5_datadir}/kxmlgui5/kinfocenter/
+%{_kf5_datadir}/kpackage/kcms/kcm_energyinfo/
+%lang(ca) %{_datadir}/doc/HTML/ca/kinfocenter/
+%lang(de) %{_datadir}/doc/HTML/de/kinfocenter/
+%lang(en) %{_datadir}/doc/HTML/en/kinfocenter/
+%lang(it) %{_datadir}/doc/HTML/it/kinfocenter/
+%lang(nl) %{_datadir}/doc/HTML/nl/kinfocenter/
+%lang(pt_BR) %{_datadir}/doc/HTML/pt_BR/kinfocenter/
+%lang(sv) %{_datadir}/doc/HTML/sv/kinfocenter/
+%lang(uk) %{_datadir}/doc/HTML/uk/kinfocenter/
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue Jun 09 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-2
+- .spec cosmetics, improve %%find_lang/%%lang usage
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

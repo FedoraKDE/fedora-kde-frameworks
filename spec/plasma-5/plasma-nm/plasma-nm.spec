@@ -1,5 +1,5 @@
 Name:           plasma-nm
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Plasma Next applet written in QML for managing network connections
 License:        LGPLv2+ and GPLv2+
@@ -17,7 +17,6 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 Source10:       01-fedora-plasma-nm.js
 
 # Upstream patches
-Patch0:         plasma-nm-adapt-to-modemmanager-qt-API-changes.patch
 
 BuildRequires:  gettext
 
@@ -153,7 +152,21 @@ Obsoletes:      kde-plasma-nm-pptp < 5.0.0-1
 Provides:       kde-plasma-nm-pptp = %{version}-%{release}
 %description    pptp
 %{summary}.
+
+%package        ssh
+Summary:        SSH suppor for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       NetworkManager-ssh
+%description    ssh
+%{summary}.
+
+%package        sstp
+Summary:        SSTP support for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+%description    sstp
+%{summary}.
 %endif
+
 
 %prep
 %autosetup -p1 -n %{name}-%{version}
@@ -181,6 +194,8 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang plasmanetworkmanagement_strongswanui
 %find_lang plasmanetworkmanagement_l2tpui
 %find_lang plasmanetworkmanagement_pptpui
+%find_lang plasmanetworkmanagement_sshui
+%find_lang plasmanetworkmanagement_sstpui
 
 # migrate to nm plasmoid
 install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora-plasma-nm.js
@@ -241,9 +256,35 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 %files pptp -f plasmanetworkmanagement_pptpui.lang
 %{_kf5_qtplugindir}/libplasmanetworkmanagement_pptpui.so
 %{_kf5_datadir}/kservices5/plasmanetworkmanagement_pptpui.desktop
+
+%files ssh -f plasmanetworkmanagement_sshui.lang
+%{_kf5_qtplugindir}/libplasmanetworkmanagement_sshui.so
+%{_kf5_datadir}/kservices5/plasmanetworkmanagement_sshui.desktop
+
+%files sstp -f plasmanetworkmanagement_sstpui.lang
+%{_kf5_qtplugindir}/libplasmanetworkmanagement_sstpui.so
+%{_kf5_datadir}/kservices5/plasmanetworkmanagement_sstpui.desktop
 %endif
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.1-3
+- OpenVPN: Do not overwrite file dialog modes set by default
+
+* Mon Jun 15 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.1-2
+- OpenVPN: Do not insert translated value for remote-cert-tls
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

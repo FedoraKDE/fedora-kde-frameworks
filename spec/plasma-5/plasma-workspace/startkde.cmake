@@ -67,6 +67,7 @@ kcminputrc Mouse cursorTheme 'breeze_cursors'
 kcminputrc Mouse cursorSize ''
 ksplashrc KSplash Theme Breeze
 ksplashrc KSplash Engine KSplashQML
+kdeglobals KScreen ScaleFactor 1
 kcmfonts General forceFontDPI 0
 EOF
 
@@ -93,6 +94,10 @@ if test $returncode -ne 0; then
     exit 1
 fi
 [ -r $configDir/startupconfig ] && . $configDir/startupconfig
+
+if test "$kdeglobals_kscreen_scalefactor" -ne 1; then
+    export QT_DEVICE_PIXEL_RATIO=$kdeglobals_kscreen_scalefactor
+fi
 
 # XCursor mouse theme needs to be applied here to work even for kded or ksmserver
 if test -n "$kcminputrc_mouse_cursortheme" -o -n "$kcminputrc_mouse_cursorsize" ; then
@@ -158,10 +163,6 @@ for prefix in `echo $scriptpath`; do
     test -r "$file" && . "$file"
   done
 done
-
-# Set the path for Qt plugins provided by KDE
-QT_PLUGIN_PATH=${QT_PLUGIN_PATH+$QT_PLUGIN_PATH:}`qtpaths --plugin-dir`
-export QT_PLUGIN_PATH
 
 # Set a left cursor instead of the standard X11 "X" cursor, since I've heard
 # from some users that they're confused and don't know what to do. This is
@@ -313,7 +314,7 @@ echo 'startkde: Running shutdown scripts...'  1>&2
 # Run scripts found in <config locations>/plasma-workspace/shutdown
 for prefix in `echo "$scriptpath"`; do
   for file in `ls "$prefix"/shutdown 2> /dev/null | egrep -v '(~|\.bak)$'`; do
-    test -x "$prefix$file" && "$prefix$file"
+    test -x "$prefix/shutdown/$file" && "$prefix/shutdown/$file"
   done
 done
 

@@ -2,7 +2,7 @@
 
 Name:           polkit-kde
 Summary:        PolicyKit integration for KDE Desktop
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 
 License:        GPLv2+
@@ -77,6 +77,21 @@ mv %{buildroot}/%{_libexecdir}/polkit-kde-authentication-agent-1 \
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

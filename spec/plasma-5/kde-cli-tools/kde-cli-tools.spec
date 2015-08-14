@@ -1,5 +1,5 @@
 Name:           kde-cli-tools
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Tools based on KDE Frameworks 5 to better interact with the system
 
@@ -23,6 +23,7 @@ BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kinit-devel >= 5.10.0-3
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kdesu-devel
@@ -33,6 +34,9 @@ Requires:       kf5-filesystem
 
 # probably could be unversioned, but let's play it safe so we can avoid adding Conflicts: -- rex
 Requires:       kdesu = 1:%{version}-%{release}
+
+# libkdeinit5_kcmshell5
+%{?kf5_kinit_requires}
 
 %description
 Provides several KDE and Plasma specific command line tools to allow
@@ -55,7 +59,7 @@ Conflicts: kde-runtime-docs < 14.12.3-2
 %setup -q -n %{name}-%{version}
 
 %build
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
@@ -92,6 +96,24 @@ ln -s %{_kf5_libexecdir}/kdesu %{buildroot}%{_bindir}/kdesu
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Mon Jun 01 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-2
+- %%{?kf5_kinit_requires}
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

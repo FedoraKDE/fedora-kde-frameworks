@@ -1,5 +1,5 @@
 Name:           kdeplasma-addons
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Additional Plasmoids for Plasma 5.
 
@@ -37,6 +37,8 @@ BuildRequires:  kf5-krunner-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kunitconversion-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-knewstuff-devel
+BuildRequires:  kf5-kross-devel
 
 
 BuildRequires:  libxcb-devel
@@ -78,16 +80,37 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/plasma/wallpapers/*
 %{_kf5_datadir}/plasma/services/*.operations
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
+%{_kf5_qtplugindir}/plasma/applets/*.so
 %{_kf5_qtplugindir}/*.so
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/kwin/*.desktop
+%{_kf5_datadir}/kservices5/*.kickerdash
 %{_kf5_qmldir}/org/kde/plasma/*
 %{_datadir}/kwin/desktoptabbox
 %{_datadir}/kwin/tabbox
 %{_datadir}/icons/hicolor/scalable/apps/fifteenpuzzle.svgz
+%{_sysconfdir}/xdg/comic.knsrc
+%{_kf5_libdir}/libplasmacomicprovidercore.so.*
+%{_kf5_qtplugindir}/kpackage/packagestructure/plasma_packagestructure_comic.so
+%{_kf5_datadir}/kservicetypes5/plasma_comicprovider.desktop
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

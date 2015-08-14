@@ -1,5 +1,9 @@
+# Enable bootstrap when building plasma-workspace on a new repo
+# or arch where there's no package that would provide plasmashell
+#define bootstrap 1
+
 Name:           plasma-workspace
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Plasma workspace, applications and applets
 License:        GPLv2+
@@ -17,8 +21,13 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 Source10:       kde
 # upstream startkde.kde, minus stuff we don't want or need, plus a minor bit of customization --rex
 Source11:       startkde.cmake
+# Desktop file for Fedora Twenty Two/Three look-and-feel package
+Source12:       twenty.two.desktop
+Source13:       twenty.three.desktop
 
 ## downstream Patches
+Patch10:        plasma-workspace-5.3.0-konsole-in-contextmenu.patch
+Patch11:        plasma-workspace-5.3.0-set-fedora-default-look-and-feel.patch
 
 ## upstreamable Patches
 
@@ -88,9 +97,14 @@ BuildRequires:  kf5-threadweaver-devel
 BuildRequires:  kf5-ktexteditor-devel
 BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-ktextwidgets-devel
 BuildRequires:  kf5-kdewebkit-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kglobalaccel-devel >= 5.7
+BuildRequires:  kf5-networkmanager-qt-devel
+BuildRequires:  kf5-kxmlrpcclient-devel
+BuildRequires:  kf5-kinit-devel >= 5.10.0-3
 
 BuildRequires:  kf5-ksysguard-devel
 BuildRequires:  kf5-kscreen-devel
@@ -108,14 +122,11 @@ BuildRequires:  desktop-file-utils
 # Optional
 BuildRequires:  kf5-kactivities-devel
 
-
-# HACK: Should be kf5-kactivities-runtime, but that conflicts with kactivities,
-# so we requre KDE4 KActivities (it's dbus runtime dep, so no problem)
-Requires:       kactivities
-Requires:       kf5-kinit
+# for libkdeinit5_*
+%{?kf5_kinit_requires}
+Requires:       kf5-kactivities
 Requires:       kf5-kded
 Requires:       kf5-kdoctools
-#Requires:       kde5-runtime
 Requires:       qt5-qtquickcontrols
 Requires:       qt5-qtgraphicaleffects
 Requires:       kf5-filesystem
@@ -124,6 +135,13 @@ Requires:       kf5-kglobalaccel >= 5.7
 # for translations mostly, can drop for plasma-5.3 (#1208947) -- rex
 Requires:       kf5-kxmlrpcclient >= 5.8
 Requires:       khotkeys
+
+# The new volume control for PulseAudio
+Requires:       plasma-pa
+
+# TODO: This should go into -wayland subpackage alongside with other
+# wayland integration stuff --dvratil
+Requires:       kwayland-integration
 
 # Without the platformtheme plugins we get broken fonts
 Requires:       kf5-frameworkintegration
@@ -146,10 +164,27 @@ Requires:       xorg-x11-server-utils
 
 Requires:       kde-settings-plasma
 
+# Default look-and-feel theme
+%if 0%{?fedora} > 21
+Provides:       f22-kde-theme-core = %{versino}-%{release}
+%endif
+%if 0%{?fedora} == 22
+Requires:       f22-kde-theme >= 22.2
+%global default_lookandfeel org.fedoraproject.fedora.twenty.two
+%endif
+%if 0%{?fedora} > 22
+Provides:       f23-kde-theme-core = %{versino}-%{release}
+Requires:       f23-kde-theme
+%global default_lookandfeel org.fedoraproject.fedora.twenty.three
+%endif
+
 Requires:       systemd
 
 # SysTray support for Qt 4 apps
 Requires:       sni-qt
+
+# kde(4) platform plugin
+Requires:       kde-platform-plugin
 
 # Oxygen
 Requires:       oxygen-icon-theme
@@ -157,7 +192,20 @@ Requires:       oxygen-sound-theme
 Requires:       oxygen-fonts
 
 # PolicyKit authentication agent
-Requires: polkit-kde
+Requires:        polkit-kde
+
+# Require any plasmashell (plasma-desktop provides plasmashell(desktop))
+%if 0%{?bootstrap}
+Provides:       plasmashell = %{version}
+%else
+# Note: We should require >= %%{version}, but that creates a circular dependency
+# at build time of plasma-desktop, because it provides the needed dependency, but
+# also needs plasma-workspace to build. So for now the dependency is unversioned.
+Requires:       plasmashell
+%endif
+
+# owner of setsebool
+Requires(post): policycoreutils
 
 %description
 Plasma 5 libraries and runtime components
@@ -173,13 +221,37 @@ developing applications that use %{name}.
 
 %package        doc
 Summary:        Documentation and user manuals for %{name}
-
+# switch to noarch
+Obsoletes: plasma-workspace-doc < 5.3.1-2
+BuildArch: noarch
 %description    doc
 Documentation and user manuals for %{name}.
 
+%package -n sddm-breeze
+Summary:        SDDM breeze theme
+# upgrade path, when sddm-breeze was split out
+Obsoletes: plasma-workspace < 5.3.2-8
+Requires:       kf5-plasma
+# QML imports:
+# org.kde.plasma.workspace.components
+# org.kde.plasma.workspace.keyboardlayout
+Requires:       %{name} = %{version}-%{release}
+# /usr/share/backgrounds/default.png
+Requires:       desktop-backgrounds-compat
+BuildArch: noarch
+%description -n sddm-breeze
+%{summary}.
+
 
 %prep
-%autosetup -p1
+%setup -q
+
+%patch10 -p1 -b .konsole-in-contextmenu
+%if 0%{?fedora} > 21
+%patch11 -p1 -b .set-fedora-default-look-and-feel
+sed -i -e "s|@DEFAULT_LOOKANDFEEL@|%{?default_lookandfeel}%{!?default_lookandfeel:org.kde.breeze.desktop}|g" \
+  shell/packageplugins/lookandfeel/lookandfeel.cpp
+%endif
 
 mv startkde/startkde.cmake startkde/startkde.cmake.orig
 install -m644 -p %{SOURCE11} startkde/startkde.cmake
@@ -202,63 +274,114 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 chrpath --delete %{buildroot}/%{_kf5_qtplugindir}/phonon_platform/kde.so
 
+%if 0%{?fedora} > 21
+# Create Fedora Twenty Two look and feel package from the Breeze one
+cp -r %{buildroot}%{_datadir}/plasma/look-and-feel/{org.kde.breeze.desktop,org.fedoraproject.fedora.twenty.two}
+install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.two/metadata.desktop
+install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/kservices5/plasma-lookandfeel-org.fedoraproject.fedora.twenty.two.desktop
+## We need to remove original background which will be replaced by Fedora one from f22-kde-theme
+rm -fv %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.two/contents/components/artwork/background.png
+rm -fv %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.two/contents/previews/{lockscreen.png,preview.png,splash.png}
+%endif
+
+%if 0%{?fedora} > 22
+# Create Fedora Twenty Three look and feel package from the Breeze one
+cp -r %{buildroot}%{_datadir}/plasma/look-and-feel/{org.kde.breeze.desktop,org.fedoraproject.fedora.twenty.three}
+install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.three/metadata.desktop
+install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/kservices5/plasma-lookandfeel-org.fedoraproject.fedora.twenty.three.desktop
+## We need to remove original background which will be replaced by Fedora one from f22-kde-theme
+rm -fv %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.three/contents/components/artwork/background.png
+rm -fv %{buildroot}%{_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.three/contents/previews/{lockscreen.png,preview.png,splash.png}
+%endif
+
+# make fedora-breeze sddm theme variant.  FIXME/TODO: corrected preview screenshot
+cp -alf %{buildroot}%{_datadir}/sddm/themes/breeze/ \
+        %{buildroot}%{_datadir}/sddm/themes/01-breeze-fedora
+ln -sf  %{_datadir}/backgrounds/default.png \
+        %{buildroot}%{_datadir}/sddm/themes/01-breeze-fedora/components/artwork/background.png
+
 # Make kcheckpass work
 install -m455 -p -D %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/kde
 %find_lang plasmaworkspace5 --with-qt --with-kde --all-name
 
 
 %check
-desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org.kde.klipper}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.kde.klipper}.desktop
 
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+# make DrKonqi work by default by taming SELinux enough (suggested by dwalsh)
+# if KDE_DEBUG is set, DrKonqi is disabled, so do nothing
+# if it is unset (or empty), check if deny_ptrace is already disabled
+# if not, disable it
+if [ -z "$KDE_DEBUG" ] ; then
+  if [ "`getsebool deny_ptrace 2>/dev/null`" == 'deny_ptrace --> on' ] ; then
+    setsebool -P deny_ptrace off &> /dev/null || :
+  fi
+fi
+
 %postun -p /sbin/ldconfig
 
 %files -f plasmaworkspace5.lang
-%{_bindir}/*
-%{_libdir}/*.so.*
+%{_kf5_bindir}/*
+%{_kf5_libdir}/*.so.*
 %{_kf5_libdir}/libkdeinit5_*.so
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
 %{_kf5_qtplugindir}/plasma/packagestructure/*.so
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/phonon_platform/kde.so
-%{_qt5_prefix}/qml/org/kde/*
-%{_libexecdir}/*
-%{_datadir}/ksmserver
-%{_datadir}/ksplash
-%{_datadir}/plasma/plasmoids
-%{_datadir}/plasma/services
-%{_datadir}/plasma/shareprovider
-%{_datadir}/plasma/wallpapers
-%{_datadir}/plasma/look-and-feel
-%{_datadir}/plasma/kcms
-%{_datadir}/solid
-%{_datadir}/kstyle
-%{_datadir}/drkonqi/debuggers/external/*
-%{_datadir}/drkonqi/debuggers/internal/*
-%{_datadir}/drkonqi/mappings
-%{_datadir}/drkonqi/pics/*.png
+%{_kf5_qtplugindir}/kpackage/packagestructure/*.so
+%{_kf5_plugindir}/kio/desktop.so
+%{_kf5_qmldir}/org/kde/*
+%{_libexecdir}/drkonqi
+%{_libexecdir}/kcheckpass
+%{_libexecdir}/kscreenlocker_greet
+%{_libexecdir}/ksyncdbusenv
+%{_libexecdir}/startplasma
+%{_kf5_datadir}/ksmserver/
+%{_kf5_datadir}/ksplash/
+%{_kf5_datadir}/plasma/plasmoids/
+%{_kf5_datadir}/plasma/services/
+%{_kf5_datadir}/plasma/shareprovider/
+%{_kf5_datadir}/plasma/wallpapers/
+%dir %{_kf5_datadir}/plasma/look-and-feel/
+%{_kf5_datadir}/plasma/look-and-feel/org.kde.breeze.desktop/
+%if 0%{?fedora} > 21
+%{_kf5_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.two/
+%endif
+%if 0%{?fedora} > 22
+%{_kf5_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.three/
+%endif
+%{_kf5_datadir}/plasma/kcms/
+%{_kf5_datadir}/solid/
+%{_kf5_datadir}/kstyle/
+%{_kf5_datadir}/drkonqi/
+%{_kf5_datadir}/kconf_update/*
 %{_sysconfdir}/xdg/*.knsrc
 %{_sysconfdir}/xdg/taskmanagerrulesrc
 %{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/desktop-directories/*.directory
 %{_datadir}/dbus-1/services/*.service
+# move to -devel? -- rex
 %{_datadir}/dbus-1/interfaces/*.xml
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/*.protocol
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/knotifications5/*.notifyrc
-%{_datadir}/applications/*.desktop
-%{_datadir}/config.kcfg
-%{_datadir}/sddm/themes/breeze
+%{_kf5_datadir}/config.kcfg/*
+%{_kf5_datadir}/kio_desktop/
+%{_datadir}/applications/org.kde.klipper.desktop
+%{_datadir}/applications/plasma-windowed.desktop
 %{_datadir}/xsessions/plasma.desktop
-
 # PAM
-%config %{_sysconfdir}/pam.d/kde
+%config(noreplace) %{_sysconfdir}/pam.d/kde
 
 %files doc
-%{_datadir}/doc/HTML/*/*
+%lang(en) %{_docdir}/HTML/en/klipper/
+%lang(ca) %{_docdir}/HTML/ca/klipper/
+%lang(en) %{_docdir}/HTML/en/kcontrol/screenlocker
 
 %files devel
 %{_libdir}/libweather_ion.so
@@ -266,11 +389,15 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 %{_libdir}/libplasma-geolocation-interface.so
 %{_libdir}/libkworkspace5.so
 %{_includedir}/*
-%{_libdir}/cmake/KRunnerAppDBusInterface
-%{_libdir}/cmake/KSMServerDBusInterface
-%{_libdir}/cmake/LibKWorkspace
-%{_libdir}/cmake/LibTaskManager
-%{_libdir}/cmake/ScreenSaverDBusInterface
+%{_libdir}/cmake/KRunnerAppDBusInterface/
+%{_libdir}/cmake/KSMServerDBusInterface/
+%{_libdir}/cmake/LibKWorkspace/
+%{_libdir}/cmake/LibTaskManager/
+%{_libdir}/cmake/ScreenSaverDBusInterface/
+
+%files -n sddm-breeze
+%{_datadir}/sddm/themes/breeze/
+%{_datadir}/sddm/themes/01-breeze-fedora/
 
 # TODO split to subpackages
 # - KCM (?)
@@ -280,6 +407,88 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/{plasma-windowed,org
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Tue Aug 11 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.2-11
+- Provides: f23-kde-theme-core (and f22-kde-theme-core)
+- default_lookandfeel org.fedoraproject.fedora.twenty.three (f23+)
+
+* Thu Aug 06 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.2-10
+- prep fedora.twenty.three plasma theme
+
+* Thu Aug 06 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.2-9
+- make sddm-breeze noarch (#1250204)
+
+* Thu Aug 06 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.2-8
+- sddm-breeze subpkg, userlist variant for bz #1250204
+
+* Wed Aug 05 2015 Jonathan Wakely <jwakely@redhat.com> 5.3.2-7
+- Rebuilt for Boost 1.58
+
+* Fri Jul 31 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.2-6
+- Requires: kde-platform-plugin
+
+* Wed Jul 29 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.2-5
+- Rebuilt for https://fedoraproject.org/wiki/Changes/F23Boost159
+
+* Wed Jul 22 2015 David Tardon <dtardon@redhat.com> - 5.3.2-4
+- rebuild for Boost 1.58
+
+* Thu Jul 09 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.2-3
+- .spec cosmetics
+- port selinux/drkonqi scriptlet (from kde-runtime)
+- own /usr/share/drkonqi/
+- %%config(noreplace) pam
+
+* Fri Jun 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-2
+- Make the Requires: plasmashell unversioned to break circular dependency during update
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Sat Jun 20 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-5
+- shutdown scripts are not executed (#1234059)
+
+* Thu Jun 18 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-4
+- startkde.cmake: sync ScaleFactor changes, drop QT_PLUGIN_PATH munging (#1233298)
+
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue Jun 02 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.1-2
+- use %%{?kf5_kinit_requires}
+- Requires: kf5-kactivities
+- doc: make noarch, %%lang'ify
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Wed May 20 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.0-8
+- apply the new patch for update scripts execution
+
+* Wed May 20 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.0-7
+- process update scripts after first initialization
+
+* Tue May 19 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.0-6
+- copy Breeze look-and-feel package also as Fedora Twenty Two look-and-feel package
+
+* Mon May 18 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.0-5
+- set default look and feel theme to Fedora Twenty Two
+
+* Tue May 05 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-4
+- backport patch form kde-workspace to add Konsole into shell context menu
+- re-enable fix-update-scripts.patch
+
+* Wed Apr 29 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-3
+- Disable bootstrap
+
+* Wed Apr 29 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-2
+- Requires plasmashell (virtual provides for packages that provide Plasma shells, like plasma-desktop)
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

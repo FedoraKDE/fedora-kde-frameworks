@@ -1,6 +1,6 @@
 Name:           bluedevil
 Summary:        Bluetooth stack for KDE
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 
 License:        GPLv2+
@@ -14,20 +14,24 @@ URL:            https://projects.kde.org/projects/extragear/base/bluedevil
 %endif
 Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
-
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
 
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kwidgetsaddons-devel
 BuildRequires:  kf5-kdbusaddons-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-ki18n-devel
 BuildRequires:  kf5-kio-devel
+# 5.11 is when kf5-bluez-qt became Framework and changed API
+BuildRequires:  kf5-bluez-qt-devel >= 5.11
+BuildRequires:  kf5-kded-devel
+BuildRequires:  kf5-kwindowsystem-devel
 
-BuildRequires:  libbluedevil-devel >= %{version}
 BuildRequires:  shared-mime-info
 
 BuildRequires:  desktop-file-utils
@@ -36,25 +40,22 @@ Provides:       dbus-bluez-pin-helper
 
 Obsoletes:      kbluetooth < 0.4.2-3
 Obsoletes:      bluedevil-devel < 2.0.0-0.10
+
 Requires:       pulseaudio-module-bluetooth
+Requires:       kf5-kded
+
+# When -autostart was removed
+Obsoletes:      bluedevil-autostart < 5.2.95
 
 %description
 BlueDevil is the bluetooth stack for KDE.
 
 
-%package        autostart
-Summary:        Autostart support for non-KDE desktops
-Requires:       %{name} = %{version}-%{release}
-%description    autostart
-%{summary}.
-
-
 %prep
 %setup -q -n %{name}-%{version}
 
-
 %build
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
@@ -64,17 +65,11 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang %{name} --with-qt --with-kde
-
-desktop-file-install \
-  --dir=%{buildroot}%{_sysconfdir}/xdg/autostart/ \
-  --add-not-show-in=KDE \
-  %{buildroot}%{_kf5_datadir}/applications/bluedevil-monolithic.desktop
+%find_lang bluedevil5  --with-qt --all-name
 
 %check
-desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/bluedevil-monolithic.desktop
-desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/bluedevil-sendfile.desktop
-desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/bluedevil-wizard.desktop
+desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.bluedevilsendfile.desktop
+desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.bluedevilwizard.desktop
 
 
 %post
@@ -91,27 +86,50 @@ fi
 update-desktop-database -q &> /dev/null
 update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
-%files -f %{name}.lang
+%files -f bluedevil5.lang
 %doc README
-%{_kf5_bindir}/bluedevil-*
+%{_kf5_bindir}/bluedevil-sendfile
+%{_kf5_bindir}/bluedevil-wizard
 %{_libexecdir}/bluedevil-*
 %{_kf5_qtplugindir}/kcm_*.so
 %{_kf5_qtplugindir}/kio_*.so
-%{_kf5_qtplugindir}/kded_*.so
+%{_kf5_plugindir}/kded/*.so
 %{_kf5_qtplugindir}/bluetoothfileitemaction.so
+%{_kf5_datadir}/remoteview/bluetooth-network.desktop
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/*.protocol
-%{_kf5_datadir}/kservices5/kded/*.desktop
-%{_kf5_datadir}/knotifications5
-%{_kf5_datadir}/applications/*.desktop
-%{_kf5_datadir}/bluedevilwizard
+%{_kf5_datadir}/knotifications5/bluedevil.notifyrc
+%{_kf5_datadir}/applications/org.kde.bluedevilsendfile.desktop
+%{_kf5_datadir}/applications/org.kde.bluedevilwizard.desktop
+%{_kf5_datadir}/bluedevilwizard/
+%{_kf5_datadir}/plasma/plasmoids/org.kde.plasma.bluetooth
+%{_kf5_qmldir}/org/kde/plasma/private/bluetooth/
 %{_datadir}/mime/packages/*.xml
-
-%files autostart
-%{_sysconfdir}/xdg/autostart/bluedevil-monolithic.desktop
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Thu Jun 11 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-2
+- Rebuild against kf5-bluez-qt 5.11 (API/ABI break as BluezQt became a proper Framework)
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Sat Apr 25 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.0-1
+- 5.3.0
+
+* Sat Apr 25 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.2.95-2
+- drop Provides: -autostart (it's a lie, not included or supported anymore)
+- .spec cosmetics
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

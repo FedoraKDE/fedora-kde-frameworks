@@ -1,5 +1,5 @@
 Name:           khotkeys
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Application to configure hotkeys in KDE
 
@@ -36,8 +36,12 @@ BuildRequires:  libX11-devel
 
 Requires:       kf5-filesystem
 
-# TODO: Remove When khotkeys has been split from kde-workspace
-Conflicts:      kde-workspace < 5.0.0-1
+# when khotkeys was split out of kde-workspace-4.11.x
+Conflicts:      kde-workspace < 4.11.15-3
+
+# upgrade path from khotkeys-libs-4.11.x (skip Provides for now, it was only ever a private library)
+Obsoletes:      khotkeys-libs < 5.0.0
+#Provides:       khotkeys-libs = %{version}-%{release}
 
 %description
 An advanced editor component which is used in numerous KDE applications
@@ -45,6 +49,7 @@ requiring a text editing component.
 
 %package        devel
 Summary:        Development files for %{name}
+# strictly speaking, not required in this case, but still often expected to pull in subpkg -- rex
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -54,38 +59,69 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
+
 %build
 
-mkdir -p %{_target_platform}
+
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
+
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang khotkeys5 --with-qt --with-kde --all-name
+
+%find_lang khotkeys
+
 
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
 
-%files -f khotkeys5.lang
+%files -f khotkeys.lang
 %doc COPYING
 %{_kf5_libdir}/libkhotkeysprivate.so.*
 %{_kf5_qtplugindir}/kcm_hotkeys.so
 %{_kf5_qtplugindir}/kded_khotkeys.so
 %{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservices5/khotkeys.desktop
-%{_datadir}/khotkeys
-%{_datadir}/dbus-1/interfaces/*.xml
-%{_datadir}/doc/HTML/en/kcontrol/khotkeys
+%{_datadir}/khotkeys/
+%{_datadir}/doc/HTML/en/kcontrol/khotkeys/
 
 %files devel
-%{_libdir}/cmake/KHotKeysDBusInterface
+%{_datadir}/dbus-1/interfaces/org.kde.khotkeys.xml
+%{_libdir}/cmake/KHotKeysDBusInterface/
+
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue Jun 09 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.1-2
+- re-add versioned Conflicts: kde-workspace (gives hints on upgrade path for older releases)
+- improve Obsoletes khotkeys-libs
+- improve %%find_lang usage
+- -devel: move dbus-1 xml interface here
+- .spec cosmetics
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon May 11 2015 Nils Philippsen <nils@redhat.com> - 5.3.0-2
+- don't conflict kde-workspace anymore
+- obsolete khotkeys-libs
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

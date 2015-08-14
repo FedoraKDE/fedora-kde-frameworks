@@ -1,7 +1,7 @@
 %global         base_name oxygen
 
 Name:           plasma-%{base_name}
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Plasma and Qt widget style and window decorations for Plasma 5 and KDE 4
 
@@ -38,9 +38,9 @@ BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-frameworkintegration-devel
 BuildRequires:  kf5-kwindowsystem-devel
+BuildRequires:  kf5-kcmutils-devel
 
-# KWin (for window decoration - KWin 5 only)
-BuildRequires:  kwin-devel
+BuildRequires:  kdecoration-devel
 
 Requires:       kf5-filesystem
 
@@ -133,7 +133,6 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 %{_kde4_libdir}/kde4/plugins/styles/oxygen.so
 %{_kde4_appsdir}/kstyle/themes/oxygen.themerc
 %{_kde4_bindir}/oxygen-demo
-%{_kde4_bindir}/oxygen-settings
 
 %post -n    qt5-style-oxygen -p /sbin/ldconfig
 %postun -n  qt5-style-oxygen -p /sbin/ldconfig
@@ -145,6 +144,9 @@ rm %{buildroot}/%{_kde4_libdir}/liboxygenstyleconfig.so
 %{_libdir}/liboxygenstyleconfig5.so.*
 %{_kf5_qtplugindir}/styles/oxygen.so
 %{_kf5_qtplugindir}/kstyle_oxygen_config.so
+%{_kf5_qtplugindir}/org.kde.kdecoration2/oxygendecoration.so
+%{_kf5_datadir}/kservices5/oxygenstyleconfig.desktop
+%{_kf5_datadir}/kservices5/oxygendecorationconfig.desktop
 %{_kf5_datadir}/kstyle/themes/oxygen.themerc
 %{_kf5_datadir}/plasma/look-and-feel/org.kde.oxygen/
 
@@ -168,6 +170,21 @@ fi
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

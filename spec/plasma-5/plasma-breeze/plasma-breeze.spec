@@ -3,7 +3,7 @@
 %global         build_kde4  1
 
 Name:           plasma-breeze
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
@@ -24,10 +24,12 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:	kf5-kservice-devel
+BuildRequires:  kf5-kcmutils-devel
 
 # kde4breeze
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kguiaddons-devel
 
 # kstyle
 BuildRequires:  kf5-ki18n-devel
@@ -103,6 +105,17 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}_kde4
 %endif
 
+%post
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+fi
 
 %files
 %doc cursors/Breeze/README COPYING COPYING-ICONS
@@ -110,12 +123,15 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}_kde4
 %{_kf5_qtplugindir}/styles/breeze.so
 %{_kf5_datadir}/kstyle/themes/breeze.themerc
 %{_kf5_qtplugindir}/kstyle_breeze_config.so
-%{_bindir}/breeze-settings5
 %{_kf5_datadir}/kconf_update/kde4breeze.upd
 %{_kf5_libdir}/kconf_update_bin/kde4breeze
 %{_kf5_datadir}/kconf_update/gtkbreeze.upd
 %{_kf5_libdir}/kconf_update_bin/gtkbreeze
 %{_kf5_qmldir}/QtQuick/Controls/Styles/Breeze
+%{_bindir}/breeze-settings5
+%{_datadir}/icons/hicolor/scalable/apps/breeze-settings.svgz
+%{_kf5_datadir}/kservices5/breezedecorationconfig.desktop
+%{_kf5_datadir}/kservices5/breezestyleconfig.desktop
 
 %files common -f breeze.lang
 %{_datadir}/color-schemes/*.colors
@@ -149,6 +165,21 @@ fi
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

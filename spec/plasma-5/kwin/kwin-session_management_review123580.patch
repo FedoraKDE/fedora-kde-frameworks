@@ -1,0 +1,314 @@
+diff --git a/main.h b/main.h
+index 276cf78..532f54c 100644
+--- a/main.h
++++ b/main.h
+@@ -184,6 +184,9 @@ protected:
+     bool notify(QObject* o, QEvent* e);
+     static void crashHandler(int signal);
+ 
++protected:
++    QString m_originalSessionKey;
++
+ private Q_SLOTS:
+     void resetCrashesCount();
+ 
+diff --git a/main.cpp b/main.cpp
+index fa6e373..6a91e3b 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -42,7 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <KSharedConfig>
+ // Qt
+ #include <qplatformdefs.h>
+-#include <QDebug>
+ #include <QComboBox>
+ #include <qcommandlineparser.h>
+ #include <QDialog>
+@@ -372,7 +371,7 @@ void Application::createWorkspace()
+     // critical startup section where x errors cause kwin to abort.
+ 
+     // create workspace.
+-    (void) new Workspace(isSessionRestored());
++    (void) new Workspace(m_originalSessionKey);
+     emit workspaceCreated();
+ }
+ 
+diff --git a/main_x11.cpp b/main_x11.cpp
+index c50aad2..b1c4a40 100644
+--- a/main_x11.cpp
++++ b/main_x11.cpp
+@@ -146,6 +146,11 @@ void ApplicationX11::performStartup()
+         Application::setX11ScreenNumber(QX11Info::appScreen());
+     }
+ 
++    // QSessionManager for some reason triggers a very early commitDataRequest
++    // and updates the key - before we create the workspace and load the session
++    // data -> store and pass to the workspace constructor
++    m_originalSessionKey = sessionKey();
++
+     owner.reset(new KWinSelectionOwner(Application::x11ScreenNumber()));
+     connect(owner.data(), &KSelectionOwner::failedToClaimOwnership, []{
+         fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").toLocal8Bit().constData(), stderr);
+@@ -291,10 +296,6 @@ KWIN_EXPORT int kdemain(int argc, char * argv[])
+ 
+     a.start();
+ 
+-#warning SessionManager needs porting
+-#if KWIN_QT5_PORTING
+-    KWin::SessionManager weAreIndeed;
+-#endif
+     KWin::SessionSaveDoneHelper helper;
+ 
+     return a.exec();
+diff --git a/sm.h b/sm.h
+index cc63aa3..529187d 100644
+--- a/sm.h
++++ b/sm.h
+@@ -25,9 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <QDataStream>
+ #include <kwinglobals.h>
+ #include <QStringList>
+-#if KWIN_QT5_PORTING
+-#include <ksessionmanager.h>
+-#endif
+ #include <netwm_def.h>
+ #include <QRect>
+ 
+@@ -101,16 +98,6 @@ private:
+     SmcConn conn;
+ };
+ 
+-#if KWIN_QT5_PORTING
+-class SessionManager
+-    : public KSessionManager
+-{
+-public:
+-    virtual bool saveState(QSessionManager& sm);
+-    virtual bool commitData(QSessionManager& sm);
+-};
+-#endif
+-
+ } // namespace
+ 
+ #endif
+diff --git a/sm.cpp b/sm.cpp
+index 0e3e735..2098b7f 100644
+--- a/sm.cpp
++++ b/sm.cpp
+@@ -36,8 +36,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ namespace KWin
+ {
+ 
+-#if KWIN_QT5_PORTING
+-bool SessionManager::saveState(QSessionManager& sm)
++static bool gs_sessionManagerIsKSMServer = false;
++static KConfig *sessionConfig(QString id, QString key)
++{
++    static KConfig *config = nullptr;
++    static QString lastId;
++    static QString lastKey;
++    static QString pattern = QString(QLatin1String("session/%1_%2_%3")).arg(qApp->applicationName());
++    if (id != lastId || key != lastKey) {
++        delete config;
++        config = nullptr;
++    }
++    lastId = id;
++    lastKey = key;
++    if (!config) {
++        config = new KConfig(pattern.arg(id).arg(key), KConfig::SimpleConfig);
++    }
++    return config;
++}
++
++void Workspace::saveState(QSessionManager &sm)
+ {
+     // If the session manager is ksmserver, save stacking
+     // order, active window, active desktop etc. in phase 1,
+@@ -45,37 +63,27 @@ bool SessionManager::saveState(QSessionManager& sm)
+     // before the WM finishes phase 1. Saving in phase 2 is
+     // too late, as possible user interaction may change some things.
+     // Phase2 is still needed though (ICCCM 5.2)
+-#if KWIN_QT5_PORTING
+-    char* sm_vendor = SmcVendor(static_cast< SmcConn >(sm.handle()));
+-    bool ksmserver = qstrcmp(sm_vendor, "KDE") == 0;
+-    free(sm_vendor);
+-#else
+-#warning need to figure out whether the used SessionManager is ksmserver
+-    bool ksmserver = false;
+-#endif
++    KConfig *config = sessionConfig(sm.sessionId(), sm.sessionKey());
+     if (!sm.isPhase2()) {
+-        Workspace::self()->sessionSaveStarted();
+-        if (ksmserver)   // save stacking order etc. before "save file?" etc. dialogs change it
+-            Workspace::self()->storeSession(kapp->sessionConfig(), SMSavePhase0);
++        KConfigGroup cg(config, "Session");
++        cg.writeEntry("AllowsInteraction", sm.allowsInteraction());
++        sessionSaveStarted();
++        if (gs_sessionManagerIsKSMServer)   // save stacking order etc. before "save file?" etc. dialogs change it
++            storeSession(config, SMSavePhase0);
+         sm.release(); // Qt doesn't automatically release in this case (bug?)
+         sm.requestPhase2();
+-        return true;
++        return;
+     }
+-    Workspace::self()->storeSession(kapp->sessionConfig(), ksmserver ? SMSavePhase2 : SMSavePhase2Full);
+-#if KWIN_QT5_PORTING
+-    kapp->sessionConfig()->sync();
+-#endif
+-    return true;
++    storeSession(config, gs_sessionManagerIsKSMServer ? SMSavePhase2 : SMSavePhase2Full);
++    config->sync();
+ }
+ 
+ // I bet this is broken, just like everywhere else in KDE
+-bool SessionManager::commitData(QSessionManager& sm)
++void Workspace::commitData(QSessionManager &sm)
+ {
+     if (!sm.isPhase2())
+-        Workspace::self()->sessionSaveStarted();
+-    return true;
++        sessionSaveStarted();
+ }
+-#endif
+ 
+ // Workspace
+ 
+@@ -194,18 +202,18 @@ void Workspace::storeSubSession(const QString &name, QSet<QByteArray> sessionIds
+ 
+   \sa storeSession()
+  */
+-void Workspace::loadSessionInfo()
++void Workspace::loadSessionInfo(const QString &key)
+ {
++    // NOTICE: qApp->sessionKey() is outdated when this gets invoked
++    // the key parameter is cached from the application constructor.
+     session.clear();
+-#if KWIN_QT5_PORTING
+-    KConfigGroup cg(kapp->sessionConfig(), "Session");
+-
++    KConfigGroup cg(sessionConfig(qApp->sessionId(), key), "Session");
+     addSessionInfo(cg);
+-#endif
+ }
+ 
+ void Workspace::addSessionInfo(KConfigGroup &cg)
+ {
++    m_initialDesktop = cg.readEntry(QStringLiteral("desktop"), 1);
+     int count =  cg.readEntry("count", 0);
+     int active_client = cg.readEntry("active", 0);
+     for (int i = 1; i <= count; i++) {
+@@ -408,9 +416,8 @@ static void shutdown_cancelled(SmcConn conn_P, SmPointer ptr)
+ 
+ void SessionSaveDoneHelper::saveDone()
+ {
+-#if KWIN_QT5_PORTING
+-    Workspace::self()->sessionSaveDone();
+-#endif
++    if (Workspace::self())
++        Workspace::self()->sessionSaveDone();
+ }
+ 
+ SessionSaveDoneHelper::SessionSaveDoneHelper()
+@@ -433,6 +440,15 @@ SessionSaveDoneHelper::SessionSaveDoneHelper()
+         free(id);
+     if (conn == NULL)
+         return; // no SM
++
++    // detect ksmserver
++    // NOTICE: no idea whether the assumptions about it in Workspace::saveState()
++    // still hold for KF5/Plasma 5
++#warning assuming special behavior in ksmserver to be still present in KF5
++    char* vendor = SmcVendor(conn);
++    gs_sessionManagerIsKSMServer = qstrcmp(vendor, "KDE") == 0;
++    free(vendor);
++
+     // set the required properties, mostly dummy values
+     SmPropValue propvalue[ 5 ];
+     SmProp props[ 5 ];
+diff --git a/workspace.h b/workspace.h
+index 4acefb4..84d6edf 100644
+--- a/workspace.h
++++ b/workspace.h
+@@ -62,7 +62,7 @@ class KWIN_EXPORT Workspace : public QObject
+ {
+     Q_OBJECT
+ public:
+-    explicit Workspace(bool restore = false);
++    explicit Workspace(const QString &sessionKey = QString());
+     virtual ~Workspace();
+ 
+     static Workspace* self() {
+@@ -431,6 +431,10 @@ private Q_SLOTS:
+     void slotDesktopCountChanged(uint previousCount, uint newCount);
+     void slotCurrentDesktopChanged(uint oldDesktop, uint newDesktop);
+ 
++    // session management
++    void saveState(QSessionManager &sm);
++    void commitData(QSessionManager &sm);
++
+ Q_SIGNALS:
+     /**
+      * Emitted after the Workspace has setup the complete initialization process.
+@@ -503,7 +507,8 @@ private:
+     QWidget* active_popup;
+     Client* active_popup_client;
+ 
+-    void loadSessionInfo();
++    int m_initialDesktop;
++    void loadSessionInfo(const QString &key);
+     void addSessionInfo(KConfigGroup &cg);
+ 
+     QList<SessionInfo*> session;
+diff --git a/workspace.cpp b/workspace.cpp
+index 09ae9a2..9e71494 100644
+--- a/workspace.cpp
++++ b/workspace.cpp
+@@ -99,12 +99,13 @@ void ColorMapper::update()
+ 
+ Workspace* Workspace::_self = 0;
+ 
+-Workspace::Workspace(bool restore)
++Workspace::Workspace(const QString &sessionKey)
+     : QObject(0)
+     , m_compositor(NULL)
+     // Unsorted
+     , active_popup(NULL)
+     , active_popup_client(NULL)
++    , m_initialDesktop(1)
+     , active_client(0)
+     , last_active_client(0)
+     , most_recently_raised(0)
+@@ -155,8 +156,10 @@ Workspace::Workspace(bool restore)
+ 
+     delayFocusTimer = 0;
+ 
+-    if (restore)
+-        loadSessionInfo();
++    if (!sessionKey.isEmpty())
++        loadSessionInfo(sessionKey);
++    connect(qApp, SIGNAL(commitDataRequest(QSessionManager&)), SLOT(commitData(QSessionManager&)));
++    connect(qApp, SIGNAL(saveStateRequest(QSessionManager&)), SLOT(saveState(QSessionManager&)));
+ 
+     RuleBook::create(this)->load();
+ 
+@@ -260,18 +263,9 @@ void Workspace::init()
+ 
+     // Extra NETRootInfo instance in Client mode is needed to get the values of the properties
+     NETRootInfo client_info(connection(), NET::ActiveWindow | NET::CurrentDesktop);
+-    int initial_desktop;
+     if (!qApp->isSessionRestored())
+-        initial_desktop = client_info.currentDesktop();
+-    else {
+-#if KWIN_QT5_PORTING
+-        KConfigGroup group(kapp->sessionConfig(), "Session");
+-        initial_desktop = group.readEntry("desktop", 1);
+-#else
+-        initial_desktop = 1;
+-#endif
+-    }
+-    if (!VirtualDesktopManager::self()->setCurrent(initial_desktop))
++        m_initialDesktop = client_info.currentDesktop();
++    if (!VirtualDesktopManager::self()->setCurrent(m_initialDesktop))
+         VirtualDesktopManager::self()->setCurrent(1);
+ 
+     reconfigureTimer.setSingleShot(true);

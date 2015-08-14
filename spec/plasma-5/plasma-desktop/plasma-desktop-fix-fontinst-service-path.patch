@@ -1,0 +1,34 @@
+diff --git a/kcms/kfontinst/config-fontinst.h.cmake b/kcms/kfontinst/config-fontinst.h.cmake
+index f2e6014..b44e8de 100644
+--- a/kcms/kfontinst/config-fontinst.h.cmake
++++ b/kcms/kfontinst/config-fontinst.h.cmake
+@@ -1,7 +1,7 @@
+ #ifndef __CONFIG_FONTINST_H__
+ #define __CONFIG_FONTINST_H__
+ 
+-#define KFONTINST_LIB_EXEC_DIR "${CMAKE_INSTALL_PREFIX}/${KAUTH_HELPER_INSTALL_DIR}"
++#define KFONTINST_LIB_EXEC_DIR "${KAUTH_HELPER_INSTALL_DIR}"
+ 
+ /* Define to 1 if you have the <locale.h> header file. */
+ #cmakedefine HAVE_LOCALE_H 1
+diff --git a/kcms/kfontinst/dbus/org.kde.fontinst.service.cmake b/kcms/kfontinst/dbus/org.kde.fontinst.service.cmake
+index e212a88..a2915b5 100644
+--- a/kcms/kfontinst/dbus/org.kde.fontinst.service.cmake
++++ b/kcms/kfontinst/dbus/org.kde.fontinst.service.cmake
+@@ -1,4 +1,4 @@
+ [D-BUS Service]
+ Name=org.kde.fontinst
+-Exec=@CMAKE_INSTALL_PREFIX@/@KAUTH_HELPER_INSTALL_DIR@/fontinst
++Exec=@KAUTH_HELPER_INSTALL_DIR@/fontinst
+ 
+diff --git a/kcms/kfontinst/dbus/org.kde.fontinst.system-service.cmake b/kcms/kfontinst/dbus/org.kde.fontinst.system-service.cmake
+index be6927f..c8b540f 100644
+--- a/kcms/kfontinst/dbus/org.kde.fontinst.system-service.cmake
++++ b/kcms/kfontinst/dbus/org.kde.fontinst.system-service.cmake
+@@ -1,5 +1,5 @@
+ [D-BUS Service]
+ Name=org.kde.fontinst
+-Exec=@CMAKE_INSTALL_PREFIX@/@KAUTH_HELPER_INSTALL_DIR@/fontinst
++Exec=@KAUTH_HELPER_INSTALL_DIR/fontinst
+ User=root
+ 

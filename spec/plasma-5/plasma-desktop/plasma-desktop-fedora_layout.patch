@@ -1,0 +1,12 @@
+diff -up plasma-desktop-5.3.0/desktoppackage/contents/layout.js.fedora_layout plasma-desktop-5.3.0/desktoppackage/contents/layout.js
+--- plasma-desktop-5.3.0/desktoppackage/contents/layout.js.fedora_layout	2015-04-23 05:02:33.000000000 -0500
++++ plasma-desktop-5.3.0/desktoppackage/contents/layout.js	2015-05-21 08:10:39.185880487 -0500
+@@ -2,7 +2,7 @@
+ loadTemplate("org.kde.plasma.desktop.defaultPanel")
+ 
+ for (var i = 0; i < screenCount; ++i) {
+-    var id = createActivity("Desktop");
++    var id = createActivity("Fedora Desktop", "org.kde.plasma.folder");
+     var desktopsArray = desktopsForActivity(id);
+     print(desktopsArray.length);
+     for( var j = 0; j < desktopsArray.length; j++) {

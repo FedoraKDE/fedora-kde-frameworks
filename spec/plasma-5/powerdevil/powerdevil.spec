@@ -1,5 +1,5 @@
 Name:           powerdevil
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
@@ -40,6 +40,8 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-knotifyconfig-devel
 BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kscreen-devel
+BuildRequires:  kf5-kactivities-devel
 
 BuildRequires:  plasma-workspace-devel
 
@@ -92,6 +94,21 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

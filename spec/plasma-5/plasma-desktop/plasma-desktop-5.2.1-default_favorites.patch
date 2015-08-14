@@ -6,7 +6,7 @@ diff -up plasma-desktop-5.2.1/applets/kickoff/core/favoritesmodel.cpp.default_fa
          }
  
 -        applications << browser << "kontact" << "systemsettings" << "dolphin" << "ktp-contactlist" << "kate";
-+        applications << browser << "kontact" << "systemsettings" << "dolphin" << "ktp-contactlist" << "kate" << "org.kde.konsole" << "apper";
++        applications << "konqbrowser" << "kontact" << "systemsettings" << "dolphin" << "ktp-contactlist" << "kate" << "org.kde.konsole" << "apper";
  
          QList<QString> desktopFiles;
  

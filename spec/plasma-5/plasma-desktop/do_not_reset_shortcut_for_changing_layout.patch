@@ -1,0 +1,27 @@
+From d5d809aa349a72a4c6fa7c031c4cfe6938ea3eaa Mon Sep 17 00:00:00 2001
+From: Ivan Romanov <drizt@land.ru>
+Date: Sun, 5 Jul 2015 00:46:16 +0500
+Subject: [PATCH] keyboard: do not reset shortcut for changing layout
+
+With KGlobalAccel::NoAutoloading after restarting plasma
+Ctrl-Alt-K always is set to 'Switch to Next Keyboard Layout'
+---
+ kcms/keyboard/bindings.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kcms/keyboard/bindings.cpp b/kcms/keyboard/bindings.cpp
+index a11941f..968721f 100644
+--- a/kcms/keyboard/bindings.cpp
++++ b/kcms/keyboard/bindings.cpp
+@@ -42,7 +42,7 @@ KeyboardLayoutActionCollection::KeyboardLayoutActionCollection(QObject* parent,
+ 	toggleAction->setText( i18n(actionName) );
+         KGlobalAccel::self()->setShortcut(toggleAction,
+                                           QList<QKeySequence>() << QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_K),
+-                                          KGlobalAccel::NoAutoloading);
++                                          KGlobalAccel::Autoloading);
+ 	if( configAction ) {
+ 	    toggleAction->setProperty("isConfigurationAction", true);
+ 	}
+-- 
+2.4.3
+

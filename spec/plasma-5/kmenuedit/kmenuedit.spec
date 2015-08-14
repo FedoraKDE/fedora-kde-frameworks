@@ -1,5 +1,5 @@
 Name:           kmenuedit
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        KDE menu editor
 
@@ -28,35 +28,42 @@ BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-sonnet-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kinit-devel >= 5.10.0-3
 
 BuildRequires:  desktop-file-utils
 
 Requires:       kf5-filesystem
+# libkdeinit5_*
+%{?kf5_kinit_requires}
 
-# TODO: Remove once kmenuedit is split from kde-workspace
-Conflicts:      kde-workspace < 5.0.0-1
+# when split out from kde-workspace-4.11.x
+Conflicts:      kde-workspace < 4.11.15-3
 
 %description
 %{summary}.
 
+
 %prep
 %setup -q -n %{name}-%{version}
 
-%build
 
-mkdir -p %{_target_platform}
+%build
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
+
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang kmenuedit5 --with-qt --with-kde --all-name
+%find_lang kmenuedit5 --with-qt --all-name
+
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.kmenuedit.desktop
+
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -74,14 +81,42 @@ fi
 %doc COPYING COPYING.DOC
 %{_bindir}/kmenuedit
 %{_kf5_libdir}/libkdeinit5_kmenuedit.so
-%{_datadir}/kmenuedit
+%{_datadir}/kmenuedit/
 %{_datadir}/applications/org.kde.kmenuedit.desktop
-%{_datadir}/icons/hicolor/*/apps/kmenuedit.png
-%{_kf5_datadir}/kxmlgui5/kmenuedit
-%{_docdir}/HTML/*/kmenuedit
+%{_datadir}/icons/hicolor/*/apps/kmenuedit.*
+%{_kf5_datadir}/kxmlgui5/kmenuedit/
+%lang(ca) %{_docdir}/HTML/ca/kmenuedit/
+%lang(de) %{_docdir}/HTML/de/kmenuedit/
+%lang(en) %{_docdir}/HTML/en/kmenuedit/
+%lang(it) %{_docdir}/HTML/it/kmenuedit/
+%lang(nl) %{_docdir}/HTML/nl/kmenuedit/
+%lang(pt_BR) %{_docdir}/HTML/pt_BR/kmenuedit/
+%lang(sv) %{_docdir}/HTML/sv/kmenuedit/
+%lang(uk) %{_docdir}/HTML/uk/kmenuedit/
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue Jun 09 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-3
+- tighten Conflicts: kde-workspace versioning
+
+* Tue Jun 02 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-2
+- +%%{kf5_kinit_requires}, %lang'ify docs, .spec cosmetics
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 

@@ -1,10 +1,12 @@
 # Whether to build experimental Wayland support
 # NOTE: Does not build on F20 due to too old Wayland and requires kf5-kwayland,
 # which is not available in Fedora yet
-%global         wayland 0
+%if 0%{?fedora} > 21
+%global         wayland 1
+%endif
 
 Name:           kwin
-Version:        5.2.95
+Version:        5.3.95
 Release:        1%{?dist}
 Summary:        KDE Window manager
 
@@ -22,6 +24,10 @@ URL:            https://projects.kde.org/projects/kde/workspace/kwin
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
+## upstreamable patches
+# session management, https://git.reviewboard.kde.org/r/123580/
+# followup to add discard support
+
 # Base
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -32,11 +38,11 @@ BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qttools-devel
 BuildRequires:  qt5-qttools-static
 BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qt5-qtmultimedia-devel
 
 # X11/OpenGL
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libgbm-devel
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libxcb-devel
@@ -46,6 +52,7 @@ BuildRequires:  libXcursor-devel
 BuildRequires:  xcb-util-wm-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  xcb-util-cursor-devel
 BuildRequires:  libepoxy-devel
 
 # Wayland (optional)
@@ -61,13 +68,15 @@ BuildRequires:  pkgconfig(libudev)
 %endif
 
 # KF5
+BuildRequires:  kf5-kcompletion-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
 BuildRequires:  kf5-kcoreaddons-devel
 BuildRequires:  kf5-kcrash-devel
 BuildRequires:  kf5-kglobalaccel-devel
 BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kinit-devel
+BuildRequires:  kf5-kinit-devel >= 5.10.0-3
+BuildRequires:  kf5-kio-devel
 BuildRequires:  kf5-knotifications-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-plasma-devel
@@ -79,12 +88,16 @@ BuildRequires:  kf5-knewstuff-devel
 BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kdeclarative-devel
+BuildRequires:  kf5-kiconthemes-devel
 
 BuildRequires:  kdecoration-devel
 
-# Runtime deps
+## Runtime deps
 Requires:       kf5-filesystem
+# Runtime-only dependency for effect video playback
 Requires:       qt5-qtmultimedia
+# libkdeinit5_kwin*
+%{?kf5_kinit_requires}
 
 # Before kwin was split out from kde-workspace into a subpackage
 Conflicts:      kde-workspace%{?_isa} < 4.11.14-2
@@ -100,10 +113,12 @@ Provides: firstboot(windowmanager) = kwin
 %description
 %{summary}.
 
-%if 0%{wayland}
+%if 0%{?wayland}
 %package        wayland
 Summary:        KDE Window Manager with experimental Wayland support
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+# libkdeinit5_kwin*
+%{?kf5_kinit_requires}
 %description    wayland
 %{summary}.
 %endif
@@ -135,16 +150,17 @@ BuildArch:      noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%autosetup -n %{name}-%{version} -p1
 
 
 %build
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
+
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
@@ -169,6 +185,8 @@ fi
 %files -f kwin5.lang
 %{_bindir}/kwin
 %{_bindir}/kwin_x11
+%{_kf5_libdir}/libkdeinit5_kwin_x11.so
+%{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
 %{_datadir}/kwin
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/kwin
@@ -183,24 +201,28 @@ fi
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/knotifications5/kwin.notifyrc
 %{_kf5_datadir}/config.kcfg/kwin.kcfg
-%{_datadir}/icons/hicolor/*/apps/*
-%config %{_sysconfdir}/xdg/*.knsrc
+%{_datadir}/icons/hicolor/*/apps/kwin.*
+# note: these are for reference (to express config defaults), they are
+# not config files themselves (so don't use %%config tag)
+%{_sysconfdir}/xdg/*.knsrc
 
-%if 0%{wayland}
+%if 0%{?wayland}
 %files wayland
-%{_bindir}/kwin_wayland
+%{_kf5_bindir}/kwin_wayland
+%{_kf5_qtplugindir}/org.kde.kglobalaccel5.platforms/KF5GlobalAccelPrivateKWin.so
+%{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandDrmBackend.so
+%{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandFbdevBackend.so
+%{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandWaylandBackend.so
+%{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandX11Backend.so
 %endif
-
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kf5_libdir}/libkdeinit5_kwin_x11.so
-%if 0%{wayland}
-%{_kf5_libdir}/libkdeinit5_kwin_wayland.so
-%endif
-%{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
+# these dbus xml files probably ought to be moved to -devel, kde-sig needs agreed policy first -- rex
+%{_sysconfdir}/xdg/org_kde_kwin.categories
+%{_datadir}/dbus-1/interfaces/*.xml
 %{_libdir}/libkwin.so.*
 %{_libdir}/libkwinxrenderutils.so.*
 %{_libdir}/libkwineffects.so.*
@@ -209,19 +231,54 @@ fi
 
 %files devel
 %{_libdir}/cmake/KWinDBusInterface
-%{_datadir}/dbus-1/interfaces/*.xml
 %{_libdir}/libkwinxrenderutils.so
 %{_libdir}/libkwineffects.so
 %{_libdir}/libkwinglutils.so
 %{_libdir}/libkwin4_effect_builtins.so
-%{_includedir}/*.h
+%{_includedir}/kwin*.h
 
 %files doc
 %doc COMPLIANCE COPYING COPYING.DOC HACKING README
-%{_docdir}/HTML/en/*
+%{_docdir}/HTML/en/kcontrol/
 
 
 %changelog
+* Thu Aug 13 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.95-1
+- Plasma 5.3.95
+
+* Thu Jun 25 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.2-1
+- Plasma 5.3.2
+
+* Wed Jun 17 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.1-4
+- BR: kf5-kcompletion-devel kf5-kiconthemes-devel kf5-kio-devel
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Tue May 26 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.1-1
+- Plasma 5.3.1
+
+* Tue May 19 2015 Rex Dieter <rdieter@fedoraproject.org> 5.3.0-5
+- move dbus xml files to -libs (so present for -devel)
+
+* Sun May 17 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-4
+- followup SM fix, discard support (kde#341930)
+- note qt5-qtmultimedia dep is runtime-only
+
+* Thu May 14 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-3
+- test candidate SM fixes (reviewboard#123580,kde#341930)
+- move libkdeinit bits out of -libs
+- move dbus interface xml to runtime pkg
+- drop %%config from knsrc files
+- enable wayland support (f21+)
+- .spec cosmetics
+
+* Wed Apr 29 2015 Jan Grulich <jgrulich@redhat.com> - 5.3.0-2
+- BR xcb-util-cursor-devel
+
+* Mon Apr 27 2015 Daniel Vrátil <dvratil@redhat.com> - 5.3.0-1
+- Plasma 5.3.0
+
 * Wed Apr 22 2015 Daniel Vrátil <dvratil@redhat.com> - 5.2.95-1
 - Plasma 5.2.95
 
