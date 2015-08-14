@@ -36,6 +36,7 @@ def main():
                         help='KDE Frameworks 5 version number')
     parser.add_argument('--pkgroot', action='store', default=os.getcwd(),
                         help='Root directory where all fedpkg clones are')
+    parser.add_argument('--no-tag', action='store_true', default = False)
     args = parser.parse_args()
 
     proc = subprocess.Popen([ 'koji', 'list-tagged', args.srcTag ], stdout=subprocess.PIPE)
@@ -72,20 +73,22 @@ def main():
     for pkgname in destPkgs:
         nvbs.append("%s-%s-%s" % (destPkgs[pkgname][0], destPkgs[pkgname][1], destPkgs[pkgname][2]))
 
-    print("Tag from: %s" % args.srcTag)
-    print("Tag into: %s" % args.destTag)
-    print("Tag packages: %s" % nvbs)
+    if not args.no_tag:
+        print("Tag from: %s" % args.srcTag)
+        print("Tag into: %s" % args.destTag)
+        print("Tag packages: %s" % nvbs)
 
-    proceed = input('Proceed? [Y/n] ')
-    if proceed.lower() == 'n':
-        return
+        proceed = input('Proceed? [Y/n] ')
+        if proceed.lower() == 'n':
+            return
 
-    proc = subprocess.Popen([ 'koji', 'tag-build', args.destTag ] + nvbs)
-    proc.wait()
+        proc = subprocess.Popen([ 'koji', 'tag-build', args.destTag ] + nvbs)
+        proc.wait()
 
-    proceed = input('Create Bodhi update? [Y/n] ')
-    if proceed.lower() == 'n':
-        return
+        proceed = input('Create Bodhi update? [Y/n] ')
+        if proceed.lower() == 'n':
+            return
+
 
     proc = subprocess.Popen([ 'bodhi', '-n', '-t', 'bugfix', '-N', 'KDE Frameworks %s' % args.version ] + nvbs)
     proc.communicate()
