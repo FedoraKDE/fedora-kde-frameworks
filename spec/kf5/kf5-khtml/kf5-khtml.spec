@@ -25,6 +25,10 @@ BuildRequires:  perl
 BuildRequires:  libpng-devel
 BuildRequires:  zlib-devel
 
+%if %{fedora} >= 24
+BuildRequires:  perl-Getopt-Long
+%endif
+
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
