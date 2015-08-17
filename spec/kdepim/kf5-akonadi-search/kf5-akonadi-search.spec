@@ -78,13 +78,21 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%license COPYING
-%{_kf5_libdir}/libKF5AkonadiSearch.so.*
+#%license COPYING COPYING.LIB
+%{_sysconfdir}/xdg/akonadi-search.categories
+%{_kf5_libdir}/libKF5AkonadiSearchPIM.so.*
+%{_kf5_libdir}/libKF5AkonadiSearchCore.so.*
+%{_kf5_libdir}/libKF5AkonadiSearchXapian.so.*
+%{_kf5_bindir}/akonadi_indexing_agent
+%{_kf5_datadir}/akonadi/agents/akonadiindexingagent.desktop
+%{_kf5_qtplugindir}/akonadi/*.so
 
 %files devel
-%{_kf5_includedir}/akonadisearch_version.h
+%{_kf5_libdir}/libKF5AkonadiSearchPIM.so
+%{_kf5_libdir}/libKF5AkonadiSearchCore.so
+%{_kf5_libdir}/libKF5AkonadiSearchXapian.so
+%{_kf5_includedir}/akonadi_search_version.h
 %{_kf5_includedir}/AkonadiSearch
-%{_kf5_libdir}/libKF5AkonadiSearch.so
 %{_kf5_libdir}/cmake/KF5AkonadiSearch
 %{_kf5_archdatadir}/mkspecs/modules/qt_AkonadiSearch.pri
 

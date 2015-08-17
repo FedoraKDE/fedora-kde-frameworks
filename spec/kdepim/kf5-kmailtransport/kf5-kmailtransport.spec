@@ -74,10 +74,13 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %license COPYING
 %{_kf5_libdir}/libKF5MailTransport.so.*
+%{_kf5_datadir}/config.kcfg/mailtransport.kcfg
+%{_kf5_qtplugindir}/kcm_mailtransport.so
+%{_kf5_datadir}/kservices5/kcm_mailtransport.desktop
 
 %files devel
-%{_kf5_includedir}/kmailtransport_version.h
-%{_kf5_includedir}/KMailTransport
+%{_kf5_includedir}/mailtransport_version.h
+%{_kf5_includedir}/MailTransport
 %{_kf5_libdir}/libKF5MailTransport.so
 %{_kf5_libdir}/cmake/KF5MailTransport
 %{_kf5_archdatadir}/mkspecs/modules/qt_KMailTransport.pri
