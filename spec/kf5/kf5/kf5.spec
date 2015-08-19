@@ -1,6 +1,6 @@
 Name:           kf5
 Version:        5.13.0
-Release:        0.1%{?dist}
+Release:        0.2%{?dist}
 Summary:        Filesystem and RPM macros for KDE Frameworks 5
 License:        BSD
 URL:            http://www.kde.org
@@ -33,6 +33,9 @@ mkdir -p %{buildroot}%{_libexecdir}/kf5
 mkdir -p %{buildroot}%{_sysconfdir}/xdg/plasma-workspace/{env,shutdown}
 
 install -Dpm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d/macros.kf5
+sed -i \
+  -e "s|@@KF5_VERSION@@|%{version}|g" \
+  %{buildroot}%{_rpmconfigdir}/macros.d/macros.kf5
 
 
 %files filesystem
@@ -49,6 +52,9 @@ install -Dpm644 %{_sourcedir}/macros.kf5 %{buildroot}%{_rpmconfigdir}/macros.d/m
 
 
 %changelog
+* Wed Aug 19 2015 Rex Dieter <rdieter@fedoraproject.org> 5.13.0-0.2
+- macros.kf5: add %%_kf5_version
+
 * Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 5.13.0-0.1
 - KDE Frameworks 5.13
 

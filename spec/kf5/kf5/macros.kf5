@@ -12,6 +12,7 @@
 %_kf5_mandir %_kf5_datadir/man
 %_kf5_buildtype release
 %_kf5_qmldir %_qt5_prefix/qml
+%_kf5_version @@KF5_VERSION@@
 
 %cmake_kf5 \
   QTDIR="%{_qt5_prefix}" ; export QTDIR ; \
