@@ -168,9 +168,6 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 # No -devel
 rm -fv %{buildroot}%{_libdir}/libkfontinst{,ui}.so
 
-# KDM is dead
-rm -rv %{buildroot}%{_datadir}/kdm
-
 # Copy konqsidebartng to kde4/apps so that KDE Konqueror can find it
 mkdir -p %{buildroot}%{_datadir}/kde4/apps/konqsidebartng/virtual_folders/services/
 cp %{buildroot}%{_datadir}/konqsidebartng/virtual_folders/services/fonts.desktop \
