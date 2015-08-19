@@ -144,7 +144,8 @@ def main():
 
             print('Done')
 
-        if not args.no_upload:
+        # KF5 does not have any sources, breaks fedpkg
+        if not args.no_upload and pkg.name != 'kf5':
             print('Updating sources...', end = '', flush = True)
             try:
                 pkg.updateSources()
