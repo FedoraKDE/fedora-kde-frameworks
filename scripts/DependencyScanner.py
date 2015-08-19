@@ -79,6 +79,8 @@ class Dependency:
 
         if self._versionCond and self._version:
             return '%s %s %s' % (name, self._versionCond, self._version)
+        elif self.isKF5():
+            return '%s >= %%{_kf5_version}' % name
         else:
             return name
 
@@ -110,7 +112,7 @@ class Dependency:
         return self._pkgname.startswith('qt5-')
 
     def isKF5(self):
-        return self._pkgname.startswith('kf5-')
+        return self._pkgname.startswith('kf5-') or self._pkgname == 'extra-cmake-modules'
 
     def isQt5OrKF5(self):
         return self.isQt5() or self.isKF5()
@@ -264,12 +266,15 @@ class DependencyScanner:
                 if line.startswith("BuildRequires:"):
                     br = self._parseRequires(line, True)
                     if br:
-                        if br.isKF5():
-                            inKF5Requires = True
                         if br in depsRemove:
                             continue
-
-                    out.append(origLine)
+                        elif br.isKF5():
+                            inKF5Requires = True
+                            out.append("BuildRequires:  %s\n" % br)
+                        else:
+                            out.append(origLine)
+                    else:
+                        out.append(origLine)
 
                 elif inKF5Requires:
                     if depsAdd:
@@ -277,10 +282,26 @@ class DependencyScanner:
                             out.append("BuildRequires:  %s\n" % br)
                         out.append("\n")
                         depsAdd = []
+
+                    # Rewrite the BR to make sure we include the version dependency
+                    br = self._parseRequires(line, True)
+                    if br and br.isKF5():
+                        out.append("BuildRequires:  %s\n" % br)
                     else:
                         out.append(origLine)
 
                     inKF5Requires = False
+                elif line.startswith("Requires:"):
+                    br = self._parseRequires(line)
+                    if br and br.isKF5():
+                        # Don't rewrite subpackage dependencies like
+                        # Requires: kf5-kactivities-libs in kf5-kactivities base pkg
+                        if not br.name().startswith('%s-' % self._pkg.name):
+                            out.append("Requires:       %s\n" % br)
+                        else:
+                            out.append(origLine)
+                    else:
+                        out.append(origLine)
                 else:
                     out.append(origLine)
 
@@ -288,20 +309,28 @@ class DependencyScanner:
                 if line.startswith("Requires:"):
                     br = self._parseRequires(line)
                     if br:
-                        if br.isKF5():
-                            inKF5Requires = True
-
                         if br in develDepsRemove:
                             continue
-                    out.append(origLine)
+                        if br.isKF5():
+                            inKF5Requires = True
+                            # Don't rewrite subpackage deps
+                            if not br.name().startswith('%s-' % self._pkg.name):
+                                out.append("Requires:       %s\n" % br)
+                            else:
+                                out.append(origLine)
+                        else:
+                            out.append(origLine)
+                    else:
+                        out.append(origLine)
 
                 elif inKF5Requires or (not inKF5Requires and (not line or line.startswith("%description"))):
                     if develDepsAdd:
                         for br in develDepsAdd:
                             out.append("Requires:       %s\n" % br)
+                        inKF5Requires = False
                         out.append("\n")
                         develDepsAdd = []
-                        if (not inKF5Requires and line.startswith("%description")):
+                        if (line.startswith("%description")):
                             out.append(origLine)
                     else:
                         out.append(origLine)
@@ -414,6 +443,7 @@ class DependencyScanner:
         currentDeps = [];
         currentDevelDeps = []
         pkgName = None
+        pkgVersion = None
 
         # Parse the SPEC file
         for line in parsed:
@@ -426,6 +456,11 @@ class DependencyScanner:
             # Get package name
             if line.startswith("Name:"):
                 pkgName = line.rsplit(' ', 1)[1]
+                continue
+
+            # Get package version
+            if line.startswith("Version:"):
+                pkgVersion = line.rsplit(' ', 1)[1]
                 continue
 
             # Parse all BR that start with qt5- or kf5-
@@ -521,8 +556,9 @@ class DependencyScanner:
         return True
 
     def write(self):
-        if self.depsAdd or self.depsRemove or self.develDepsAdd or self.develDepsRemove:
-            self._updateSpecFile(self._pkg.specFilePath, self.depsAdd, self.depsRemove, self.develDepsAdd, self.develDepsRemove)
+        # Always rewrite to file to fix dep verisons
+        #if self.depsAdd or self.depsRemove or self.develDepsAdd or self.develDepsRemove:
+        self._updateSpecFile(self._pkg.specFilePath, self.depsAdd, self.depsRemove, self.develDepsAdd, self.develDepsRemove)
 
 
 if __name__ == "__main__":

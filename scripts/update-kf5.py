@@ -134,7 +134,8 @@ def main():
         if not args.no_update:
             print('Updating SPEC file...', end = '', flush = True)
             try:
-                if pkg.scanner and (pkg.scanner.depsAdd or pkg.scanner.depsRemove or pkg.scanner.develDepsAdd or pkg.scanner.develDepsRemove):
+                # Always rewrite with scanner (if available)
+                if pkg.scanner:
                     pkg.scanner.write()
                 else:
                     pkg.writeSpec()
