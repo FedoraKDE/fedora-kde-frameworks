@@ -80,6 +80,10 @@ class Package(object):
 
         return outStr
 
+
+    def isKF5(self):
+        return self.name.startswith('kf5-') or self.name == 'extra-cmake-modules'
+
     def load(self):
         self.otherBuildRequiresNames = []
         self.kf5BuildRequiresNames = []

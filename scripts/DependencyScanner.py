@@ -58,7 +58,8 @@ class Dependency:
     _version = None
 
     def __init__(self, dep):
-        parts = re.search(r'([\w-]+)[\ ]*(\([\w]+\)){0,1}[\ ]*([\<\>\=]*){1}[\ ]*([0-9\.\-\w]*){1}', dep)
+        dep = dep.strip()
+        parts = re.search(r'([\w-]+)[\ ]*(\([\w]+\)){0,1}[\ ]*([\<\>\=]*){1}[\ ]*([0-9\.\-\w%\{\}]*){1}', dep)
         if not parts or len(parts.groups()) < 4:
             raise DependencyException("'%s' is not a valid dependency string" % dep)
 
@@ -79,8 +80,6 @@ class Dependency:
 
         if self._versionCond and self._version:
             return '%s %s %s' % (name, self._versionCond, self._version)
-        elif self.isKF5():
-            return '%s >= %%{_kf5_version}' % name
         else:
             return name
 
@@ -270,7 +269,8 @@ class DependencyScanner:
                             continue
                         elif br.isKF5():
                             inKF5Requires = True
-                            out.append("BuildRequires:  %s\n" % br)
+                            version = "%{version}" if self._pkg.isKF5() else "%{_kf5_version}"
+                            out.append("BuildRequires:  %s >= %s\n" % (br, version))
                         else:
                             out.append(origLine)
                     else:
@@ -279,14 +279,19 @@ class DependencyScanner:
                 elif inKF5Requires:
                     if depsAdd:
                         for br in depsAdd:
-                            out.append("BuildRequires:  %s\n" % br)
+                            if br.isKF5():
+                                brname = "%s >= %s" % (br.name(), "%{version}" if self._pkg.isKF5() else "%{_kf5_version}")
+                            else:
+                                brname = br.name()
+                            out.append("BuildRequires:  %s\n" % brname)
                         out.append("\n")
                         depsAdd = []
 
                     # Rewrite the BR to make sure we include the version dependency
                     br = self._parseRequires(line, True)
                     if br and br.isKF5():
-                        out.append("BuildRequires:  %s\n" % br)
+                        version = "%{version}" if self._pkg.isKF5() else "%{_kf5_version}"
+                        out.append("BuildRequires:  %s >= %s\n" % (br, version))
                     else:
                         out.append(origLine)
 
@@ -297,7 +302,8 @@ class DependencyScanner:
                         # Don't rewrite subpackage dependencies like
                         # Requires: kf5-kactivities-libs in kf5-kactivities base pkg
                         if not br.name().startswith('%s-' % self._pkg.name):
-                            out.append("Requires:       %s\n" % br)
+                            version = "%{version}" if self._pkg.isKF5() else "%{_kf5_version}"
+                            out.append("Requires:       %s >= %s\n" % (br, version))
                         else:
                             out.append(origLine)
                     else:
@@ -315,7 +321,8 @@ class DependencyScanner:
                             inKF5Requires = True
                             # Don't rewrite subpackage deps
                             if not br.name().startswith('%s-' % self._pkg.name):
-                                out.append("Requires:       %s\n" % br)
+                                version = "%{version}" if self._pkg.isKF5() else "%{_kf5_version}"
+                                out.append("Requires:       %s >= %s\n" % (br, version))
                             else:
                                 out.append(origLine)
                         else:
@@ -326,7 +333,11 @@ class DependencyScanner:
                 elif inKF5Requires or (not inKF5Requires and (not line or line.startswith("%description"))):
                     if develDepsAdd:
                         for br in develDepsAdd:
-                            out.append("Requires:       %s\n" % br)
+                            if br.isKF5():
+                                brname = "%s >= %s" % (br.name(), "%{version}" if self._pkg.isKF5() else "%{_kf5_version}")
+                            else:
+                                brname = br.name()
+                            out.append("Requires:       %s\n" % brname)
                         inKF5Requires = False
                         out.append("\n")
                         develDepsAdd = []
@@ -466,7 +477,7 @@ class DependencyScanner:
             # Parse all BR that start with qt5- or kf5-
             if line.startswith("BuildRequires:"):
                 try:
-                    dep = Dependency(line.rsplit(' ', 1)[1])
+                    dep = Dependency(line.rsplit(':', 1)[1])
                 except DependencyException:
                     continue
 
@@ -482,7 +493,7 @@ class DependencyScanner:
             else:
                 # Parse all qt5- or kf5- Requires within -devel subpackage
                 if line.startswith("Requires:"):
-                    dep = Dependency(line.rsplit(' ', 1)[1])
+                    dep = Dependency(line.rsplit(':', 1)[1])
                     if dep.isQt5OrKF5():
                         currentDevelDeps.append(dep);
                 # Reaching %description macro within -devel subpackage means end of -devel
@@ -542,16 +553,51 @@ class DependencyScanner:
 
         self._cleanupSource(srcDir)
 
-
         currentDeps = list(set(currentDeps))
         deps = list(set(deps))
-        self.depsAdd = list(set(deps) - set(currentDeps))
-        self.depsRemove = list(set(currentDeps) - set(deps))
+
+        self.depsAdd = []
+        for cdep in currentDeps:
+            found = False
+            for dep in deps:
+                if dep.name() == cdep.name():
+                    found = True
+                    break
+            if not found:
+                self.depsRemove.append(cdep)
+
+        self.depsRemove = []
+        for dep in deps:
+            found = False
+            for cdep in currentDeps:
+                if dep.name() == cdep.name():
+                    found = True
+                    break
+            if not found:
+                self.depsAdd.append(dep)
 
         currentDevelDeps = list(set(currentDevelDeps))
         develDeps = list(set(develDeps))
-        self.develDepsAdd = list(set(develDeps) - set(currentDevelDeps))
-        self.develDepsRemove = list(set(currentDevelDeps) - set(develDeps))
+
+        self.develDepsAdd = []
+        for cdep in currentDevelDeps:
+            found = False
+            for dep in develDeps:
+                if dep.name() == cdep.name():
+                    found = True
+                    break
+            if not found:
+                self.develDepsRemove.append(cdep)
+
+        self.develDepsRemove = []
+        for dep in develDeps:
+            found = False
+            for cdep in currentDevelDeps:
+                if dep.name() == cdep.name():
+                    found = True
+                    break
+            if not found:
+                self.develDepsAdd.append(dep)
 
         return True
 
