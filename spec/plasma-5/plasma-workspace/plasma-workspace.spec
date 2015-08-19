@@ -73,6 +73,8 @@ BuildRequires:  pciutils-devel
 BuildRequires:  libraw1394-devel
 %endif
 BuildRequires:  gpsd-devel
+BuildRequires:  prison-devel
+BuildRequires:  libqalculate-devel
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -627,7 +629,7 @@ fi
 
 * Tue May 20 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-6.20140519gita85f5bc
 - Add LIBEXEC_PATH to kde5 profile to fix drkonqi lookup
-- Fix install 
+- Fix install
 
 * Mon May 19 2014 Daniel Vrátil <dvratil@redhat.com> - 4.96.0-3.20140519gita85f5bc
 - Update to latest git snapshot
