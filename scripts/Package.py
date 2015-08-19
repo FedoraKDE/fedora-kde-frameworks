@@ -172,11 +172,7 @@ class Package(object):
         while (i < len(self._lines)):
             line = self._lines[i]
             if line.startswith('Version:') and not inChangelog:
-                if self.name == 'kf5-baloo' or self.name == 'kf5-kfilemetadata':
-                    self.newVersion = self._args.kf5version
-                else:
-                    self.newVersion = self._args.version
-
+                self.newVersion = self._args.version
                 self._lines[i] = line.replace(self.version, self.newVersion)
 
             elif line.startswith('Release:') and not inChangelog:

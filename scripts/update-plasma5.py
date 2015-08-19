@@ -34,8 +34,6 @@ def main():
     parser = ArgumentParser(description = 'Update Plasma 5 spec files to new version.')
     parser.add_argument('-v', '--version', required=True,
                         help='New version of Plasma 5')
-    parser.add_argument('-k', '--kf5version', required=True,
-                        help='Version of KDE Frameworks (for Baloo)')
     parser.add_argument('-r', '--release', default=1,
                         help='Package release version')
     parser.add_argument('-d', '--dist', default='fc21',
