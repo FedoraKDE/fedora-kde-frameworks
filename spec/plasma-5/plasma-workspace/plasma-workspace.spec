@@ -73,7 +73,6 @@ BuildRequires:  pciutils-devel
 BuildRequires:  libraw1394-devel
 %endif
 BuildRequires:  gpsd-devel
-BuildRequires:  prison-devel
 BuildRequires:  libqalculate-devel
 
 BuildRequires:  qt5-qtbase-devel
