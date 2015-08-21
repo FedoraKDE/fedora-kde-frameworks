@@ -36,31 +36,41 @@ def findAllPackages(args):
 
     return pkgs
 
-def allDepsAnalyzed(package, groups):
-    deps = package.kf5BuildRequiresNames.copy()
+def allDepsAnalyzed(package, groups, allPackagesNames):
+    deps = list(set(package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy() + package.kf5RequiresNames.copy()))
     if not deps:
         return True
 
-    l = []
-    knownDeps = list(map(lambda x : x.name, itertools.chain.from_iterable(groups)))
-    for dep in package.kf5BuildRequiresNames:
-        if dep in knownDeps:
-            deps.remove(dep)
-            if not deps:
-                return True
+    ourDeps = []
+    for dep in deps:
+        if dep in allPackagesNames:
+            ourDeps.append(dep)
 
-    if not deps:
+    for group in groups:
+        for pkg in group:
+            if pkg.name in ourDeps:
+                ourDeps.remove(pkg.name)
+                if not ourDeps:
+                    return True
+
+    if not ourDeps:
         return True
 
-    #print('Package %s missing deps: %s' % (package.name, deps))
+    print('Package %s missing deps: %s' % (package.name, ourDeps))
     return False
 
-def findHighestDepBuildGroup(package, groups):
-    if not package.kf5BuildRequiresNames:
-        return -1
+def findHighestDepBuildGroup(package, groups, allPackagesNames):
+    deps = list(set(package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy() + package.kf5RequiresNames.copy()))
+    if not deps:
+        return -1;
 
+    ourDeps = []
+    for dep in deps:
+        if dep in allPackagesNames:
+            ourDeps.append(dep)
+            
     maxGroupIndex = 0
-    for dep in package.kf5BuildRequiresNames:
+    for dep in ourDeps:
         groupIndex = 0
         for group in groups:
             matched = False
@@ -79,21 +89,21 @@ def findHighestDepBuildGroup(package, groups):
 
     return maxGroupIndex
 
-def createBuildGroups(packages):
+def createBuildGroups(packages, allPackagesNames):
     groups = [[]]
     while packages:
         package = packages.pop(0)
-        if not allDepsAnalyzed(package, groups):
+        if not allDepsAnalyzed(package, groups, allPackagesNames):
             packages.append(package)
             continue
 
-        highestDepGroup = findHighestDepBuildGroup(package, groups)
+        highestDepGroup = findHighestDepBuildGroup(package, groups, allPackagesNames)
         destGroup = highestDepGroup + 1
         if len(groups) - 1 < destGroup:
             groups.insert(destGroup, [ package ])
         else:
             groups[destGroup].append(package)
-        #print("Added %s to group %d" % (package.name, destGroup))
+        print("Added %s to group %d" % (package.name, destGroup))
 
     return groups
 
@@ -102,7 +112,6 @@ def buildInCopr(args, packages):
 
     buildGroups = []
     buildGroup = []
-
     names = []
     for pkg in packages:
         if isinstance(pkg, Package):
@@ -135,6 +144,7 @@ def buildInKoji(args, packages):
     lastPkg = packages.pop()
 
     pkgnames = list(map(lambda x: x.name if isinstance(x, Package) else x, packages))
+
     print('Packages to build: %s' % ' '.join(pkgnames))
     print('Koji Target: %s' % args.target)
     print('Branch: %s' % args.branch)
@@ -171,8 +181,10 @@ def main():
     args = parser.parse_args()
 
     packages = findAllPackages(args)
-    print(packages)
-    groups = createBuildGroups(packages)
+    packageNames = list(map(lambda x : x.name, packages))
+    print("Found packages: %s" % packageNames)
+
+    groups = createBuildGroups(packages, packageNames)
 
     i = 0
     for group in groups:
@@ -181,7 +193,7 @@ def main():
 
     branch = args.branch
     if not branch:
-        if args.target.startswith('f23'):
+        if args.target.startswith('f24'):
             branch = 'master'
         else:
             branch = args.target

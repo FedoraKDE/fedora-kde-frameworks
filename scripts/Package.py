@@ -46,6 +46,7 @@ class Package(object):
     hasAutoSetup = False
     otherBuildRequiresNames = None
     kf5BuildRequiresNames = None
+    kf5RequiresNames = None
 
     specFilePath = None
 
@@ -87,6 +88,7 @@ class Package(object):
     def load(self):
         self.otherBuildRequiresNames = []
         self.kf5BuildRequiresNames = []
+        self.kf5RequiresNames = []
         self.patches = []
         self._patchesToRemove = []
         self._lines = []
@@ -94,12 +96,19 @@ class Package(object):
         specFile = open(self.specFilePath, mode='r')
 
         globalVars = { '?dist' : '.%s' % self._args.dist }
+        skipNext = False
 
         for line in specFile.readlines():
             self._lines.append(line)
             line = line.strip()
 
             if line.startswith('#'):
+                if line == '# <skip!>':
+                    skipNext = True
+                continue
+
+            if skipNext:
+                skipNext = False
                 continue
 
             if line.startswith('%global') or line.startswith('%define'):
@@ -132,7 +141,7 @@ class Package(object):
             elif r[0] == 'Release':
                 self.rawRelease = r[1].strip()
                 self.release = self._replaceVars(self.rawRelease, globalVars)
-            elif r[0] == 'BuildRequires':
+            elif r[0] == 'BuildRequires' or r[0] == 'Requires':
                 brName = r[1].strip()
                 # Remove potential versioned dependency
                 index = brName.find(' ')
@@ -142,14 +151,16 @@ class Package(object):
                     if brName.endswith('-devel'):
                         brName = brName[0:-6]
                     if brName in self._MapDeps:
-                        self.kf5BuildRequiresNames.append(self._MapDeps[brName])
-                    else:
+                        brName = self._MapDeps[brName]
+                    if r[0] == 'BuildRequires':
                         self.kf5BuildRequiresNames.append(brName)
+                    else:
+                        self.kf5RequiresNames.append(brName)
                 elif brName.endswith('-devel'):
                     brName = brName[0:-6]
                     if brName in self._MapDeps:
-                        self.otherBuildRequiresNames.append(self._MapDeps[brName])
-                    else:
+                        brName = self._MapDeps[brName]
+                    if r[0] == 'BuildRequires':
                         self.otherBuildRequiresNames.append(brName)
                 continue
 

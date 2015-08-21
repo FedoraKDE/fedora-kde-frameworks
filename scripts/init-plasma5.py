@@ -41,7 +41,7 @@ _KDEToFedoraNamesMap = {
     "systemsettings": "plasma-systemsettings",
     "kwayland": "kf5-kwayland",
     "milou": "plasma-milou",
-    "libmm-qt": "kf5-modemmanager-qt"
+    "bluez-qt": "kf5-bluez-qt"
 }                
 
 

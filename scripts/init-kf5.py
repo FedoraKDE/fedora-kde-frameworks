@@ -86,7 +86,7 @@ def mapKDEModuleNameToFedoraPkg(moduleName):
 def fetchYamlMetaData(modules):
     for moduleName in modules:
         print("Retrieving YAML metadata for %s..." % moduleName, end = '', flush = True)
-        response = urllib.urlopen("http://gitweb.kde.org/%s.git?a=blob&o=plain&f=metainfo.yaml" % moduleName)
+        response = urllib.urlopen("http://gitweb.kde.org/?p=%s.git&a=blob&o=plain&f=metainfo.yaml" % moduleName)
         yamlData = yaml.load(response.read())
         if yamlData["release"] == False:
             print("Skipping module")
