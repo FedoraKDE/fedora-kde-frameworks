@@ -23,6 +23,7 @@ import argparse
 import subprocess
 import gitapi
 import os
+import itertools
 
 from Package import *
 
@@ -30,50 +31,48 @@ from Package import *
 def findAllPackages(args):
     pkgs = []
     fws = os.listdir(args.pkgroot);
-    fws = list(map(lambda x: Package("%s/%s/%s.spec" % (args.pkgroot, x, x), args), fws))
-    for f in fws:
-        if args.exclude and f.name in args.exclude:
-            continue
-        pkgs.append(f)
+    fws = map(lambda x: Package("%s/%s/%s.spec" % (args.pkgroot, x, x), args), fws)
+    pkgs += fws
 
     return pkgs
 
-def allDepsAnalyzed(package, groups, allPackagesNames):
-    deps = package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy()
+def allDepsAnalyzed(package, groups, allPackagesNames, debug = False):
+    deps = list(set(package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy() + package.kf5RequiresNames.copy()))
     if not deps:
         return True
 
-    plasmaDeps = []
+    ourDeps = []
     for dep in deps:
         if dep in allPackagesNames:
-            plasmaDeps.append(dep)
+            ourDeps.append(dep)
 
-    print(deps)
     for group in groups:
         for pkg in group:
-            if pkg.name in plasmaDeps:
-                plasmaDeps.remove(pkg.name)
-                if not plasmaDeps:
+            if pkg.name in ourDeps:
+                ourDeps.remove(pkg.name)
+                if not ourDeps:
                     return True
 
-    if not plasmaDeps:
+    if not ourDeps:
         return True
 
-    print('Package %s missing deps: %s' % (package.name, plasmaDeps))
+    if debug:
+        print('Package %s missing deps: %s' % (package.name, ourDeps))
+
     return False
 
-def findHighestDepBuildGroup(package, groups, allPackagesNames):
-    deps = package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy()
+def findHighestDepBuildGroup(package, groups, allPackagesNames, debug = False):
+    deps = list(set(package.otherBuildRequiresNames.copy() + package.kf5BuildRequiresNames.copy() + package.kf5RequiresNames.copy()))
     if not deps:
-        return -1
+        return -1;
 
-    plasmaDeps = []
+    ourDeps = []
     for dep in deps:
         if dep in allPackagesNames:
-            plasmaDeps.append(dep)
+            ourDeps.append(dep)
 
     maxGroupIndex = 0
-    for dep in plasmaDeps:
+    for dep in ourDeps:
         groupIndex = 0
         for group in groups:
             matched = False
@@ -92,40 +91,41 @@ def findHighestDepBuildGroup(package, groups, allPackagesNames):
 
     return maxGroupIndex
 
-def createBuildGroups(packages, allPackagesNames):
+def createBuildGroups(packages, allPackagesNames, debug = False):
     groups = [[]]
     while packages:
         package = packages.pop(0)
-        if not allDepsAnalyzed(package, groups, allPackagesNames):
+        if not allDepsAnalyzed(package, groups, allPackagesNames, debug):
             packages.append(package)
             continue
 
-        highestDepGroup = findHighestDepBuildGroup(package, groups, allPackagesNames)
+        highestDepGroup = findHighestDepBuildGroup(package, groups, allPackagesNames, debug)
         destGroup = highestDepGroup + 1
         if len(groups) - 1 < destGroup:
             groups.insert(destGroup, [ package ])
         else:
             groups[destGroup].append(package)
-        print("Added %s to group %d" % (package.name, destGroup))
+
+        if debug:
+            print("Added %s to group %d" % (package.name, destGroup))
 
     return groups
 
 
-def buildInCopr(args, buildChain):
+def buildInCopr(args, packages):
 
     buildGroups = []
     buildGroup = []
     names = []
-    for pkg in buildChain:
+    for pkg in packages:
         if isinstance(pkg, Package):
-            buildGroup.append('http://pub.dvratil.cz/plasma/srpm/%s/%s-%s-%s.src.rpm'
-                               % (pkg.plasmaVersion, pkg.name, pkg.version, pkg.release))
+            buildGroup.append('http://pub.dvratil.cz/kf5/srpm/%s/%s-%s-%s.src.rpm'
+                               % (pkg.version, pkg.name, pkg.version, pkg.release))
             names.append(pkg.name)
         elif pkg == ':':
-            names.append(':')
             buildGroups.append(buildGroup)
             buildGroup = []
-
+            names.append(':')
 
     print('Packages to build: %s' % ' '.join(names))
     print('Copr: %s' % args.copr)
@@ -147,8 +147,7 @@ def buildInKoji(args, packages):
     # Get the last pkg: we'll run chainbuild from there
     lastPkg = packages.pop()
 
-
-    pkgnames = list(map(lambda x : x.name if isinstance(x, Package) else x, packages))
+    pkgnames = list(map(lambda x: x.name if isinstance(x, Package) else x, packages))
 
     print('Packages to build: %s' % ' '.join(pkgnames))
     print('Koji Target: %s' % args.target)
@@ -182,23 +181,28 @@ def main():
                         help='Distgit branch to build from')
     parser.add_argument('--copr', action='store',
                         help='Copr to build in')
-    parser.add_argument('--dist', action='store', default='fc21')
+    parser.add_argument('--url', action='store', default='http://pub.dvratil.cz/srpm/kf5/5.12/',
+                        help='Base URL for SRPMS for Copr builds')
+    parser.add_argument('--dist', action='store', default='fc22')
+    parser.add_argument('--debug', action='store_true', default=False,
+                        help='Debug dependency solver')
+
     args = parser.parse_args()
 
     packages = findAllPackages(args)
     packageNames = list(map(lambda x : x.name, packages))
     print("Found packages: %s" % packageNames)
 
-    groups = createBuildGroups(packages, packageNames)
+    groups = createBuildGroups(packages, packageNames,args.debug)
 
     i = 0
     for group in groups:
-        print("Group %i: %s" % (i, group))
+        print("Group %i: %s" % (i, list(map(lambda x : x.name, group))))
         i += 1
 
     branch = args.branch
     if not branch:
-        if args.target.startswith('f23'):
+        if args.target.startswith('f24'):
             branch = 'master'
         else:
             branch = args.target
