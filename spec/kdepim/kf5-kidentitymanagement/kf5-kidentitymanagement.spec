@@ -1,39 +1,36 @@
 %global framework kidentitymanagement
-%global git_rev   029805
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 Summary:        The KIdentityManagement Library
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/pim/%{framework}
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kcompletion-devel
-BuildRequires:  kf5-ktextwidgets-devel
-BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kemoticons-devel
-BuildRequires:  kf5-kcodecs-devel
+BuildRequires:  kf5-kdelibs4support-devel >= 5.12
+BuildRequires:  kf5-kcoreaddons-devel >= 5.12
+BuildRequires:  kf5-kcompletion-devel >= 5.12
+BuildRequires:  kf5-ktextwidgets-devel >= 5.12
+BuildRequires:  kf5-kxmlgui-devel >= 5.12
+BuildRequires:  kf5-kio-devel >= 5.12
+BuildRequires:  kf5-kconfig-devel >= 5.12
+BuildRequires:  kf5-kemoticons-devel >= 5.12
+BuildRequires:  kf5-kcodecs-devel >= 5.12
 
-BuildRequires:  kf5-kpimtextedit-devel
+BuildRequires:  kf5-kpimtextedit-devel >= 15.08
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -72,7 +69,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-#%license COPYING.LIB
+%license COPYING.LIB
 %{_kf5_libdir}/libKF5IdentityManagement.so.*
 
 %files devel
@@ -84,5 +81,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/dbus-1/interfaces/kf5_org.kde.pim.IdentityManager.xml
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git029805
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

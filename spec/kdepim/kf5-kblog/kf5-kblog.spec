@@ -1,41 +1,40 @@
 %global framework kblog
-%global git_rev   f65f07
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 Summary:        The KBlog Library
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/pim/%{framework}
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtwebkit-devel
 
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-kxmlrpcclient-devel
+BuildRequires:  kf5-kcoreaddons-devel >= 5.12
+BuildRequires:  kf5-kdelibs4support-devel >= 5.12
+BuildRequires:  kf5-kio-devel >= 5.12
+BuildRequires:  kf5-kxmlrpcclient-devel >= 5.12
 
-BuildRequires:  kf5-kcalendarcore-devel
-BuildRequires:  kf5-syndication-devel
+BuildRequires:  kf5-kcalendarcore-devel >= 15.08
+BuildRequires:  kf5-syndication-devel >= 15.08
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
 
 %description
+The KBlog library can retrieve, update or create blog posts on various popular
+blogging platforms like Wordpress or Blogspot.com.
 %{summary}.
 
 %package        devel
@@ -70,7 +69,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-#%license COPYING.LIB
+%license COPYING.LIB
 %{_kf5_libdir}/libKF5Blog.so.*
 
 %files devel
@@ -82,5 +81,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.gitf65f07
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

@@ -1,23 +1,20 @@
 %global framework kmailtransport
-%global git_rev   4103dc
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 Summary:        The KMailTransport Library
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/pim/%{framework}
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -25,14 +22,14 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  cyrus-sasl-devel
 
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kcmutils-devel
-BuildRequires:  kf5-kconfigwidgets-devel
-BuildRequires:  kf5-kwallet-devel
+BuildRequires:  kf5-kdelibs4support-devel >= 5.12
+BuildRequires:  kf5-kcmutils-devel >= 5.12
+BuildRequires:  kf5-kconfigwidgets-devel >= 5.12
+BuildRequires:  kf5-kwallet-devel >= 5.12
 
-BuildRequires:  kf5-kmime-devel
-BuildRequires:  kf5-akonadi-devel
-BuildRequires:  kf5-akonadi-mime-devel
+BuildRequires:  kf5-kmime-devel >= 15.08
+BuildRequires:  kf5-akonadi-devel >= 15.08
+BuildRequires:  kf5-akonadi-mime-devel >= 15.08
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -87,5 +84,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git4103dc
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

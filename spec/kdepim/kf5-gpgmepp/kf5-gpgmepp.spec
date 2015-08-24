@@ -1,23 +1,20 @@
 %global framework gpgmepp
-%global git_rev   00d57c
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
-Summary:        The GpgMe++ Library
+Release:        1%{?dist}
+Summary:        C++ wrapper and Qt integreation for GpgMe library
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/pim/%{framework}
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -61,7 +58,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-#%license COPYING
+%license COPYING
 %{_kf5_libdir}/libKF5Gpgmepp.so.*
 %{_kf5_libdir}/libKF5Gpgmepp-pthread.so.*
 %{_kf5_libdir}/libKF5QGpgme.so.*
@@ -78,5 +75,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git00d57c
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

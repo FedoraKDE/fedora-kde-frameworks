@@ -1,30 +1,27 @@
 %global framework kcalendarcore
-%global git_rev   5542f1
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.2.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 Summary:        The KCalendarCore Library
 
 License:        GPLv2+
-URL:            https://projects.kde.org/projects/kde/pim/%{framework}
+URL:            https://projects.kde.org/projects/kde/pim/kcalcore
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        kcalcore-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/kcalcore-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  libical-devel
 
-BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kdelibs4support-devel >= 5.12
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -76,5 +73,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git5542f1
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

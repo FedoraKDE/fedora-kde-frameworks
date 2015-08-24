@@ -1,5 +1,4 @@
 %global framework akonadi-server
-%global git_rev   f91c2b
 
 # base pkg default to SQLITE now, install -mysql if you want that instead
 %global database_backend SQLITE
@@ -16,12 +15,19 @@
 Name:           kf5-%{framework}
 Summary:        PIM Storage Service
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 
 License:        LGPLv2+
 URL:            https://projects.kde.org/packages/kde/pim/akonadi
 
-Source0:        akonadi-server-%{git_rev}.tar.gz
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/akonadi-%{version}.tar.xz
+
 ## mysql config
 Source10:       akonadiserverrc.mysql
 
@@ -47,8 +53,6 @@ BuildRequires:  mariadb-server
 BuildRequires:  postgresql-server
 
 Requires:       kf5-filesystem
-
-Requires(postun): /sbin/ldconfig
 
 Conflicts:      akonadi < 15.08.0
 
@@ -85,9 +89,8 @@ package is installed on the machine.
 See also: %{_sysconfdir}/akonadi/mysql-global.conf
 
 
-
 %prep
-%setup -q -n %{framework}-%{version}
+%setup -q -n akonadi-%{version}
 
 
 %build
@@ -184,5 +187,5 @@ fi
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.gitf91c2b
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version, based on akonadi.spec

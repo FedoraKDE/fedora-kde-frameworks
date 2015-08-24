@@ -1,23 +1,20 @@
 %global framework akonadi
-%global git_rev   e2e018
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.3.git%{git_rev}%{?dist}
-Summary:        The Akonadi Library
+Release:        1%{?dist}
+Summary:        The Akonadi client libraries
 
 License:        GPLv2+
-URL:            https://projects.kde.org/projects/kde/pim/%{framework}
+URL:            https://projects.kde.org/projects/kde/kdepimlibs
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -29,26 +26,28 @@ BuildRequires:  cyrus-sasl-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
 
-BuildRequires:  kf5-kitemviews-devel
-BuildRequires:  kf5-kio-devel
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kcompletion-devel
-BuildRequires:  kf5-kcodecs-devel
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-kitemviews-devel >= 5.12
+BuildRequires:  kf5-kio-devel >= 5.12
+BuildRequires:  kf5-kconfig-devel >= 5.12
+BuildRequires:  kf5-solid-devel >= 5.12
+BuildRequires:  kf5-kdelibs4support-devel >= 5.12
+BuildRequires:  kf5-kcompletion-devel >= 5.12
+BuildRequires:  kf5-kcodecs-devel >= 5.12
+BuildRequires:  kf5-ki18n-devel >= 5.12
+BuildRequires:  kf5-kdoctools-devel >= 5.12
 BuildRequires:  phonon-qt5-devel
 
-BuildRequires:  kf5-akonadi-server-devel
+BuildRequires:  kf5-akonadi-server-devel >= 15.08
 
-BuildRequires:  kf5-kcontacts-devel
-BuildRequires:  kf5-kcalendarcore-devel
-BuildRequires:  kf5-kmime-devel
-BuildRequires:  kf5-kldap-devel
-BuildRequires:  kf5-kmbox-devel
+BuildRequires:  kf5-kcontacts-devel >= 15.08
+BuildRequires:  kf5-kcalendarcore-devel >= 15.08
+BuildRequires:  kf5-kmime-devel >= 15.08
+BuildRequires:  kf5-kldap-devel >= 15.08
+BuildRequires:  kf5-kmbox-devel >= 15.08
 
-Requires:       kf5-akonadi-server
+# There is a hardcoded strict version dependency between server and client
+# libraries with runtime check
+Requires:       kf5-akonadi-server = %{version}
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -180,15 +179,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %post -p /sbin/ldconfig
-
-%postun
-/sbin/ldconfig ||:
-if [ $1 -eq 0 ] ; then
-update-mime-database %{_kf5_datadir}/mime &> /dev/null
-fi
-
-%posttrans
-update-mime-database %{_kf5_datadir}/mime >& /dev/null
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -206,8 +197,6 @@ update-mime-database %{_kf5_datadir}/mime >& /dev/null
 %{_kf5_datadir}/kservices5/*.protocol
 
 %{_kf5_datadir}/doc/HTML/en/kioslave5/*
-
-%{_kf5_datadir}/mime/packages/kdepimlibs-mime.xml
 
 %files devel
 %{_kf5_bindir}/akonadi2xml
@@ -254,10 +243,19 @@ update-mime-database %{_kf5_datadir}/mime >& /dev/null
 %{_kf5_includedir}/akonadi-contact_version.h
 
 %post mime -p /sbin/ldconfig
-%postun mime -p /sbin/ldconfig
+%postun mime
+/sbin/ldconfig ||:
+if [ $1 -eq 0 ] ; then
+update-mime-database %{_kf5_datadir}/mime &> /dev/null
+fi
+
+%posttrans mime
+update-mime-database %{_kf5_datadir}/mime >& /dev/null
 
 %files mime
 %{_kf5_libdir}/libKF5AkonadiMime.so.*
+# Despite the name, this is provided by the AkonadiMime library
+%{_kf5_datadir}/mime/packages/x-vnd.kde.contactgroup.xml
 
 %files mime-devel
 %{_kf5_libdir}/cmake/KF5AkonadiMime
@@ -295,7 +293,7 @@ update-mime-database %{_kf5_datadir}/mime >& /dev/null
 %{_kf5_libdir}/libKF5AkonadiSocialUtils.so.*
 %{_kf5_qtplugindir}/akonadi_serializer_socialfeeditem.so
 %{_kf5_datadir}/akonadi/plugins/serializer/akonadi_serializer_socialfeeditem.desktop
-%{_kf5_datadir}/mime/packages/x-vnd.akonadi.socialfeeditem.xml
+%{_kf5_datadir}/mime/packages/x-vnd.akonadi5.socialfeeditem.xml
 
 %files socialutils-devel
 %{_kf5_libdir}/cmake/KF5AkonadiSocialUtils
@@ -307,8 +305,5 @@ update-mime-database %{_kf5_datadir}/mime >& /dev/null
 
 
 %changelog
-* Fri Aug 14 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.2.gite2e018
-- Update git snapshot
-
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git8f20ed
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version

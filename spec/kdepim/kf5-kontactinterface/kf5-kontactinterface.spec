@@ -1,34 +1,31 @@
 %global framework kontactinterface
-%global git_rev   89b2f0
 
 Name:           kf5-%{framework}
 Version:        15.08.0
-Release:        0.1.git%{git_rev}%{?dist}
+Release:        1%{?dist}
 Summary:        The Kontact Interface Library
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/pim/%{framework}
 
-%global versiondir %(echo %{version} | cut -d. -f1-2)
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
 %else
 %global stable stable
 %endif
-#Source0:        http://download.kde.org/%{stable}/frameworks/%{versiondir}/%{framework}-%{version}.tar.xz
-Source0:        %{framework}-%{git_rev}.tar.gz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-kparts-devel
-BuildRequires:  kf5-kwindowsystem-devel
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kxmlgui-devel
-BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kcoreaddons-devel >= 5.12
+BuildRequires:  kf5-kparts-devel >= 5.12
+BuildRequires:  kf5-kwindowsystem-devel >= 5.12
+BuildRequires:  kf5-ki18n-devel >= 5.12
+BuildRequires:  kf5-kxmlgui-devel >= 5.12
+BuildRequires:  kf5-kiconthemes-devel >= 5.12
 
 BuildRequires:  libX11-devel
 
@@ -36,7 +33,8 @@ Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
 
 %description
-%{summary}.
+The Kontact Interface library provides API to integrate other applications
+with Kontact.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -68,7 +66,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-#%license COPYING.LIB
+%license COPYING.LIB
 %{_kf5_libdir}/libKF5KontactInterface.so.*
 %{_kf5_datadir}/kservicetypes5/kontactplugin.desktop
 
@@ -81,5 +79,5 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Tue Aug 11 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-0.1.git89b2f0
-- Initial snapshot
+* Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
+- Initial version
