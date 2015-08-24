@@ -239,7 +239,12 @@ class Package(object):
         if com[1]:
             raise PackageException(com[1].decode('UTF-8'))
 
-        srcFileName = com[0].decode('UTF-8').rsplit('/', 2)[-1]
+        url = com[0].decode('UTF-8');
+        # We only upload remote sources
+        if not url.startswith('http'):
+            return;
+
+        srcFileName = url.rsplit('/', 2)[-1]
         srcFile = os.path.expanduser('~/rpmbuild/SOURCES/%s' % srcFileName).strip()
 
         if not os.path.exists(srcFile):
