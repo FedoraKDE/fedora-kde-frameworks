@@ -33,10 +33,11 @@ def main():
     parser.add_argument('--destTag', action='store', required = True,
                         help='New tag to tag the packages into')
     parser.add_argument('--version', action='store', required = True,
-                        help='KDE Frameworks 5 version number')
+                        help='New version number')
+    parser.add_argument('--notes', action='store', required = True,
+                        help='Bodhi update notes')
     parser.add_argument('--pkgroot', action='store', default=os.getcwd(),
                         help='Root directory where all fedpkg clones are')
-    parser.add_argument('--no-tag', action='store_true', default = False)
     args = parser.parse_args()
 
     proc = subprocess.Popen([ 'koji', 'list-tagged', args.srcTag ], stdout=subprocess.PIPE)
@@ -51,15 +52,11 @@ def main():
 
         allSrcPkgs.append(( pkgParts[0], pkgParts[1], pkgParts[2] ))
 
-    srcPkgs = os.listdir('%s' % args.pkgroot)
+    srcPkgs = os.listdir(args.pkgroot)
 
     destPkgs = {}
     for srcPkg in allSrcPkgs:
         if srcPkg[0] in srcPkgs:
-            # Check kf5-* version
-            if (srcPkg[0] == 'extra-cmake-modules' or srcPkg[0].startswith('kf5')) and srcPkg[1] != args.version:
-                continue
-
             # We already met package of this name...
             if srcPkg[0] in destPkgs:
                 # Is this package newer than the one we met before? If yes, then
@@ -73,26 +70,25 @@ def main():
     for pkgname in destPkgs:
         nvbs.append("%s-%s-%s" % (destPkgs[pkgname][0], destPkgs[pkgname][1], destPkgs[pkgname][2]))
 
-    if not args.no_tag:
-        print("Tag from: %s" % args.srcTag)
-        print("Tag into: %s" % args.destTag)
-        print("Tag packages: %s" % nvbs)
+    print("Tag from: %s" % args.srcTag)
+    print("Tag into: %s" % args.destTag)
+    print("Tag packages: %s" % nvbs)
 
-        proceed = input('Proceed? [Y/n] ')
-        if proceed.lower() == 'n':
-            return
+    proceed = input('Proceed? [Y/n] ')
+    if proceed.lower() == 'n':
+        return
 
-        proc = subprocess.Popen([ 'koji', 'tag-build', args.destTag ] + nvbs)
-        proc.wait()
+    proc = subprocess.Popen([ 'koji', 'tag-build', args.destTag ] + nvbs)
+    proc.wait()
 
-        proceed = input('Create Bodhi update? [Y/n] ')
-        if proceed.lower() == 'n':
-            return
+    proceed = input('Create Bodhi update? [Y/n] ')
+    if proceed.lower() == 'n':
+        return
 
-
-    proc = subprocess.Popen([ 'bodhi', '-n', '-t', 'bugfix', '-N', 'KDE Frameworks %s' % args.version ] + nvbs)
+    proc = subprocess.Popen([ 'bodhi', '-n', '-t', 'bugfix', '-N', args.notes ] + nvbs)
     proc.communicate()
 
 
 if __name__ == "__main__":
     main()
+
