@@ -1,21 +1,19 @@
-## init-kf5.py ##
+# Fedora KDE Update scripts
 
-Clones all KDE Frameworks 5 packages from distgit and split them to
-tier{1,2,3,4} subfolders. Also clones kf5 and extra-cmake-modules packages
-to the top-level directory.
-
-The script will automatically retrieve list of all KDE Frameworks available
-in upstream git, and will clone their respective Fedora packages
+These scripts are used by the KDE SIG to mass-update KDE packages in Fedora.
 
 
+## clone-packages.py ##
 
-## iniy-plasma5.py ##
+Clones all KDE Frameworks 5 or Plasma packages from Fedora distgit into current
+directory. The script will get list of all relevant upstream modules from
+kde_projects.xml and clone their respective Fedora packages. Some upstream modules
+are blacklisted in the script as they are not packaged in Fedora right now.
 
-Clones all Plasma 5 packages available in Fedora. The script will get list
-of all modules in kde/workspace upstream git tree and receive their respective
-Fedora packages. Some upstream modules are blacklisted in the script, as they
-are not packaged in Fedora right now.
+In case of KDE Frameworks the script also checks their YAML files and will
+automatically skip Frameworks that are not released yet.
 
+See clone-packages.py --help for details.
 
 
 ## update-kf5.sh ##
@@ -49,43 +47,36 @@ See update-plasma5.py --help for details.
 
 
 
-## build-kf5.py ##
+## build.py ##
 
-Smart script for building KDE Frameworks 5. It will analyze all KF5 packages (plus kf5 and
-extra-cmake-modules) and will parse their dependencies in order to produce the most optimal
-chainbuild groups. It allows to continue from any package, or to explicitly exclude package(s)
-from the chainbuild.
+Smart script for generating chainbuilds. It analyzes dependencies in the SPEC files
+(by parsing BuildRequires) and creates the most optimal chainbuild groups for Koji
+or Copr.
 
-See build-kf5.py --help for details.
-
+See build.py --help for details.
 
 
-## build-plasma5.py ##
+## tag.py ##
 
-Similar to build-kf5.py, but the build groups are currently hardcoded.
+A script to mass-tag recently built packages. Pass it the source tag (like f22-kde),
+the destination tag (like f22-updates-candidate) and the version of the packages
+just built (to filter out other possible packages in the source tag). The script
+compares the packages against distgit clones in current working directory.
 
-See build-plasma5.py --help for details.
-
-
-
-## tag-kf5.py ##
-
-A script to mass-tag KF5 packages. The script will list all packages in specified Koji tag and
-will extract latest builds of all KF5 packages from the list and tag these packages into specified
-tag.
-
-See tag-kf5.py --help for details.
+See tag.py --help for details.
 
 
 
-## cmake-to-rpm-deps.py ##
 
-This script will parse given SPEC file (currently works only with KF5 packages SPEC files) and
-get list of BuildRequires, and -devel Requires. Then it retrieves source tarball and analyzes
-all CMakeLists.txt files in order to extract real upstream dependencies. Then it will compare
-them with the dependencies extracted from SPEC file and will adjust the BuildRequires and Requires
-in the SPEC file.
+## Package.py ##
 
-Note that the script will only detect Qt and other KF5 dependencies, it does not work with
-generic system libraries dependencies (their CMake names cannot be reliably mapped to Fedora
-package names).
+A module that interacts with fedpkg and parse and write RPM SPEC files. It's used
+by the scripts above to get current SPEC file, parse it, and then write it again
+with the changes applied (like new version number, changelog entry etc.). It can
+also create commits and push to distgit.
+
+## DependencyScanner.py ##
+
+A module that can parse dependencies from CMake files and SPEC files, compare them
+and make sure that the SPEC file has up-to-date dependencies matching those
+described in the CMake file.
