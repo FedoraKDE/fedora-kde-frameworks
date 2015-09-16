@@ -154,7 +154,7 @@ class Package(object):
                         brName = self._MapDeps[brName]
                     if r[0] == 'BuildRequires':
                         self.kf5BuildRequiresNames.append(brName)
-                    else:
+                    elif brName and not brName.startswith(self.name):
                         self.kf5RequiresNames.append(brName)
                 elif brName.endswith('-devel'):
                     brName = brName[0:-6]
@@ -239,8 +239,11 @@ class Package(object):
         if com[1]:
             raise PackageException(com[1].decode('UTF-8'))
 
-        url = com[0].decode('UTF-8');
+        url = com[0].decode('UTF-8')
+        # Get rid of "SourceN:" part
+        url = url.split(':', 1)[1].strip()
         # We only upload remote sources
+        print("URL: %s" % url)
         if not url.startswith('http'):
             return;
 
