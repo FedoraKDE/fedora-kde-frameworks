@@ -175,18 +175,17 @@ def main():
 
             print('Done')
 
-        if not args.no_commit or not args.no_push:
-            proceed = input("Push changes to distgit? [Y/n] ")
-            if proceed.lower() == 'n':
-                return
+    if not args.no_commit or not args.no_push:
+        proceed = input("Push changes to distgit? [Y/n] ")
+        if proceed.lower() == 'n':
+            return
 
-            for pkg in pkgs:
-                print('Pushing %s...' % pkg.name, end = '', flush = True)
-                pkg.push()
-
+        for pkg in pkgs:
+            print('Pushing %s...' % pkg.name, end = '', flush = True)
+            pkg.push()
             print('Done')
 
-        print('\n')
+    print('\n')
 
     print('We are done and this lousy script did not screw anything \o/!')
     print('See you around.')
