@@ -138,6 +138,8 @@ def buildInCopr(args, packages):
     for buildGroup in buildGroups:
         p = subprocess.Popen(['copr-cli', 'build', args.copr] + buildGroup)
         p.wait()
+        if p.returncode:
+            break
 
 
 def buildInKoji(args, packages):
