@@ -119,8 +119,8 @@ def buildInCopr(args, packages):
     names = []
     for pkg in packages:
         if isinstance(pkg, Package):
-            buildGroup.append('http://pub.dvratil.cz/kf5/srpm/%s/%s-%s-%s.src.rpm'
-                               % (pkg.version, pkg.name, pkg.version, pkg.release))
+            buildGroup.append('%s/%s-%s-%s.src.rpm'
+                               % (args.url, pkg.name, pkg.version, pkg.release))
             names.append(pkg.name)
         elif pkg == ':':
             buildGroups.append(buildGroup)
