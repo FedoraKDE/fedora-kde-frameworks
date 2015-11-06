@@ -41,7 +41,7 @@ def main():
                         help='Distribution version')
     parser.add_argument('-c', '--changelog',
                         help='Changelog entry.')
-    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@redhat.com>',
+    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@fedoraproject.org>',
                         help='Update author')
     parser.add_argument('-s', '--skip-git-update', action='store_true',
                         help='Don\'t pull updates from distgit')

@@ -40,7 +40,7 @@ def main():
                         help='Distribution version')
     parser.add_argument('-c', '--changelog',
                         help='Changelog entry.')
-    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@redhat.com>',
+    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@fedoraproject.org>',
                         help='Update author')
     parser.add_argument('-g', '--keep-git-version', default=False, action='store_true',
                         help='Keep git snapshot reference in Release attribute')
@@ -60,8 +60,8 @@ def main():
     if not args.changelog:
         args.changelog = 'Plasma %s' % args.version
 
-    p = subprocess.Popen(['ssh-add', '/home/dvratil/.ssh/id_rsa.redhat'])
-    p.communicate()
+    #p = subprocess.Popen(['ssh-add', '/home/dvratil/.ssh/id_rsa.fedoraproject'])
+    #p.communicate()
 
 
     pkgs = []

@@ -41,7 +41,7 @@ def main():
                         help='Distribution version')
     parser.add_argument('-c', '--changelog',
                         help='Changelog entry.')
-    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@redhat.com>',
+    parser.add_argument('-a', '--author', default='Daniel Vrátil <dvratil@fedoraproject.org>',
                         help='The update author')
     parser.add_argument('--no-pull', action='store_true',
                         help='Don\'t pull updates from distgit')
@@ -72,8 +72,8 @@ def main():
 
     p = subprocess.Popen(['ssh-add', '-l'], stdout = subprocess.PIPE)
     out, _ = p.communicate()
-    if not "/home/dvratil/.ssh/id_rsa.redhat" in out.decode('UTF-8'):
-        p = subprocess.Popen(['ssh-add', '/home/dvratil/.ssh/id_rsa.redhat'])
+    if not "/home/dvratil/.ssh/id_rsa.fedoraproject" in out.decode('UTF-8'):
+        p = subprocess.Popen(['ssh-add', '/home/dvratil/.ssh/id_rsa.fedoraproject'])
         p.communicate()
 
 
