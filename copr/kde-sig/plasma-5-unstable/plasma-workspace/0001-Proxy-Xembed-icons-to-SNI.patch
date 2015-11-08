@@ -1,0 +1,1575 @@
+From 2fc947526df5d7f62db79e7f224cc13b1aa15493 Mon Sep 17 00:00:00 2001
+From: David Edmundson <kde@davidedmundson.co.uk>
+Date: Wed, 28 Oct 2015 13:17:49 +0000
+Subject: [PATCH] Proxy Xembed icons to SNI
+
+The goal of this project is to make xembed system trays available in
+Plasma.
+
+This is to allow legacy apps (xchat, pidgin, tuxguitar) etc. system
+trays[1] available in Plasma which only supports StatusNotifierItem [2].
+
+Ideally we also want this to work in an xwayland session, making X
+system tray icons available even when plasmashell only has a wayland
+connection.
+
+REVIEW: 125655
+---
+ CMakeLists.txt                                     |   3 +
+ xembed-sni-proxy/CMakeLists.txt                    |  67 ++++
+ xembed-sni-proxy/Readme.md                         |  30 ++
+ xembed-sni-proxy/fdoselectionmanager.cpp           | 182 ++++++++++
+ xembed-sni-proxy/fdoselectionmanager.h             |  62 ++++
+ xembed-sni-proxy/main.cpp                          |  72 ++++
+ xembed-sni-proxy/org.kde.StatusNotifierItem.xml    |  96 ++++++
+ xembed-sni-proxy/org.kde.StatusNotifierWatcher.xml |  42 +++
+ xembed-sni-proxy/snidbus.cpp                       | 148 ++++++++
+ xembed-sni-proxy/snidbus.h                         |  65 ++++
+ xembed-sni-proxy/sniproxy.cpp                      | 376 +++++++++++++++++++++
+ xembed-sni-proxy/sniproxy.h                        | 152 +++++++++
+ xembed-sni-proxy/xcbutils.h                        | 126 +++++++
+ xembed-sni-proxy/xembedsniproxy.desktop            |   7 +
+ 14 files changed, 1428 insertions(+)
+ create mode 100644 xembed-sni-proxy/CMakeLists.txt
+ create mode 100644 xembed-sni-proxy/Readme.md
+ create mode 100644 xembed-sni-proxy/fdoselectionmanager.cpp
+ create mode 100644 xembed-sni-proxy/fdoselectionmanager.h
+ create mode 100644 xembed-sni-proxy/main.cpp
+ create mode 100644 xembed-sni-proxy/org.kde.StatusNotifierItem.xml
+ create mode 100644 xembed-sni-proxy/org.kde.StatusNotifierWatcher.xml
+ create mode 100644 xembed-sni-proxy/snidbus.cpp
+ create mode 100644 xembed-sni-proxy/snidbus.h
+ create mode 100644 xembed-sni-proxy/sniproxy.cpp
+ create mode 100644 xembed-sni-proxy/sniproxy.h
+ create mode 100644 xembed-sni-proxy/xcbutils.h
+ create mode 100644 xembed-sni-proxy/xembedsniproxy.desktop
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 86d1531..5aacfb8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -44,6 +44,7 @@
+ include(CheckIncludeFiles)
+ include(FeatureSummary)
+ include(ECMOptionalAddSubdirectory)
++include(ECMQtDeclareLoggingCategory)
+ 
+ find_package(KF5Activities ${KF5_MIN_VERSION})
+ set_package_properties(KF5Activities PROPERTIES DESCRIPTION "management of Plasma activities"
+@@ -156,6 +157,8 @@
+ add_subdirectory(drkonqi)
+ endif()
+ 
++ecm_optional_add_subdirectory(xembed-sni-proxy)
++
+ add_subdirectory(soliduiserver)
+ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+ 
+diff --git a/xembed-sni-proxy/CMakeLists.txt b/xembed-sni-proxy/CMakeLists.txt
+new file mode 100644
+index 0000000..1686340
+--- /dev/null
++++ b/xembed-sni-proxy/CMakeLists.txt
+@@ -0,0 +1,67 @@
++project(xembedsniproxy)
++
++add_definitions(-DQT_NO_CAST_TO_ASCII
++-DQT_NO_CAST_FROM_ASCII
++-DQT_NO_URL_CAST_FROM_STRING
++-DQT_NO_CAST_FROM_BYTEARRAY)
++
++find_package(XCB
++    REQUIRED COMPONENTS
++        XCB
++        XFIXES
++        DAMAGE
++        COMPOSITE
++        RANDR
++        SHM
++        UTIL
++        IMAGE
++)
++
++set(XCB_LIBS
++    XCB::XCB
++    XCB::XFIXES
++    XCB::DAMAGE
++    XCB::COMPOSITE
++    XCB::RANDR
++    XCB::SHM
++    XCB::UTIL
++    XCB::IMAGE
++)
++
++
++
++set(XEMBED_SNI_PROXY_SOURCES
++    main.cpp
++    fdoselectionmanager.cpp
++    snidbus.cpp
++    sniproxy.cpp
++)
++
++qt5_add_dbus_adaptor(XEMBED_SNI_PROXY_SOURCES org.kde.StatusNotifierItem.xml
++                     sniproxy.h SNIProxy)
++
++set(statusnotifierwatcher_xml org.kde.StatusNotifierWatcher.xml)
++qt5_add_dbus_interface(XEMBED_SNI_PROXY_SOURCES ${statusnotifierwatcher_xml} statusnotifierwatcher_interface)
++
++add_executable(xembedsniproxy ${XEMBED_SNI_PROXY_SOURCES})
++
++
++
++set_package_properties(XCB PROPERTIES TYPE REQUIRED)
++
++ecm_qt_declare_logging_category(xembedsniproxy HEADER debug.h
++                                               IDENTIFIER SNIPROXY
++                                               CATEGORY_NAME kde.xembedsniproxy
++                                               DEFAULT_SEVERITY Info)
++
++target_link_libraries(xembedsniproxy
++    Qt5::Core
++    Qt5::X11Extras
++    Qt5::DBus
++    KF5::WindowSystem
++    ${XCB_LIBS}
++)
++
++install(TARGETS xembedsniproxy ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
++install(FILES xembedsniproxy.desktop DESTINATION ${KDE_INSTALL_AUTOSTARTDIR})
++
+diff --git a/xembed-sni-proxy/Readme.md b/xembed-sni-proxy/Readme.md
+new file mode 100644
+index 0000000..4201349
+--- /dev/null
++++ b/xembed-sni-proxy/Readme.md
+@@ -0,0 +1,30 @@
++##XEmbed SNI Proxy
++
++The goal of this project is to make xembed system trays available in Plasma.
++
++This is to allow legacy apps (xchat, pidgin, tuxguitar) etc. system trays[1] available in Plasma which only supports StatusNotifierItem [2].
++
++Ideally we also want this to work in an xwayland session, making X system tray icons available even when plasmashell only has a wayland connection.
++
++This project should be portable onto all other DEs that speak SNI.
++
++##How it works (in theory)
++
++* We register a window as a system tray container
++* We render embeded windows composited offscreen
++* We render contents into an image and send this over DBus via the SNI protocol
++* XDamage events trigger a repaint
++* Activate and context menu events are replyed via X send event into the embedded container as left and right clicks
++
++There are a few extra hacks in the real code to deal with some toolkits being awkward.
++
++##Build instructions
++
++    cmake .
++    make
++    sudo make install
++
++After building, run `xembedsniproxy`.
++
++[1] http://standards.freedesktop.org/systemtray-spec/systemtray-spec-latest.html
++[2] http://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/
+diff --git a/xembed-sni-proxy/fdoselectionmanager.cpp b/xembed-sni-proxy/fdoselectionmanager.cpp
+new file mode 100644
+index 0000000..02d2660
+--- /dev/null
++++ b/xembed-sni-proxy/fdoselectionmanager.cpp
+@@ -0,0 +1,182 @@
++/*
++ * Registers as a embed container
++ * Copyright (C) 2015 <davidedmundson@kde.org> David Edmundson
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++#include "fdoselectionmanager.h"
++
++#include "debug.h"
++
++#include <QCoreApplication>
++#include <QHash>
++#include <QTimer>
++
++#include <QTextDocument>
++#include <QX11Info>
++
++#include <KWindowSystem>
++#include <KSelectionOwner>
++
++#include <xcb/xcb.h>
++#include <xcb/xcb_atom.h>
++#include <xcb/xcb_event.h>
++#include <xcb/composite.h>
++#include <xcb/damage.h>
++
++#include "xcbutils.h"
++#include "sniproxy.h"
++
++#define SYSTEM_TRAY_REQUEST_DOCK    0
++#define SYSTEM_TRAY_BEGIN_MESSAGE   1
++#define SYSTEM_TRAY_CANCEL_MESSAGE  2
++
++FdoSelectionManager::FdoSelectionManager():
++    QObject(),
++    m_selectionOwner(new KSelectionOwner(Xcb::atoms->selectionAtom, -1, this))
++{
++    qCDebug(SNIPROXY) << "starting";
++
++    //load damage extension
++    xcb_connection_t *c = QX11Info::connection();
++    xcb_prefetch_extension_data(c, &xcb_damage_id);
++    const auto *reply = xcb_get_extension_data(c, &xcb_damage_id);
++    if (reply->present) {
++        m_damageEventBase = reply->first_event;
++        xcb_damage_query_version_unchecked(c, XCB_DAMAGE_MAJOR_VERSION, XCB_DAMAGE_MINOR_VERSION);
++    } else {
++        //no XDamage means
++        qCCritical(SNIPROXY) << "could not load damage extension. Quitting";
++        qApp->exit(-1);
++    }
++
++    qApp->installNativeEventFilter(this);
++
++    m_selectionOwner->claim(false);
++    connect(m_selectionOwner, &KSelectionOwner::claimedOwnership, this, &FdoSelectionManager::onClaimedOwnership);
++    connect(m_selectionOwner, &KSelectionOwner::failedToClaimOwnership, this, &FdoSelectionManager::onFailedToClaimOwnership);
++    connect(m_selectionOwner, &KSelectionOwner::lostOwnership, this, &FdoSelectionManager::onLostOwnership);
++}
++
++FdoSelectionManager::~FdoSelectionManager()
++{
++    qCDebug(SNIPROXY) << "closing";
++    m_selectionOwner->release();
++}
++
++void FdoSelectionManager::addDamageWatch(xcb_window_t client)
++{
++    qCDebug(SNIPROXY) << "adding damage watch for " << client;
++
++    xcb_connection_t *c = QX11Info::connection();
++    const auto attribsCookie = xcb_get_window_attributes_unchecked(c, client);
++
++    const auto damageId = xcb_generate_id(c);
++    m_damageWatches[client] = damageId;
++    xcb_damage_create(c, damageId, client, XCB_DAMAGE_REPORT_LEVEL_NON_EMPTY);
++
++    QScopedPointer<xcb_get_window_attributes_reply_t, QScopedPointerPodDeleter> attr(xcb_get_window_attributes_reply(c, attribsCookie, Q_NULLPTR));
++    uint32_t events = XCB_EVENT_MASK_STRUCTURE_NOTIFY;
++    if (!attr.isNull()) {
++        events = events | attr->your_event_mask;
++    }
++    // the event mask will not be removed again. We cannot track whether another component also needs STRUCTURE_NOTIFY (e.g. KWindowSystem).
++    // if we would remove the event mask again, other areas will break.
++    xcb_change_window_attributes(c, client, XCB_CW_EVENT_MASK, &events);
++
++}
++
++bool FdoSelectionManager::nativeEventFilter(const QByteArray& eventType, void* message, long int* result)
++{
++    Q_UNUSED(result);
++
++    if (eventType != "xcb_generic_event_t") {
++        return false;
++    }
++
++    xcb_generic_event_t* ev = static_cast<xcb_generic_event_t *>(message);
++
++    const auto responseType = XCB_EVENT_RESPONSE_TYPE(ev);
++    if (responseType == XCB_CLIENT_MESSAGE) {
++        const auto ce = reinterpret_cast<xcb_client_message_event_t *>(ev);
++        if (ce->type == Xcb::atoms->opcodeAtom) {
++            switch (ce->data.data32[1]) {
++                case SYSTEM_TRAY_REQUEST_DOCK:
++                    dock(ce->data.data32[2]);
++                    return true;
++            }
++        }
++    } else if (responseType == XCB_UNMAP_NOTIFY) {
++        const auto unmappedWId = reinterpret_cast<xcb_unmap_notify_event_t *>(ev)->window;
++        if (m_proxies[unmappedWId]) {
++            undock(unmappedWId);
++        }
++    } else if (responseType == m_damageEventBase + XCB_DAMAGE_NOTIFY) {
++        const auto damagedWId = reinterpret_cast<xcb_damage_notify_event_t *>(ev)->drawable;
++        const auto sniProx = m_proxies[damagedWId];
++
++        Q_ASSERT(sniProx);
++
++        if(sniProx) {
++            sniProx->update();
++            xcb_damage_subtract(QX11Info::connection(), m_damageWatches[damagedWId], XCB_NONE, XCB_NONE);
++        }
++    }
++
++    return false;
++}
++
++void FdoSelectionManager::dock(xcb_window_t winId)
++{
++    qCDebug(SNIPROXY) << "trying to dock window " << winId;
++
++    if (m_proxies.contains(winId)) {
++        return;
++    }
++
++    addDamageWatch(winId);
++    m_proxies[winId] = new SNIProxy(winId, this);
++}
++
++void FdoSelectionManager::undock(xcb_window_t winId)
++{
++    qCDebug(SNIPROXY) << "trying to undock window " << winId;
++
++    if (!m_proxies.contains(winId)) {
++        return;
++    }
++    m_proxies[winId]->deleteLater();
++    m_proxies.remove(winId);
++}
++
++void FdoSelectionManager::onClaimedOwnership()
++{
++    qCDebug(SNIPROXY) << "Manager selection claimed";
++}
++
++void FdoSelectionManager::onFailedToClaimOwnership()
++{
++    qCWarning(SNIPROXY) << "failed to claim ownership of Systray Manager";
++    qApp->exit(-1);
++}
++
++void FdoSelectionManager::onLostOwnership()
++{
++    qCWarning(SNIPROXY) << "lost ownership of Systray Manager";
++    qApp->exit(-1);
++}
++
++
+diff --git a/xembed-sni-proxy/fdoselectionmanager.h b/xembed-sni-proxy/fdoselectionmanager.h
+new file mode 100644
+index 0000000..084152e
+--- /dev/null
++++ b/xembed-sni-proxy/fdoselectionmanager.h
+@@ -0,0 +1,62 @@
++/*
++ * Registers as a embed container
++ * Copyright (C) 2015 <davidedmundson@kde.org> David Edmundson
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#ifndef FDOSELECTIONMANAGER_H
++#define FDOSELECTIONMANAGER_H
++
++#include <QObject>
++#include <QHash>
++#include <QAbstractNativeEventFilter>
++
++#include <xcb/xcb.h>
++
++class KSelectionOwner;
++class SNIProxy;
++
++class FdoSelectionManager : public QObject, public QAbstractNativeEventFilter
++{
++    Q_OBJECT
++
++public:
++    FdoSelectionManager();
++    ~FdoSelectionManager();
++
++protected:
++    bool nativeEventFilter(const QByteArray & eventType, void * message, long * result) Q_DECL_OVERRIDE;
++
++private Q_SLOTS:
++    void onClaimedOwnership();
++    void onFailedToClaimOwnership();
++    void onLostOwnership();
++
++private:
++    void addDamageWatch(xcb_window_t client);
++    void dock(xcb_window_t embed_win);
++    void undock(xcb_window_t client);
++
++    uint8_t m_damageEventBase;
++
++    QHash<xcb_window_t, u_int32_t> m_damageWatches;
++    QHash<xcb_window_t, SNIProxy*> m_proxies;
++    KSelectionOwner *m_selectionOwner;
++};
++
++
++#endif
+diff --git a/xembed-sni-proxy/main.cpp b/xembed-sni-proxy/main.cpp
+new file mode 100644
+index 0000000..291fb10
+--- /dev/null
++++ b/xembed-sni-proxy/main.cpp
+@@ -0,0 +1,72 @@
++/*
++ * Main
++ * Copyright (C) 2015 <davidedmundson@kde.org> David Edmundson
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#include <QGuiApplication>
++#include <QSessionManager>
++
++#include "fdoselectionmanager.h"
++
++#include "debug.h"
++#include "xcbutils.h"
++#include "snidbus.h"
++
++#include <QtDBus/QtDBus>
++
++namespace Xcb {
++    Xcb::Atoms* atoms;
++}
++
++Q_LOGGING_CATEGORY(SNIPROXY, "kde.xembedsniproxy", QtDebugMsg) //change to QtInfoMsg near release
++
++int main(int argc, char ** argv)
++{
++    //the whole point of this is to interact with X, if we are in any other session, force trying to connect to X
++    //if the QPA can't load xcb, this app is useless anyway.
++    qputenv("QT_QPA_PLATFORM", "xcb");
++
++    QGuiApplication app(argc, argv);
++
++    if (app.platformName() != QLatin1String("xcb")) {
++        qFatal("xembed-sni-proxy is only useful XCB. Aborting");
++    }
++
++    auto disableSessionManagement = [](QSessionManager &sm) {
++        sm.setRestartHint(QSessionManager::RestartNever);
++    };
++    QObject::connect(&app, &QGuiApplication::commitDataRequest, disableSessionManagement);
++    QObject::connect(&app, &QGuiApplication::saveStateRequest, disableSessionManagement);
++
++
++    app.setDesktopSettingsAware(false);
++    app.setQuitOnLastWindowClosed(false);
++
++    qDBusRegisterMetaType<KDbusImageStruct>();
++    qDBusRegisterMetaType<KDbusImageVector>();
++    qDBusRegisterMetaType<KDbusToolTipStruct>();
++
++    Xcb::atoms = new Xcb::Atoms();
++
++    FdoSelectionManager manager;
++
++    auto rc = app.exec();
++
++    delete Xcb::atoms;
++    return rc;
++}
+\ No newline at end of file
+diff --git a/xembed-sni-proxy/org.kde.StatusNotifierItem.xml b/xembed-sni-proxy/org.kde.StatusNotifierItem.xml
+new file mode 100644
+index 0000000..d378c74
+--- /dev/null
++++ b/xembed-sni-proxy/org.kde.StatusNotifierItem.xml
+@@ -0,0 +1,96 @@
++<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
++<node>
++  <interface name="org.kde.StatusNotifierItem">
++
++    <property name="Category" type="s" access="read"/>
++    <property name="Id" type="s" access="read"/>
++    <property name="Title" type="s" access="read"/>
++    <property name="Status" type="s" access="read"/>
++    <property name="WindowId" type="i" access="read"/>
++
++    <!-- An additional path to add to the theme search path to find the icons specified above. -->
++<!--     <property name="IconThemePath" type="s" access="read"/> -->
++<!--     <property name="Menu" type="o" access="read"/> -->
++    <property name="ItemIsMenu" type="b" access="read"/>
++
++
++    <!-- main icon -->
++    <!-- names are preferred over pixmaps -->
++<!--     <property name="IconName" type="s" access="read"/> -->
++
++    <!--struct containing width, height and image data-->
++    <property name="IconPixmap" type="(iiay)" access="read">
++      <annotation name="org.qtproject.QtDBus.QtTypeName" value="KDbusImageVector"/>
++    </property>
++
++<!--     <property name="OverlayIconName" type="s" access="read"/> -->
++
++<!--     <property name="OverlayIconPixmap" type="(iiay)" access="read"> -->
++<!--       <annotation name="org.qtproject.QtDBus.QtTypeName" value="KDbusImageVector"/> -->
++<!--     </property> -->
++
++
++    <!-- Requesting attention icon -->
++<!--     <property name="AttentionIconName" type="s" access="read"/> -->
++
++    <!--same definition as image-->
++<!--     <property name="AttentionIconPixmap" type="(iiay)" access="read"> -->
++<!--       <annotation name="org.qtproject.QtDBus.QtTypeName" value="KDbusImageVector"/> -->
++<!--     </property> -->
++
++<!--     <property name="AttentionMovieName" type="s" access="read"/> -->
++
++
++
++    <!-- tooltip data -->
++
++    <!--(iiay) is an image-->
++<!--     <property name="ToolTip" type="(s(iiay)ss)" access="read"> -->
++<!--       <annotation name="org.qtproject.QtDBus.QtTypeName" value="KDbusToolTipStruct"/> -->
++<!--     </property> -->
++
++
++    <!-- interaction: the systemtray wants the application to do something -->
++    <method name="ContextMenu">
++        <!-- we're passing the coordinates of the icon, so the app knows where to put the popup window -->
++        <arg name="x" type="i" direction="in"/>
++        <arg name="y" type="i" direction="in"/>
++    </method>
++
++    <method name="Activate">
++        <arg name="x" type="i" direction="in"/>
++        <arg name="y" type="i" direction="in"/>
++    </method>
++
++    <method name="SecondaryActivate">
++        <arg name="x" type="i" direction="in"/>
++        <arg name="y" type="i" direction="in"/>
++    </method>
++
++    <method name="Scroll">
++      <arg name="delta" type="i" direction="in"/>
++      <arg name="orientation" type="s" direction="in"/>
++    </method>
++
++    <!-- Signals: the client wants to change something in the status-->
++    <signal name="NewTitle">
++    </signal>
++
++    <signal name="NewIcon">
++    </signal>
++
++    <signal name="NewAttentionIcon">
++    </signal>
++
++    <signal name="NewOverlayIcon">
++    </signal>
++
++    <signal name="NewToolTip">
++    </signal>
++
++    <signal name="NewStatus">
++      <arg name="status" type="s"/>
++    </signal>
++
++  </interface>
++</node>
+diff --git a/xembed-sni-proxy/org.kde.StatusNotifierWatcher.xml b/xembed-sni-proxy/org.kde.StatusNotifierWatcher.xml
+new file mode 100644
+index 0000000..2eb1a7a
+--- /dev/null
++++ b/xembed-sni-proxy/org.kde.StatusNotifierWatcher.xml
+@@ -0,0 +1,42 @@
++<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
++<node>
++  <interface name="org.kde.StatusNotifierWatcher">
++
++    <!-- methods -->
++    <method name="RegisterStatusNotifierItem">
++       <arg name="service" type="s" direction="in"/>
++    </method>
++
++    <method name="RegisterStatusNotifierHost">
++       <arg name="service" type="s" direction="in"/>
++    </method>
++
++
++    <!-- properties -->
++
++    <property name="RegisteredStatusNotifierItems" type="as" access="read">
++       <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QStringList"/>
++    </property>
++
++    <property name="IsStatusNotifierHostRegistered" type="b" access="read"/>
++
++    <property name="ProtocolVersion" type="i" access="read"/>
++
++
++    <!-- signals -->
++
++    <signal name="StatusNotifierItemRegistered">
++        <arg type="s"/>
++    </signal>
++
++    <signal name="StatusNotifierItemUnregistered">
++        <arg type="s"/>
++    </signal>
++
++    <signal name="StatusNotifierHostRegistered">
++    </signal>
++
++    <signal name="StatusNotifierHostUnregistered">
++    </signal>
++  </interface>
++</node>
+diff --git a/xembed-sni-proxy/snidbus.cpp b/xembed-sni-proxy/snidbus.cpp
+new file mode 100644
+index 0000000..4ebb7a0
+--- /dev/null
++++ b/xembed-sni-proxy/snidbus.cpp
+@@ -0,0 +1,148 @@
++/*
++ * SNI DBus Serialisers
++ * Copyright 2015  David Edmundson <davidedmundson@kde.org>
++ * Copyright 2009 by Marco Martin <notmart@gmail.com>
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of
++ * the License or (at your option) version 3 or any later version
++ * accepted by the membership of KDE e.V. (or its successor approved
++ * by the membership of KDE e.V.), which shall act as a proxy
++ * defined in Section 14 of version 3 of the license.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "snidbus.h"
++
++#include <QSysInfo>
++#include <QtEndian>
++
++//mostly copied from KStatusNotiferItemDbus.cpps from knotification
++
++KDbusImageStruct::KDbusImageStruct()
++{
++}
++
++KDbusImageStruct::KDbusImageStruct(const QImage &image)
++{
++    width = image.size().width();
++    height = image.size().height();
++    if (image.format() == QImage::Format_ARGB32) {
++        data = QByteArray((char *)image.bits(), image.byteCount());
++    } else {
++        QImage image32 = image.convertToFormat(QImage::Format_ARGB32);
++        data = QByteArray((char *)image32.bits(), image32.byteCount());
++    }
++
++    //swap to network byte order if we are little endian
++    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
++        quint32 *uintBuf = (quint32 *) data.data();
++        for (uint i = 0; i < data.size() / sizeof(quint32); ++i) {
++            *uintBuf = qToBigEndian(*uintBuf);
++            ++uintBuf;
++        }
++    }
++}
++
++// Marshall the ImageStruct data into a D-BUS argument
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusImageStruct &icon)
++{
++    argument.beginStructure();
++    argument << icon.width;
++    argument << icon.height;
++    argument << icon.data;
++    argument.endStructure();
++    return argument;
++}
++
++// Retrieve the ImageStruct data from the D-BUS argument
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusImageStruct &icon)
++{
++    qint32 width;
++    qint32 height;
++    QByteArray data;
++
++    argument.beginStructure();
++    argument >> width;
++    argument >> height;
++    argument >> data;
++    argument.endStructure();
++
++    icon.width = width;
++    icon.height = height;
++    icon.data = data;
++
++    return argument;
++}
++
++// Marshall the ImageVector data into a D-BUS argument
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusImageVector &iconVector)
++{
++    argument.beginArray(qMetaTypeId<KDbusImageStruct>());
++    for (int i = 0; i < iconVector.size(); ++i) {
++        argument << iconVector[i];
++    }
++    argument.endArray();
++    return argument;
++}
++
++// Retrieve the ImageVector data from the D-BUS argument
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusImageVector &iconVector)
++{
++    argument.beginArray();
++    iconVector.clear();
++
++    while (!argument.atEnd()) {
++        KDbusImageStruct element;
++        argument >> element;
++        iconVector.append(element);
++    }
++
++    argument.endArray();
++
++    return argument;
++}
++
++// Marshall the ToolTipStruct data into a D-BUS argument
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusToolTipStruct &toolTip)
++{
++    argument.beginStructure();
++    argument << toolTip.icon;
++    argument << toolTip.image;
++    argument << toolTip.title;
++    argument << toolTip.subTitle;
++    argument.endStructure();
++    return argument;
++}
++
++// Retrieve the ToolTipStruct data from the D-BUS argument
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusToolTipStruct &toolTip)
++{
++    QString icon;
++    KDbusImageVector image;
++    QString title;
++    QString subTitle;
++
++    argument.beginStructure();
++    argument >> icon;
++    argument >> image;
++    argument >> title;
++    argument >> subTitle;
++    argument.endStructure();
++
++    toolTip.icon = icon;
++    toolTip.image = image;
++    toolTip.title = title;
++    toolTip.subTitle = subTitle;
++
++    return argument;
++}
+\ No newline at end of file
+diff --git a/xembed-sni-proxy/snidbus.h b/xembed-sni-proxy/snidbus.h
+new file mode 100644
+index 0000000..e8cda9c
+--- /dev/null
++++ b/xembed-sni-proxy/snidbus.h
+@@ -0,0 +1,65 @@
++/*
++ * SNI Dbus serialisers
++ * Copyright 2015  <davidedmundson@kde.org> David Edmundson
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of
++ * the License or (at your option) version 3 or any later version
++ * accepted by the membership of KDE e.V. (or its successor approved
++ * by the membership of KDE e.V.), which shall act as a proxy
++ * defined in Section 14 of version 3 of the license.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#ifndef SNIDBUS_H
++#define SNIDBUS_H
++
++#include <QString>
++#include <QByteArray>
++#include <QDBusArgument>
++#include <QVector>
++#include <QImage>
++
++//Custom message type for DBus
++struct KDbusImageStruct {
++    KDbusImageStruct();
++    KDbusImageStruct(const QImage &image);
++    int width;
++    int height;
++    QByteArray data;
++};
++
++typedef QVector<KDbusImageStruct> KDbusImageVector;
++
++struct KDbusToolTipStruct {
++    QString icon;
++    KDbusImageVector image;
++    QString title;
++    QString subTitle;
++};
++
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusImageStruct &icon);
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusImageStruct &icon);
++
++Q_DECLARE_METATYPE(KDbusImageStruct)
++
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusImageVector &iconVector);
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusImageVector &iconVector);
++
++Q_DECLARE_METATYPE(KDbusImageVector)
++
++const QDBusArgument &operator<<(QDBusArgument &argument, const KDbusToolTipStruct &toolTip);
++const QDBusArgument &operator>>(const QDBusArgument &argument, KDbusToolTipStruct &toolTip);
++
++Q_DECLARE_METATYPE(KDbusToolTipStruct)
++
++#endif // SNIDBUS_H
+diff --git a/xembed-sni-proxy/sniproxy.cpp b/xembed-sni-proxy/sniproxy.cpp
+new file mode 100644
+index 0000000..b5cf3c3
+--- /dev/null
++++ b/xembed-sni-proxy/sniproxy.cpp
+@@ -0,0 +1,376 @@
++/*
++ * Holds one embedded window, registers as DBus entry
++ * Copyright (C) 2015 <davidedmundson@kde.org> David Edmundson
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#include "sniproxy.h"
++
++#include <xcb/xcb.h>
++#include <xcb/xcb_atom.h>
++#include <xcb/xcb_event.h>
++#include <xcb/xcb_image.h>
++
++#include "xcbutils.h"
++#include "debug.h"
++
++#include <QX11Info>
++#include <QScreen>
++#include <QGuiApplication>
++#include <QTimer>
++
++#include <QPainter>
++
++#include <KWindowSystem>
++#include <netwm.h>
++
++#include "statusnotifieritemadaptor.h"
++#include "statusnotifierwatcher_interface.h"
++
++#define SNI_WATCHER_SERVICE_NAME "org.kde.StatusNotifierWatcher"
++#define SNI_WATCHER_PATH "/StatusNotifierWatcher"
++
++static uint16_t s_embedSize = 48; //max size of window to embed. We no longer resize the embedded window as Chromium acts stupidly.
++
++int SNIProxy::s_serviceCount = 0;
++
++void
++xembed_message_send(xcb_window_t towin,
++                    long message, long d1, long d2, long d3)
++{
++    xcb_client_message_event_t ev;
++
++    ev.response_type = XCB_CLIENT_MESSAGE;
++    ev.window = towin;
++    ev.format = 32;
++    ev.data.data32[0] = XCB_CURRENT_TIME;
++    ev.data.data32[1] = message;
++    ev.data.data32[2] = d1;
++    ev.data.data32[3] = d2;
++    ev.data.data32[4] = d3;
++    ev.type = Xcb::atoms->xembedAtom;
++    xcb_send_event(QX11Info::connection(), false, towin, XCB_EVENT_MASK_NO_EVENT, (char *) &ev);
++}
++
++SNIProxy::SNIProxy(xcb_window_t wid, QObject* parent):
++    QObject(parent),
++    //Work round a bug in our SNIWatcher with multiple SNIs per connection.
++    //there is an undocumented feature that you can register an SNI by path, however it doesn't detect an object on a service being removed, only the entire service closing
++    //instead lets use one DBus connection per SNI
++    m_dbus(QDBusConnection::connectToBus(QDBusConnection::SessionBus, QStringLiteral("XembedSniProxy%1").arg(s_serviceCount++))),
++    m_windowId(wid)
++{
++    //create new SNI
++    new StatusNotifierItemAdaptor(this);
++    m_dbus.registerObject(QStringLiteral("/StatusNotifierItem"), this);
++
++    auto statusNotifierWatcher = new org::kde::StatusNotifierWatcher(QStringLiteral(SNI_WATCHER_SERVICE_NAME), QStringLiteral(SNI_WATCHER_PATH), QDBusConnection::sessionBus(), this);
++    auto reply = statusNotifierWatcher->RegisterStatusNotifierItem(m_dbus.baseService());
++    reply.waitForFinished();
++    if (reply.isError()) {
++        qCWarning(SNIPROXY) << "could not register SNI:" << reply.error().message();
++    }
++
++    auto c = QX11Info::connection();
++
++    auto cookie = xcb_get_geometry(c, m_windowId);
++    QScopedPointer<xcb_get_geometry_reply_t> clientGeom(xcb_get_geometry_reply(c, cookie, Q_NULLPTR));
++
++    //create a container window
++    auto screen = xcb_setup_roots_iterator (xcb_get_setup (c)).data;
++    m_containerWid = xcb_generate_id(c);
++    uint32_t             values[2];
++    auto mask = XCB_CW_BACK_PIXEL | XCB_CW_OVERRIDE_REDIRECT;
++    values[0] = screen->black_pixel; //draw a solid background so the embeded icon doesn't get garbage in it
++    values[1] = true; //bypass wM
++    xcb_create_window (c,                          /* connection    */
++                    XCB_COPY_FROM_PARENT,          /* depth         */
++                     m_containerWid,               /* window Id     */
++                     screen->root,                 /* parent window */
++                     -500, 0,                       /* x, y          */
++                     s_embedSize, s_embedSize,     /* width, height */
++                     0,                           /* border_width  */
++                     XCB_WINDOW_CLASS_INPUT_OUTPUT,/* class         */
++                     screen->root_visual,          /* visual        */
++                     mask, values);                /* masks         */
++
++    /*
++        We need the window to exist and be mapped otherwise the child won't render it's contents
++
++        We also need it to exist in the right place to get the clicks working as GTK will check sendEvent locations to see if our window is in the right place. So even though our contents are drawn via compositing we still put this window in the right place
++
++        We can't composite it away anything parented owned by the root window (apparently)
++        Stack Under works in the non composited case, but it doesn't seem to work in kwin's composited case (probably need set relevant NETWM hint)
++
++        As a last resort set opacity to 0 just to make sure this container never appears
++    */
++
++#ifndef VISUAL_DEBUG
++    const uint32_t stackBelowData[] = {XCB_STACK_MODE_BELOW};
++    xcb_configure_window(c, m_containerWid, XCB_CONFIG_WINDOW_STACK_MODE, stackBelowData);
++
++    NETWinInfo wm(c, m_containerWid, screen->root, 0);
++    wm.setOpacity(0);
++#endif
++
++    xcb_flush(c);
++
++    xcb_map_window(c, m_containerWid);
++
++    xcb_reparent_window(c, wid,
++                        m_containerWid,
++                        0, 0);
++
++    /*
++     * Render the embedded window offscreen
++     */
++    xcb_composite_redirect_window(c, wid, XCB_COMPOSITE_REDIRECT_MANUAL);
++
++
++    /* we grab the window, but also make sure it's automatically reparented back
++     * to the root window if we should die.
++    */
++    xcb_change_save_set(c, XCB_SET_MODE_INSERT, wid);
++
++    //tell client we're embedding it
++    xembed_message_send(wid, XEMBED_EMBEDDED_NOTIFY, m_containerWid, 0, 0);
++
++    //move window we're embedding
++    const uint32_t windowMoveConfigVals[2] = { 0, 0 };
++
++    xcb_configure_window(c, wid,
++                             XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y,
++                             windowMoveConfigVals);
++
++
++    //if the window is a clearly stupid size resize to be something sensible
++    //this is needed as chormium and such when resized just fill the icon with transparent space and only draw in the middle
++    //however spotify does need this as by default the window size is 900px wide.
++    //use an artbitrary heuristic to make sure icons are always sensible
++    if (clientGeom->width < 12 || clientGeom->width > s_embedSize ||
++        clientGeom->height < 12 || clientGeom->height > s_embedSize)
++    {
++        const uint32_t windowMoveConfigVals[2] = { s_embedSize, s_embedSize };
++        xcb_configure_window(c, wid,
++                                XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT,
++                                windowMoveConfigVals);
++    }
++
++    //show the embedded window otherwise nothing happens
++    xcb_map_window(c, wid);
++
++    xcb_clear_area(c, 0, wid, 0, 0, qMin(clientGeom->width, s_embedSize), qMin(clientGeom->height, s_embedSize));
++
++    xcb_flush(c);
++
++    //there's no damage event for the first paint, and sometimes it's not drawn immediately
++    //not ideal, but it works better than nothing
++    //test with xchat before changing
++    QTimer::singleShot(500, this, &SNIProxy::update);
++}
++
++SNIProxy::~SNIProxy()
++{
++    QDBusConnection::disconnectFromBus(m_dbus.name());
++}
++
++void SNIProxy::update()
++{
++    const QImage image = getImageNonComposite();
++
++    bool isTransparentImage = true;
++
++    int sum = 0;
++    for (int x = 0; x < image.width(); ++x) {
++        for (int y = 0; y < image.height(); ++y) {
++            sum += qAlpha(image.pixel(x, y));
++            if (sum >= 255) {
++                // There is enough amount of opaque pixels.
++                isTransparentImage = false;
++                break;
++            }
++        }
++    }
++
++    // Update icon only if it is at least partially opaque.
++    // This is just a workaround for X11 bug: xembed icon may suddenly
++    // become transparent for a one or few frames. Reproducible at least
++    // with WINE applications.
++    if (!isTransparentImage) {
++        m_pixmap = QPixmap::fromImage(image);
++        emit NewIcon();
++    }
++    else {
++        qCDebug(SNIPROXY) << "Skip transparent xembed icon";
++    }
++}
++
++void sni_cleanup_xcb_image(void *data) {
++    xcb_image_destroy(static_cast<xcb_image_t*>(data));
++}
++
++QImage SNIProxy::getImageNonComposite()
++{
++    auto c = QX11Info::connection();
++    auto cookie = xcb_get_geometry(c, m_windowId);
++    QScopedPointer<xcb_get_geometry_reply_t> geom(xcb_get_geometry_reply(c, cookie, Q_NULLPTR));
++
++    xcb_image_t *image = xcb_image_get(c, m_windowId, 0, 0, geom->width, geom->height, 0xFFFFFF, XCB_IMAGE_FORMAT_Z_PIXMAP);
++
++    QImage qimage(image->data, image->width, image->height, image->stride, QImage::Format_ARGB32, sni_cleanup_xcb_image, image);
++
++    return qimage;
++}
++
++//____________properties__________
++
++QString SNIProxy::Category() const
++{
++    return QStringLiteral("ApplicationStatus");
++}
++
++QString SNIProxy::Id() const
++{
++    return QString::number(m_windowId);
++}
++
++KDbusImageVector SNIProxy::IconPixmap() const
++{
++    KDbusImageStruct dbusImage(m_pixmap.toImage());
++    return KDbusImageVector() << dbusImage;
++}
++
++bool SNIProxy::ItemIsMenu() const
++{
++    return false;
++}
++
++QString SNIProxy::Status() const
++{
++    return QStringLiteral("Active");
++}
++
++QString SNIProxy::Title() const
++{
++    KWindowInfo window (m_windowId, NET::WMName);
++    return window.name();
++}
++
++int SNIProxy::WindowId() const
++{
++    return m_windowId;
++}
++
++//____________actions_____________
++
++void SNIProxy::Activate(int x, int y)
++{
++    sendClick(XCB_BUTTON_INDEX_1, x, y);
++}
++
++void SNIProxy::ContextMenu(int x, int y)
++{
++    sendClick(XCB_BUTTON_INDEX_3, x, y);
++}
++
++void SNIProxy::SecondaryActivate(int x, int y)
++{
++    sendClick(XCB_BUTTON_INDEX_2, x, y);
++}
++
++void SNIProxy::Scroll(int delta, const QString& orientation)
++{
++    if (orientation == QLatin1String("vertical")) {
++        sendClick(delta > 0 ? XCB_BUTTON_INDEX_4: XCB_BUTTON_INDEX_5, 0, 0);
++    } else {
++        sendClick(delta > 0 ? 6: 7, 0, 0);
++    }
++}
++
++void SNIProxy::sendClick(uint8_t mouseButton, int x, int y)
++{
++    //it's best not to look at this code
++    //GTK doesn't like send_events and double checks the mouse position matches where the window is and is top level
++    //in order to solve this we move the embed container over to where the mouse is then replay the event using send_event
++    //if patching, test with xchat + xchat context menus
++
++    //note x,y are not actually where the mouse is, but the plasmoid
++    //ideally we should make this match the plasmoid hit area
++
++    qCDebug(SNIPROXY) << "Sending click " << mouseButton << "to" << x << y;
++
++    auto c = QX11Info::connection();
++
++    //set our window so the middle is where the mouse is
++    const uint32_t stackAboveData[] = {XCB_STACK_MODE_ABOVE};
++    xcb_configure_window(c, m_containerWid, XCB_CONFIG_WINDOW_STACK_MODE, stackAboveData);
++
++    const uint32_t config_vals[4] = {x, y, s_embedSize, s_embedSize };
++    xcb_configure_window(c, m_containerWid,
++                             XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT,
++                             config_vals);
++    //mouse down
++    {
++        xcb_button_press_event_t* event = new xcb_button_press_event_t;
++        memset(event, 0x00, sizeof(xcb_button_press_event_t));
++        event->response_type = XCB_BUTTON_PRESS;
++        event->event = m_windowId;
++        event->time = QX11Info::getTimestamp();
++        event->same_screen = 1;
++        event->root = QX11Info::appRootWindow();
++        event->root_x = x;
++        event->root_y = y;
++        event->event_x = 0;
++        event->event_y = 0;
++        event->child = 0;
++        event->state = 0;
++        event->detail = mouseButton;
++
++        xcb_send_event(c, false, m_windowId, XCB_EVENT_MASK_BUTTON_PRESS, (char *) event);
++        free(event);
++    }
++
++    //mouse up
++    {
++        xcb_button_release_event_t* event = new xcb_button_release_event_t;
++        memset(event, 0x00, sizeof(xcb_button_release_event_t));
++        event->response_type = XCB_BUTTON_RELEASE;
++        event->event = m_windowId;
++        event->time = QX11Info::getTimestamp();
++        event->same_screen = 1;
++        event->root = QX11Info::appRootWindow();
++        event->root_x = x;
++        event->root_y = y;
++        event->event_x = 0;
++        event->event_y = 0;
++        event->child = 0;
++        event->state = 0;
++        event->detail = mouseButton;
++
++        xcb_send_event(c, false, m_windowId, XCB_EVENT_MASK_BUTTON_RELEASE, (char *) event);
++        free(event);
++    }
++#ifndef VISUAL_DEBUG
++    const uint32_t stackBelowData[] = {XCB_STACK_MODE_BELOW};
++    xcb_configure_window(c, m_containerWid, XCB_CONFIG_WINDOW_STACK_MODE, stackBelowData);
++#endif
++    }
++
++
++
++
++//
+diff --git a/xembed-sni-proxy/sniproxy.h b/xembed-sni-proxy/sniproxy.h
+new file mode 100644
+index 0000000..29aa56e
+--- /dev/null
++++ b/xembed-sni-proxy/sniproxy.h
+@@ -0,0 +1,152 @@
++/*
++ * Holds one embedded window, registers as DBus entry
++ * Copyright (C) 2015 <davidedmundson@kde.org> David Edmundson
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#ifndef SNI_PROXY_H
++#define SNI_PROXY_H
++
++#include <QObject>
++#include <QDBusArgument>
++#include <QDBusConnection>
++#include <QDBusObjectPath>
++#include <QPixmap>
++
++#include <xcb/xcb.h>
++
++#include "snidbus.h"
++
++class SNIProxy : public QObject
++{
++    Q_OBJECT
++    Q_PROPERTY(QString Category READ Category)
++    Q_PROPERTY(QString Id READ Id)
++    Q_PROPERTY(QString Title READ Title)
++    Q_PROPERTY(QString Status READ Status)
++    Q_PROPERTY(int WindowId READ WindowId)
++    Q_PROPERTY(bool ItemIsMenu READ ItemIsMenu)
++    Q_PROPERTY(KDbusImageVector IconPixmap READ IconPixmap)
++
++public:
++    SNIProxy(xcb_window_t wid, QObject *parent=0);
++    ~SNIProxy();
++
++    void update();
++
++    /**
++     * @return the category of the application associated to this item
++     * @see Category
++     */
++    QString Category() const;
++
++    /**
++     * @return the id of this item
++     */
++    QString Id() const;
++
++    /**
++     * @return the title of this item
++     */
++    QString Title() const;
++
++    /**
++     * @return The status of this item
++     * @see Status
++     */
++    QString Status() const;
++
++    /**
++     * @return The id of the main window of the application that controls the item
++     */
++    int WindowId() const;
++
++    /**
++     * @return The item only support the context menu, the visualization should prefer sending ContextMenu() instead of Activate()
++     */
++    bool ItemIsMenu() const;
++
++    /**
++     * @return a serialization of the icon data
++     */
++    KDbusImageVector IconPixmap() const;
++
++public Q_SLOTS:
++    //interaction
++    /**
++     * Shows the context menu associated to this item
++     * at the desired screen position
++     */
++    void ContextMenu(int x, int y);
++
++    /**
++     * Shows the main widget and try to position it on top
++     * of the other windows, if the widget is already visible, hide it.
++     */
++    void Activate(int x, int y);
++
++    /**
++     * The user activated the item in an alternate way (for instance with middle mouse button, this depends from the systray implementation)
++     */
++    void SecondaryActivate(int x, int y);
++
++    /**
++     * Inform this item that the mouse wheel was used on its representation
++     */
++    void Scroll(int delta, const QString &orientation);
++
++Q_SIGNALS:
++    /**
++     * Inform the systemtray that the own main icon has been changed,
++     * so should be reloaded
++     */
++    void NewIcon();
++
++    /**
++     * Inform the systemtray that there is a new icon to be used as overlay
++     */
++    void NewOverlayIcon();
++
++    /**
++     * Inform the systemtray that the requesting attention icon
++     * has been changed, so should be reloaded
++     */
++    void NewAttentionIcon();
++
++    /**
++     * Inform the systemtray that something in the tooltip has been changed
++     */
++    void NewToolTip();
++
++    /**
++     * Signal the new status when it has been changed
++     * @see Status
++     */
++    void NewStatus(const QString &status);
++
++private:
++    void sendClick(uint8_t mouseButton, int x, int y);
++    QImage getImageNonComposite();
++
++    QDBusConnection m_dbus;
++    xcb_window_t m_windowId;
++    xcb_window_t m_containerWid;
++    static int s_serviceCount;
++    QPixmap m_pixmap;
++};
++
++#endif // SNIPROXY_H
+diff --git a/xembed-sni-proxy/xcbutils.h b/xembed-sni-proxy/xcbutils.h
+new file mode 100644
+index 0000000..5e2b6dc
+--- /dev/null
++++ b/xembed-sni-proxy/xcbutils.h
+@@ -0,0 +1,126 @@
++/********************************************************************
++Copyright (C) 2012, 2013 Martin Graesslin <mgraesslin@kde.org>
++Copyright (C) 2015 David Edmudson <davidedmundson@kde.org>
++
++This program is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 2 of the License, or
++(at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program.  If not, see <http://www.gnu.org/licenses/>.
++*********************************************************************/
++
++#ifndef KWIN_XCB_UTILS_H
++#define KWIN_XCB_UTILS_H
++
++#include <xcb/xcb.h>
++#include <xcb/composite.h>
++#include <xcb/randr.h>
++#include <xcb/shm.h>
++#include <xcb/xcb_atom.h>
++#include <xcb/xcb_event.h>
++#include <xcb/damage.h>
++
++#include <QScopedPointer>
++#include <QVector>
++#include <QX11Info>
++
++/** XEMBED messages */
++#define XEMBED_EMBEDDED_NOTIFY          0
++#define XEMBED_WINDOW_ACTIVATE          1
++#define XEMBED_WINDOW_DEACTIVATE        2
++#define XEMBED_REQUEST_FOCUS            3
++#define XEMBED_FOCUS_IN                 4
++#define XEMBED_FOCUS_OUT                5
++#define XEMBED_FOCUS_NEXT               6
++#define XEMBED_FOCUS_PREV               7
++
++
++namespace Xcb {
++
++typedef xcb_window_t WindowId;
++
++template <typename T> using ScopedCPointer = QScopedPointer<T, QScopedPointerPodDeleter>;
++
++class Atom
++{
++public:
++    explicit Atom(const QByteArray &name, bool onlyIfExists = false, xcb_connection_t *c = QX11Info::connection())
++        : m_connection(c)
++        , m_retrieved(false)
++        , m_cookie(xcb_intern_atom_unchecked(m_connection, onlyIfExists, name.length(), name.constData()))
++        , m_atom(XCB_ATOM_NONE)
++        , m_name(name)
++        {
++        }
++    Atom() = delete;
++    Atom(const Atom &) = delete;
++
++    ~Atom() {
++        if (!m_retrieved && m_cookie.sequence) {
++            xcb_discard_reply(m_connection, m_cookie.sequence);
++        }
++    }
++
++    operator xcb_atom_t() const {
++        (const_cast<Atom*>(this))->getReply();
++        return m_atom;
++    }
++    bool isValid() {
++        getReply();
++        return m_atom != XCB_ATOM_NONE;
++    }
++    bool isValid() const {
++        (const_cast<Atom*>(this))->getReply();
++        return m_atom != XCB_ATOM_NONE;
++    }
++
++    inline const QByteArray &name() const {
++        return m_name;
++    }
++
++private:
++    void getReply() {
++        if (m_retrieved || !m_cookie.sequence) {
++            return;
++        }
++        ScopedCPointer<xcb_intern_atom_reply_t> reply(xcb_intern_atom_reply(m_connection, m_cookie, nullptr));
++        if (!reply.isNull()) {
++            m_atom = reply->atom;
++        }
++        m_retrieved = true;
++    }
++    xcb_connection_t *m_connection;
++    bool m_retrieved;
++    xcb_intern_atom_cookie_t m_cookie;
++    xcb_atom_t m_atom;
++    QByteArray m_name;
++};
++
++class Atoms {
++public:
++    Atoms() :
++        xembedAtom("_XEMBED"),
++        selectionAtom(xcb_atom_name_by_screen("_NET_SYSTEM_TRAY", QX11Info::appScreen())),
++        opcodeAtom("_NET_SYSTEM_TRAY_OPCODE"),
++        messageData("_NET_SYSTEM_TRAY_MESSAGE_DATA")
++    {}
++
++    Atom xembedAtom;
++    Atom selectionAtom;
++    Atom opcodeAtom;
++    Atom messageData;
++
++};
++
++extern Atoms* atoms;
++
++} // namespace Xcb
++
++#endif // KWIN_XCB_UTILS_H
+diff --git a/xembed-sni-proxy/xembedsniproxy.desktop b/xembed-sni-proxy/xembedsniproxy.desktop
+new file mode 100644
+index 0000000..a583391
+--- /dev/null
++++ b/xembed-sni-proxy/xembedsniproxy.desktop
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++Exec=xembedsniproxy
++Name=XembedSniProxy
++Type=Application
++X-KDE-StartupNotify=false
++OnlyShowIn=KDE;
++X-KDE-autostart-phase=0
+-- 
+2.5.0
+

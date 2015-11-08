@@ -1,0 +1,81 @@
+diff --git a/containmentactions/contextmenu/menu.cpp b/containmentactions/contextmenu/menu.cpp
+index fee6c7a..bea941c 100644
+--- a/containmentactions/contextmenu/menu.cpp
++++ b/containmentactions/contextmenu/menu.cpp
+@@ -30,6 +30,7 @@
+ #include <QDebug>
+ #include <QIcon>
+ #include <KLocalizedString>
++#include <KToolInvocation>
+ 
+ #include <Plasma/Containment>
+ #include <Plasma/Corona>
+@@ -45,6 +46,7 @@
+ 
+ ContextMenu::ContextMenu(QObject *parent, const QVariantList &args)
+     : Plasma::ContainmentActions(parent, args),
++      m_runKonsoleAction(0),
+       m_runCommandAction(0),
+       m_lockScreenAction(0),
+       m_logoutAction(0),
+@@ -74,7 +76,7 @@ void ContextMenu::restore(const KConfigGroup &config)
+         m_actionOrder << "add widgets" << "_add panel" << "lock widgets" << "_context" << "configure" << "remove";
+     } else {
+         actions.insert("configure shortcuts", false);
+-        m_actionOrder << "_context" << "_run_command" << "add widgets" << "_add panel"
++        m_actionOrder << "_context" << "_run_konsole" << "_run_command" << "add widgets" << "_add panel"
+                       << "manage activities" << "remove" << "lock widgets" << "_sep1"
+                       <<"_lock_screen" << "_logout" << "_sep2" << "run associated application" << "configure"
+                       << "configure shortcuts" << "_sep3" << "_wallpaper";
+@@ -93,6 +95,10 @@ void ContextMenu::restore(const KConfigGroup &config)
+ 
+     // everything below should only happen once, so check for it
+     if (!m_runCommandAction) {
++        m_runKonsoleAction = new QAction(i18n("Konsole"), this);
++        m_runKonsoleAction->setIcon(QIcon::fromTheme("utilities-terminal"));
++        connect(m_runKonsoleAction, &QAction::triggered, this, &ContextMenu::runKonsole);
++
+         m_runCommandAction = new QAction(i18nc("plasma_containmentactions_contextmenu", "Run Command..."), this);
+         m_runCommandAction->setIcon(QIcon::fromTheme("system-run"));
+         setGlobalActionShortcut(m_runCommandAction, "krunner", "run command");
+@@ -158,6 +164,8 @@ QAction *ContextMenu::action(const QString &name)
+         if (c->corona() && c->corona()->immutability() == Plasma::Types::Mutable) {
+             return c->corona()->actions()->action("add panel");
+         }
++    } else if (name == "_run_konsole") {
++        return m_runKonsoleAction;
+     } else if (name == "_run_command") {
+         if (KAuthorized::authorizeKAction("run_command")) {
+             return m_runCommandAction;
+@@ -185,6 +193,11 @@ QAction *ContextMenu::action(const QString &name)
+     return 0;
+ }
+ 
++void ContextMenu::runKonsole()
++{
++    KToolInvocation::invokeTerminal(QString(), QDir::homePath());
++}
++
+ void ContextMenu::runCommand()
+ {
+     if (!KAuthorized::authorizeKAction("run_command")) {
+diff --git a/containmentactions/contextmenu/menu.h b/containmentactions/contextmenu/menu.h
+index 36013dc..02b71e1 100644
+--- a/containmentactions/contextmenu/menu.h
++++ b/containmentactions/contextmenu/menu.h
+@@ -40,6 +40,7 @@ public:
+     void save(KConfigGroup &config);
+ 
+ public Q_SLOTS:
++    void runKonsole();
+     void runCommand();
+     void lockScreen();
+     void startLogout();
+@@ -47,6 +48,7 @@ public Q_SLOTS:
+ 
+ private:
+     void setGlobalActionShortcut(QAction * action, const QString & component, const QString & actionId);
++    QAction *m_runKonsoleAction;
+     QAction *m_runCommandAction;
+     QAction *m_lockScreenAction;
+     QAction *m_logoutAction;

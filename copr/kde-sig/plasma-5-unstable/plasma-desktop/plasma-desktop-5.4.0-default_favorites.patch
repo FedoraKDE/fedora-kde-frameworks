@@ -1,0 +1,21 @@
+diff --git a/applets/kickoff/core/favoritesmodel.cpp b/applets/kickoff/core/favoritesmodel.cpp
+index ce49939..cbfa456 100644
+--- a/applets/kickoff/core/favoritesmodel.cpp
++++ b/applets/kickoff/core/favoritesmodel.cpp
+@@ -133,12 +133,14 @@ public:
+         // Application releases (i.e. find one that is installed regardless of
+         // whether it uses the current or a previous name).
+         // BUG: 351550
+-        applications  << browser
++        applications  << "firefox"
+                       << "org.kde.kontact" << "kontact"
+                       << "org.kde.systemsettings" << "systemsettings"
+                       << "org.kde.dolphin" << "dolphin"
+                       << "org.kde.ktpcontactlist" << "ktp-contactlist"
+-                      << "org.kde.kate" << "kate";
++                      << "org.kde.kate" << "kate"
++                      << "org.kde.konsole"
++                      << "apper";
+ 
+         QList<QString> desktopFiles;
+ 

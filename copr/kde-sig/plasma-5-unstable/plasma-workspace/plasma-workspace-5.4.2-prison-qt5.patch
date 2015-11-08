@@ -1,0 +1,71 @@
+diff -up plasma-workspace-5.4.2/klipper/clipboardjob.cpp.prison-qt5 plasma-workspace-5.4.2/klipper/clipboardjob.cpp
+--- plasma-workspace-5.4.2/klipper/clipboardjob.cpp.prison-qt5	2015-10-01 04:56:51.000000000 -0500
++++ plasma-workspace-5.4.2/klipper/clipboardjob.cpp	2015-10-20 12:28:13.427524814 -0500
+@@ -28,10 +28,10 @@ along with this program.  If not, see <h
+ #include <QIcon>
+ 
+ #ifdef HAVE_PRISON
+-#include <prison/QRCodeBarcode>
+-#include <prison/DataMatrixBarcode>
+-#include <prison/Code39Barcode>
+-#include <prison/Code93Barcode>
++#include <prison-qt5/QRCodeBarcode>
++#include <prison-qt5/DataMatrixBarcode>
++#include <prison-qt5/Code39Barcode>
++#include <prison-qt5/Code93Barcode>
+ #endif
+ 
+ const static QString s_iconKey = QStringLiteral("icon");
+diff -up plasma-workspace-5.4.2/klipper/CMakeLists.txt.prison-qt5 plasma-workspace-5.4.2/klipper/CMakeLists.txt
+--- plasma-workspace-5.4.2/klipper/CMakeLists.txt.prison-qt5	2015-10-01 04:56:51.000000000 -0500
++++ plasma-workspace-5.4.2/klipper/CMakeLists.txt	2015-10-20 12:29:19.011990523 -0500
+@@ -19,14 +19,14 @@ set(libklipper_common_SRCS
+     clipcommandprocess.cpp
+ )
+ 
+-find_package(KF5Prison "1.2.0" QUIET CONFIG)
+-set_package_properties(KF5Prison PROPERTIES DESCRIPTION "Prison library"
++find_package(Prison-qt5 QUIET CONFIG)
++set_package_properties(Prison-qt5 PROPERTIES DESCRIPTION "Prison library"
+                        URL "http://projects.kde.org/prison"
+                        TYPE OPTIONAL
+                        PURPOSE "Needed to create mobile barcodes from clipboard data (no stable release currently)"
+                       )
+ 
+-set(HAVE_PRISON ${KF5Prison_FOUND})
++set(HAVE_PRISON ${PRISON_FOUND})
+ configure_file(config-klipper.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-klipper.h )
+ 
+ kde4_add_app_icon(libklipper_common_SRCS "${KDE4_ICON_INSTALL_DIR}/oxygen/*/apps/klipper.png")
+@@ -58,7 +58,7 @@ if (X11_FOUND)
+   target_link_libraries(kdeinit_klipper XCB::XCB Qt5::X11Extras)
+ endif()
+ if (HAVE_PRISON)
+-  target_link_libraries(kdeinit_klipper KF5::Prison)
++  target_link_libraries(kdeinit_klipper ${PRISON_LIBRARIES})
+ endif ()
+ 
+ install(TARGETS kdeinit_klipper ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+@@ -93,7 +93,7 @@ if (X11_FOUND)
+   target_link_libraries(plasma_engine_clipboard XCB::XCB Qt5::X11Extras)
+ endif()
+ if (HAVE_PRISON)
+-  target_link_libraries(plasma_engine_clipboard KF5::Prison)
++  target_link_libraries(plasma_engine_clipboard ${PRISON_LIBRARIES})
+ endif ()
+ install(TARGETS plasma_engine_clipboard DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/dataengine)
+ install(FILES plasma-dataengine-clipboard.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+diff -up plasma-workspace-5.4.2/klipper/klipper.cpp.prison-qt5 plasma-workspace-5.4.2/klipper/klipper.cpp
+--- plasma-workspace-5.4.2/klipper/klipper.cpp.prison-qt5	2015-10-01 04:56:51.000000000 -0500
++++ plasma-workspace-5.4.2/klipper/klipper.cpp	2015-10-20 12:28:13.429524828 -0500
+@@ -50,8 +50,8 @@
+ #include "klipperpopup.h"
+ 
+ #ifdef HAVE_PRISON
+-#include <prison/DataMatrixBarcode>
+-#include <prison/QRCodeBarcode>
++#include <prison-qt5/DataMatrixBarcode>
++#include <prison-qt5/QRCodeBarcode>
+ #endif
+ 
+ #include <config-X11.h>

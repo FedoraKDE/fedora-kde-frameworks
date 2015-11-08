@@ -1,0 +1,12 @@
+diff -up plasma-desktop-5.4.0/kcms/formats/kcmformats.cpp.C_locale plasma-desktop-5.4.0/kcms/formats/kcmformats.cpp
+--- plasma-desktop-5.4.0/kcms/formats/kcmformats.cpp.C_locale	2015-08-21 05:52:33.000000000 -0500
++++ plasma-desktop-5.4.0/kcms/formats/kcmformats.cpp	2015-09-09 08:34:56.109261012 -0500
+@@ -115,7 +115,7 @@ void KCMFormats::addLocaleToCombo(QCombo
+     // "it_IT")
+     // TODO: Properly handle scripts (@foo)
+     QString cvalue = locale.name();
+-    if (!cvalue.contains('.')) { // explicitely add the encoding, otherwise Qt doesn't accept dead keys and garbles the output as well
++    if (!cvalue.contains('.') && (locale.language() != QLocale::C) ) { // explicitely add the encoding, otherwise Qt doesn't accept dead keys and garbles the output as well
+         cvalue.append(QLatin1Char('.') + QTextCodec::codecForLocale()->name());
+     }
+ 

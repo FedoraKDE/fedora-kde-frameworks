@@ -1,0 +1,214 @@
+diff --git a/startkde/startkde.cmake b/startkde/startkde.cmake
+index cd1c40e..e62adfc 100644
+--- a/startkde/startkde.cmake
++++ b/startkde/startkde.cmake
+@@ -16,25 +16,22 @@ trap 'echo GOT SIGHUP' HUP
+ # we have to unset this for Darwin since it will screw up KDE's dynamic-loading
+ unset DYLD_FORCE_FLAT_NAMESPACE
+ 
+-# in case we have been started with full pathname spec without being in PATH
+-bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
+-if [ -n "$bindir" ]; then
+-  qbindir=`qtpaths --binaries-dir`
+-  qdbus=$qbindir/qdbus
+-  case $PATH in
+-    $bindir|$bindir:*|*:$bindir|*:$bindir:*) ;;
+-    *) PATH=$bindir:$PATH; export PATH;;
+-  esac
+-else
+-  qdbus=qdbus
+-fi
++qdbus=qdbus-qt5
++
++# See http://bugzilla.redhat.com/537609 , a naive attempt to drop dep
++# on xmessage and allow alternatives like zenity.
++message() {
++  xmessage -geometry 500x100 "$1" > /dev/null 2>/dev/null || \
++    zenity --info --text="$1" > /dev/null 2>/dev/null ||:
++  return $?
++}
+ 
+ # Check if a KDE session already is running and whether it's possible to connect to X
+ kcheckrunning
+ kcheckrunning_result=$?
+ if test $kcheckrunning_result -eq 0 ; then
+ 	echo "KDE seems to be already running on this display."
+-	xmessage -geometry 500x100 "KDE seems to be already running on this display." > /dev/null 2>/dev/null
++	message "KDE seems to be already running on this display." > /dev/null 2>/dev/null
+ 	exit 1
+ elif test $kcheckrunning_result -eq 2 ; then
+ 	echo "\$DISPLAY is not set or cannot connect to the X server."
+@@ -90,53 +87,10 @@ test -f $exportformatssettings && {
+     . $exportformatssettings
+ }
+ 
+-# Write a default kdeglobals file to set up the font
+-kdeglobalsfile=$configDir/kdeglobals
+-test -f $kdeglobalsfile || {
+-cat >$kdeglobalsfile <<EOF
+-[General]
+-XftAntialias=true
+-XftHintStyle=hintmedium
+-XftSubPixel=none
+-EOF
+-}
+-
+-# Make sure the Oxygen font is installed
+-# This is necessary for setups where CMAKE_INSTALL_PREFIX
+-# is not in /usr. fontconfig looks in /usr, ~/.fonts and
+-# $XDG_DATA_HOME for fonts. In this case, we symlink the
+-# Oxygen font under ${XDG_DATA_HOME} and make it known to
+-# fontconfig
+-
+-usr_share="/usr/share"
+-install_share="@CMAKE_INSTALL_PREFIX@/@SHARE_INSTALL_PREFIX@"
+-
+-if [ ! $install_share = $usr_share ]; then
+-
+-    if [ ${XDG_DATA_HOME} ]; then
+-        fontsDir="${XDG_DATA_HOME}/fonts"
+-    else
+-        fontsDir="${HOME}/.fonts"
+-    fi
+-
+-    test -d $fontsDir || {
+-        mkdir -p $fontsDir
+-    }
+-
+-    oxygenDir=$fontsDir/oxygen
+-    prefixDir="@CMAKE_INSTALL_PREFIX@/@SHARE_INSTALL_PREFIX@/fonts/oxygen"
+-
+-    # if the oxygen dir doesn't exist, create a symlink to be sure that the
+-    # Oxygen font is available to the user
+-    test -d $oxygenDir || test -d $prefixDir && {
+-        test -h $oxygenDir || ln -s $prefixDir $oxygenDir && fc-cache $oxygenDir
+-    }
+-fi
+-
+ kstartupconfig5
+ returncode=$?
+ if test $returncode -ne 0; then
+-    xmessage -geometry 500x100 "kstartupconfig5 does not exist or fails. The error code is $returncode. Check your installation."
++    message "kstartupconfig5 does not exist or fails. The error code is $returncode. Check your installation."
+     exit 1
+ fi
+ [ -r $configDir/startupconfig ] && . $configDir/startupconfig
+@@ -210,48 +164,6 @@ for prefix in `echo $scriptpath`; do
+   done
+ done
+ 
+-# Activate the kde font directories.
+-#
+-# There are 4 directories that may be used for supplying fonts for KDE.
+-#
+-# There are two system directories. These belong to the administrator.
+-# There are two user directories, where the user may add her own fonts.
+-#
+-# The 'override' versions are for fonts that should come first in the list,
+-# i.e. if you have a font in your 'override' directory, it will be used in
+-# preference to any other.
+-#
+-# The preference order looks like this:
+-# user override, system override, X, user, system
+-#
+-# Where X is the original font database that was set up before this script
+-# runs.
+-
+-usr_odir=$HOME/.fonts/kde-override
+-usr_fdir=$HOME/.fonts
+-
+-if test -n "$KDEDIRS"; then
+-  kdedirs_first=`echo "$KDEDIRS"|sed -e 's/:.*//'`
+-  sys_odir=$kdedirs_first/share/fonts/override
+-  sys_fdir=$kdedirs_first/share/fonts
+-else
+-  sys_odir=$KDEDIR/share/fonts/override
+-  sys_fdir=$KDEDIR/share/fonts
+-fi
+-
+-# We run mkfontdir on the user's font dirs (if we have permission) to pick
+-# up any new fonts they may have installed. If mkfontdir fails, we still
+-# add the user's dirs to the font path, as they might simply have been made
+-# read-only by the administrator, for whatever reason.
+-
+-test -d "$sys_odir" && xset +fp "$sys_odir"
+-test -d "$usr_odir" && (mkfontdir "$usr_odir" ; xset +fp "$usr_odir")
+-test -d "$usr_fdir" && (mkfontdir "$usr_fdir" ; xset fp+ "$usr_fdir")
+-test -d "$sys_fdir" && xset fp+ "$sys_fdir"
+-
+-# Ask X11 to rebuild its font list.
+-xset fp rehash
+-
+ # Set a left cursor instead of the standard X11 "X" cursor, since I've heard
+ # from some users that they're confused and don't know what to do. This is
+ # especially necessary on slow machines, where starting KDE takes one or two
+@@ -262,37 +174,15 @@ xset fp rehash
+ #
+ xsetroot -cursor_name left_ptr
+ 
+-# Get Ghostscript to look into user's KDE fonts dir for additional Fontmap
+-if test -n "$GS_LIB" ; then
+-    GS_LIB=$usr_fdir:$GS_LIB
+-    export GS_LIB
+-else
+-    GS_LIB=$usr_fdir
+-    export GS_LIB
+-fi
+-
+ echo 'startkde: Starting up...'  1>&2
+ 
+-# Make sure that the KDE prefix is first in XDG_DATA_DIRS and that it's set at all.
+-# The spec allows XDG_DATA_DIRS to be not set, but X session startup scripts tend
+-# to set it to a list of paths *not* including the KDE prefix if it's not /usr or
+-# /usr/local.
+-if test -z "$XDG_DATA_DIRS"; then
+-    XDG_DATA_DIRS="@CMAKE_INSTALL_PREFIX@/@SHARE_INSTALL_PREFIX@:/usr/share:/usr/local/share"
+-fi
+-export XDG_DATA_DIRS
+-
+ # Make sure that D-Bus is running
+-# D-Bus autolaunch is broken
+-if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
+-    eval `dbus-launch --sh-syntax --exit-with-session`
+-fi
+ if $qdbus >/dev/null 2>/dev/null; then
+     : # ok
+ else
+     echo 'startkde: Could not start D-Bus. Can you call qdbus?'  1>&2
+     test -n "$ksplash_pid" && kill "$ksplash_pid" 2>/dev/null
+-    xmessage -geometry 500x100 "Could not start D-Bus. Can you call qdbus?"
++    message "Could not start D-Bus. Can you call qdbus?"
+     exit 1
+ fi
+ 
+@@ -352,18 +242,16 @@ if test $? -ne 0; then
+   # Startup error
+   echo 'startkde: Could not sync environment to dbus.'  1>&2
+   test -n "$ksplash_pid" && kill "$ksplash_pid" 2>/dev/null
+-  xmessage -geometry 500x100 "Could not sync environment to dbus."
++  message "Could not sync environment to dbus."
+   exit 1
+ fi
+ 
+-# We set LD_BIND_NOW to increase the efficiency of kdeinit.
+-# kdeinit unsets this variable before loading applications.
+-LD_BIND_NOW=true @CMAKE_INSTALL_FULL_LIBEXECDIR_KF5@/start_kdeinit_wrapper --kded +kcminit_startup
++@CMAKE_INSTALL_FULL_LIBEXECDIR_KF5@/start_kdeinit_wrapper --kded +kcminit_startup
+ if test $? -ne 0; then
+   # Startup error
+   echo 'startkde: Could not start kdeinit5. Check your installation.'  1>&2
+   test -n "$ksplash_pid" && kill "$ksplash_pid" 2>/dev/null
+-  xmessage -geometry 500x100 "Could not start kdeinit5. Check your installation."
++  message "Could not start kdeinit5. Check your installation."
+   exit 1
+ fi
+ 
+@@ -387,7 +275,7 @@ if test $? -eq 255; then
+   # Startup error
+   echo 'startkde: Could not start ksmserver. Check your installation.'  1>&2
+   test -n "$ksplash_pid" && kill "$ksplash_pid" 2>/dev/null
+-  xmessage -geometry 500x100 "Could not start ksmserver. Check your installation."
++  message "Could not start ksmserver. Check your installation."
+ fi
+ 
+ wait_drkonqi=`kreadconfig5 --file startkderc --group WaitForDrKonqi --key Enabled --default true`
