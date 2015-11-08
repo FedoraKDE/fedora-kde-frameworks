@@ -29,7 +29,9 @@ import yaml
 _IgnoredKDEProjects = [
     "user-manager",
     "kde-gtk-config",
-    "muon"
+    "kwallet-pam",
+    "kaccounts-mobile",
+    "discover"
 ]
 
 _KDEToFedoraNamesMap = {
@@ -44,6 +46,7 @@ _KDEToFedoraNamesMap = {
     "kwayland": "kf5-kwayland",
     "milou": "plasma-milou",
     "bluez-qt": "kf5-bluez-qt",
+    "kgamma5": "kgamma",
 # Frameworks
     "plasma-framework": "kf5-plasma"
 }
