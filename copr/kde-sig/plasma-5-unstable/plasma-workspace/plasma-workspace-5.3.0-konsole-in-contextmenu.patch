@@ -1,5 +1,5 @@
 diff --git a/containmentactions/contextmenu/menu.cpp b/containmentactions/contextmenu/menu.cpp
-index fee6c7a..bea941c 100644
+index a4e06f1..b7f684b 100644
 --- a/containmentactions/contextmenu/menu.cpp
 +++ b/containmentactions/contextmenu/menu.cpp
 @@ -30,6 +30,7 @@
@@ -19,14 +19,14 @@ index fee6c7a..bea941c 100644
        m_lockScreenAction(0),
        m_logoutAction(0),
 @@ -74,7 +76,7 @@ void ContextMenu::restore(const KConfigGroup &config)
-         m_actionOrder << "add widgets" << "_add panel" << "lock widgets" << "_context" << "configure" << "remove";
+         m_actionOrder << QStringLiteral("add widgets") << QStringLiteral("_add panel") << QStringLiteral("lock widgets") << QStringLiteral("_context") << QStringLiteral("configure") << QStringLiteral("remove");
      } else {
-         actions.insert("configure shortcuts", false);
--        m_actionOrder << "_context" << "_run_command" << "add widgets" << "_add panel"
-+        m_actionOrder << "_context" << "_run_konsole" << "_run_command" << "add widgets" << "_add panel"
-                       << "manage activities" << "remove" << "lock widgets" << "_sep1"
-                       <<"_lock_screen" << "_logout" << "_sep2" << "run associated application" << "configure"
-                       << "configure shortcuts" << "_sep3" << "_wallpaper";
+         actions.insert(QStringLiteral("configure shortcuts"), false);
+-        m_actionOrder << QStringLiteral("_context") << QStringLiteral("_run_command") << QStringLiteral("add widgets") << QStringLiteral("_add panel")
++        m_actionOrder << QStringLiteral("_context") << QStringLiteral("_run_konsole") << QStringLiteral("_run_command") << QStringLiteral("add widgets") << QStringLiteral("_add panel")
+                       << QStringLiteral("manage activities") << QStringLiteral("remove") << QStringLiteral("lock widgets") << QStringLiteral("_sep1")
+                       <<QStringLiteral("_lock_screen") << QStringLiteral("_logout") << QStringLiteral("_sep2") << QStringLiteral("run associated application") << QStringLiteral("configure")
+                       << QStringLiteral("configure shortcuts") << QStringLiteral("_sep3") << QStringLiteral("_wallpaper");
 @@ -93,6 +95,10 @@ void ContextMenu::restore(const KConfigGroup &config)
  
      // everything below should only happen once, so check for it
@@ -36,16 +36,16 @@ index fee6c7a..bea941c 100644
 +        connect(m_runKonsoleAction, &QAction::triggered, this, &ContextMenu::runKonsole);
 +
          m_runCommandAction = new QAction(i18nc("plasma_containmentactions_contextmenu", "Run Command..."), this);
-         m_runCommandAction->setIcon(QIcon::fromTheme("system-run"));
-         setGlobalActionShortcut(m_runCommandAction, "krunner", "run command");
+         m_runCommandAction->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
+         setGlobalActionShortcut(m_runCommandAction, QStringLiteral("krunner"), QStringLiteral("run command"));
 @@ -158,6 +164,8 @@ QAction *ContextMenu::action(const QString &name)
          if (c->corona() && c->corona()->immutability() == Plasma::Types::Mutable) {
-             return c->corona()->actions()->action("add panel");
+             return c->corona()->actions()->action(QStringLiteral("add panel"));
          }
-+    } else if (name == "_run_konsole") {
++    } else if (name == QLatin1String("_run_konsole")) {
 +        return m_runKonsoleAction;
-     } else if (name == "_run_command") {
-         if (KAuthorized::authorizeKAction("run_command")) {
+     } else if (name == QLatin1String("_run_command")) {
+         if (KAuthorized::authorizeKAction(QStringLiteral("run_command"))) {
              return m_runCommandAction;
 @@ -185,6 +193,11 @@ QAction *ContextMenu::action(const QString &name)
      return 0;
@@ -58,7 +58,7 @@ index fee6c7a..bea941c 100644
 +
  void ContextMenu::runCommand()
  {
-     if (!KAuthorized::authorizeKAction("run_command")) {
+     if (!KAuthorized::authorizeKAction(QStringLiteral("run_command"))) {
 diff --git a/containmentactions/contextmenu/menu.h b/containmentactions/contextmenu/menu.h
 index 36013dc..02b71e1 100644
 --- a/containmentactions/contextmenu/menu.h

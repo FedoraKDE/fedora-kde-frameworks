@@ -1,6 +1,17 @@
+diff --git a/discover/org.kde.discover.desktop b/discover/org.kde.discover.desktop
+index d80af55..f9d8095 100644
 --- a/discover/org.kde.discover.desktop
 +++ b/discover/org.kde.discover.desktop
-@@ -107,20 +107,20 @@
+@@ -44,7 +44,7 @@ Name[uk]=Шукач Muon
+ Name[x-test]=xxMuon Discoverxx
+ Name[zh_CN]=Muon 发现者
+ Name[zh_TW]=Muon 探詢器
+-MimeType=x-scheme-handler/appstream
++MimeType=x-scheme-handler/appstream;
+ Exec=muon-discover %U
+ Icon=muondiscover
+ Type=Application
+@@ -108,17 +108,17 @@ Keywords[de]=Programm;Software;Archiv;Repository;Paket;Installieren;Entfernen;Ak
  Keywords[el]=πρόγραμμα;λογισμικό;αποθετήριο;πακέτο;εγκατάσταση;αφαίρεση;ενημέρωση;εφαρμογές;
  Keywords[en_GB]=program;software;repository;package;install;remove;update;apps;applications;
  Keywords[es]=programa;software;repositorio;paquete;instalar;eliminar;actualizar;apps;aplicaciones;
@@ -9,7 +20,7 @@
  Keywords[fi]=program;software;repository;package;install;remove;update;apps;applications;ohjelma;ohjelmisto;ohjelmalähde;lähteet;arkisto;paketti;asenna;poista;päivitä;sovellukset;
 -Keywords[fr]=programme ; logiciel ; dépôt ; archive ; paquet ; installation ; suppression ; mise à jour ; deb
 -Keywords[gl]=aplicativo,software,repositorio,paquete,instalar,eliminar,actualizar,deb
-+Keywords[fr]=programme ; logiciel ; dépôt ; archive ; paquet ; installation ; suppression ; mise à jour ; deb ;
++Keywords[fr]=programme ; logiciel ; dépôt ; archive ; paquet ; installation ; suppression ; mise à jour ; deb;
 +Keywords[gl]=aplicativo;software;repositorio;paquete;instalar;eliminar;actualizar;deb;
  Keywords[hu]=program;szoftver;tároló;csomag;telepítés;eltávolítás;frissítés;appok;alkalmazások;
  Keywords[id]=program;perangkat lunak;repositori;paket;pasang;buang;perbarui;apl;aplikasi;
@@ -22,9 +33,4 @@
 +Keywords[nds]=programm;software;repository;archiev;paket;installeren;wegmaken;opfrischen;update;apps;programmen;
  Keywords[nl]=programma;software;opslagruimte;pakket;installeren;verwijderen;bijwerken;apps;toepassingen;applicaties;
  Keywords[nn]=program;programvare;pakkebrønn;pakke;pakkar;installera;installering;fjerna;fjerning;oppdatera;oppdatering;app;appar;applikasjonar;
--Keywords[pl]=program,oprogramowanie,repozytorium,archiwum,pakiet,paczka,instaluj,zainstaluj,usuń,odinstaluj,uaktualnij,aktualizuj,programy,aplikacje,deb
-+Keywords[pl]=program;oprogramowanie;repozytorium;archiwum;pakiet;paczka;instaluj;zainstaluj;usuń;odinstaluj;uaktualnij;aktualizuj;programy;aplikacje;deb;
- Keywords[pt]=programa;software;repositório;arquivo;pacote;instalar;remover;actualizar;deb;aplicações;
- Keywords[pt_BR]=programa;software;repositório;pacote;instalar;instalação;remover;atualizar;aplicativos;apps;aplicações;
- Keywords[ro]=program;software;depozit;arhivă;pachet;instalare;elimină;actualizare;aplicații;
-
+ Keywords[pl]=program;oprogramowanie;repozytorium;archiwum;pakiet;paczka;instaluj;zainstaluj;usuń;odinstaluj;uaktualnij;aktualizuj;programy;aplikacje;deb;

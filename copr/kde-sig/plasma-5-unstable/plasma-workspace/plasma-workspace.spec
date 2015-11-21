@@ -120,14 +120,14 @@ BuildRequires:  kf5-kwallet-devel >= %{kf5_version}
 BuildRequires:  kf5-kxmlrpcclient-devel >= %{kf5_version}
 BuildRequires:  kf5-networkmanager-qt-devel >= %{kf5_version}
 BuildRequires:  kf5-plasma-devel >= %{kf5_version}
-BuildRequires:  kf5-plasma-devel >= %{kf5_version}
 BuildRequires:  kf5-threadweaver-devel >= %{kf5_version}
 
 BuildRequires:  kf5-ksysguard-devel >= %{version}
-BuildRequires:  kf5-kscreen-devel >= %{version}
 BuildRequires:  kf5-kwayland-devel >= %{version}
 BuildRequires:  libwayland-client-devel >= 1.3.0
 BuildRequires:  libwayland-server-devel >= 1.3.0
+BuildRequires:  libkscreen-qt5-devel >= %{version}
+BuildRequires:  kscreenlocker-devel >= %{version}
 
 BuildRequires:  kwin-devel
 
@@ -268,7 +268,6 @@ Summary: Runtime libraries for %{name}
 Obsoletes: plasma-workspace < 5.4.2-2
 ## omit dep on main pkg for now, means we can avoid pulling in a
 ## huge amount of deps (including kde4) into buildroot -- rex
-#Requires:  %{name}%{?_isa} = %{version}-%{release}
 Requires:  %{name}-common = %{version}-%{release}
 %description libs
 %{summary}.
@@ -348,9 +347,6 @@ sed -i -e "s|@DEFAULT_LOOKANDFEEL@|%{?default_lookandfeel}%{!?default_lookandfee
 %if 0%{?prison}
 %patch13 -p1 -b .prison-qt5
 %endif
-
-%patch100 -p1 -b .sni_proxy
-
 
 %build
 mkdir %{_target_platform}
@@ -439,9 +435,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %{_kf5_qtplugindir}/phonon_platform/kde.so
 %{_kf5_qtplugindir}/kpackage/packagestructure/*.so
 %{_kf5_plugindir}/kio/desktop.so
+%{_kf5_plugindir}/kded/*.so
 %{_kf5_qmldir}/org/kde/*
-%{_libexecdir}/kcheckpass
-%{_libexecdir}/kscreenlocker_greet
 %{_libexecdir}/ksyncdbusenv
 %{_libexecdir}/startplasma
 %{_kf5_datadir}/ksmserver/
@@ -458,17 +453,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %if 0%{?fedora} > 22
 %{_kf5_datadir}/plasma/look-and-feel/org.fedoraproject.fedora.twenty.three/
 %endif
-%{_kf5_datadir}/plasma/kcms/
 %{_kf5_datadir}/solid/
 %{_kf5_datadir}/kstyle/
-%{_kf5_datadir}/kconf_update/*
 %{_sysconfdir}/xdg/*.knsrc
 %{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/desktop-directories/*.directory
 %{_datadir}/dbus-1/services/*.service
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/*.protocol
-%{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/knotifications5/*.notifyrc
 %{_kf5_datadir}/config.kcfg/*
@@ -539,7 +531,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %{_libdir}/cmake/KSMServerDBusInterface/
 %{_libdir}/cmake/LibKWorkspace/
 %{_libdir}/cmake/LibTaskManager/
-%{_libdir}/cmake/ScreenSaverDBusInterface/
 %{_datadir}/dbus-1/interfaces/*.xml
 
 %post drkonqi

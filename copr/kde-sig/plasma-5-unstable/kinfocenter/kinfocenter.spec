@@ -43,6 +43,7 @@ BuildRequires:  kf5-kpackage-devel
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLES-devel
 BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libGLU-devel
 BuildRequires:  libX11-devel
 BuildRequires:  pciutils-devel
 %ifnarch s390 s390x
@@ -98,6 +99,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/desktop-directories/kinfocenter.directory
 %{_kf5_datadir}/kxmlgui5/kinfocenter/
 %{_kf5_datadir}/kpackage/kcms/kcm_energyinfo/
+%{_kf5_datadir}/kpackage/kcms/kcm_fileindexermonitor/
 %lang(ca) %{_datadir}/doc/HTML/ca/kinfocenter/
 %lang(de) %{_datadir}/doc/HTML/de/kinfocenter/
 %lang(en) %{_datadir}/doc/HTML/en/kinfocenter/

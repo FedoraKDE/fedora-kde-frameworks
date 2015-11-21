@@ -63,6 +63,8 @@ BuildRequires:  pkgconfig(libnm-glib) pkgconfig(libnm-util)
 BuildRequires:  pkgconfig(openconnect) >= 4.00
 %endif
 
+BuildRequires:  qca-qt5-devel
+
 Requires:       NetworkManager >= 0.9.8
 
 Requires:       kf5-filesystem

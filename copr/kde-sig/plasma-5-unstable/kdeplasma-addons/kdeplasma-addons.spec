@@ -18,9 +18,11 @@ Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.
 
 Obsoletes: kdeplasma-addons-libs < 5.0.0
 
-BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
-BuildRequires:  ibus-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  qt5-qtx11extras-devel
+
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -34,13 +36,15 @@ BuildRequires:  kf5-krunner-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kunitconversion-devel
 BuildRequires:  kf5-plasma-devel
+BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-rpm-macros
-BuildRequires:  libxcb-devel
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtdeclarative-devel
-BuildRequires:  qt5-qtx11extras-devel
+
+BuildRequires:  ibus-devel
 BuildRequires:  scim-devel
 BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  libxcb-devel
+
 
 Requires:       kf5-filesystem
 
@@ -83,7 +87,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_libexecdir}/kimpanel-scim-panel
 %{_libexecdir}/kimpanel-ibus-panel
 %{_kf5_datadir}/plasma/plasmoids/*
-%{_kf5_datadir}/plasma/desktoptheme/default/widgets/*.svgz
+%{_kf5_datadir}/plasma/desktoptheme/default/widgets/*
+%{_kf5_datadir}/plasma/desktoptheme/default/icons/*
 %{_kf5_datadir}/plasma/wallpapers/*
 %{_kf5_datadir}/plasma/services/*.operations
 %{_kf5_qtplugindir}/plasma/dataengine/*.so

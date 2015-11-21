@@ -1,6 +1,6 @@
 Name:           powerdevil
-Version: 5.4.90
-Release: 1%{?dist}
+Version:        5.4.90
+Release:        1%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
@@ -40,9 +40,10 @@ BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-plasma-devel
 BuildRequires:  kf5-knotifyconfig-devel
 BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kscreen-devel
 BuildRequires:  kf5-kactivities-devel
 
+BuildRequires:  libkscreen-qt5-devel
+BuildRequires:  kf5-kwayland-devel
 BuildRequires:  plasma-workspace-devel
 
 Requires:       kf5-filesystem
@@ -83,11 +84,11 @@ rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 %{_libdir}/libpowerdevilcore.so.*
 %{_libdir}/libpowerdevilui.so.*
 %{_kf5_qtplugindir}/*.so
+%{_kf5_plugindir}/kded/*.so
 %{_kf5_libexecdir}/kauth/backlighthelper
 %{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 %{_kf5_datadir}/knotifications5/powerdevil.notifyrc
 %{_kf5_datadir}/kservices5/*.desktop
-%{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
 %{_datadir}/doc/HTML/en/kcontrol/powerdevil

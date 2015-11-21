@@ -23,7 +23,7 @@ Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.
 # default kickoff favorites: -preferred_browser(buggy) +firefox +konsole +apper
 Patch100: plasma-desktop-5.4.0-default_favorites.patch
 # default kickoff favorites: -preferred_browser(buggy) +konqbrowser +konsole +apper
-Patch101: plasma-desktop-5.4.0-default_favorites.patch
+Patch101: plasma-desktop-5.4.0-default_favorites_f22.patch
 # Default to Folder containment (rather than Desktop)
 Patch102: plasma-desktop-fedora_layout.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1250238
@@ -82,6 +82,7 @@ BuildRequires:  kf5-kinit-devel >= %{kf5_version}
 
 BuildRequires:  kf5-ksysguard-devel >= %{majmin_ver}
 
+BuildRequires:  kscreenlocker-devel >= %{majmin_ver}
 BuildRequires:  plasma-workspace-devel >= %{majmin_ver}
 BuildRequires:  kwin-devel >= %{majmin_ver}
 
@@ -245,6 +246,7 @@ fi
 %{_kf5_libdir}/libKF5ActivitiesExperimentalStats.so.*
 %{_kf5_qtplugindir}/*.so
 %{_kf5_qtplugindir}/kcms/*.so
+%{_kf5_plugindir}/kded/*.so
 %{_kf5_qmldir}/org/kde/plasma/activityswitcher
 %{_kf5_qmldir}/org/kde/private/desktopcontainment/*
 %{_kf5_datadir}/plasma/*

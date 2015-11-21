@@ -1,6 +1,3 @@
-#%global git_version  4c5da6e
-#%global git_date     20150112
-
 %global base_name    libkscreen
 
 Name:    libkscreen-qt5
@@ -11,10 +8,6 @@ Release: 1%{?dist}
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/workspace/libkscreen
 
-
-# git archive --format=tar.gz --remote=git://anongit.kde.org/libkscreen.git \
-#             --prefix=libkscreen-%%{version}/ --output=libkscreen-qt5-%%{git_version}.tar.gz %%{git_version}
-#Source0:        libkscreen-%{git_version}.tar.gz
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -83,6 +76,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libexecdir}/kscreen_backend_launcher
 %{_kf5_libdir}/libKF5Screen.so.*
 %{_kf5_plugindir}/kscreen/
+%{_datadir}/dbus-1/services/org.kde.kscreen.service
 
 %files devel
 %{_kf5_includedir}/KScreen/

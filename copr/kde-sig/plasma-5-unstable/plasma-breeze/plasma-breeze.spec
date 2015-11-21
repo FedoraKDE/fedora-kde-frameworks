@@ -4,7 +4,7 @@
 
 Name:           plasma-breeze
 Version:        5.4.90
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
 License:        GPLv2+
@@ -18,11 +18,6 @@ URL:            https://projects.kde.org/projects/kde/workspace/breeze
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
-# This was accidentally broken by merge from breeze github repo in 5.4.2 while in 5.4.0 and 5.4.1 
-# it was correct. Without this when you use breeze-dark you will be missing some icons because of
-# wrong inheritance.
-Patch1:         fix-breeze-dark-inheritance.patch
-
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
@@ -30,6 +25,7 @@ BuildRequires:  qt5-qtx11extras-devel
 
 BuildRequires:	kf5-kservice-devel
 BuildRequires:  kf5-kcmutils-devel
+BuildRequires:  kf5-plasma-devel
 
 # kde4breeze
 BuildRequires:  kf5-kcoreaddons-devel
@@ -66,10 +62,10 @@ BuildArch:      noarch
 %description    common
 %{summary}.
 
-%package -n     breeze-icon-theme
-Summary:        Breeze icon theme
-BuildArch:      noarch
-%description -n breeze-icon-theme
+%package -n     breeze-cursor-theme
+Summary:	Breeze cursor theme
+BuildArch:	noarch
+%description -n breeze-cursor-theme
 %{summary}.
 
 %if 0%{?build_kde4:1}
@@ -115,8 +111,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}_kde4
 %endif
 
-## icon optimizations
-for theme in breeze_cursors breeze breeze-dark Breeze_Snow; do
+# icon optimizations
+for theme in breeze_cursors Breeze_Snow; do
 pushd %{buildroot}%{_datadir}/icons/${theme}
 du -s  .
 time optimizegraphics ||:
@@ -147,36 +143,18 @@ fi
 %{_kf5_qtplugindir}/kstyle_breeze_config.so
 %{_kf5_datadir}/kconf_update/kde4breeze.upd
 %{_kf5_libdir}/kconf_update_bin/kde4breeze
-%{_kf5_datadir}/kconf_update/gtkbreeze.upd
-%{_kf5_libdir}/kconf_update_bin/gtkbreeze
 %{_kf5_qmldir}/QtQuick/Controls/Styles/Breeze
 %{_bindir}/breeze-settings5
 %{_datadir}/icons/hicolor/scalable/apps/breeze-settings.svgz
 %{_kf5_datadir}/kservices5/breezedecorationconfig.desktop
 %{_kf5_datadir}/kservices5/breezestyleconfig.desktop
+%{_kf5_datadir}/kservices5/plasma-lookandfeel-org.kde.breezedark.desktop.desktop
+%{_kf5_datadir}/plasma/look-and-feel/org.kde.breezedark.desktop/
 
 %files common -f breeze.lang
 %{_datadir}/color-schemes/*.colors
 %{_datadir}/QtCurve/Breeze.qtcurve
 %{_datadir}/wallpapers/Next
-
-%post -n breeze-icon-theme
-touch --no-create %{_datadir}/icons/{breeze_cursors,breeze,breeze-dark,Breeze_Snow} &> /dev/null || :
-
-%posttrans -n breeze-icon-theme
-gtk-update-icon-cache %{_datadir}/icons/{breeze_cursors,breeze,breeze-dark,Breeze_Snow} &> /dev/null || :
-
-%postun -n breeze-icon-theme
-if [ $1 -eq 0 ] ; then
-touch --no-create %{_datadir}/icons/{breeze_cursors,breeze,breeze-dark,Breeze_Snow} &> /dev/null || :
-gtk-update-icon-cache %{_datadir}/icons/{breeze_cursors,breeze,breeze-dark,Breeze_Snow} &> /dev/null || :
-fi
-
-%files -n breeze-icon-theme
-%{_datadir}/icons/breeze_cursors
-%{_datadir}/icons/breeze
-%{_datadir}/icons/breeze-dark
-%{_datadir}/icons/Breeze_Snow
 
 %if 0%{?build_kde4:1}
 %files -n kde-style-breeze
@@ -184,6 +162,28 @@ fi
 %{_kde4_libdir}/kde4/kstyle_breeze_config.so
 %{_kde4_appsdir}/kstyle/themes/breeze.themerc
 %endif
+
+%post -n breeze-cursor-theme
+touch --no-create %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
+touch --no-create %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
+
+%posttrans -n breeze-cursor-theme
+gtk-update-icon-cache %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
+gtk-update-icon-cache %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
+
+%postun -n breeze-cursor-theme
+if [ $1 -eq 0 ] ; then
+touch --no-create %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
+gtk-update-icon-cache %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
+touch --no-create %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
+gtk-update-icon-cache %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
+fi
+
+%files -n breeze-cursor-theme
+%{_kf5_datadir}/icons/Breeze_Snow
+%ghost %{_kf5_datadir}/icons/Breeze_Snow/index.theme
+%{_kf5_datadir}/icons/breeze_cursors
+%ghost %{_kf5_datadir}/icons/breeze_cursors/index.theme
 
 
 %changelog

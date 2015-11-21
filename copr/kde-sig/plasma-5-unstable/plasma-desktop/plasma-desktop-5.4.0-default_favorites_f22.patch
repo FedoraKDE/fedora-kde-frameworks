@@ -1,21 +1,21 @@
 diff --git a/applets/kickoff/core/favoritesmodel.cpp b/applets/kickoff/core/favoritesmodel.cpp
-index ce49939..cbfa456 100644
+index be47347..423c95c 100644
 --- a/applets/kickoff/core/favoritesmodel.cpp
 +++ b/applets/kickoff/core/favoritesmodel.cpp
-@@ -133,12 +133,14 @@ public:
+@@ -133,13 +133,14 @@ public:
          // Application releases (i.e. find one that is installed regardless of
          // whether it uses the current or a previous name).
          // BUG: 351550
 -        applications  << browser
-+        applications  << "konqbrowser"
-                       << "org.kde.kontact" << "kontact"
-                       << "org.kde.systemsettings" << "systemsettings"
-                       << "org.kde.dolphin" << "dolphin"
-                       << "org.kde.ktpcontactlist" << "ktp-contactlist"
--                      << "org.kde.kate" << "kate";
-+                      << "org.kde.kate" << "kate"
-+                      << "org.kde.konsole"
-+                      << "apper";
++        applications  << QStringLiteral("konqbrowser")
+                       << QStringLiteral("org.kde.kontact") << QStringLiteral("kontact")
+                       << QStringLiteral("org.kde.systemsettings") << QStringLiteral("systemsettings")
+                       << QStringLiteral("org.kde.dolphin") << QStringLiteral("dolphin")
+                       << QStringLiteral("org.kde.ktpcontactlist") << QStringLiteral("ktp-contactlist")
+                       << QStringLiteral("org.kde.kate") << QStringLiteral("kate")
+-                      << QStringLiteral("org.kde.discover") << QStringLiteral("muon-discover") << QStringLiteral("discover");
++                      << QStringLiteral("org.kde.konsole")
++                      << QStringLiteral("apper");
  
          QList<QString> desktopFiles;
  

@@ -1,6 +1,6 @@
 Name:           ksysguard
-Version: 5.4.90
-Release: 1%{?dist}
+Version: 	5.4.90
+Release: 	1%{?dist}
 Summary:        KDE Process Management application
 
 License:        GPLv2
@@ -16,6 +16,7 @@ Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{ve
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
+BuildRequires:  qt5-qtwebkit-devel
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules

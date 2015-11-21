@@ -89,8 +89,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %license COPYING
 %{_kf5_libdir}/libkhotkeysprivate.so.*
 %{_kf5_qtplugindir}/kcm_hotkeys.so
-%{_kf5_qtplugindir}/kded_khotkeys.so
-%{_kf5_datadir}/kservices5/kded/*.desktop
+%{_kf5_plugindir}/kded/khotkeys.so
 %{_kf5_datadir}/kservices5/khotkeys.desktop
 %{_datadir}/khotkeys/
 %{_datadir}/doc/HTML/en/kcontrol/khotkeys/

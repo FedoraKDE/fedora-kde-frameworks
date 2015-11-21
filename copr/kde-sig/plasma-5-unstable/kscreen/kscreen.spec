@@ -1,10 +1,7 @@
-#%global git_version 7a8460a
-#%global git_date 20150112
-
 Name:           kscreen
 Epoch:          1
-Version: 5.4.90
-Release: 1%{?dist}
+Version: 	5.4.90
+Release: 	1%{?dist}
 Summary:        KDE Display Management software
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -18,10 +15,6 @@ URL:            https://projects.kde.org/projects/playground/base/kscreen
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
-
-# git archive --format=tar.gz --prefix=kscreen-%{version}/ --remote=git://anongit.kde.org/kscreen \
-#             --output=kscreen-%{git_version}.tar.gz %{git_version}
-#Source0:        kscreen-%{git_version}.tar.gz
 
 # Upstream patches
 
@@ -80,10 +73,9 @@ fi
 %doc COPYING
 %{_bindir}/kscreen-console
 %{_kf5_qtplugindir}/kcm_kscreen.so
-%{_kf5_qtplugindir}/kded_kscreen.so
+%{_kf5_plugindir}/kded/kscreen.so
 %{_datadir}/kcm_kscreen/
 %{_kf5_datadir}/kservices5/kcm_kscreen.desktop
-%{_kf5_datadir}/kservices5/kded/kscreen.desktop
 %{_datadir}/icons/hicolor/*/actions/*
 
 
