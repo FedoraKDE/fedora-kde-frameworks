@@ -48,7 +48,11 @@ _KDEToFedoraNamesMap = {
     "bluez-qt": "kf5-bluez-qt",
     "kgamma5": "kgamma",
 # Frameworks
-    "plasma-framework": "kf5-plasma"
+    "plasma-framework": "kf5-plasma",
+    "extra-cmake-modules": "extra-cmake-modules",
+    "kf5": "kf5",
+    "oxygen-icons5": "oxygen-icon-theme",
+    "breeze-icons": "breeze-icon-theme"
 }
 
 
