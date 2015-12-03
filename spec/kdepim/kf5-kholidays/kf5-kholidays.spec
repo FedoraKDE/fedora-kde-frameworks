@@ -1,7 +1,7 @@
 %global framework kholidays
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        The KHolidays Library
 
@@ -21,8 +21,8 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qttools-static
 
-BuildRequires:  kf5-kdelibs4support-devel >= 5.12
-BuildRequires:  kf5-kitemviews-devel >= 5.12
+BuildRequires:  kf5-kdelibs4support-devel >= 5.15
+BuildRequires:  kf5-kitemviews-devel >= 5.15
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -69,11 +69,13 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_includedir}/kholidays_version.h
 %{_kf5_includedir}/KHolidays
 %{_kf5_libdir}/libKF5Holidays.so
-%{_kf5_qtplugindir}/designer/holidays5widgets.so
 %{_kf5_libdir}/cmake/KF5Holidays
 %{_kf5_archdatadir}/mkspecs/modules/qt_KHolidays.pri
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version

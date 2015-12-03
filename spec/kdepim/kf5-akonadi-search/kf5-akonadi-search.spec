@@ -1,7 +1,7 @@
 %global framework akonadi-search
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        The Akonadi Search library and indexing agent
 
@@ -22,14 +22,16 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  xapian-core-devel
 
-BuildRequires:  kf5-ki18n-devel >= 5.12
-BuildRequires:  kf5-kconfig-devel >= 5.12
-BuildRequires:  kf5-kcrash-devel >= 5.12
+BuildRequires:  kf5-ki18n-devel >= 5.15
+BuildRequires:  kf5-kconfig-devel >= 5.15
+BuildRequires:  kf5-kcrash-devel >= 5.15
+BuildRequires:  kf5-krunner-devel >= 5.15
+BuildRequires:  kf5-kcmutils-devel >= 5.15
 
-BuildRequires:  kf5-akonadi-mime-devel >= 15.08
-BuildRequires:  kf5-kcontacts-devel >= 15.08
-BuildRequires:  kf5-kcalendarcore-devel >= 15.08
-BuildRequires:  kf5-kmime-devel >= 15.08
+BuildRequires:  kf5-akonadi-mime-devel >= 15.11.80
+BuildRequires:  kf5-kcontacts-devel >= 15.11.80
+BuildRequires:  kf5-kcalendarcore-devel >= 15.11.80
+BuildRequires:  kf5-kmime-devel >= 15.11.80
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -80,20 +82,29 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_libdir}/libKF5AkonadiSearchPIM.so.*
 %{_kf5_libdir}/libKF5AkonadiSearchCore.so.*
 %{_kf5_libdir}/libKF5AkonadiSearchXapian.so.*
+%{_kf5_libdir}/libKF5AkonadiSearchDebug.so.*
+
 %{_kf5_bindir}/akonadi_indexing_agent
 %{_kf5_datadir}/akonadi/agents/akonadiindexingagent.desktop
+%{_kf5_datadir}/kservices5/plasma-krunner-pimcontacts.desktop
+%{_kf5_datadir}/kservices5/plasma-krunner-pimcontacts_config.desktop
 %{_kf5_qtplugindir}/akonadi/*.so
+%{_kf5_qtplugindir}/kcm_krunner_pimcontacts.so
+%{_kf5_qtplugindir}/krunner_pimcontacts.so
 
 %files devel
 %{_kf5_libdir}/libKF5AkonadiSearchPIM.so
 %{_kf5_libdir}/libKF5AkonadiSearchCore.so
 %{_kf5_libdir}/libKF5AkonadiSearchXapian.so
+%{_kf5_libdir}/libKF5AkonadiSearchDebug.so
 %{_kf5_includedir}/akonadi_search_version.h
 %{_kf5_includedir}/AkonadiSearch
 %{_kf5_libdir}/cmake/KF5AkonadiSearch
-%{_kf5_archdatadir}/mkspecs/modules/qt_AkonadiSearch.pri
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version

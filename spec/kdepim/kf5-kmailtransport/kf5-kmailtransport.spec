@@ -1,7 +1,7 @@
 %global framework kmailtransport
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        The KMailTransport Library
 
@@ -22,14 +22,14 @@ BuildRequires:  qt5-qtbase-devel
 
 BuildRequires:  cyrus-sasl-devel
 
-BuildRequires:  kf5-kdelibs4support-devel >= 5.12
-BuildRequires:  kf5-kcmutils-devel >= 5.12
-BuildRequires:  kf5-kconfigwidgets-devel >= 5.12
-BuildRequires:  kf5-kwallet-devel >= 5.12
+BuildRequires:  kf5-kdelibs4support-devel >= 5.15
+BuildRequires:  kf5-kcmutils-devel >= 5.15
+BuildRequires:  kf5-kconfigwidgets-devel >= 5.15
+BuildRequires:  kf5-kwallet-devel >= 5.15
 
-BuildRequires:  kf5-kmime-devel >= 15.08
-BuildRequires:  kf5-akonadi-devel >= 15.08
-BuildRequires:  kf5-akonadi-mime-devel >= 15.08
+BuildRequires:  kf5-kmime-devel >= 15.11.80
+BuildRequires:  kf5-akonadi-devel >= 15.11.80
+BuildRequires:  kf5-akonadi-mime-devel >= 15.11.80
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -69,7 +69,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%license COPYING
+%license COPYING.LIB
 %{_kf5_libdir}/libKF5MailTransport.so.*
 %{_kf5_datadir}/config.kcfg/mailtransport.kcfg
 %{_kf5_qtplugindir}/kcm_mailtransport.so
@@ -84,5 +84,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version

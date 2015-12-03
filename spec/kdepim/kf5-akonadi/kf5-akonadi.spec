@@ -1,7 +1,7 @@
 %global framework akonadi
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        The Akonadi client libraries
 
@@ -14,7 +14,7 @@ URL:            https://projects.kde.org/projects/kde/kdepimlibs
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/%{framework}-%{version}.tar.xz
+Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/kdepimlibs-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
@@ -26,24 +26,24 @@ BuildRequires:  cyrus-sasl-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
 
-BuildRequires:  kf5-kitemviews-devel >= 5.12
-BuildRequires:  kf5-kio-devel >= 5.12
-BuildRequires:  kf5-kconfig-devel >= 5.12
-BuildRequires:  kf5-solid-devel >= 5.12
-BuildRequires:  kf5-kdelibs4support-devel >= 5.12
-BuildRequires:  kf5-kcompletion-devel >= 5.12
-BuildRequires:  kf5-kcodecs-devel >= 5.12
-BuildRequires:  kf5-ki18n-devel >= 5.12
-BuildRequires:  kf5-kdoctools-devel >= 5.12
+BuildRequires:  kf5-kitemviews-devel >= 5.15
+BuildRequires:  kf5-kio-devel >= 5.15
+BuildRequires:  kf5-kconfig-devel >= 5.15
+BuildRequires:  kf5-solid-devel >= 5.15
+BuildRequires:  kf5-kdelibs4support-devel >= 5.15
+BuildRequires:  kf5-kcompletion-devel >= 5.15
+BuildRequires:  kf5-kcodecs-devel >= 5.15
+BuildRequires:  kf5-ki18n-devel >= 5.15
+BuildRequires:  kf5-kdoctools-devel >= 5.15
 BuildRequires:  phonon-qt5-devel
 
-BuildRequires:  kf5-akonadi-server-devel >= 15.08
+BuildRequires:  kf5-akonadi-server-devel >= 15.11.80
 
-BuildRequires:  kf5-kcontacts-devel >= 15.08
-BuildRequires:  kf5-kcalendarcore-devel >= 15.08
-BuildRequires:  kf5-kmime-devel >= 15.08
-BuildRequires:  kf5-kldap-devel >= 15.08
-BuildRequires:  kf5-kmbox-devel >= 15.08
+BuildRequires:  kf5-kcontacts-devel >= 15.11.80
+BuildRequires:  kf5-kcalendarcore-devel >= 15.11.80
+BuildRequires:  kf5-kmime-devel >= 15.11.80
+BuildRequires:  kf5-kldap-devel >= 15.11.80
+BuildRequires:  kf5-kmbox-devel >= 15.11.80
 
 # There is a hardcoded strict version dependency between server and client
 # libraries with runtime check
@@ -164,7 +164,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{framework}-%{version}
+%setup -q -n kdepimlibs-%{version}
 
 %build
 mkdir -p %{_target_platform}
@@ -305,5 +305,8 @@ update-mime-database %{_kf5_datadir}/mime >& /dev/null
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version

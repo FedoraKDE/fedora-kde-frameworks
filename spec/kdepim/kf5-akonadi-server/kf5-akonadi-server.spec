@@ -14,7 +14,7 @@
 
 Name:           kf5-%{framework}
 Summary:        PIM Storage Service
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 
 License:        LGPLv2+
@@ -187,5 +187,8 @@ fi
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version, based on akonadi.spec

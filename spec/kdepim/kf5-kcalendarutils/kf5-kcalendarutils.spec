@@ -1,7 +1,7 @@
 %global framework kcalendarutils
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        The KCalendarUtils Library
 
@@ -18,16 +18,17 @@ Source0:        http://download.kde.org/%{stable}/applications/%{version}/src/kc
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
+BuildRequires:  grantlee-qt5-devel
 BuildRequires:  qt5-qtbase-devel
 
-BuildRequires:  kf5-kcoreaddons-devel >= 5.12
-BuildRequires:  kf5-kconfig-devel >= 5.12
-BuildRequires:  kf5-ki18n-devel >= 5.12
-BuildRequires:  kf5-kdelibs4support-devel >= 5.12
-BuildRequires:  kf5-kcodecs-devel >= 5.12
+BuildRequires:  kf5-kcoreaddons-devel >= 5.15
+BuildRequires:  kf5-kconfig-devel >= 5.15
+BuildRequires:  kf5-ki18n-devel >= 5.15
+BuildRequires:  kf5-kdelibs4support-devel >= 5.15
+BuildRequires:  kf5-kcodecs-devel >= 5.15
 
-BuildRequires:  kf5-kcalendarcore-devel >= 15.08
-BuildRequires:  kf5-kidentitymanagement-devel >= 15.08
+BuildRequires:  kf5-kcalendarcore-devel >= 15.11.80
+BuildRequires:  kf5-kidentitymanagement-devel >= 15.11.80
 
 Obsoletes:      kdepimlibs%{?_isa} < 15.08.0
 Conflicts:      kdepimlibs%{?_isa} < 15.08.0
@@ -69,6 +70,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %files
 %license COPYING
 %{_kf5_libdir}/libKF5CalendarUtils.so.*
+%{_kf5_libdir}/grantlee/5.0/kcalendar_grantlee_plugin.so
+%{_kf5_datadir}/kcalendar/templates/default/
 
 %files devel
 %{_kf5_includedir}/kcalutils_version.h
@@ -79,5 +82,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version

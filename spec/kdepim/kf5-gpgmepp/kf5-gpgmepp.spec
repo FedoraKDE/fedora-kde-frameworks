@@ -1,7 +1,7 @@
 %global framework gpgmepp
 
 Name:           kf5-%{framework}
-Version:        15.08.0
+Version:        15.11.80
 Release:        1%{?dist}
 Summary:        C++ wrapper and Qt integreation for GpgMe library
 
@@ -58,7 +58,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%license COPYING
+%license COPYING.LIB
 %{_kf5_libdir}/libKF5Gpgmepp.so.*
 %{_kf5_libdir}/libKF5Gpgmepp-pthread.so.*
 %{_kf5_libdir}/libKF5QGpgme.so.*
@@ -75,5 +75,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Thu Dec 03 2015 Jan Grulich <jgrulich@redhat.com> - 15.11.80-1
+- Update to 15.11.80
+
 * Mon Aug 24 2015 Daniel Vrátil <dvratil@redhat.com> - 15.08.0-1
 - Initial version
