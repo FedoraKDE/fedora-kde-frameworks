@@ -131,9 +131,10 @@ def buildInCopr(args, packages):
     print('Copr: %s' % args.copr)
     print('Build URLs: %s' % buildGroups)
     print('!! WARNING !! HAVE YOU DISABLED BUILD PUBLISHING?')
-    proceed = input('Proceed? [Y/n] ')
-    if proceed.lower() == 'n':
-        return
+    if not args.yes:
+        proceed = input('Proceed? [Y/n] ')
+        if proceed.lower() == 'n':
+            return
 
     for buildGroup in buildGroups:
         p = subprocess.Popen(['copr-cli', 'build', args.copr] + buildGroup)
@@ -156,9 +157,10 @@ def buildInKoji(args, packages):
     print('Branch: %s' % args.branch)
     print('Chainbuild package: %s/%s' % (args.pkgroot, lastPkg.name))
 
-    proceed = input('Proceed? [Y/n] ')
-    if proceed.lower() == 'n':
-        return
+    if not args.yes:
+        proceed = input('Proceed? [Y/n] ')
+        if proceed.lower() == 'n':
+            return
 
     repo = gitapi.Repo('%s/%s' % (args.pkgroot, lastPkg.name))
     repo.git_checkout(args.branch)
@@ -188,6 +190,7 @@ def main():
     parser.add_argument('--dist', action='store', default='fc22')
     parser.add_argument('--debug', action='store_true', default=False,
                         help='Debug dependency solver')
+    parser.add_argument('--yes', '-y', action='store_true', default=False)
 
     args = parser.parse_args()
 
