@@ -4,17 +4,13 @@
 
 %global kf5_version 5.13.0
 
-%if 0%{?fedora} > 23
-%global prison 1
-%endif
+Name:           plasma-workspace
+Summary:        Plasma workspace, applications and applets
+Version:        5.5.95
+Release:        1%{?dist}
 
-Name:    plasma-workspace
-Summary: Plasma workspace, applications and applets
-Version: 5.4.90
-Release: 1%{?dist}
-
-License: GPLv2+
-URL:     https://projects.kde.org/projects/kde/workspace/plasma-workspace
+License:        GPLv2+
+URL:            https://projects.kde.org/plasma-workspace
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -37,7 +33,8 @@ Patch10:        plasma-workspace-5.3.0-konsole-in-contextmenu.patch
 Patch11:        plasma-workspace-5.3.0-set-fedora-default-look-and-feel.patch
 # remove stuff we don't want or need, plus a minor bit of customization --rex
 Patch12:        startkde.patch
-Patch13:        plasma-workspace-5.4.2-prison-qt5.patch
+Patch13:        startplasmacompositor.patch
+Patch14:        plasma-workspace-5.5.0-plasmawayland_desktop.patch
 
 ## upstreamable Patches
 Patch1:         kde-runtime-4.9.0-installdbgsymbols.patch
@@ -45,7 +42,6 @@ Patch1:         kde-runtime-4.9.0-installdbgsymbols.patch
 ## upstream Patches
 
 ## master branch Patches
-Patch100: 0001-Proxy-Xembed-icons-to-SNI.patch
 
 # udev
 BuildRequires:  zlib-devel
@@ -87,7 +83,7 @@ BuildRequires:  libraw1394-devel
 BuildRequires:  gpsd-devel
 BuildRequires:  libqalculate-devel
 %if 0%{?prison}
-BuildRequires:  prison-qt5-devel
+BuildRequires:  kf5-prison-devel
 %endif
 
 BuildRequires:  qt5-qtbase-devel
@@ -122,14 +118,14 @@ BuildRequires:  kf5-networkmanager-qt-devel >= %{kf5_version}
 BuildRequires:  kf5-plasma-devel >= %{kf5_version}
 BuildRequires:  kf5-threadweaver-devel >= %{kf5_version}
 
-BuildRequires:  kf5-ksysguard-devel >= %{version}
-BuildRequires:  kf5-kwayland-devel >= %{version}
+BuildRequires:  kf5-ksysguard-devel >= %{majmin_ver}
+BuildRequires:  kf5-kwayland-devel >= %{majmin_ver}
 BuildRequires:  libwayland-client-devel >= 1.3.0
 BuildRequires:  libwayland-server-devel >= 1.3.0
-BuildRequires:  libkscreen-qt5-devel >= %{version}
-BuildRequires:  kscreenlocker-devel >= %{version}
+BuildRequires:  libkscreen-qt5-devel >= %{majmin_ver}
+BuildRequires:  kscreenlocker-devel >= %{majmin_ver}
 
-BuildRequires:  kwin-devel
+BuildRequires:  kwin-devel >= %{majmin_ver}
 
 BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
@@ -154,7 +150,6 @@ Requires:       libkworkspace5%{?_isa} = %{version}-%{release}
 
 # for libkdeinit5_*
 %{?kf5_kinit_requires}
-Requires:       kf5-kactivities
 Requires:       kf5-kded
 Requires:       kf5-kdoctools
 Requires:       qt5-qtquickcontrols
@@ -164,24 +159,21 @@ Requires:       kf5-baloo
 Requires:       kf5-kglobalaccel >= 5.7
 Requires:       kf5-kxmlrpcclient
 Requires:       khotkeys >= %{majmin_ver}
+Requires:       kactivitymanagerd >= %{version}
 
 # The new volume control for PulseAudio
 %if 0%{?fedora} > 22
 Requires:       plasma-pa
 %endif
 
-# TODO: This should go into -wayland subpackage alongside with other
-# wayland integration stuff --dvratil
-Requires:       kwayland-integration >= %{majmin_ver}
-
 # Without the platformtheme plugins we get broken fonts
 Requires:       kf5-frameworkintegration
 
 # For krunner
-Requires:       plasma-milou
+Requires:       plasma-milou >= %{majmin_ver}
 
 # Power management
-Requires:       powerdevil
+Requires:       powerdevil >= %{majmin_ver}
 
 # startkde
 Requires:       coreutils
@@ -212,18 +204,18 @@ Requires:       f23-kde-theme
 Requires:       systemd
 
 # SysTray support for Qt 4 apps
-Requires:       sni-qt
+Requires:       sni-qt%{?_isa}
 
 # kde(4) platform plugin
-Requires:       kde-platform-plugin
+Requires:       kde-platform-plugin%{?_isa}
 
 # Oxygen
 Requires:       oxygen-icon-theme
 Requires:       oxygen-sound-theme >= %{majmin_ver}
-Requires:       oxygen-fonts >= %{majmin_ver}
+Requires:       oxygen-fonts
 
 # PolicyKit authentication agent
-Requires:        polkit-kde
+Requires:        polkit-kde >= %{majmin_ver}
 
 # Require any plasmashell (plasma-desktop provides plasmashell(desktop))
 %if 0%{?bootstrap}
@@ -245,6 +237,10 @@ Provides:       kuiserver = %{version}-%{release}
 # (hopefully temporary) workaround for dnf Obsoletes bug
 # https://bugzilla.redhat.com/show_bug.cgi?id=1260394
 Requires: sddm-breeze = %{version}-%{release}
+
+# digitalclock applet
+#BuildRequires: iso-codes
+Requires: iso-codes
 
 %description
 Plasma 5 libraries and runtime components
@@ -268,6 +264,7 @@ Summary: Runtime libraries for %{name}
 Obsoletes: plasma-workspace < 5.4.2-2
 ## omit dep on main pkg for now, means we can avoid pulling in a
 ## huge amount of deps (including kde4) into buildroot -- rex
+#Requires:  %%{name}%%{?_isa} = %%{version}-%%{release}
 Requires:  %{name}-common = %{version}-%{release}
 %description libs
 %{summary}.
@@ -291,7 +288,7 @@ BuildArch: noarch
 Documentation and user manuals for %{name}.
 
 %package drkonqi
-Summary: DrKonqi KDE crash handler
+Summary: DrKonqi crash handler for KF5/Plasma5
 # when split out
 Obsoletes: plasma-workspace < 5.4.2-2
 Requires: %{name} = %{version}-%{release}
@@ -332,6 +329,18 @@ BuildArch: noarch
 %description -n sddm-breeze
 %{summary}.
 
+%package wayland
+Summary:        Wayland support for Plasma
+Requires:       kwin-wayland >= %{version}
+Requires:       plasma-workspace = %{version}-%{release}
+Requires:       kwayland-integration%{?_isa} >= %{majmin_ver}
+Requires:       xorg-x11-server-Xwayland
+Requires:       qt5-qtwayland%{?_isa}
+# startplasmacompositor deps
+Requires:       qt5-qttools
+%description wayland
+%{summary}.
+
 
 %prep
 %setup -q
@@ -344,9 +353,9 @@ sed -i -e "s|@DEFAULT_LOOKANDFEEL@|%{?default_lookandfeel}%{!?default_lookandfee
   shell/packageplugins/lookandfeel/lookandfeel.cpp
 %endif
 %patch12 -p1 -b .startkde
-%if 0%{?prison}
-%patch13 -p1 -b .prison-qt5
-%endif
+%patch13 -p1 -b .startplasmacompositor
+%patch14 -p1 -b .plasmawayland
+
 
 %build
 mkdir %{_target_platform}
@@ -425,7 +434,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %{_kf5_bindir}/plasmashell
 %{_kf5_bindir}/plasmawindowed
 %{_kf5_bindir}/startkde
-%{_kf5_bindir}/startplasmacompositor
 %{_kf5_bindir}/systemmonitor
 %{_kf5_bindir}/xembedsniproxy
 %{_kf5_libdir}/libkdeinit5_*.so
@@ -438,7 +446,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %{_kf5_plugindir}/kded/*.so
 %{_kf5_qmldir}/org/kde/*
 %{_libexecdir}/ksyncdbusenv
-%{_libexecdir}/startplasma
 %{_kf5_datadir}/ksmserver/
 %{_kf5_datadir}/ksplash/
 %{_kf5_datadir}/plasma/plasmoids/
@@ -481,8 +488,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/{plasma-windowed,org.
 %files doc
 %license COPYING.DOC
 %lang(en) %{_docdir}/HTML/en/klipper/
-%lang(ca) %{_docdir}/HTML/ca/klipper/
 %lang(en) %{_docdir}/HTML/en/kcontrol/screenlocker
+%lang(ca) %{_docdir}/HTML/ca/klipper/
 %lang(ca) %{_docdir}/HTML/ca/kcontrol/screenlocker
 
 %post -n libkworkspace5 -p /sbin/ldconfig
@@ -553,10 +560,99 @@ fi
 %{_datadir}/sddm/themes/breeze/
 %{_datadir}/sddm/themes/01-breeze-fedora/
 
+%files wayland
+%{_kf5_bindir}/startplasmacompositor
+%{_libexecdir}/startplasma
+%{_datadir}/wayland-sessions/plasmawayland.desktop
+
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Wed Mar 03 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-2
+- Upstream respun tarball
+
+* Tue Mar 02 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Mon Feb 29 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-6
+- Requires: iso-codes (digitalclock applet)
+
+* Mon Feb 29 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-5
+- pull in some 5.5 branch fixes
+
+* Mon Feb 22 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-4
+- -wayland: Requires: xorg-x11-server-Xwayland
+
+* Tue Feb 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-3
+- backport xembedsniproxy fixes
+
+* Thu Feb 04 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-2
+- backport systray applets not shown workaround (kde#352055)
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Mon Jan 25 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-6
+- pull in upstream fixes (notifications/xembedsniproxy)
+
+* Mon Jan 11 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-5
+- -wayland: Requires: qt5-qtools (for qdbus-qt5)
+
+* Mon Jan 11 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.5.3-4
+- startplasmacompositor.patch (#1297418)
+- disable bootstrap
+
+* Sun Jan 10 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-3
+- drop hacked klipper/prison support (until we have kf5-prison available properly)
+
+* Sat Jan 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-2
+- pull in upstream fixes (notifications,xembedsniproxy)
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-2
+- use %%majmin_ver for most plasma-related deps
+- tighten plugin deps using %%_isa
+- update URL
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Tue Dec 15 2015 Than Ngo <than@redhat.com> - 5.5.0-5
+- enable bootstrap for secondary arch
+
+* Mon Dec 14 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-4
+- proper upstream fix for #356415 (review #126331)
+
+* Sun Dec 13 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.0-3
+- latest upstream fixes (#1291100)
+- revert commit causing regression'ish kde #356415
+- drop kwayland-integration from main pkg (only in -wayland subpkg)
+
+* Sat Dec 05 2015 Daniel Vrátil <dvraitl@fedoraproject.org> - 5.5.0-2
+- remove version dependency on oxygen-fonts, because it's not being released anymore
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
+
+* Tue Nov 17 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.3-4
+- Unhelpful summary/description for drkonqi packages (#1282810)
+
+* Mon Nov 16 2015 Jan Grulich <jgrulich@redhat.com> - 5.4.3-3
+- Fix changing of visibility for system tray entries
+  Resolves: kdebz#355404
+
+* Wed Nov 11 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.3-2
+- refresh xembedsniproxy support (#1280457)
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

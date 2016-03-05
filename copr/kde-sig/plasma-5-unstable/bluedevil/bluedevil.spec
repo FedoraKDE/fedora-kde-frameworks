@@ -1,6 +1,6 @@
 Name:           bluedevil
 Summary:        Bluetooth stack for KDE
-Version: 5.4.90
+Version: 5.5.95
 Release: 1%{?dist}
 
 License:        GPLv2+
@@ -60,10 +60,11 @@ pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make %{?_smp_flags} -C %{_target_platform}
 
 
 %install
+
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang bluedevil5  --with-qt --all-name
 
@@ -107,8 +108,32 @@ update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

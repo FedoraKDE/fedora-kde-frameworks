@@ -6,7 +6,7 @@
 %endif
 
 Name:    kwin
-Version: 5.4.90
+Version: 5.5.95
 Release: 1%{?dist}
 Summary: KDE Window manager
 
@@ -14,7 +14,7 @@ Summary: KDE Window manager
 # scripts/enforcedeco/contents/code/main.js
 # KDE e.V. may determine that future GPL versions are accepted
 License: GPLv2 or GPLv3
-URL:     https://projects.kde.org/projects/kde/workspace/kwin
+URL:     https://projects.kde.org/kwin
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -31,7 +31,6 @@ Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.
 ## upstreamable patches
 
 # Base
-BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
 
@@ -61,7 +60,7 @@ BuildRequires:  libepoxy-devel
 
 # Wayland (optional)
 %if 0%{?wayland}
-BuildRequires:  kf5-kwayland-devel >= %{version}
+BuildRequires:  kf5-kwayland-devel >= %{majmin_ver}
 BuildRequires:  libwayland-client-devel
 BuildRequires:  libwayland-server-devel
 BuildRequires:  libwayland-cursor-devel
@@ -93,12 +92,14 @@ BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kdoctools-devel
 BuildRequires:  kf5-kdeclarative-devel
 BuildRequires:  kf5-kiconthemes-devel
+BuildRequires:  kf5-kidletime-devel
 
 BuildRequires:  kdecoration-devel >= %{majmin_ver}
 BuildRequires:  kscreenlocker-devel >= %{majmin_ver}
 
 ## Runtime deps
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 
 Requires:       kf5-filesystem
 # Runtime-only dependency for effect video playback
@@ -124,6 +125,7 @@ Provides: firstboot(windowmanager) = kwin
 %package        wayland
 Summary:        KDE Window Manager with experimental Wayland support
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       kwayland-integration%{?_isa} >= %{version}
 # libkdeinit5_kwin*
 %{?kf5_kinit_requires}
@@ -131,13 +133,18 @@ Requires:       kwayland-integration%{?_isa} >= %{version}
 %{summary}.
 %endif
 
+%package        common
+Summary:        Common files for KWin X11 and KWin Wayland
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+%description    common
+%{summary}.
+
 %package        libs
 Summary:        KWin runtime libraries
 # Before kwin-libs was split out from kde-workspace into a subpackage
 Conflicts:      kde-workspace-libs%{?_isa} < 4.11.14-2
 %if 0%{?wayland}
-# = or >= ? play safe, go with latter for now -- rex
-Requires:       kf5-kwayland%{?_isa} >= %{version}
+Requires:       kf5-kwayland%{?_isa} >= %{majmin_ver}
 %endif
 %description    libs
 %{summary}.
@@ -145,6 +152,7 @@ Requires:       kf5-kwayland%{?_isa} >= %{version}
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       kf5-kconfig-devel
 Requires:       kf5-kservice-devel
 Requires:       kf5-kwindowsystem-devel
@@ -194,10 +202,12 @@ fi
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
-%files -f kwin5.lang
+%files
 %{_bindir}/kwin
 %{_bindir}/kwin_x11
 %{_kf5_libdir}/libkdeinit5_kwin_x11.so
+
+%files common -f kwin5.lang
 %{_kf5_libdir}/libkdeinit5_kwin_rules_dialog.so
 %{_datadir}/kwin
 %{_kf5_qtplugindir}/*.so
@@ -228,6 +238,7 @@ fi
 %{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandWaylandBackend.so
 %{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandX11Backend.so
 %{_kf5_qtplugindir}/org.kde.kwin.waylandbackends/KWinWaylandVirtualBackend.so
+%{_kf5_plugindir}/org.kde.kidletime.platforms/KF5IdleTimeKWinWaylandPrivatePlugin.so
 %endif
 
 %post libs -p /sbin/ldconfig
@@ -251,13 +262,44 @@ fi
 %{_includedir}/kwin*.h
 
 %files doc
-%doc COMPLIANCE COPYING COPYING.DOC HACKING README
+%doc COMPLIANCE HACKING README
+%license COPYING COPYING.DOC
 %{_docdir}/HTML/en/kcontrol/
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 14 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-2
+- -BR: cmake, use %%license
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.2-2
+- update URL, use %%majmin_ver for more plasma-related deps
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

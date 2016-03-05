@@ -1,7 +1,6 @@
-
-Name:    plasma-nm
-Summary: Plasma for managing network connections
-Version: 5.4.90
+Name:           plasma-nm
+Summary:        Plasma for managing network connections
+Version: 5.5.95
 Release: 1%{?dist}
 
 License: LGPLv2+ and GPLv2+
@@ -204,7 +203,7 @@ make install/fast  DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang plasmanetworkmanagement_sstpui
 
 # migrate to nm plasmoid
-install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora-plasma-nm.js
+#install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora-plasma-nm.js
 
 
 %post -p /sbin/ldconfig
@@ -223,12 +222,11 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 %{_datadir}/plasma/plasmoids/org.kde.plasma.networkmanagement/contents
 %{_datadir}/plasma/plasmoids/org.kde.plasma.networkmanagement/metadata.desktop
 %{_kf5_datadir}/kservices5/plasma-applet-org.kde.plasma.networkmanagement.desktop
-%{_datadir}/plasma/updates/*.js
+#{_datadir}/plasma/updates/*.js
 # plasma-nm notifications
 %{_kf5_datadir}/knotifications5/networkmanagement.notifyrc
 # plasma-nm kded
-%{_kf5_qtplugindir}/kded_networkmanagement.so
-%{_kf5_datadir}/kservices5/kded/networkmanagement.desktop
+%{_kf5_plugindir}/kded/networkmanagement.so
 # plasma-nm other
 %{_kf5_datadir}/kservicetypes5/plasma-networkmanagement-vpnuiplugin.desktop
 
@@ -275,8 +273,42 @@ install -m644 -p -D %{SOURCE10} %{buildroot}%{_datadir}/plasma/updates/01-fedora
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Mon Dec 14 2015 Jan Grulich <jgrulich@redhat.com> - 5.5.0-2
+- Fix openconnect dialog layout (kdebz#356587, kdebz#356622)
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Dec 02 2015 Jan Grulich <jgrulich@redhat.com> - 5.4.95-2
+- Fix openconnect failure when accepting certificate
+  Resolves: bz#1285482
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
+
+* Thu Nov 19 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.4.3-2
+- drop updates script, it's (probably) no longer needed, and doesn't work where it is anyway
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@redhat.com> - 5.4.3-1
 - Plasma 5.4.3

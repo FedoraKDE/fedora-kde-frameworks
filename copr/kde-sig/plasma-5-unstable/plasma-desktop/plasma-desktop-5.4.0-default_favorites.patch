@@ -1,21 +1,13 @@
-diff --git a/applets/kickoff/core/favoritesmodel.cpp b/applets/kickoff/core/favoritesmodel.cpp
-index be47347..423c95c 100644
---- a/applets/kickoff/core/favoritesmodel.cpp
-+++ b/applets/kickoff/core/favoritesmodel.cpp
-@@ -133,13 +133,14 @@ public:
-         // Application releases (i.e. find one that is installed regardless of
-         // whether it uses the current or a previous name).
-         // BUG: 351550
--        applications  << browser
-+        applications  << QStringLiteral("firefox")
-                       << QStringLiteral("org.kde.kontact") << QStringLiteral("kontact")
-                       << QStringLiteral("org.kde.systemsettings") << QStringLiteral("systemsettings")
-                       << QStringLiteral("org.kde.dolphin") << QStringLiteral("dolphin")
-                       << QStringLiteral("org.kde.ktpcontactlist") << QStringLiteral("ktp-contactlist")
-                       << QStringLiteral("org.kde.kate") << QStringLiteral("kate")
--                      << QStringLiteral("org.kde.discover") << QStringLiteral("muon-discover") << QStringLiteral("discover");
-+                      << QStringLiteral("org.kde.konsole")
-+                      << QStringLiteral("apper");
- 
-         QList<QString> desktopFiles;
- 
+diff --git a/applets/kickoff/package/contents/config/main.xml b/applets/kickoff/package/contents/config/main.xml
+index afd0b6f..aa55c49 100644
+--- a/applets/kickoff/package/contents/config/main.xml
++++ b/applets/kickoff/package/contents/config/main.xml
+@@ -16,7 +16,7 @@
+       <default>start-here-kde</default>
+     </entry>
+     <entry name="favorites" type="StringList">
+-      <default>preferred://browser,kontact.desktop,systemsettings.desktop,org.kde.dolphin.desktop,ktp-contactlist.desktop,org.kde.kate.desktop,org.kde.discover</default>
++      <default>firefox,org.kde.kontact.desktop,kontact.desktop,org.kde.systemsettings.desktop,systemsettings.desktop,org.kde.dolphin.desktop,dolphin.desktop,org.kde.ktpcontactlist.desktop,ktpcontactlist.desktop,org.kde.kate.desktop,kate.desktop,apper.desktop,systemsettings.desktop,org.kde.dolphin.desktop,ktp-contactlist.desktop,org.kde.kate.desktop,org.kde.discover</default>
+     </entry>
+     <entry name="systemApplications" type="StringList">
+       <default>systemsettings.desktop</default>

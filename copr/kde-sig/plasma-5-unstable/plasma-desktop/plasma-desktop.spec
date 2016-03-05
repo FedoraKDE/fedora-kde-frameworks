@@ -1,13 +1,13 @@
 
-%global kf5_version 5.13.0
+%global kf5_version 5.19.0
 
 Name:    plasma-desktop
 Summary: Plasma Desktop shell
-Version: 5.4.90
+Version: 5.5.95
 Release: 1%{?dist}
 
 License: GPLv2+ and (GPLv2 or GPLv3)
-URL:     https://projects.kde.org/projects/kde/workspace/plasma-desktop
+URL:     https://projects.kde.org/plasma-desktop
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -26,13 +26,14 @@ Patch100: plasma-desktop-5.4.0-default_favorites.patch
 Patch101: plasma-desktop-5.4.0-default_favorites_f22.patch
 # Default to Folder containment (rather than Desktop)
 Patch102: plasma-desktop-fedora_layout.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1250238
-# http://bugs.kde.org/show_bug.cgi?id=348678
-Patch103: plasma-desktop-C_locale.patch
 
 ## upstream patches
 
+## upstream patches (master branch)
+
 ## upstreamable patches
+# missing '#include <config-workspace.h>' means PK never used
+Patch50: plasma-desktop-PackageKit.patch
 
 BuildRequires:  libusb-devel
 BuildRequires:  fontconfig-devel
@@ -55,12 +56,13 @@ BuildRequires:  phonon-qt5-devel
 # PackageKit-Qt 5 is not avaialble on F20, because PackageKit is too old there
 %if 0%{?fedora} >= 21
 BuildRequires:  PackageKit-Qt5-devel
-Recommends: muon-discover
+Recommends: muon-discover >= %{majmin_ver}
 %endif
 
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-plasma-devel >= %{kf5_version}
+Requires:       kf5-plasma >= %{kf5_version}
 BuildRequires:  kf5-kdoctools-devel >= %{kf5_version}
 BuildRequires:  kf5-ki18n-devel >= %{kf5_version}
 BuildRequires:  kf5-kcmutils-devel >= %{kf5_version}
@@ -95,8 +97,13 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 
+# xorg-x11 doesn't have hw_server and disable for s390/s390x
+%ifnarch s390 s390x
 # for kcm_touchpad
 BuildRequires:  xorg-x11-drv-synaptics-devel
+# KCM touchpad has been merged to plasma-desktop in 5.3
+Provides:       kcm_touchpad = %{version}-%{release}
+Obsoletes:      kcm_touchpad < 5.3.0
 # for xserver-properties
 BuildRequires:  xorg-x11-server-devel
 Requires:       kf5-kded
@@ -105,7 +112,6 @@ Requires:       kf5-kded
 Requires:       iso-codes
 
 # for kcm_input
-%if 0%{?fedora} > 20
 BuildRequires:  xorg-x11-drv-evdev-devel
 %endif
 
@@ -113,10 +119,8 @@ BuildRequires:  xorg-x11-drv-evdev-devel
 Requires:       plasma-workspace >= %{majmin_ver}
 Requires:       kf5-filesystem >= %{kf5_version}
 
-# Install breeze
-Requires:       plasma-breeze >= %{majmin_ver}
-Requires:       breeze-icon-theme >= %{majmin_ver}
-Requires:       kde-style-breeze >= %{majmin_ver}
+# Qt Integration (brings in Breeze)
+Requires:       plasma-integration >= %{majmin_ver}
 
 # Install systemsettings, full set of KIO slaves and write() notifications
 Requires:       plasma-systemsettings >= %{majmin_ver}
@@ -128,13 +132,6 @@ Requires:       kwin >= %{majmin_ver}
 
 # kickoff -> edit applications (#1229393)
 Requires:       kmenuedit >= %{majmin_ver}
-
-# kickoff -> uninstall feature
-Recommends:     muon-discover >= %{majmin_ver}
-
-# KCM touchpad has been merged to plasma-desktop in 5.3
-Provides:       kcm_touchpad = %{version}-%{release}
-Obsoletes:      kcm_touchpad < 5.3.0
 
 # Virtual provides for plasma-workspace
 Provides:       plasmashell(desktop) = %{version}-%{release}
@@ -162,18 +159,21 @@ BuildArch: noarch
 %prep
 %setup -q
 
+%patch50 -p1 -b .PackageKit
+
 %if 0%{?fedora} > 22
 %patch100 -p1 -b .default_favorites
 %else
 %patch101 -p1 -b .default_favorites_f22
 %endif
 %patch102 -p1 -b .fedora_layout
-%if 0%{?fedora} < 24
-%patch103 -p1 -b .C_locale
-%endif
 
 
 %build
+%ifarch s390 %{arm}
+# Decrease debuginfo verbosity to reduce memory consumption even more
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+%endif
 
 mkdir %{_target_platform}
 pushd %{_target_platform}
@@ -195,9 +195,9 @@ mkdir -p %{buildroot}%{_datadir}/kde4/apps/konqsidebartng/virtual_folders/servic
 cp %{buildroot}%{_datadir}/konqsidebartng/virtual_folders/services/fonts.desktop \
    %{buildroot}%{_datadir}/kde4/apps/konqsidebartng/virtual_folders/services
 
-# create own `kf5-config --path data`/plasma/shells/org.kde.plasma.desktop/updates/
-# per https://techbase.kde.org/KDE_System_Administration/PlasmaTwoDesktopScripting#Running_Scripts
-mkdir -p %{buildroot}{_datadir}/plasma/shells/org.kde.plasma.desktop/updates/
+# rename script to force it to run again (initial 5.5.0 version was buggy)
+mv %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js \
+   %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc-1.js
 
 ## unpackaged files
 rm -rfv %{buildroot}%{_datadir}/kdm/pics/users/
@@ -223,9 +223,6 @@ fi
 
 %files -f plasmadesktop5.lang
 %license COPYING*
-%if 0%{?fedora} > 20
-%{_bindir}/kapplymousetheme
-%endif
 %{_bindir}/kaccess
 %{_bindir}/kfontinst
 %{_bindir}/kfontview
@@ -249,10 +246,20 @@ fi
 %{_kf5_plugindir}/kded/*.so
 %{_kf5_qmldir}/org/kde/plasma/activityswitcher
 %{_kf5_qmldir}/org/kde/private/desktopcontainment/*
+%{_kf5_qmldir}/org/kde/activities/settings/
 %{_kf5_datadir}/plasma/*
-%if 0%{?fedora} > 20
+%ifnarch s390 s390x
+%{_bindir}/kapplymousetheme
 %{_kf5_datadir}/kcminput
+# touchpad
+%{_kf5_datadir}/kservices5/kded/touchpad.desktop
+%{_bindir}/kcm-touchpad-list-devices
+%{_kf5_qtplugindir}/plasma/dataengine/plasma_engine_touchpad.so
+%{_datadir}/config.kcfg/touchpad.kcfg
+%{_datadir}/config.kcfg/touchpaddaemon.kcfg
+%{_datadir}/dbus-1/interfaces/org.kde.touchpad.xml
 %endif
+%{_kf5_qtplugindir}/plasma/dataengine/plasma_engine_kimpanel.so
 %{_kf5_datadir}/color-schemes
 %{_kf5_datadir}/kconf_update/*
 %{_kf5_datadir}/kdisplay
@@ -266,6 +273,7 @@ fi
 %{_kf5_datadir}/kpackage/kcms/*
 %{_datadir}/konqsidebartng/virtual_folders/services/fonts.desktop
 %{_datadir}/kde4/apps/konqsidebartng/virtual_folders/services/fonts.desktop
+%{_kf5_datadir}/kf5/kactivitymanagerd/workspace/
 %{_kf5_datadir}/kcmsolidactions
 %{_kf5_datadir}/solid/devices/*.desktop
 %config %{_sysconfdir}/dbus-1/system.d/*.conf
@@ -273,7 +281,6 @@ fi
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservices5/ServiceMenus/installfont.desktop
 %{_kf5_datadir}/kservices5/fonts.protocol
-%{_kf5_datadir}/kservices5/kded/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
 %{_kf5_datadir}/kxmlgui5/kfontview
 %{_kf5_datadir}/kxmlgui5/kfontinst
@@ -284,12 +291,6 @@ fi
 %{_datadir}/dbus-1/system-services/*.service
 %{_datadir}/polkit-1/actions/org.kde.fontinst.policy
 %{_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
-# kcm_touchpad
-%{_bindir}/kcm-touchpad-list-devices
-%{_kf5_qtplugindir}/plasma/dataengine/plasma_engine_touchpad.so
-%{_datadir}/config.kcfg/touchpad.kcfg
-%{_datadir}/config.kcfg/touchpaddaemon.kcfg
-%{_datadir}/dbus-1/interfaces/org.kde.touchpad.xml
 
 %files doc
 %lang(ca) %{_docdir}/HTML/ca/kcontrol/
@@ -300,7 +301,7 @@ fi
 %lang(en) %{_docdir}/HTML/en/kfontview/
 %lang(en) %{_docdir}/HTML/en/knetattach/
 %lang(en) %{_docdir}/HTML/en/plasma-desktop/
-%lang(it) %{_docdir}/HTML/it/plasma-desktop/
+%lang(it) %{_docdir}/HTML/it/plasma-desktop
 %lang(nl) %{_docdir}/HTML/nl/plasma-desktop/
 %lang(pt_BR) %{_docdir}/HTML/pt_BR/plasma-desktop/
 %lang(ru) %{_docdir}/HTML/ru/plasma-desktop/
@@ -309,8 +310,63 @@ fi
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Mon Feb 29 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-4
+- (backport) wrong breeze icons used ... in taskmanager (#359387)
+
+* Fri Feb 26 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-3
+- fix kickoff "right click => remove app" packagekit integration (#359837)
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Sat Jan 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-3
+- pull in some upstream patches, simplify/consolidate s390 blocks
+
+* Sat Jan 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.3-2
+- Fix font preview (#1208229, kde#336089)
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.2-2
+- update URL, old sources
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Wed Dec 16 2015 Than Ngo <than@redhat.com> - 5.5.0-6
+- add workaround for "virtual memory exhausted: Cannot allocate memory" on s390
+- exclude touchpad for s390/s390x
+
+* Tue Dec 15 2015 Than Ngo <than@redhat.com> - 5.5.0-5
+- fix build failure on s390/s390x
+
+* Wed Dec 09 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-4
+- omit env hack, rename plasma update script instead
+
+* Tue Dec 08 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-3
+- force plasma's obsolete_kickoffrc.js to run again
+
+* Tue Dec 08 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-2
+- backport favorites migration fix (#1289709)
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

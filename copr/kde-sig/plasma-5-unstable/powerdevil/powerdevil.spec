@@ -1,10 +1,10 @@
 Name:           powerdevil
-Version:        5.4.90
+Version:        5.5.95
 Release:        1%{?dist}
 Summary:        Manages the power consumption settings of a Plasma Shell
 
 License:        GPLv2+
-URL:            https://projects.kde.org/projects/kde/workspace/powerdevil
+URL:            https://projects.kde.org/powerdevil
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -14,89 +14,127 @@ URL:            https://projects.kde.org/projects/kde/workspace/powerdevil
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
-Patch0:         powerdevil-enable-upower.patch
+## upstream patches
 
-BuildRequires:  libxcb-devel
-BuildRequires:  xcb-util-keysyms-devel
-BuildRequires:  xcb-util-image-devel
-BuildRequires:  xcb-util-wm-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  systemd-devel
+# TODO: document why this is (still) needed and not yet upstreamed?  -- rex
+Patch100:       powerdevil-enable-upower.patch
 
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtx11extras-devel
-
-BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
-
+BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kauth-devel
-BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-solid-devel
-BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kglobalaccel-devel
+BuildRequires:  kf5-ki18n-devel
+BuildRequires:  kf5-kidletime-devel
 BuildRequires:  kf5-kio-devel
+BuildRequires:  kf5-knotifyconfig-devel
+BuildRequires:  kf5-kwayland-devel
 BuildRequires:  kf5-kwindowsystem-devel
 BuildRequires:  kf5-plasma-devel
-BuildRequires:  kf5-knotifyconfig-devel
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kactivities-devel
-
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  kf5-solid-devel
 BuildRequires:  libkscreen-qt5-devel
-BuildRequires:  kf5-kwayland-devel
+BuildRequires:  libxcb-devel
+BuildRequires:  libXrandr-devel
 BuildRequires:  plasma-workspace-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  systemd-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  xcb-util-keysyms-devel
+BuildRequires:  xcb-util-wm-devel
 
 Requires:       kf5-filesystem
+%{?_qt5:Requires: %{_qt5}%{?_isa} >= %{_qt5_version}}
 
 %description
 Powerdevil is an utility for powermanagement. It consists
 of a daemon (a KDED module) and a KCModule for its configuration.
 
-%prep
-%setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .enable-upower
+%prep
+%autosetup -n %{name}-%{version} -p1
+
 
 %build
-
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
+
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
-%find_lang powerdevil5 --with-qt --with-kde --all-name
+%find_lang powerdevil5 --with-qt --all-name
 
 # Don't bother with -devel
 rm %{buildroot}/%{_libdir}/libpowerdevil{configcommonprivate,core,ui}.so
 
-%post -p /sbin/ldconfig
 
+%post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files -f powerdevil5.lang
-%doc COPYING
-%config %{_sysconfdir}/dbus-1/system.d/org.kde.powerdevil.backlighthelper.conf
-%{_libdir}/libpowerdevilconfigcommonprivate.so.*
-%{_libdir}/libpowerdevilcore.so.*
-%{_libdir}/libpowerdevilui.so.*
+%license COPYING
+%{_sysconfdir}/dbus-1/system.d/org.kde.powerdevil.backlighthelper.conf
+%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
+%{_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
+%{_kf5_libexecdir}/kauth/backlighthelper
+%{_kf5_libdir}/libpowerdevilconfigcommonprivate.so.*
+%{_kf5_libdir}/libpowerdevilcore.so.*
+%{_kf5_libdir}/libpowerdevilui.so.*
 %{_kf5_qtplugindir}/*.so
 %{_kf5_plugindir}/kded/*.so
-%{_kf5_libexecdir}/kauth/backlighthelper
-%{_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 %{_kf5_datadir}/knotifications5/powerdevil.notifyrc
 %{_kf5_datadir}/kservices5/*.desktop
 %{_kf5_datadir}/kservicetypes5/*.desktop
-%{_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
-%{_datadir}/doc/HTML/en/kcontrol/powerdevil
+%dir %{_kf5_docdir}/HTML/en/kcontrol/
+%{_kf5_docdir}/HTML/en/kcontrol/powerdevil/
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.5.3-2
+- backport https://git.reviewboard.kde.org/r/126721/
+- -BR: cmake
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Mon Dec 14 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-3
+- .spec cosmetics, pull in upstream fixed, minimal qt5 dep
+
+* Mon Dec 14 2015 Jan Grulich <jgrulich@redhat.com> - 5.5.0-2
+- Rebuild
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
+
+* Wed Nov 18 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.4.3-2
+- .spec cosmetics
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

@@ -2,13 +2,13 @@
 
 %global  wayland_min_version 1.3
 
-Name:    kf5-%{framework}
-Version: 5.4.90
-Release: 1%{?dist}
-Summary: KDE Frameworks 5 library that wraps Client and Server Wayland libraries
+Name:           kf5-%{framework}
+Version:        5.5.95
+Release:        1%{?dist}
+Summary:        KDE Frameworks 5 library that wraps Client and Server Wayland libraries
 
-License: GPLv2+
-URL:     https://projects.kde.org/projects/kde/workspace/kwayland
+License:        GPLv2+
+URL:            https://projects.kde.org/kwayland
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -19,7 +19,6 @@ URL:     https://projects.kde.org/projects/kde/workspace/kwayland
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/kwayland-%{version}.tar.xz
 
 BuildRequires:  kf5-rpm-macros
-BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  libwayland-client-devel >= %{wayland_min_version}
@@ -63,7 +62,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING.LIB
+%license COPYING.LIB
 %{_sysconfdir}/xdg/org_kde_kwayland.categories
 %{_kf5_libdir}/libKF5WaylandClient.so.*
 %{_kf5_libdir}/libKF5WaylandServer.so.*
@@ -79,8 +78,35 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 18 2016 Rex Dieter <rdieter@fedoraproject.org> 5.5.4-3
+- cleanup, update URL, use %%license
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

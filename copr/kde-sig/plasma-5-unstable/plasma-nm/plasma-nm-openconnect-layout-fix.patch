@@ -1,0 +1,76 @@
+From 28c4b2e1b868427201cecb6d01cdb45ebfd157a0 Mon Sep 17 00:00:00 2001
+From: Jan Grulich <jgrulich@redhat.com>
+Date: Mon, 14 Dec 2015 10:18:03 +0100
+Subject: Fix openconnect dialog
+
+Previous patch removing "Show passwords" checkbox changed layout order and
+we forgot to address that.
+
+Patch from Simon Munton
+
+BUG:356587
+BUG:356622
+
+diff --git a/vpn/openconnect/openconnectauth.cpp b/vpn/openconnect/openconnectauth.cpp
+index 81d5ea5..1602fb8 100644
+--- a/vpn/openconnect/openconnectauth.cpp
++++ b/vpn/openconnect/openconnectauth.cpp
+@@ -82,6 +82,7 @@ public:
+     bool formGroupChanged;
+     int cancelPipes[2];
+     QList<QPair<QString, int> > serverLog;
++    int passwordFormIndex;
+ 
+     enum LogLevels {Error = 0, Info, Debug, Trace};
+ };
+@@ -476,6 +477,7 @@ void OpenconnectAuthWidget::processAuthForm(struct oc_auth_form *form)
+         }
+     }
+     d->ui.loginBoxLayout->addLayout(layout);
++    d->passwordFormIndex = d->ui.loginBoxLayout->count() - 1;
+ 
+     QDialogButtonBox *box = new QDialogButtonBox(this);
+     QPushButton *btn = box->addButton(QDialogButtonBox::Ok);
+@@ -585,7 +587,7 @@ void OpenconnectAuthWidget::formLoginClicked()
+     Q_D(OpenconnectAuthWidget);
+ 
+     const int lastIndex = d->ui.loginBoxLayout->count() - 1;
+-    QLayout *layout = d->ui.loginBoxLayout->itemAt(lastIndex - 2)->layout();
++    QLayout *layout = d->ui.loginBoxLayout->itemAt(d->passwordFormIndex)->layout();
+     struct oc_auth_form *form = (struct oc_auth_form *) d->ui.loginBoxLayout->itemAt(lastIndex)->widget()->property("openconnect_form").value<quintptr>();
+ 
+     for (int i = 0; i < layout->count(); i++) {
+@@ -674,21 +676,3 @@ void OpenconnectAuthWidget::viewServerLogToggled(bool toggled)
+         d->ui.serverLogBox->setSizePolicy(policy);
+     }
+ }
+-
+-void OpenconnectAuthWidget::passwordModeToggled(bool toggled)
+-{
+-    Q_D(OpenconnectAuthWidget);
+-    const int lastIndex = d->ui.loginBoxLayout->count() - 1;
+-    QLayout *layout = d->ui.loginBoxLayout->itemAt(lastIndex - 2)->layout();
+-    for (int i = 0; i < layout->count(); i++) {
+-        QLayoutItem *item = layout->itemAt(i);
+-        QWidget *widget = item->widget();
+-        if (widget && widget->property("openconnect_opt").isValid()) {
+-            struct oc_form_opt *opt = (struct oc_form_opt *) widget->property("openconnect_opt").value<quintptr>();
+-            if (opt->type == OC_FORM_OPT_PASSWORD) {
+-                PasswordField *le = qobject_cast<PasswordField*>(widget);
+-                le->setPasswordMode(!toggled);
+-            }
+-        }
+-    }
+-}
+diff --git a/vpn/openconnect/openconnectauth.h b/vpn/openconnect/openconnectauth.h
+index 295cf0d..1a8a574 100644
+--- a/vpn/openconnect/openconnectauth.h
++++ b/vpn/openconnect/openconnectauth.h
+@@ -61,7 +61,6 @@ private Q_SLOTS:
+     void formGroupChanged();
+     void workerFinished(const int&);
+     void viewServerLogToggled(bool);
+-    void passwordModeToggled(bool);
+     void connectHost();
+ };
+ 

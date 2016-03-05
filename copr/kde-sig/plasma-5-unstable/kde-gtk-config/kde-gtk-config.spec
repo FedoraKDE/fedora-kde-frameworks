@@ -1,6 +1,6 @@
 Name:           kde-gtk-config
 Summary:        Configure the appearance of GTK apps in KDE
-Version: 5.5.5
+Version: 5.5.95
 Release: 1%{?dist}
 
 # KDE e.V. may determine that future GPL versions are accepted
@@ -81,6 +81,9 @@ fi
 
 
 %changelog
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
 * Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
 - Plasma 5.5.5
 

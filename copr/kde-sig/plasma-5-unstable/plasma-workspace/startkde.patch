@@ -1,5 +1,5 @@
 diff --git a/startkde/startkde.cmake b/startkde/startkde.cmake
-index edf61f0..9854088 100644
+index 37ab5cd..559949a 100644
 --- a/startkde/startkde.cmake
 +++ b/startkde/startkde.cmake
 @@ -16,25 +16,22 @@ trap 'echo GOT SIGHUP' HUP
@@ -61,7 +61,7 @@ index edf61f0..9854088 100644
 -# fontconfig
 -
 -usr_share="/usr/share"
--install_share="@CMAKE_INSTALL_PREFIX@/@SHARE_INSTALL_PREFIX@"
+-install_share="@KDE_INSTALL_FULL_DATADIR@"
 -
 -if [ ! $install_share = $usr_share ]; then
 -
@@ -76,7 +76,7 @@ index edf61f0..9854088 100644
 -    }
 -
 -    oxygenDir=$fontsDir/oxygen
--    prefixDir="@CMAKE_INSTALL_PREFIX@/@SHARE_INSTALL_PREFIX@/fonts/oxygen"
+-    prefixDir="@KDE_INSTALL_FULL_DATADIR@/fonts/oxygen"
 -
 -    # if the oxygen dir doesn't exist, create a symlink to be sure that the
 -    # Oxygen font is available to the user

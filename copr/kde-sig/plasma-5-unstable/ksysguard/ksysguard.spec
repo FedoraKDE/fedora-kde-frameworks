@@ -1,10 +1,10 @@
-Name:           ksysguard
-Version: 	5.4.90
-Release: 	1%{?dist}
-Summary:        KDE Process Management application
+Name:    ksysguard
+Version: 5.5.95
+Release: 1%{?dist}
+Summary: KDE Process Management application
 
-License:        GPLv2
-URL:            https://projects.kde.org/projects/kde/workspace/ksysguard
+License: GPLv2
+URL:     https://projects.kde.org/ksysguard
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -13,6 +13,8 @@ URL:            https://projects.kde.org/projects/kde/workspace/ksysguard
 %global stable stable
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+
+%global majmin_ver %(echo %{version} | cut -d. -f1,2)
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
@@ -30,7 +32,7 @@ BuildRequires:  kf5-kiconthemes-devel
 BuildRequires:  kf5-kdelibs4support-devel
 BuildRequires:  kf5-kdoctools-devel
 
-BuildRequires:  libksysguard-devel
+BuildRequires:  libksysguard-devel >= %{majmin_ver}
 
 BuildRequires:  lm_sensors-devel
 BuildRequires:  desktop-file-utils
@@ -47,24 +49,28 @@ Summary: Performance monitor daemon
 %description -n ksysguardd
 %{summary}.
 
+
 %prep
 %setup -q -n %{name}-%{version}
 
-%build
 
-mkdir -p %{_target_platform}
+%build
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
 
+
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %find_lang ksysguard5 --with-qt --with-kde --all-name
 
+
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.ksysguard.desktop
+
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -79,12 +85,14 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files -f ksysguard5.lang
-%doc COPYING COPYING.DOC README
+%license COPYING COPYING.DOC
+%doc README
 %{_bindir}/ksysguard
 %{_kf5_libdir}/libkdeinit5_ksysguard.so
 %{_datadir}/ksysguard
 %config %{_sysconfdir}/xdg/ksysguard.knsrc
 %{_datadir}/applications/org.kde.ksysguard.desktop
+## TODO: %%lang'ify
 %{_docdir}/HTML/*/ksysguard
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_kf5_datadir}/knotifications5/ksysguard.notifyrc
@@ -96,8 +104,35 @@ fi
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.2-2
+- .spec cosmetics, use %%majmin_ver for plasma-related deps, update URL
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

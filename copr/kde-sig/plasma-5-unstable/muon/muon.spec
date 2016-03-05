@@ -1,12 +1,19 @@
 
 Name:    muon
-Summary: A collection of package management tools for KDE
-Version: 5.4.90
+Summary: KDE and Plasma resources management GUI
+Version: 5.5.95
 Release: 1%{?dist}
 
 License: GPLv2+
-URL:     https://projects.kde.org/projects/kde/workspace/muon
-Source0: http://download.kde.org/stable/plasma/%{version}/%{name}-%{version}.tar.xz
+URL:     https://projects.kde.org/discover
+
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0: http://download.kde.org/%{stable}/plasma/%{version}/discover-%{version}.tar.xz
 
 ## upstream patches
 Patch0:  0001-org-kde-discover-desktop-validation-fixes.patch
@@ -14,8 +21,8 @@ Patch0:  0001-org-kde-discover-desktop-validation-fixes.patch
 BuildRequires: appstream-qt-devel >= 0.8.4
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
-BuildRequires: gettext
 BuildRequires: extra-cmake-modules
+BuildRequires: gettext
 BuildRequires: kf5-karchive-devel
 BuildRequires: kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel
@@ -32,8 +39,8 @@ BuildRequires: kf5-ktextwidgets-devel
 BuildRequires: kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel
 BuildRequires: kf5-plasma-devel
-BuildRequires: kf5-solid-devel
 BuildRequires: kf5-rpm-macros
+BuildRequires: kf5-solid-devel
 BuildRequires: pkgconfig(packagekitqt5)
 BuildRequires: pkgconfig(phonon4qt5)
 BuildRequires: pkgconfig(Qt5Concurrent)
@@ -50,7 +57,7 @@ Requires: %{name}-discover = %{version}-%{release}
 Requires: %{name}-updater = %{version}-%{release}
 
 %description
-A collection of package management tools for KDE.
+KDE and Plasma resources management GUI.
 
 %package libs
 Summary: Runtime libraries for %{name}
@@ -59,7 +66,7 @@ Requires: PackageKit
 %{summary}.
 
 %package discover
-Summary: Muon Discover
+Summary: KDE and Plasma resources management GUI
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %description discover
 %{summary}.
@@ -73,7 +80,12 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n discover-%{version}
+
+# disable update notifier applet by default
+sed -i \
+  -e 's|X-KDE-PluginInfo-EnabledByDefault=.*|X-KDE-PluginInfo-EnabledByDefault=false|g' \
+  notifier/plasmoid/metadata.desktop
 
 ## unpackaged files, these bits are not currently shipped
 rm -fv po/*/muon.po
@@ -95,20 +107,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-%find_lang libmuon
-%find_lang muon-discover
-%find_lang muon-notifier
-%find_lang muon-updater
+%find_lang libdiscover --with-qt
+%find_lang plasma-discover --with-qt
+%find_lang plasma-discover-notifier --with-qt
+%find_lang plasma-discover-updater --with-qt
+%find_lang plasma-discover-exporter --with-qt
 %find_lang plasma_applet_org.kde.muonnotifier
 
-cat muon-notifier.lang >> muon-updater.lang
-cat plasma_applet_org.kde.muonnotifier.lang >> muon-updater.lang
+cat plasma-discover-notifier.lang >> plasma-discover-updater.lang
+cat plasma-discover-exporter.lang >> plasma-discover-updater.lang
+cat plasma_applet_org.kde.muonnotifier.lang >> plasma-discover-updater.lang
 
-## unpackaged files
-rm -fv %{buildroot}%{_libdir}/libmuonprivate.so
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/muon-updater.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/plasma-discover-updater.desktop
 desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.discover.desktop
 
 
@@ -129,43 +141,69 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 update-desktop-database -q 2> /dev/null ||:
 
-%files discover -f muon-discover.lang
-%{_bindir}/muon-discover
+%files discover -f plasma-discover.lang
+%{_bindir}/plasma-discover
 %{_datadir}/applications/org.kde.discover.desktop
+%{_datadir}/icons/hicolor/*/apps/plasmadiscover.*
+%{_datadir}/plasmadiscover/
+%{_datadir}/kxmlgui5/plasmadiscover/
 
-%{_datadir}/icons/hicolor/*/apps/muondiscover.*
-%{_datadir}/muondiscover/
-%{_datadir}/kxmlgui5/muondiscover/
-%{_datadir}/desktoptheme/muon-contenttheme/
-
-%files updater -f muon-updater.lang
-%{_bindir}/muon-updater
-%{_datadir}/applications/muon-updater.desktop
-%{_datadir}/kxmlgui5/muonupdater/
+%files updater -f plasma-discover-updater.lang
+%{_bindir}/plasma-discover-updater
+%{_datadir}/applications/plasma-discover-updater.desktop
+%{_datadir}/kxmlgui5/plasmadiscoverupdater/
 # notifier
-%{_datadir}/plasma/plasmoids/org.kde.muonnotifier/
-%{_datadir}/kservices5/plasma-applet-org.kde.muonnotifier.desktop
+%{_datadir}/plasma/plasmoids/org.kde.discovernotifier/
+%{_datadir}/kservices5/plasma-applet-org.kde.discovernotifier.desktop
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
-%files libs -f libmuon.lang
-%doc README
-%license COPYING
-%{_libdir}/libMuonNotifiers.so
-%{_libdir}/libMuonCommon.so
-%{_datadir}/libmuon/
-%{_kf5_qtplugindir}/muon/
-%dir %{_kf5_qtplugindir}/muon-notifier/
-%{_kf5_qtplugindir}/muon-notifier/MuonPackageKitNotifier.so
-%{_qt5_prefix}/qml/org/kde/muon/
-%{_qt5_prefix}/qml/org/kde/muonnotifier/
-%{_datadir}/knotifications5/muonabstractnotifier.notifyrc
+%files libs -f libdiscover.lang
+%license COPYING COPYING.LIB
+%{_libdir}/libDiscoverNotifiers.so
+%{_libdir}/libDiscoverCommon.so
+%{_datadir}/libdiscover/
+%{_kf5_qtplugindir}/discover/
+%{_qt5_prefix}/qml/org/kde/discover/
+%{_qt5_prefix}/qml/org/kde/discovernotifier/
+%{_datadir}/knotifications5/discoverabstractnotifier.notifyrc
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Tue Dec 29 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.1-2
+- update description, summary, url
+- -updater: disable updater plasmoid by default
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Sun Dec 13 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-2
+- rebuild (appstream)
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

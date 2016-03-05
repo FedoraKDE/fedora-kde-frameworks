@@ -1,0 +1,30 @@
+From fefe2878f5c204fa01306e9e6c60045295ef66a0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Vr=C3=A1til?= <dvratil@kde.org>
+Date: Mon, 11 Jan 2016 23:51:42 +0100
+Subject: [PATCH 2/2] Don't consider Unknown output to be an external monitor
+
+When laptop screen gets reported as 'Unknown', assume it's a laptop screen
+and not an external screen, so that suspend-on-lid-close does not get disabled.
+
+REVIEW: 126721
+CCBUG: 357868
+---
+ daemon/actions/bundled/handlebuttonevents.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/daemon/actions/bundled/handlebuttonevents.cpp b/daemon/actions/bundled/handlebuttonevents.cpp
+index 7e1d16e..1c3a06d 100644
+--- a/daemon/actions/bundled/handlebuttonevents.cpp
++++ b/daemon/actions/bundled/handlebuttonevents.cpp
+@@ -230,7 +230,7 @@ void HandleButtonEvents::checkOutputs()
+     bool hasExternalMonitor = false;
+ 
+     for(const KScreen::OutputPtr &output : m_screenConfiguration->outputs()) {
+-        if (output->isConnected() && output->isEnabled() && output->type() != KScreen::Output::Panel) {
++        if (output->isConnected() && output->isEnabled() && output->type() != KScreen::Output::Panel && output->type() != KScreen::Output::Unknown) {
+             hasExternalMonitor = true;
+             break;
+         }
+-- 
+2.5.0
+

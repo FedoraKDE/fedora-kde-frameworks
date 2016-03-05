@@ -1,0 +1,11 @@
+diff -up plasma-desktop-5.5.4/applets/kicker/plugin/appentry.cpp.PackageKit plasma-desktop-5.5.4/applets/kicker/plugin/appentry.cpp
+--- plasma-desktop-5.5.4/applets/kicker/plugin/appentry.cpp.PackageKit	2016-02-26 11:19:47.956302194 -0600
++++ plasma-desktop-5.5.4/applets/kicker/plugin/appentry.cpp	2016-02-26 11:23:50.421393814 -0600
+@@ -17,6 +17,7 @@
+  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
+  ***************************************************************************/
+ 
++#include <config-workspace.h>
+ #include "appentry.h"
+ #include "actionlist.h"
+ #include "appsmodel.h"

@@ -1,0 +1,44 @@
+From: David Rosca <nowrep@gmail.com>
+Date: Fri, 19 Feb 2016 16:20:00 +0100
+Subject: [PATCH 519/545] TaskManager: Don't use Plasma theme icons in task
+ icon
+
+Summary:
+Also disable animation for icon in tooltip (normal Plasma tooltips
+no longer have animated icon too).
+
+BUG: 359387
+
+Reviewers: #plasma, hein
+
+Reviewed By: hein
+
+Subscribers: plasma-devel
+
+Projects: #plasma
+
+Differential Revision: https://phabricator.kde.org/D991
+-- 
+diff -up plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/Task.qml.0519 plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/Task.qml
+--- plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/Task.qml.0519	2016-02-29 11:45:49.595021502 -0600
++++ plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/Task.qml	2016-02-29 11:49:00.288093610 -0600
+@@ -270,6 +270,7 @@ MouseArea {
+ 
+             active: task.containsMouse || task.showingContextMenu
+             enabled: true
++            usesPlasmaTheme: false
+ 
+             source: model.DecorationRole
+ 
+diff -up plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/ToolTipDelegate.qml.0519 plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/ToolTipDelegate.qml
+--- plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/ToolTipDelegate.qml.0519	2016-01-26 13:39:46.000000000 -0600
++++ plasma-desktop-5.5.4/applets/taskmanager/package/contents/ui/ToolTipDelegate.qml	2016-02-29 11:45:49.595021502 -0600
+@@ -142,6 +142,8 @@ Column {
+                 x: _s
+                 width: units.iconSizes.desktop
+                 height: width
++                animated: false
++                usesPlasmaTheme: false
+                 source: icon
+             }
+         }

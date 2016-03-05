@@ -1,0 +1,62 @@
+diff -up plasma-workspace-5.5.3/startkde/startplasmacompositor.cmake.startplasmacompositor plasma-workspace-5.5.3/startkde/startplasmacompositor.cmake
+--- plasma-workspace-5.5.3/startkde/startplasmacompositor.cmake.startplasmacompositor	2016-01-06 06:17:36.000000000 -0600
++++ plasma-workspace-5.5.3/startkde/startplasmacompositor.cmake	2016-01-11 08:20:08.629227225 -0600
+@@ -3,18 +3,7 @@
+ #  DEFAULT KDE STARTUP SCRIPT ( @PROJECT_VERSION@ )
+ #
+ 
+-# in case we have been started with full pathname spec without being in PATH
+-bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
+-if [ -n "$bindir" ]; then
+-  qbindir=`qtpaths --binaries-dir`
+-  qdbus=$qbindir/qdbus
+-  case $PATH in
+-    $bindir|$bindir:*|*:$bindir|*:$bindir:*) ;;
+-    *) PATH=$bindir:$PATH; export PATH;;
+-  esac
+-else
+-  qdbus=qdbus
+-fi
++qdbus=qdbus-qt5
+ 
+ # We need to create config folder so we can write startupconfigkeys
+ if [  ${XDG_CONFIG_HOME} ]; then
+@@ -62,38 +51,6 @@ XftSubPixel=none
+ EOF
+ }
+ 
+-# Make sure the Oxygen font is installed
+-# This is necessary for setups where CMAKE_INSTALL_PREFIX
+-# is not in /usr. fontconfig looks in /usr, ~/.fonts and
+-# $XDG_DATA_HOME for fonts. In this case, we symlink the
+-# Oxygen font under ${XDG_DATA_HOME} and make it known to
+-# fontconfig
+-
+-usr_share="/usr/share"
+-install_share="@KDE_INSTALL_FULL_DATADIR@"
+-
+-if [ ! $install_share = $usr_share ]; then
+-
+-    if [ ${XDG_DATA_HOME} ]; then
+-        fontsDir="${XDG_DATA_HOME}/fonts"
+-    else
+-        fontsDir="${HOME}/.fonts"
+-    fi
+-
+-    test -d $fontsDir || {
+-        mkdir -p $fontsDir
+-    }
+-
+-    oxygenDir=$fontsDir/truetype/oxygen
+-    prefixDir="@KDE_INSTALL_FULL_DATADIR@/fonts/truetype/oxygen"
+-
+-    # if the oxygen dir doesn't exist, create a symlink to be sure that the
+-    # Oxygen font is available to the user
+-    test -d $oxygenDir || test -d $prefixDir && {
+-        test -h $oxygenDir || ln -s $prefixDir $oxygenDir && fc-cache $oxygenDir
+-    }
+-fi
+-
+ kstartupconfig5
+ returncode=$?
+ if test $returncode -ne 0; then

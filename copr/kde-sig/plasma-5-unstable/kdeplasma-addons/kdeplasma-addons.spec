@@ -1,6 +1,6 @@
 Name:    kdeplasma-addons
 Summary: Additional Plasmoids for Plasma 5
-Version: 5.4.90
+Version: 5.5.95
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -18,11 +18,10 @@ Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.
 
 Obsoletes: kdeplasma-addons-libs < 5.0.0
 
+BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtdeclarative-devel
-BuildRequires:  qt5-qtx11extras-devel
-
+BuildRequires:  ibus-devel
+BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-kconfig-devel
 BuildRequires:  kf5-kconfigwidgets-devel
@@ -36,17 +35,21 @@ BuildRequires:  kf5-krunner-devel
 BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kunitconversion-devel
 BuildRequires:  kf5-plasma-devel
-BuildRequires:  kf5-kactivities-devel
 BuildRequires:  kf5-rpm-macros
-
-BuildRequires:  ibus-devel
-BuildRequires:  scim-devel
-BuildRequires:  xcb-util-keysyms-devel
-BuildRequires:  xcb-util-image-devel
 BuildRequires:  libxcb-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
+BuildRequires:  qt5-qtx11extras-devel
+BuildRequires:  scim-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  xcb-util-keysyms-devel
 
+BuildRequires:  plasma-workspace-devel >= %{version}
+BuildRequires:  libksysguard-devel
 
 Requires:       kf5-filesystem
+# for notes.svgz
+Requires:       kf5-plasma >= 5.17
 
 %description
 %{summary}.
@@ -71,9 +74,11 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %post
+/sbin/ldconfig
 touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun
+/sbin/ldconfig
 if [ $1 -eq 0 ] ; then
 touch --no-create     %{_datadir}/icons/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
@@ -84,11 +89,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %files -f kdeplasmaaddons5_qt.lang
 %license COPYING COPYING.LIB
-%{_libexecdir}/kimpanel-scim-panel
-%{_libexecdir}/kimpanel-ibus-panel
 %{_kf5_datadir}/plasma/plasmoids/*
 %{_kf5_datadir}/plasma/desktoptheme/default/widgets/*
 %{_kf5_datadir}/plasma/desktoptheme/default/icons/*
+%{_kf5_datadir}/plasma/desktoptheme/default/weather/*
 %{_kf5_datadir}/plasma/wallpapers/*
 %{_kf5_datadir}/plasma/services/*.operations
 %{_kf5_qtplugindir}/plasma/dataengine/*.so
@@ -102,13 +106,44 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_datadir}/icons/hicolor/*/apps/fifteenpuzzle.*
 %{_sysconfdir}/xdg/comic.knsrc
 %{_kf5_libdir}/libplasmacomicprovidercore.so.*
+%{_kf5_libdir}/libplasmaweather.so.*
 %{_kf5_qtplugindir}/kpackage/packagestructure/plasma_packagestructure_comic.so
 %{_kf5_datadir}/kservicetypes5/plasma_comicprovider.desktop
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Mon Dec 14 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-3
+- Rebuild against kf5-plasma-5.17 (#1289782)
+
+* Thu Dec 10 2015 Rex Dieter <rdieter@fedoraproject.org> 5.5.0-2
+- (re)add missing notes.svgz (#1289782), .spec cosmetics
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3

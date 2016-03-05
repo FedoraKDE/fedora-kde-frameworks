@@ -2,13 +2,13 @@
 
 %global         build_kde4  1
 
-Name:           plasma-breeze
-Version:        5.4.90
-Release:        2%{?dist}
-Summary:        Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
+Name:    plasma-breeze
+Version: 5.5.95
+Release: 1%{?dist}
+Summary: Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 
-License:        GPLv2+
-URL:            https://projects.kde.org/projects/kde/workspace/breeze
+License: GPLv2+
+URL:     https://projects.kde.org/breeze
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -18,12 +18,13 @@ URL:            https://projects.kde.org/projects/kde/workspace/breeze
 %endif
 Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{base_name}-%{version}.tar.xz
 
+BuildRequires:  cmake
 BuildRequires:  kf5-rpm-macros
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtx11extras-devel
 
-BuildRequires:	kf5-kservice-devel
+BuildRequires:  kf5-kservice-devel
 BuildRequires:  kf5-kcmutils-devel
 BuildRequires:  kf5-plasma-devel
 
@@ -44,10 +45,10 @@ BuildRequires:  libxcb-devel
 BuildRequires:  gettext
 
 # icon optimizations
-BuildRequires: hardlink
+BuildRequires:  hardlink
 # for optimizegraphics
-BuildRequires: kde-dev-scripts
-BuildRequires: time
+BuildRequires:  kde-dev-scripts
+BuildRequires:  time
 
 Requires:       kf5-filesystem
 
@@ -63,8 +64,10 @@ BuildArch:      noarch
 %{summary}.
 
 %package -n     breeze-cursor-theme
-Summary:	Breeze cursor theme
-BuildArch:	noarch
+Summary:        Breeze cursor theme
+BuildArch:      noarch
+Conflicts:      breeze-icon-theme < 5.4.3-4
+Provides:       breeze-cursor-themes = %{version}-%{release}
 %description -n breeze-cursor-theme
 %{summary}.
 
@@ -84,6 +87,7 @@ Provides:       plasma-breeze-kde4%{?_isa} = %{version}-%{release}
 %prep
 %autosetup -n %{base_name}-%{version} -p1
 
+
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
@@ -94,7 +98,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %if 0%{?build_kde4:1}
-mkdir -p %{_target_platform}_kde4
+mkdir %{_target_platform}_kde4
 pushd %{_target_platform}_kde4
 %{cmake_kde4} -DUSE_KDE4=TRUE ..
 popd
@@ -111,16 +115,11 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}_kde4
 %endif
 
-# icon optimizations
-for theme in breeze_cursors Breeze_Snow; do
-pushd %{buildroot}%{_datadir}/icons/${theme}
-du -s  .
-time optimizegraphics ||:
-du -s .
-/usr/sbin/hardlink -c -v %{buildroot}%{_datadir}/icons/${theme}
-du -s .
-popd
-done
+# omit/rename kde4breeze.upd, seems to be causing problems for
+# (at least) new users, lame workaround for
+# http://bugzilla.redhat.com/1283348
+mv %{buildroot}%{_kf5_datadir}/kconf_update/kde4breeze.upd \
+   %{buildroot}%{_kf5_datadir}/kconf_update/kde4breeze.upd.BAK
 
 
 %post
@@ -136,25 +135,24 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
 %files
-%doc cursors/Breeze/README COPYING COPYING-ICONS
+%license COPYING COPYING-ICONS
 %{_kf5_qtplugindir}/org.kde.kdecoration2/breezedecoration.so
 %{_kf5_qtplugindir}/styles/breeze.so
 %{_kf5_datadir}/kstyle/themes/breeze.themerc
 %{_kf5_qtplugindir}/kstyle_breeze_config.so
-%{_kf5_datadir}/kconf_update/kde4breeze.upd
+%{_kf5_datadir}/kconf_update/kde4breeze.upd*
 %{_kf5_libdir}/kconf_update_bin/kde4breeze
 %{_kf5_qmldir}/QtQuick/Controls/Styles/Breeze
 %{_bindir}/breeze-settings5
-%{_datadir}/icons/hicolor/scalable/apps/breeze-settings.svgz
+%{_datadir}/icons/hicolor/*/apps/breeze-settings.*
 %{_kf5_datadir}/kservices5/breezedecorationconfig.desktop
 %{_kf5_datadir}/kservices5/breezestyleconfig.desktop
-%{_kf5_datadir}/kservices5/plasma-lookandfeel-org.kde.breezedark.desktop.desktop
-%{_kf5_datadir}/plasma/look-and-feel/org.kde.breezedark.desktop/
+%{_kf5_datadir}/lookandfeel/look-and-feel/org.kde.breezedark.desktop/
 
 %files common -f breeze.lang
 %{_datadir}/color-schemes/*.colors
 %{_datadir}/QtCurve/Breeze.qtcurve
-%{_datadir}/wallpapers/Next
+%{_datadir}/wallpapers/Next/
 
 %if 0%{?build_kde4:1}
 %files -n kde-style-breeze
@@ -163,32 +161,55 @@ fi
 %{_kde4_appsdir}/kstyle/themes/breeze.themerc
 %endif
 
-%post -n breeze-cursor-theme
-touch --no-create %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
-touch --no-create %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
-
-%posttrans -n breeze-cursor-theme
-gtk-update-icon-cache %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
-gtk-update-icon-cache %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
-
-%postun -n breeze-cursor-theme
-if [ $1 -eq 0 ] ; then
-touch --no-create %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
-gtk-update-icon-cache %{_kf5_datadir}/icons/Breeze_Snow &> /dev/null || :
-touch --no-create %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
-gtk-update-icon-cache %{_kf5_datadir}/icons/breeze_cursors &> /dev/null || :
-fi
-
 %files -n breeze-cursor-theme
-%{_kf5_datadir}/icons/Breeze_Snow
-%ghost %{_kf5_datadir}/icons/Breeze_Snow/index.theme
-%{_kf5_datadir}/icons/breeze_cursors
-%ghost %{_kf5_datadir}/icons/breeze_cursors/index.theme
+%doc cursors/Breeze/README
+%dir %{_kf5_datadir}/icons/Breeze_Snow/
+%{_kf5_datadir}/icons/Breeze_Snow/cursors/
+%{_kf5_datadir}/icons/Breeze_Snow/index.theme
+%dir %{_kf5_datadir}/icons/breeze_cursors/
+%{_kf5_datadir}/icons/breeze_cursors/cursors/
+%{_kf5_datadir}/icons/breeze_cursors/index.theme
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Fri Jan 08 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.5.3-2
+- .spec cosmetics
+- drop icon-related deps
+- breeze-cursor-theme: tighten %%files, don't use %%ghost, drop scriptlets
+- avoid kde4breeze.upd, causes problems for new users (#1283348)
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-2
+- Plasma 5.4.95
+
+* Sun Nov 15 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.3-5
+- icon-theme/cursor theme: drop Requires: -common, add versioned Conflicts instead
+
+* Sun Nov 15 2015 Rex Dieter <rdieter@fedoraproject.org> 5.4.3-4
+- breeze-cursor-theme pkg (#1282203)
 
 * Fri Nov 06 2015 Daniel Vrátil <dvraitl@fedoraproject.org> - 5.4.3-2
 - tarball respin

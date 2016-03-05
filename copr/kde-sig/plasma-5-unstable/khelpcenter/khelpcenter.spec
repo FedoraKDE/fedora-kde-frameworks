@@ -1,12 +1,12 @@
-Name:           khelpcenter
-Version: 5.4.90
-Release: 1%{?dist}
-Summary:        Application to show KDE Application's documentation
+Name:    khelpcenter
+Summary: Show documentation for KDE applications
 # Override khelpcenter subpackage from kde-runtime-15.04 (no longer built)
-Epoch:          1
+Epoch:   1
+Version: 5.5.95
+Release: 1%{?dist}
 
-License:        GPLv2 or GPLv3
-URL:            https://projects.kde.org/projects/kde/workspace/khelpcenter
+License: GPLv2 or GPLv3
+URL:     https://projects.kde.org/khelpcenter
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -14,25 +14,22 @@ URL:            https://projects.kde.org/projects/kde/workspace/khelpcenter
 %else
 %global stable stable
 %endif
-Source0:        http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
+Source0: http://download.kde.org/%{stable}/plasma/%{version}/%{name}-%{version}.tar.xz
 
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtscript-devel
-
-BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-rpm-macros
-
-BuildRequires:  kf5-kconfig-devel
-BuildRequires:  kf5-kinit-devel >= 5.10.0-3
-BuildRequires:  kf5-kcmutils-devel
-BuildRequires:  kf5-khtml-devel
-BuildRequires:  kf5-kdelibs4support-devel
-BuildRequires:  kf5-kdoctools-devel
-
+BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
-
+BuildRequires:  extra-cmake-modules
 # _kde4_* macros
 BuildRequires:  kde-filesystem
+BuildRequires:  kf5-kcmutils-devel
+BuildRequires:  kf5-kconfig-devel
+BuildRequires:  kf5-kdelibs4support-devel
+BuildRequires:  kf5-kdoctools-devel
+BuildRequires:  kf5-khtml-devel
+BuildRequires:  kf5-kinit-devel >= 5.10.0-3
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtscript-devel
 
 Requires:       kf5-filesystem
 
@@ -45,9 +42,6 @@ Requires:       kf5-filesystem
 
 %prep
 %setup -q
-
-mv doc/CMakeLists.txt doc/CMakeLists.txt.en_only
-grep 'add_subdirectory(en)' doc/CMakeLists.txt.en_only > doc/CMakeLists.txt
 
 
 %build
@@ -77,7 +71,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.Help.desktop
 
 
 %files -f khelpcenter5.lang
-%doc README.htdig README.metadata COPYING
+%doc README.htdig README.metadata
+%license COPYING
 %{_bindir}/khelpcenter
 %{_libexecdir}/khc_indexbuilder
 %{_libexecdir}/khc_htdig.pl
@@ -93,14 +88,52 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/org.kde.Help.desktop
 %{_datadir}/dbus-1/interfaces/org.kde.khelpcenter.kcmhelpcenter.xml
 %{_kde4_datadir}/services/khelpcenter.desktop
 %{_kde4_datadir}/kde4/services/khelpcenter.desktop
-%lang(en) /usr/share/doc/HTML/en/fundamentals/
-%lang(en) /usr/share/doc/HTML/en/khelpcenter/
-%lang(en) /usr/share/doc/HTML/en/onlinehelp/
+%lang(ca) %{_kf5_docdir}/HTML/ca/fundamentals/
+%lang(ca) %{_kf5_docdir}/HTML/ca/glossary/
+%lang(ca) %{_kf5_docdir}/HTML/ca/khelpcenter/
+%lang(ca) %{_kf5_docdir}/HTML/ca/onlinehelp/
+%lang(en) %{_kf5_docdir}/HTML/en/fundamentals/
+%lang(en) %{_kf5_docdir}/HTML/en/khelpcenter/
+%lang(en) %{_kf5_docdir}/HTML/en/onlinehelp/
+%lang(it) %{_kf5_docdir}/HTML/it/khelpcenter/
+%lang(nl) %{_kf5_docdir}/HTML/nl/khelpcenter/
+%lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/khelpcenter/
+%lang(sr) %{_kf5_docdir}/HTML/sr/khelpcenter/
+%lang(sr@latin) %{_kf5_docdir}/HTML/sr@latin/khelpcenter/
+%lang(sv) %{_kf5_docdir}/HTML/sv/khelpcenter/
+%lang(uk) %{_kf5_docdir}/HTML/uk/khelpcenter/
 
 
 %changelog
-* Sun Nov 08 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.90-1
-- Plasma 5.4.90
+* Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
+- Plasma 5.5.95
+
+* Tue Mar 01 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.5-1
+- Plasma 5.5.5
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:5.5.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jan 27 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.4-1
+- Plasma 5.5.4
+
+* Thu Jan 07 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.3-1
+- Plasma 5.5.3
+
+* Wed Jan 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 1:5.5.2-2
+- .spec cosmetics, (re)enable all HTML docs
+
+* Thu Dec 31 2015 Rex Dieter <rdieter@fedoraproject.org> - 1:5.5.2-1
+- 5.5.2
+
+* Fri Dec 18 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.1-1
+- Plasma 5.5.1
+
+* Thu Dec 03 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.0-1
+- Plasma 5.5.0
+
+* Wed Nov 25 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.95-1
+- Plasma 5.4.95
 
 * Thu Nov 05 2015 Daniel Vrátil <dvratil@fedoraproject.org> - 5.4.3-1
 - Plasma 5.4.3
