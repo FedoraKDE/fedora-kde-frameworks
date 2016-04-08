@@ -1,6 +1,6 @@
 Name:           plasma-integration
 Summary:        Qt Platform Theme integration plugin for Plasma
-Version:        5.5.95
+Version:        5.6.0
 Release:        1%{?dist}
 
 License:        GPLv2+
@@ -67,5 +67,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_qtplugindir}/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Sun Mar 20 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.6.0-1
+- Plasma 5.6.0
+
 * Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
 - Initial package

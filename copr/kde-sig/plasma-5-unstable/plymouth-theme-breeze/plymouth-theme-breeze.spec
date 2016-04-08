@@ -1,10 +1,10 @@
 Name:           plymouth-theme-breeze
-Version:        5.5.95
+Version:        5.6.2
 Release:        1%{?dist}
 Summary:        Breeze theme for Plymouth
 
-License:        GPLv2+
-URL:            https://projects.kde.org/projects/kde/workspace/%{name}
+License:        GPLv3
+URL:            https://projects.kde.org/projects/kde/workspace/breeze-plymouth
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -21,6 +21,7 @@ BuildRequires:  plymouth-devel
 
 
 Requires:       plymouth
+Requires:       plymouth-plugin-script
 
 %description
 %{summary}.
@@ -39,7 +40,6 @@ make %{?_smp_flags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-
 %files
 %license COPYING
 %doc README
@@ -48,5 +48,15 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_datadir}/plymouth/themes/breeze/
 
 %changelog
+* Tue Apr 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.6.2-1
+- Update to 5.6.2
+- fix license
+
+* Sun Mar 20 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.6.0-1
+- Plasma 5.6.0
+
+* Sun Mar 06 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-2
+- Fix path to scripts, fix deps
+
 * Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
 - Initial version

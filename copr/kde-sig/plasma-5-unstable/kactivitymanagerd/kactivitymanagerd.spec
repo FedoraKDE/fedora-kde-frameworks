@@ -1,7 +1,7 @@
 Name:           kactivitymanagerd
 Summary:        Plasma service to manage user's activities
-Version:        5.5.95
-Release:        2%{?dist}
+Version:        5.6.0
+Release:        1%{?dist}
 
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/kde/workspace/%{name}
@@ -33,12 +33,11 @@ BuildRequires:  boost-devel
 
 Requires:       kf5-filesystem
 
-# The KActivityManagerD was split from KActivities in KF5 5.20,
+# The kactivitymanagerd was split from KActivities in KF5 5.21,
 # but thanks to our clever packaging kf5-kactivities package
-# already contained only the KActivityManagerD files
-Obsoletes:      kf5-kactivities
-# Fake workaround
-Provides:       kf5-kactivities = 5.100.0
+# already contained only the kactivitymanagerd files
+Obsoletes:      kf5-kactivities <= 5.20.0
+Provides:       kf5-kactivities
 
 %description
 %{summary}.
@@ -74,5 +73,8 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 %{_kf5_datadir}/kservicetypes5/kactivitymanagerd-plugin.desktop
 
 %changelog
+* Sun Mar 20 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.6.0-1
+- Plasma 5.6.0
+
 * Sat Mar 05 2016 Daniel Vrátil <dvratil@fedoraproject.org> - 5.5.95-1
 - Initial version
