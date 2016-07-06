@@ -140,16 +140,20 @@ def parseKDEMetaData(metadata, product):
     return projects
 
 def fetchYamlMetaData(modules):
+    toSkip = []
     for moduleName in modules:
         print("Retrieving YAML metadata for %s..." % moduleName, end = '', flush = True)
         response = urllib.urlopen("http://gitweb.kde.org/?p=%s.git&a=blob&o=plain&f=metainfo.yaml" % moduleName)
         yamlData = yaml.load(response.read())
         if yamlData["release"] == False:
             print("Skipping module")
-            del modules[moduleName]
+            toSkip.append(moduleName)
             continue
 
         print("Done")
+
+    for skip in toSkip:
+        del modules[skip]
 
     return modules;
 
